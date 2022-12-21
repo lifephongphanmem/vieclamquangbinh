@@ -1,0 +1,174 @@
+{{-- @extends ('admin.layout') --}}
+@extends ('main')
+@section('custom-style')
+    <link rel="stylesheet" type="text/css"
+        href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
+    <style>
+        .col-md-3 {
+            float: left;
+        }
+
+        .wrapper {
+            margin-top: 0px;
+            padding: 0px 15px;
+        }
+    </style>
+@stop
+
+@section('custom-script')
+    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
+    </script>
+    <script type="text/javascript"
+        src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
+
+    <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            TableManaged3.init();
+            $('#madv').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val()+'&kydieutra='+$('#kydieutra').val();
+            });
+            $('#kydieutra').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val()+'&kydieutra='+$('#kydieutra').val();
+            });
+        });
+    </script>
+@stop
+@section('content')
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card card-custom">
+                <div class="card-header card-header-tabs-line">
+                    <div class="card-title">
+                        <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3>
+                    </div>
+                    <div class="card-toolbar">
+                        {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
+					</div>
+
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Đơn vị</label>
+                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control', 'id' => 'madv']) !!}
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Kỳ điều tra</label>
+                            {!! Form::select('kydieutra', $a_kydieutra, $inputs['kydieutra'], ['class' => 'form-control', 'id' => 'kydieutra']) !!}
+                        </div>
+
+                        <div class="col-md-4 float-right">
+                            {{-- <a title="In báo cáo"
+                            data-target="#modify-modal-in" data-toggle="modal"
+                            class="btn btn-sm btn-clean btn-icon" >
+                            <i class="icon-lg la flaticon2-print text-primary"></i>
+                        </a> --}}
+                        </div>
+                    </div>
+                    <form class="form-inline" method="GET">
+                        <div class="row col-xl-4">
+                            <div class="col-xl-12 m-b-xs">
+                                <select class="form-control select2basic" name="huyen" id='huyen'>
+                                    <?php foreach ($dmhc as $dv){
+						if ($dv->level == 'Huyện' || $dv->level == 'Thành phố'||$dv->level =="Thị xã"){
+						?>
+                                    <option value='{{ $dv->maquocgia }}'>{{ $dv->name }}</option>
+                                    <?php  }}?>
+
+                                </select>
+
+                                <select class=" form-control select2basic" name="xa" id="xa">
+                                    <?php foreach ($dmhc as $dv){
+						if ($dv->level =="Xã"||$dv->level =="Phường"||$dv->level =="Thị trấn"){
+						?>
+                                    <option class="{{ $dv->parent }}" value='{{ $dv->maquocgia }}'>{{ $dv->name }}
+                                    </option>
+                                    <?php } }?>
+
+
+                                </select>
+                                <script>
+                                    var xa = $("[name=xa] option").detach()
+                                    $("[name=huyen]").change(function() {
+                                        var val = $(this).val()
+                                        $("[name=xa] option").detach()
+                                        xa.filter("." + val).clone().appendTo("[name=xa]")
+                                    }).change()
+                                </script>
+
+                            </div>
+                        </div>
+                        <div class="row col-xl-8">
+                            <div class="col-xl-2 m-b-xs">
+                                <select name="gioitinh_filter" class="form-control select2basic"
+                                    onchange="this.form.submit()">
+                                    <option value="0"> Chọn giới tính </option>
+                                    <option value="Nam" <?php if ($gioitinh_filter == 'Nam') {
+                                        echo 'selected';
+                                    } ?>>Nam</option>
+                                    <option value="Nữ" <?php if ($gioitinh_filter == 'Nữ') {
+                                        echo 'selected';
+                                    } ?>>Nữ</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-xl-2 m-b-xs">
+                                <select name="age_filter" class="form-control select2basic" onchange="this.form.submit()">
+                                    <option value="0"> Lọc theo độ tuổi </option>
+                                    <option value="35"<?php if ($age_filter == '35') {
+                                        echo 'selected';
+                                    } ?>> 35 tuổi trở lên </option>
+
+
+                                </select>
+                            </div>
+                            <div class="col-xl-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="search" name="search"
+                                        value="{{ $search }}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-sm btn-default" type="submit">Tìm kiếm</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 m-b-xs">
+                                <button class="btn btn-sm btn-default" name="export" value="1" type="submit">Xuất
+                                    Excel</button>
+                            </div>
+                        </div>
+                    </form>
+                    <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
+                        <thead>
+                            <tr>
+                                <th width="5%"> STT </th>
+                                <th>Tên</th>
+                                <th>CMND/CCCD</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Nơi làm việc</th>
+                                {{-- <th>Thao tác</th> --}}
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+		foreach ($lds as $key=>$ld ){
+	?>
+                            <tr>
+                                <td>{{ ++$key }} </td>
+                                <td><a href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id) }}">{{ $ld->hoten }}</a></td>
+                                <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $ld->diachi }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    @endsection
