@@ -50,7 +50,8 @@ class AdminNhankhau extends Controller
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra=array_column(danhsach::all()->toarray(),'kydieutra','kydieutra');
-        $inputs['kydieutra']=$inputs['kydieutra']??danhsach::orderBy('id','desc')->first()->kydieutra;
+        $kydieutra=danhsach::orderBy('id', 'desc')->first();
+        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
         $lds = Nhankhau::join('danhsach', 'danhsach.id', 'nhankhau.danhsach_id')
             ->select('nhankhau.*')
             ->where('danhsach.kydieutra',$inputs['kydieutra']);
@@ -124,7 +125,8 @@ class AdminNhankhau extends Controller
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra=array_column(danhsach::all()->toarray(),'kydieutra','kydieutra');
-        $inputs['kydieutra']=$inputs['kydieutra']??danhsach::orderBy('id','desc')->first()->kydieutra;
+        $kydieutra=danhsach::orderBy('id', 'desc')->first();
+        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
 
         $lds = Nhankhau::join('danhsach', 'danhsach.id', 'nhankhau.danhsach_id')
         ->select('nhankhau.id', 'nhankhau.danhsach_id', 'nhankhau.hoten', 'nhankhau.cccd', 'nhankhau.ngaysinh', 'nhankhau.mqh', 'nhankhau.diachi', 'nhankhau.noilamviec')

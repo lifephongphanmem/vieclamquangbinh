@@ -48,7 +48,8 @@ class AdminDieutra extends Controller
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
-        $inputs['kydieutra'] = $inputs['kydieutra'] ?? danhsach::orderBy('id', 'desc')->first()->kydieutra;
+        $kydieutra=danhsach::orderBy('id', 'desc')->first();
+        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
         // dd($inputs['madv']);
         $inputs['url'] = '/dieutra/danhsach';
         $dss = DB::table('danhsach')
