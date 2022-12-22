@@ -2,6 +2,16 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
+        <style>
+            .col-md-3 {
+                float: left;
+            }
+    
+            .wrapper {
+                margin-top: 0px;
+                padding: 0px 15px;
+            }
+        </style>
 @stop
 
 @section('custom-script')

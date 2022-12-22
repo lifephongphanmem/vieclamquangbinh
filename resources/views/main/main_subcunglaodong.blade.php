@@ -45,7 +45,7 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text font-weight-bold">Tìm kiếm</span>
+                                    <span class="menu-text font-weight-bold">Danh sách</span>
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">

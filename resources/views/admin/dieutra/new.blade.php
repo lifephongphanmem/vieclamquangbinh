@@ -141,7 +141,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Kỳ điều tra </label>
-                                    <input type="text" id="kydieutra" name="kydieutra" size='30'
+                                    <input type="month" id="kydieutra" name="kydieutra" size='30' style="width:50%;"
                                         class="form-control">
 
                                 </div>

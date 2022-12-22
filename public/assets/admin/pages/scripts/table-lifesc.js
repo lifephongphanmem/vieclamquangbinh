@@ -157,7 +157,7 @@ var TableManaged3 = function () {
                 [5, 10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
-            "pageLength": -1,
+            "pageLength": 20,
             "language": {
                 "lengthMenu": "Hiển thị _MENU_ thông tin",
                 "search": "Tìm kiếm thông tin ",

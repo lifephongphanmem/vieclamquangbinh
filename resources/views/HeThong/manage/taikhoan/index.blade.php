@@ -2,15 +2,25 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ url('assets/global/plugins/select2/select2.css') }}" />
+        <style>
+            .col-md-3 {
+                float: left;
+            }
+    
+            .wrapper {
+                margin-top: 0px;
+                padding: 0px 15px;
+            }
+        </style>
 @stop
 
 @section('custom-script')
-    <script type="text/javascript" src="{{ url('assets/global/plugins/select2/select2.min.js') }}"></script>
-    <script src="{{ url('assets/js/pages/select2.js') }}"></script>
-    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
+    </script>
+    <script type="text/javascript"
+        src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
 
-    <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
+        <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
