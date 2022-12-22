@@ -21,11 +21,11 @@
             <td style="text-align: right"><i style="margin-right: 40%;">Quảng Bình, ngày .... tháng .... năm ....</i></td>
         </tr>
     </table>
-    <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO <br>VỀ THÔNG TIN
+    <p id="data_body1" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO <br>VỀ THÔNG TIN
         CUNG LAO ĐỘNG NĂM......</p>
-    <p style="text-align: center;font-style: italic;">Kính gửi: Sở Lao động - Thương binh và Xã hội</p>
+    <p id="data_body2" style="text-align: center;font-style: italic;">Kính gửi: Sở Lao động - Thương binh và Xã hội</p>
 
-    <table id="data_body" cellspacing="0" cellpadding="0" border="1"
+    <table id="data_body3" cellspacing="0" cellpadding="0" border="1"
         style="margin: 20px auto; border-collapse: collapse;" id="data">
 
         <tr>

@@ -8,7 +8,10 @@ use App\Models\Nhankhau;
 use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\AdminNhankhausExport;
+use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdonvi;
 use App\Models\danhsach;
+use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminNhankhau extends Controller
@@ -49,16 +52,28 @@ class AdminNhankhau extends Controller
         $a_kydieutra=array_column(danhsach::all()->toarray(),'kydieutra','kydieutra');
         $inputs['kydieutra']=$inputs['kydieutra']??danhsach::orderBy('id','desc')->first()->kydieutra;
         $lds = Nhankhau::join('danhsach', 'danhsach.id', 'nhankhau.danhsach_id')
-            ->select('nhankhau.*', 'danhsach.*')
+            ->select('nhankhau.*')
             ->where('danhsach.kydieutra',$inputs['kydieutra']);
 
-
-            if(session('admin')->sadmin == 'ADMIN'){
-                $lds=$lds->get();
-            }else{
-                $lds=$lds->where('danhsach.user_id', $inputs['madv'])
+        $donvi=User::where('madv',$inputs['madv'])->first();
+        if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
+            $lds = $lds->get();
+        } elseif ($donvi->capdo == 'H') {
+            $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
+                ->where('dmdonvi.madv', $inputs['madv'])
+                ->first();
+            $xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'dmdonvi.tendv')
+                ->where('danhmuchanhchinh.parent', $huyen->maquocgia)
                 ->get();
-            }
+             $a_xa=array_column($xa->toarray(),'madv');
+            $lds = $lds->wherein('danhsach.user_id', $a_xa)
+                ->get();
+        }else{
+            $lds = $lds->where('danhsach.user_id', $inputs['madv'])
+            ->get();
+        }
             // dd($lds);
         // $lds= DB::table('nhankhau')
         // 		->when($search, function ($query, $search) {
@@ -116,12 +131,25 @@ class AdminNhankhau extends Controller
         ->where('danhsach.kydieutra',$inputs['kydieutra'])
         ->where('mqh', "CH");
         
-        if(session('admin')->sadmin == 'ADMIN'){
-            $lds=$lds->get();
-        }else{
-            $lds=$lds->where('danhsach.user_id', $inputs['madv'])
-            ->get();
-        }
+        $donvi=User::where('madv',$inputs['madv'])->first();
+            if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
+                $lds = $lds->get();
+            } elseif ($donvi->capdo == 'H') {
+                $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
+                    ->where('dmdonvi.madv', $inputs['madv'])
+                    ->first();
+                $xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv', 'dmdonvi.tendv')
+                    ->where('danhmuchanhchinh.parent', $huyen->maquocgia)
+                    ->get();
+                 $a_xa=array_column($xa->toarray(),'madv');
+                $lds = $lds->wherein('danhsach.user_id', $a_xa)
+                    ->get();
+            }else{
+                $lds = $lds->where('danhsach.user_id', $inputs['madv'])
+                ->get();
+            }
 
         // $lds = DB::table('nhankhau')
         //     ->join('danhsach', 'nhankhau.danhsach_id', '=', 'danhsach.id')
