@@ -64,7 +64,7 @@ class Nhankhau extends Model
 			$data = array();
 			$data['ho'] = $arr[$i][0];
 			if ($data['ho'] != "") {
-				if (is_numeric($data['ho'])) {
+				if (is_int($data['ho'])) {
 					$hoindex = $data['ho'];
 				}
 			} else {
