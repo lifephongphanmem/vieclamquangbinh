@@ -1,5 +1,5 @@
 
-@if (chkPhanQuyen('baocao', 'phanquyen'))
+{{-- @if (chkPhanQuyen('baocao', 'phanquyen')) --}}
 {{-- <li class="menu-section">
     <h4 class="menu-text">BÁO CÁO</h4>
     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -34,14 +34,14 @@
                     <span class="menu-text">Báo cáo</span>
                 </a>
             </li>
-            <li class="menu-item" aria-haspopup="true">
+            {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/vanban/danhsach') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
                     <span class="menu-text">Văn bản</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/employer-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -54,4 +54,4 @@
         </ul>
     </div>
 </li>
-@endif
+{{-- @endif --}}

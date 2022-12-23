@@ -46,12 +46,9 @@ class Nhankhau extends Model
 		$request = request();
 		// Get the csv rows as an array
 		$file = $request->file('import_file');
-
 		$dataObj = new \stdClass();
 		$theArray = Excel::toArray($dataObj, $file);
-
 		$arr = $theArray[0];
-		// dd($arr);
 		$arr_col = array('hoten', 'gioitinh', 'ngaysinh', 'cccd', 'bhxh', 'thuongtru', 'diachi', 'uutien', 'dantoc', 'trinhdogiaoduc', 'chuyenmonkythuat', 'chuyennganh', 'tinhtranghdkt', 'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec', 'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep', 'khongthamgiahdkt', 'mqh');
 		// check file excel
 		$lds = array();
@@ -78,7 +75,7 @@ class Nhankhau extends Model
 			// dd($data);
 			// check data
 			if (!$data['hoten']) {
-				break;
+				continue;
 			};
 
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
@@ -110,21 +107,24 @@ class Nhankhau extends Model
 			}
 
 
-			$array_loi = array('gioitinh', 'ngaysinh', 'cccd');
+			
 
 			// dd($data);
 			$id = DB::table('nhankhau')->insertGetId($data);
+
+			$array_loi = array('gioitinh', 'ngaysinh', 'cccd');
 			//Lọc trường lỗi để đẩy vào bảng danh sach loi
 			$loi = false;
 			for ($j = 0; $j < count($array_loi); $j++) {
 				if ($data[$array_loi[$j]] == '' || $data[$array_loi[$j]] == null) {
 					$loi = true;
+					break;
 				}
 			}
 			if ($loi == true) {
 				$data_loi[] = $id;
 			}
-			$lds[] =	$data;
+			$lds[] = $data;
 		}
 
 

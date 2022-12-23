@@ -184,11 +184,13 @@ class AdminDieutra extends Controller
 
 
         $model = new Nhankhau();
+
         $request->validate([
             'import_file' => 'required|mimes:xlsx, csv, xls'
         ]);
 
         try {
+        
             $RetIm = $model->import($result);
 
             $ld = $RetIm['valid'];
@@ -207,9 +209,7 @@ class AdminDieutra extends Controller
                 DB::table('danhsachloi')->insert(['nhankhau_id'=>$item,'madv'=>$inputs['madv'],'kydieutra'=>$inputs['kydieutra']]);
             }
         }
-
         if ($ld) {
-
             DB::table('danhsach')
                 ->where('id', $result)
                 ->update(['soluong' => $ld, 'soho' => $soho]);
@@ -264,27 +264,99 @@ class AdminDieutra extends Controller
         if (isset($inputs['kydieutra'])) {
             $model = $model->where('kydieutra', $inputs['kydieutra']);
         }
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('danhmuchanhchinh.*','dmdonvi.madv')
+        ->get();
         //    dd($model); 
         foreach ($model as $ct) {
-            $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-                ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
-                ->where('dmdonvi.madv', $ct->user_id)
-                ->first();
+            // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
+            //     ->where('dmdonvi.madv', $ct->user_id)
+            //     ->first();
+            $danhmuc = $m_danhmuc
+            ->where('madv', $ct->user_id)
+            ->first();
             if ($danhmuc->level == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-
-            $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            $ct->tuoi = $tuoi;
+            $ngaysinh=str_replace('-','',$ct->ngaysinh);
+            if(strlen($ngaysinh)< 9){
+                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
+            }
         }
+
+        $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
+        $m_donvi->huyen=$m_danhmuc->where('maquocgia',$m_donvi->parent)->first()->name;
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
         return view('admin.dieutra.tonghop')
             ->with('model', $model)
+            ->with('inputs', $inputs)
+            ->with('m_donvi', $m_donvi)
+            ->with('a_cmkt', $a_cmkt)
+            ->with('a_khongthamgia', $a_khongthamgia)
+            ->with('a_vithevl', $a_vithevl)
+            ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
+            ->with('pageTitle', 'Tổng hợp cung lao động');
+    }
+    public function inbaocaohuyen(Request $request)
+    {
+        $inputs = $request->all();
+        // dd($inputs);
+        $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
+            ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
+            ->get();
+        // dd($model);
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('danhmuchanhchinh.*','dmdonvi.madv')
+        ->get();
+        $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
+        $m_donvi->huyen=$m_danhmuc->where('maquocgia',$m_donvi->parent)->first()->name;
+
+        if (isset($inputs['madv'])) {
+            $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
+            $model = $model->wherein('user_id', $a_donvi);
+        }
+
+        if (isset($inputs['kydieutra'])) {
+            $model = $model->where('kydieutra', $inputs['kydieutra']);
+        }
+
+        //    dd($model); 
+        foreach ($model as $ct) {
+            // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
+            //     ->where('dmdonvi.madv', $ct->user_id)
+            //     ->first();
+            $danhmuc = $m_danhmuc
+            ->where('madv', $ct->user_id)
+            ->first();
+            if ($danhmuc->level == 'Xã') {
+                $ct->khuvuc = 'nongthon';
+            } else {
+                $ct->khuvuc = 'thanhthi';
+            }
+            $ngaysinh=str_replace('-','',$ct->ngaysinh);
+            if(strlen($ngaysinh)< 9){
+                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
+            }
+
+            $ct->tuoi = isset($tuoi)??0;
+        }
+
+
+        $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
+        $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
+        $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
+        $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
+        return view('admin.dieutra.baocaohuyen')
+            ->with('model', $model)
+            ->with('inputs', $inputs)
+            ->with('m_donvi', $m_donvi)
             ->with('a_cmkt', $a_cmkt)
             ->with('a_khongthamgia', $a_khongthamgia)
             ->with('a_vithevl', $a_vithevl)
