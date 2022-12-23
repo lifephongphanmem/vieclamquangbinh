@@ -285,6 +285,7 @@ class AdminDieutra extends Controller
             if(strlen($ngaysinh)< 9){
                 $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
             }
+            $ct->tuoi = isset($tuoi)??0;
         }
 
         $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
