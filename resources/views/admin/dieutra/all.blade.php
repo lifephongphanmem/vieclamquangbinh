@@ -55,7 +55,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control', 'id' => 'madv']) !!}
+                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
                         </div>
                         <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>

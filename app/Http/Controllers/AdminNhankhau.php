@@ -12,6 +12,7 @@ use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\danhsach;
 use App\Models\User;
+use App\Models\view\view_nhankhau_danhsach;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminNhankhau extends Controller
@@ -52,29 +53,28 @@ class AdminNhankhau extends Controller
         $a_kydieutra=array_column(danhsach::all()->toarray(),'kydieutra','kydieutra');
         $kydieutra=danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
-        $lds = Nhankhau::join('danhsach', 'danhsach.id', 'nhankhau.danhsach_id')
-            ->select('nhankhau.*')
-            ->where('danhsach.kydieutra',$inputs['kydieutra']);
+        $lds = view_nhankhau_danhsach::where('kydieutra',$inputs['kydieutra'])
+        ->where('user_id',$inputs['madv'])->get();
 
-        $donvi=User::where('madv',$inputs['madv'])->first();
-        if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
-            $lds = $lds->get();
-        } elseif ($donvi->capdo == 'H') {
-            $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-                ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
-                ->where('dmdonvi.madv', $inputs['madv'])
-                ->first();
-            $xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-                ->select('dmdonvi.madv', 'dmdonvi.tendv')
-                ->where('danhmuchanhchinh.parent', $huyen->maquocgia)
-                ->get();
-             $a_xa=array_column($xa->toarray(),'madv');
-            $lds = $lds->wherein('danhsach.user_id', $a_xa)
-                ->get();
-        }else{
-            $lds = $lds->where('danhsach.user_id', $inputs['madv'])
-            ->get();
-        }
+        // $donvi=User::where('madv',$inputs['madv'])->first();
+        // if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
+        //     $lds = $lds;
+        // } elseif ($donvi->capdo == 'H') {
+        //     $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        //         ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
+        //         ->where('dmdonvi.madv', $inputs['madv'])
+        //         ->first();
+        //     $xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        //         ->select('dmdonvi.madv', 'dmdonvi.tendv')
+        //         ->where('danhmuchanhchinh.parent', $huyen->maquocgia)
+        //         ->get();
+        //      $a_xa=array_column($xa->toarray(),'madv');
+        //     $lds = $lds->wherein('user_id', $a_xa)
+        //         ;
+        // }else{
+        //     $lds = $lds->where('user_id', $inputs['madv'])
+        //    ;
+        // }
             // dd($lds);
         // $lds= DB::table('nhankhau')
         // 		->when($search, function ($query, $search) {
