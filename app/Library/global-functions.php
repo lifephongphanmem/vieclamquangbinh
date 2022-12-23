@@ -433,3 +433,16 @@ function dinhdangso ($number , $decimals = 0, $unit = '1' , $dec_point = ',' , $
     $number = round($number / $r , $decimals);
     return number_format($number, $decimals ,$dec_point, $thousands_sep);
 }
+
+function getDayVn($date) {
+    if($date != null || $date != '')
+        $newday = date('d/m/Y',strtotime($date));
+    else
+        $newday='';
+    return $newday;
+}
+
+function danhsachtinhtrangvl()
+{
+    return array('1'=>'Người có việc làm','2'=>'Người thất thất nghiệp','3'=>'Không tham gia hoạt động kinh tế');
+}

@@ -160,9 +160,9 @@
                                 <td>{{ ++$key }} </td>
                                 <td><a href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id) }}">{{ $ld->hoten }}</a></td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->thuongtru }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->tinhtranghdkt }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt]??'' }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
                             </tr>
                             <?php } ?>

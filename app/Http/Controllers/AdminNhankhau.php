@@ -55,6 +55,19 @@ class AdminNhankhau extends Controller
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
         $lds = view_nhankhau_danhsach::where('kydieutra',$inputs['kydieutra'])
         ->where('user_id',$inputs['madv'])->get();
+        $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
+
+        $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+        $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();
+
+        foreach($lds as $ct){
+            $ct->tenxa=ucwords($m_xa->name);
+            $ct->tenhuyen=ucwords($m_huyen->name);
+
+            if($ct->tinhtranghdkt == 1){
+                $ct->noilamviec=$ct->tenxa .', '.$ct->tenhuyen;
+            }
+        }
 
         // $donvi=User::where('madv',$inputs['madv'])->first();
         // if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
@@ -99,6 +112,7 @@ class AdminNhankhau extends Controller
             ->with('lds', $lds)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
+            ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
             ->with('a_kydieutra', $a_kydieutra)
             ->with('dmhc', $dmhc_list)
             ->with('search', $search)
