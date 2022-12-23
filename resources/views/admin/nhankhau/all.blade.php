@@ -58,12 +58,11 @@
                             {!! Form::select('kydieutra', $a_kydieutra, $inputs['kydieutra'], ['class' => 'form-control', 'id' => 'kydieutra']) !!}
                         </div>
 
-                        <div class="col-md-4 float-right">
-                            {{-- <a title="In báo cáo"
-                            data-target="#modify-modal-in" data-toggle="modal"
-                            class="btn btn-sm btn-clean btn-icon" >
-                            <i class="icon-lg la flaticon2-print text-primary"></i>
-                        </a> --}}
+                        <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
+                            <a href="#" title="In báo cáo chi tiết" data-target="#cungld-modal" data-toggle="modal"
+                                class="btn btn-sm btn-clean btn-icon">
+                                <i class="icon-lg la flaticon2-print text-primary"></i>
+                            </a>
                         </div>
                     </div>
                     <form class="form-inline" method="GET">
@@ -171,4 +170,49 @@
             </div>
         </div>
 
+
+               {{-- modal --}}
+               <div id="cungld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                <form id="frm_cungld" method="get" accept-charset="UTF-8" action="{{ '/nhankhau-in' }}" target="_blank">
+                    @csrf
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <h4 id="modal-header-primary-label" class="modal-title">Báo cáo chi tiết nhân khẩu</h4>
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                            </div>
+                            <div class="modal-body">
+    
+                                <div class="col-xl-12">
+                                    <div class="form-group fv-plugins-icon-container">
+                                        <label><b>Đơn vị</b></label><br>
+                                        <select style="width: 100%" class="col-xl-12 select2basic form-control" id="user_id" name="user_id">
+                                            @foreach ($dmdonvi as $dv)
+                                                <option value="{{ $dv->madv }}">{{ $dv->tendv }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+    
+                                <div class="col-xl-12">
+                                    <div class="form-group fv-plugins-icon-container">
+                                        <label style="font-weight:bold;">Kỳ Điều tra</label><br>
+                                        <select  style="width: 100%" class="col-xl-12 select2basic form-control" id="danhsach_id" name="danhsach_id">
+                                            @foreach ($danhsach as $ds)
+                                                <option value="{{ $ds->id }}">{{ $ds->kydieutra }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                                <button type="submit" class="btn btn-primary">Đồng
+                                    ý gửi</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
     @endsection

@@ -38,7 +38,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     <form class="form-inline" method="GET">
                         <div class="row w3-res-tb">
                             <div class="col-sm-2 m-b-xs">
@@ -53,7 +52,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-sm-2 m-b-xs" style="margin-left: 14%">
+                            <div class="col-sm-2 m-b-xs">
                                 <select class="form-control select2basic" name="public_filter"
                                     onchange="this.form.submit()">
                                     <option value="0">Tình trạng hoạt động</option>
@@ -66,7 +65,7 @@
 
                                 </select>
                             </div>
-                            <div class="col-sm-2 m-b-xs" style="margin-left: 15%">
+                            <div class="col-sm-2 m-b-xs">
                                 <select class="form-control select2basic">
                                     <option value="0">Khai báo biến động</option>
                                     <option value="1">Đã khai báo</option>
@@ -74,32 +73,26 @@
 
                                 </select>
                             </div>
-
-                        </div>
-                        <div class="row w3-res-tb">
-                            <div class="col-sm-2 m-b-xs">
-                                <span> Quy mô lao động </span>
+                            <div style=" margin-left:5%">
+                                <span> Quy mô <br> lao động </span>
                             </div>
-                            <div class="col-sm-5 m-b-xs">
-                                <div class="">
-                                    <span> Min </span>
-                                    <input type="text" class="select2basic form-control " value="{{ $quymo_min_filter }}"
-                                        name="quymo_min_filter">
-                                    <span> Max </span>
-                                    <input type="text" class="select2basic form-control " value="{{ $quymo_max_filter }}"
-                                        name="quymo_max_filter">
-                                </div>
+                            <label style=" margin-left:1%"> Min </label>
+                            <input type="text" class=" form-control col-xl-1 " value="{{ $quymo_min_filter }}"
+                                name="quymo_min_filter">
+                            <label> Max </label>
+                            <input type="text" class=" form-control col-xl-1 " value="{{ $quymo_max_filter }}"
+                                name="quymo_max_filter">
+                            <div>
+                                <button class=" form-control " type="submit">Lọc</button>
                             </div>
-                            <div class="col-sm-3 m-b-xs">
-                                <button class="btn-default" type="submit">Lọc</button>
-                            </div>
-                            <div class="col-sm-2 m-b-xs">
-                                <button class="btn btn-sm btn-default" name="export" value="1" type="submit">Xuất
+                            <div style=" margin-left:2%">
+                                <button class=" form-control form-inline" name="export" value="1" type="submit">Xuất
                                     Excel</button>
                             </div>
                         </div>
-                </div>
-                </form>
+
+
+                    </form>
                 <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                         <tr>

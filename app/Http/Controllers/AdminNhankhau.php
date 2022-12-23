@@ -93,7 +93,9 @@ class AdminNhankhau extends Controller
 
         $inputs['url'] = '/nhankhau/danhsach';
         // dd($inputs['madv']);
-        return view('admin.nhankhau.all')
+        $dmdonvi = dmdonvi::all();
+        $danhsach = danhsach::all();
+        return view('admin.nhankhau.all', compact('danhsach','dmdonvi'))
             ->with('lds', $lds)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
@@ -314,4 +316,28 @@ class AdminNhankhau extends Controller
         }
         return $cats;
     }
+
+    
+    public function inchitiet(Request $request)
+    {
+
+        $model = Nhankhau::join('danhsach','danhsach.id' ,'Nhankhau.danhsach_id')->select('Nhankhau.*','danhsach.user_id');
+       //kỳ điều tra
+        if ($request->danhsach_id) {
+            $model = $model->where('danhsach_id',$request->danhsach_id);
+        }
+     //đơn vị
+        if ($request->user_id) {
+          
+            $model = $model->where('user_id',$request->user_id);
+        }
+        $model = $model->get();
+   
+        return view('admin.nhankhau.inchitiet',compact('model'))
+        ->with('pageTitle', 'Danh sách thông tin chi tiết cung dụng lao động');
+    }
+
+
+
+    
 }
