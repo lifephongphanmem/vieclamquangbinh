@@ -42,6 +42,7 @@ use App\Http\Controllers\Controller;
 
 include('hethongchung.php');
 include('danhmuc.php');
+include('baocao.php');
 // Route::get('/', [UserController::class, 'show_login' ]);
 
 // Route::get('/home',[UserController::class, 'show_login' ]);
@@ -145,7 +146,8 @@ Route::get('/dieutra-be/{dtid}',[AdminDieutra::class,'edit']); // edit
 Route::prefix('dieutra')->group(function(){
     Route::get('/danhsach',[AdminDieutra::class,'show_all']); // all
     Route::get('/ThemMoi',[AdminDieutra::class,'new']); // 
-    Route::post('/intonghop',[AdminDieutra::class,'intonghop']);//in tổng hợp cung lao động
+    Route::post('/intonghop',[AdminDieutra::class,'intonghop']);//in tổng hợp cung lao động xã
+    Route::post('/inbaocaohuyen',[AdminDieutra::class,'inbaocaohuyen']);//in tổng hợp cung lao động huyện
 });
 
 

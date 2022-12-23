@@ -33,6 +33,7 @@
                     @include('main.main_subhethong')
                     @include('main.main_subdoanhnghiep')
                     @include('main.main_subcunglaodong')
+                    @include('main.main_subbaocao')
                 @else
                     @include('main.main_doanhnghiep')
                     @include('main.main_subkhaibao')
