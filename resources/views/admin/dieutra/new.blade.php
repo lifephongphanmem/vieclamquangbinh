@@ -141,8 +141,9 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Kỳ điều tra </label>
-                                    <input type="month" id="kydieutra" name="kydieutra" size='30' style="width:50%;"
-                                        class="form-control">
+                                    {{-- <input type="year" id="kydieutra" name="kydieutra" size='30' style="width:50%;"
+                                        class="form-control"> --}}
+                                    {{Form::select('kydieutra',getNam(),date('Y'),['class'=>'form-control select2basic'])}}
 
                                 </div>
                                 <div class="form-group">

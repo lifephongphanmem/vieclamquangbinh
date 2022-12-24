@@ -45,10 +45,14 @@ class Nhankhau extends Model
 
 		$request = request();
 		// Get the csv rows as an array
+		
 		$file = $request->file('import_file');
+		
 		$dataObj = new \stdClass();
 		$theArray = Excel::toArray($dataObj, $file);
 		$arr = $theArray[0];
+		
+		//  dd($arr);
 		$arr_col = array('hoten', 'gioitinh', 'ngaysinh', 'cccd', 'bhxh', 'thuongtru', 'diachi', 'uutien', 'dantoc', 'trinhdogiaoduc', 'chuyenmonkythuat', 'chuyennganh', 'tinhtranghdkt', 'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec', 'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep', 'khongthamgiahdkt', 'mqh');
 		// check file excel
 		$lds = array();
@@ -56,8 +60,15 @@ class Nhankhau extends Model
 		$errs = array();
 		$nfield = sizeof($arr_col);
 		$hoindex = 1;
-		for ($i = 8; $i < count($arr); $i++) {
+		if(DB::table('nhankhau')->count() > 0){
+			$idmax=DB::table('nhankhau')->where('id', \DB::raw("(select max(id) from nhankhau)"))->first()->id;
+		}else{
+			$idmax=1;
+		}
 
+		$y=1;
+		for ($i = 12; $i < count($arr); $i++) {
+				//  dd($arr[$i]);
 			$data = array();
 			$data['ho'] = $arr[$i][0];
 			if ($data['ho'] != "") {
@@ -67,16 +78,18 @@ class Nhankhau extends Model
 			} else {
 				$data['ho'] = $hoindex;
 			};
+			
 
 			for ($j = 0; $j < $nfield; $j++) {
 
-				$data[$arr_col[$j]] = $arr[$i][$j + 2];
+				$data[$arr_col[$j]] = $arr[$i][$j + 2]??'';
 			}
 			// dd($data);
 			// check data
-			if (!$data['hoten']) {
+			if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
 				continue;
 			};
+			
 
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
 
@@ -106,11 +119,10 @@ class Nhankhau extends Model
 				Session::put('message', "Lỗi ngày sinh dòng " . $i);
 			}
 
-
-			
-
 			// dd($data);
-			$id = DB::table('nhankhau')->insertGetId($data);
+			$data['maloi']=$idmax++;
+			$data['maloailoi']='';
+			
 
 			$array_loi = array('gioitinh', 'ngaysinh', 'cccd');
 			//Lọc trường lỗi để đẩy vào bảng danh sach loi
@@ -118,18 +130,54 @@ class Nhankhau extends Model
 			for ($j = 0; $j < count($array_loi); $j++) {
 				if ($data[$array_loi[$j]] == '' || $data[$array_loi[$j]] == null) {
 					$loi = true;
+					
 					break;
 				}
 			}
 			if ($loi == true) {
-				$data_loi[] = $id;
+				$data['maloailoi'].='LOAI1;';
 			}
-			$lds[] = $data;
+			//lỗi2
+			$loi2=false;
+			$a_loi2=array('nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+			'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep');
+			if($data['tinhtranghdkt']== 3){
+				foreach($a_loi2 as $tentruong){
+					if($data[$tentruong] != ''){
+						$loi2=true;
+					}
+				}
+			}
+			if ($loi2 == true) {
+				$data['maloailoi'].='LOAI2;';
+			}
+
+			//loi 3
+			$loi3=false;
+			$a_loi3=array('nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+			'loaihinhnoilamviec', 'diachinoilamviec');
+			if($data['tinhtranghdkt']== 2){
+				foreach($a_loi3 as $tentruong){
+					if($data[$tentruong] != ''){
+						$loi3=true;
+					}
+				}
+			}
+			if ($loi3 == true) {
+				$data['maloailoi'].='LOAI3;';
+			}
+			//
+			if ($loi || $loi2 ||$loi3) {
+				$data_loi[] = $data['maloi'];
+			}
+			DB::table('nhankhau')->insert($data);
+			//  $lds[] = $data;
+			$y++;
 		}
 
 
-		// dd($data_loi);
-		$num_valid_ld = count($lds);
+		//  dd($lds);
+		$num_valid_ld = $y;
 
 		if ($num_valid_ld) {
 

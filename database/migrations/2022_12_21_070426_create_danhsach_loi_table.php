@@ -18,6 +18,7 @@ class CreateDanhsachLoiTable extends Migration
             $table->string('nhankhau_id')->nullable();
             $table->string('madv')->nullable();
             $table->string('kydieutra')->nullable();
+            $table->string('maloi',50)->nullable();
             $table->timestamps();
         });
     }
