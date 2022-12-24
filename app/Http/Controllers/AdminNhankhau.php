@@ -60,6 +60,13 @@ class AdminNhankhau extends Controller
         $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
         $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();
 
+        $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
+        $inputs['mahuyen']=isset($inputs['mahuyen'])??$inputs['mahuyen']=$m_huyen->maquocgia;
+
+        $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                ->select('dmdonvi.madv','danhmuchanhchinh.name')
+                ->where('parent',$inputs['mahuyen'])->get();
+
         foreach($lds as $ct){
             $ct->tenxa=ucwords($m_xa->name);
             $ct->tenhuyen=ucwords($m_huyen->name);
@@ -110,6 +117,8 @@ class AdminNhankhau extends Controller
         $danhsach = danhsach::all();
         return view('admin.nhankhau.all', compact('danhsach','dmdonvi'))
             ->with('lds', $lds)
+            ->with('a_huyen', $a_huyen)
+            ->with('a_xa', $a_xa)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
@@ -352,6 +361,20 @@ class AdminNhankhau extends Controller
     }
 
 
+public function ajax_getxa(Request $request)
+{
+    $inputs=$request->all();
+    $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+    ->select('dmdonvi.madv','danhmuchanhchinh.name')
+    ->where('parent',$inputs['mahuyen'])->get();
 
+    $html = ' <option class="xa" value="">--- Chọn xã --</option>';
+    foreach($m_xa as $ct){
+        
+        $html .= ' <option class="xa" value="'.$ct->madv.'">'.$ct->name.'</option>';
+    }
+
+    return response()->json($html);
+}
     
 }
