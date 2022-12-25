@@ -308,7 +308,7 @@ class AdminNhankhau extends Controller
         $list_cmkt = dmtrinhdokythuat::all();
         $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
-        $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
+        // $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
         // $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
         $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
         $m_uutien=dmdoituonguutien::all();
@@ -342,7 +342,7 @@ class AdminNhankhau extends Controller
             ->with('list_cmkt', $list_cmkt)
             ->with('list_tdgd', $list_tdgd)
             ->with('list_nghe', $list_nghe)
-            ->with('list_vithe', $list_vithe)
+            // ->with('list_vithe', $list_vithe)
             // ->with('list_linhvuc', $list_linhvuc)
             ->with('list_hdld', $list_hdld);
     }
