@@ -14,6 +14,7 @@ use App\Models\danhsach;
 use App\Models\danhsachloi;
 use App\Models\Nhankhau;
 use App\Models\User;
+use App\Models\view\view_bao_cao_tonghop;
 use Carbon\Carbon;
 use Session;
 use Illuminate\Http\RedirectResponse;
@@ -308,9 +309,15 @@ class AdminDieutra extends Controller
     {
         $inputs = $request->all();
         // dd($inputs);
-        $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
-            ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
-            ->get();
+        // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
+        //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
+        //     ->get();
+        // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
+        //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
+        //     ->chunk(1000, function($danhsach){
+        //         return $danhsach;
+        //     });
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
@@ -323,9 +330,67 @@ class AdminDieutra extends Controller
             $model = $model->wherein('user_id', $a_donvi);
         }
 
-        if (isset($inputs['kydieutra'])) {
-            $model = $model->where('kydieutra', $inputs['kydieutra']);
+        // if (isset($inputs['kydieutra'])) {
+        //     $model = $model->where('kydieutra', $inputs['kydieutra']);
+        // }
+
+        //    dd($model); 
+        foreach ($model as $ct) {
+            // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
+            //     ->where('dmdonvi.madv', $ct->user_id)
+            //     ->first();
+            $danhmuc = $m_danhmuc
+            ->where('madv', $ct->user_id)
+            ->first();
+            if ($danhmuc->level == 'Xã') {
+                $ct->khuvuc = 'nongthon';
+            } else {
+                $ct->khuvuc = 'thanhthi';
+            }
+            $ngaysinh=str_replace('-','',$ct->ngaysinh);
+            if(strlen($ngaysinh)< 9){
+                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
+            }
+
+            $ct->tuoi = isset($tuoi)??0;
         }
+
+
+        $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
+        $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
+        $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
+        $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
+        return view('admin.dieutra.baocaohuyen')
+            ->with('model', $model)
+            ->with('inputs', $inputs)
+            ->with('m_donvi', $m_donvi)
+            ->with('a_cmkt', $a_cmkt)
+            ->with('a_khongthamgia', $a_khongthamgia)
+            ->with('a_vithevl', $a_vithevl)
+            ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
+            ->with('pageTitle', 'Tổng hợp cung lao động');
+    }
+
+    public function inbaocaotinh(Request $request)
+    {
+        $inputs = $request->all();
+        // dd($inputs);
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // dd($model);
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('danhmuchanhchinh.*','dmdonvi.madv')
+        ->get();
+        $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();
+
+        if (isset($inputs['madv'])) {
+            $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
+            $model = $model->wherein('user_id', $a_donvi);
+        }
+
+        // if (isset($inputs['kydieutra'])) {
+        //     $model = $model->where('kydieutra', $inputs['kydieutra']);
+        // }
 
         //    dd($model); 
         foreach ($model as $ct) {
