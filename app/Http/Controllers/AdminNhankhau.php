@@ -9,7 +9,16 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\AdminNhankhausExport;
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dmloaihieuluchdld;
+use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmthoigianthatnghiep;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
+use App\Models\Danhmuc\dmtrinhdogdpt;
+use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
@@ -294,12 +303,24 @@ class AdminNhankhau extends Controller
         $countries_list = getCountries();
         // get params
         $dmhc = $this->getdanhmuc();
-        $list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
-        $list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
+        // $list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
+        // $list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
+        $list_cmkt = dmtrinhdokythuat::all();
+        $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
         $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
-        $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
+        // $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
         $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
+        $m_uutien=dmdoituonguutien::all();
+        $m_tinhtrangvl=dmtinhtrangthamgiahdkt::all();
+        $m_vithevl=dmtinhtrangthamgiahdktct2::all();
+        $a_thamgiabaohiem=array('1'=>'Bắt buộc','2'=>'Tự nguyện','3'=>'Không tham gia');
+        $m_hopdongld=dmloaihieuluchdld::all();
+        $m_loaihinhkt=dmloaihinhhdkt::all();
+        $dm_tinhtrangct=dmtinhtrangthamgiahdktct::all();
+        $m_nguoithatnghiep=$dm_tinhtrangct->where('manhom',20221220175720);
+        $lydo=$dm_tinhtrangct->where('manhom',20221220175728);
+        $m_thoigianthatnghiep=dmthoigianthatnghiep::all();
 
         $model = new Nhankhau();
 
@@ -307,13 +328,22 @@ class AdminNhankhau extends Controller
 
         return view('admin.nhankhau.edit')
             ->with('ld', $ld)
+            ->with('m_uutien', $m_uutien)
+            ->with('m_tinhtrangvl', $m_tinhtrangvl)
+            ->with('m_vithevl', $m_vithevl)
+            ->with('lydo', $lydo)
+            ->with('m_hopdongld', $m_hopdongld)
+            ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
+            ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
+            ->with('m_loaihinhkt', $m_loaihinhkt)
+            ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
             ->with('countries_list', $countries_list)
             ->with('dmhc', $dmhc)
             ->with('list_cmkt', $list_cmkt)
             ->with('list_tdgd', $list_tdgd)
             ->with('list_nghe', $list_nghe)
             ->with('list_vithe', $list_vithe)
-            ->with('list_linhvuc', $list_linhvuc)
+            // ->with('list_linhvuc', $list_linhvuc)
             ->with('list_hdld', $list_hdld);
     }
 

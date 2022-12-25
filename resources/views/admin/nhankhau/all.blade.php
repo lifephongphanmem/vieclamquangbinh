@@ -60,22 +60,30 @@
 
                 </div>
                 <div class="card-body">
-                    {{-- <div class="form-group row">
+                    <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control', 'id' => 'madv']) !!}
+                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
                         </div>
-                        <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Kỳ điều tra</label>
+
+                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
+                                @foreach ($a_kydieutra as $key=>$ct )
+                                    <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
                             <a href="#" title="In báo cáo chi tiết" data-target="#cungld-modal" data-toggle="modal"
                                 class="btn btn-sm btn-clean btn-icon">
                                 <i class="icon-lg la flaticon2-print text-primary"></i>
                             </a>
-                        </div>
-                    </div> --}}
-                    <div class="form-group row">
+                        </div> --}}
+                    </div>
+                    {{-- <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Huyện</label>
-                            {{-- {!! Form::select('mahuyen', $a_huyen, null, ['class' => 'form-control', 'id' => 'mahuyen']) !!} --}}
                             <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
                                 @foreach ($a_huyen as $key=>$ct )
                                     <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
@@ -92,10 +100,6 @@
                         </div>
                         <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
-                            {{-- {!! Form::select('kydieutra', $a_kydieutra, $inputs['kydieutra'], [
-                                'class' => 'form-control',
-                                'id' => 'kydieutra',
-                            ]) !!} --}}
 
                             <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
                                 @foreach ($a_kydieutra as $key=>$ct )
@@ -103,7 +107,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- <form class="form-inline" method="GET">
                         <div class="row col-xl-4">
                             <div class="col-xl-12 m-b-xs">
