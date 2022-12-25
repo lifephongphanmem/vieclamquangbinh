@@ -148,6 +148,7 @@ Route::prefix('dieutra')->group(function(){
     Route::get('/ThemMoi',[AdminDieutra::class,'new']); // 
     Route::post('/intonghop',[AdminDieutra::class,'intonghop']);//in tổng hợp cung lao động xã
     Route::post('/inbaocaohuyen',[AdminDieutra::class,'inbaocaohuyen']);//in tổng hợp cung lao động huyện
+    Route::post('/inbaocaotinh',[AdminDieutra::class,'inbaocaotinh']);//in tổng hợp cung lao động tỉnh
 });
 
 
