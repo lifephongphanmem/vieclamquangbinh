@@ -30,10 +30,11 @@
                     </a>
                 </li>
                 @if (session('admin')->phanloaitk == 1)
-                    @include('main.main_subhethong')
+
                     @include('main.main_subdoanhnghiep')
                     @include('main.main_subcunglaodong')
                     @include('main.main_subbaocao')
+                    @include('main.main_subhethong')
                 @else
                     @include('main.main_doanhnghiep')
                     @include('main.main_subkhaibao')

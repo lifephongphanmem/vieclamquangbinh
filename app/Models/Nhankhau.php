@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Imports\ColectionImport;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Models\Report;
@@ -48,7 +49,7 @@ class Nhankhau extends Model
 		
 		$file = $request->file('import_file');
 		
-		$dataObj = new \stdClass();
+		$dataObj = new ColectionImport();
 		$theArray = Excel::toArray($dataObj, $file);
 		$arr = $theArray[0];
 		
@@ -66,8 +67,8 @@ class Nhankhau extends Model
 			$idmax=1;
 		}
 
-		$y=1;
-		for ($i = 12; $i < count($arr); $i++) {
+		$y=0;
+		for ($i = 11; $i < count($arr); $i++) {
 				//  dd($arr[$i]);
 			$data = array();
 			$data['ho'] = $arr[$i][0];

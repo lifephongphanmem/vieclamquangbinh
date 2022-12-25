@@ -165,9 +165,9 @@ Route::prefix('nhankhau')->group(function(){
     Route::get('/hogiadinh/{cid?}',[AdminNhankhau::class,'show_ho']); // all
     Route::get('/ChiTietHoGiaDinh/{cid?}',[AdminNhankhau::class,'editho']); // all
     Route::get('/ChiTiet/{nkid}',[AdminNhankhau::class,'edit']); // edit
+    Route::get('/get_xa',[AdminNhankhau::class,'ajax_getxa']); // lấy xã
 });
 // Tham số
-
 Route::get('/ptype-ba',[AdminParamtype::class,'show_all']);
 
 Route::get('/ptype-be/{catid}',[AdminParamtype::class,'edit']);

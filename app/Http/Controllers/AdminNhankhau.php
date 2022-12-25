@@ -9,7 +9,16 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\AdminNhankhausExport;
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dmloaihieuluchdld;
+use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmthoigianthatnghiep;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
+use App\Models\Danhmuc\dmtrinhdogdpt;
+use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
@@ -59,6 +68,13 @@ class AdminNhankhau extends Controller
 
         $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
         $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();
+
+        $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
+        $inputs['mahuyen']=isset($inputs['mahuyen'])??$inputs['mahuyen']=$m_huyen->maquocgia;
+
+        $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                ->select('dmdonvi.madv','danhmuchanhchinh.name')
+                ->where('parent',$inputs['mahuyen'])->get();
 
         foreach($lds as $ct){
             $ct->tenxa=ucwords($m_xa->name);
@@ -110,6 +126,8 @@ class AdminNhankhau extends Controller
         $danhsach = danhsach::all();
         return view('admin.nhankhau.all', compact('danhsach','dmdonvi'))
             ->with('lds', $lds)
+            ->with('a_huyen', $a_huyen)
+            ->with('a_xa', $a_xa)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
@@ -285,12 +303,24 @@ class AdminNhankhau extends Controller
         $countries_list = getCountries();
         // get params
         $dmhc = $this->getdanhmuc();
-        $list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
-        $list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
+        // $list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
+        // $list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
+        $list_cmkt = dmtrinhdokythuat::all();
+        $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
         $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
-        $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
+        // $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
         $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
+        $m_uutien=dmdoituonguutien::all();
+        $m_tinhtrangvl=dmtinhtrangthamgiahdkt::all();
+        $m_vithevl=dmtinhtrangthamgiahdktct2::all();
+        $a_thamgiabaohiem=array('1'=>'Bắt buộc','2'=>'Tự nguyện','3'=>'Không tham gia');
+        $m_hopdongld=dmloaihieuluchdld::all();
+        $m_loaihinhkt=dmloaihinhhdkt::all();
+        $dm_tinhtrangct=dmtinhtrangthamgiahdktct::all();
+        $m_nguoithatnghiep=$dm_tinhtrangct->where('manhom',20221220175720);
+        $lydo=$dm_tinhtrangct->where('manhom',20221220175728);
+        $m_thoigianthatnghiep=dmthoigianthatnghiep::all();
 
         $model = new Nhankhau();
 
@@ -298,13 +328,22 @@ class AdminNhankhau extends Controller
 
         return view('admin.nhankhau.edit')
             ->with('ld', $ld)
+            ->with('m_uutien', $m_uutien)
+            ->with('m_tinhtrangvl', $m_tinhtrangvl)
+            ->with('m_vithevl', $m_vithevl)
+            ->with('lydo', $lydo)
+            ->with('m_hopdongld', $m_hopdongld)
+            ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
+            ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
+            ->with('m_loaihinhkt', $m_loaihinhkt)
+            ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
             ->with('countries_list', $countries_list)
             ->with('dmhc', $dmhc)
             ->with('list_cmkt', $list_cmkt)
             ->with('list_tdgd', $list_tdgd)
             ->with('list_nghe', $list_nghe)
             ->with('list_vithe', $list_vithe)
-            ->with('list_linhvuc', $list_linhvuc)
+            // ->with('list_linhvuc', $list_linhvuc)
             ->with('list_hdld', $list_hdld);
     }
 
@@ -352,6 +391,20 @@ class AdminNhankhau extends Controller
     }
 
 
+public function ajax_getxa(Request $request)
+{
+    $inputs=$request->all();
+    $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+    ->select('dmdonvi.madv','danhmuchanhchinh.name')
+    ->where('parent',$inputs['mahuyen'])->get();
 
+    $html = ' <option class="xa" value="">--- Chọn xã --</option>';
+    foreach($m_xa as $ct){
+        
+        $html .= ' <option class="xa" value="'.$ct->madv.'">'.$ct->name.'</option>';
+    }
+
+    return response()->json($html);
+}
     
 }

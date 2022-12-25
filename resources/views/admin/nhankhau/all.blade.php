@@ -25,12 +25,24 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+
             $('#madv').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val()+'&kydieutra='+$('#kydieutra').val();
+                // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+                //     '&kydieutra=' + $('#kydieutra').val();
+                    window.location.href = "{{ $inputs['url'] }}" + '?madv=' +$('#madv').val() +
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
+            });
+            $('#mahuyen').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' +$('#madv').val() +
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
             });
             $('#kydieutra').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val()+'&kydieutra='+$('#kydieutra').val();
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+                    '&kydieutra=' + $('#kydieutra').val();
             });
+            // getxa();
+            // getdulieu();
+
         });
     </script>
 @stop
@@ -44,28 +56,59 @@
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
-					</div>
+                    </div>
 
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control', 'id' => 'madv']) !!}
+                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
                         </div>
                         <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
-                            {!! Form::select('kydieutra', $a_kydieutra, $inputs['kydieutra'], ['class' => 'form-control', 'id' => 'kydieutra']) !!}
-                        </div>
 
-                        <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
+                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
+                                @foreach ($a_kydieutra as $key=>$ct )
+                                    <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
                             <a href="#" title="In báo cáo chi tiết" data-target="#cungld-modal" data-toggle="modal"
                                 class="btn btn-sm btn-clean btn-icon">
                                 <i class="icon-lg la flaticon2-print text-primary"></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
-                    <form class="form-inline" method="GET">
+                    {{-- <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Huyện</label>
+                            <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
+                                @foreach ($a_huyen as $key=>$ct )
+                                    <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Xã</label>
+                            <select name="madv" id="madv"  class="form-control select2basic">
+                                @foreach ($a_xa as $key=>$ct )
+                                <option value="{{$ct->madv}}" {{$ct->madv == $inputs['madv']?'selected':''}}>{{$ct->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Kỳ điều tra</label>
+
+                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
+                                @foreach ($a_kydieutra as $key=>$ct )
+                                    <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div> --}}
+                    {{-- <form class="form-inline" method="GET">
                         <div class="row col-xl-4">
                             <div class="col-xl-12 m-b-xs">
                                 <select class="form-control select2basic" name="huyen" id='huyen'>
@@ -137,7 +180,7 @@
                                     Excel</button>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
@@ -162,7 +205,8 @@
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->thuongtru }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt]??'' }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
+                                </td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
                             </tr>
                             <?php } ?>
@@ -173,48 +217,85 @@
         </div>
 
 
-               {{-- modal --}}
-               <div id="cungld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-                <form id="frm_cungld" method="get" accept-charset="UTF-8" action="{{ '/nhankhau-in' }}" target="_blank">
-                    @csrf
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header modal-header-primary">
-                                <h4 id="modal-header-primary-label" class="modal-title">Báo cáo chi tiết nhân khẩu</h4>
-                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                            </div>
-                            <div class="modal-body">
-    
-                                <div class="col-xl-12">
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label><b>Đơn vị</b></label><br>
-                                        <select style="width: 100%" class="col-xl-12 select2basic form-control" id="user_id" name="user_id">
-                                            @foreach ($dmdonvi as $dv)
-                                                <option value="{{ $dv->madv }}">{{ $dv->tendv }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+        {{-- modal --}}
+        <div id="cungld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="frm_cungld" method="get" accept-charset="UTF-8" action="{{ '/nhankhau-in' }}" target="_blank">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Báo cáo chi tiết nhân khẩu</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b>Đơn vị</b></label><br>
+                                    <select style="width: 100%" class="col-xl-12 select2basic form-control" id="user_id"
+                                        name="user_id">
+                                        @foreach ($dmdonvi as $dv)
+                                            <option value="{{ $dv->madv }}">{{ $dv->tendv }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-    
-                                <div class="col-xl-12">
-                                    <div class="form-group fv-plugins-icon-container">
-                                        <label style="font-weight:bold;">Kỳ Điều tra</label><br>
-                                        <select  style="width: 100%" class="col-xl-12 select2basic form-control" id="danhsach_id" name="danhsach_id">
-                                            @foreach ($danhsach as $ds)
-                                                <option value="{{ $ds->id }}">{{ $ds->kydieutra }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label style="font-weight:bold;">Kỳ Điều tra</label><br>
+                                    <select style="width: 100%" class="col-xl-12 select2basic form-control" id="danhsach_id"
+                                        name="danhsach_id">
+                                        @foreach ($danhsach as $ds)
+                                            <option value="{{ $ds->id }}">{{ $ds->kydieutra }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-    
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
-                                <button type="submit" class="btn btn-primary">Đồng
-                                    ý gửi</button>
-                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                            <button type="submit" class="btn btn-primary">Đồng
+                                ý gửi</button>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function getxa() {
+                var madv=$('#mdv').val;
+                var url='/nhankhau/get_xa?madv='+madv;
+                var mahuyen = $('#mahuyen').val();
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        mahuyen: mahuyen
+                    },
+                    dataType: 'JSON',
+                    success: function(data) {
+                        console.log(data);
+                        $('#madv').find('.xa').remove();
+                        $('#madv').append(data);
+                    },
+                    error: function(message) {
+                        toastr.error(message, 'Lỗi!');
+                    }
+                });
+            };
+
+            function getdulieu()
+            {
+                madv=$('#madv').val();
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + madv +
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+$('#mahuyen').val();
+                    // $('#madv option[value=' + madv + ' ]').attr('selected', 'selected');
+                    // getxa();
+            }
+        </script>
     @endsection

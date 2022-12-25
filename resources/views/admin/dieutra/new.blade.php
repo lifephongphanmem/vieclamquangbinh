@@ -46,7 +46,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control', 'id' => 'madv']) !!}
+                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
                         </div>
                     </div>
                   
@@ -133,7 +133,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                     <label for="exampleInputFile">File điều tra </label>
-                                    <input type="file" id="import_file" name="import_file">
+                                    <input type="file" id="import_file" name="import_file" required>
                                     </div>
 
                                 </div>
