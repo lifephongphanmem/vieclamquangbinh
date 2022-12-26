@@ -257,15 +257,17 @@ class AdminDieutra extends Controller
         // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
         //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
         //     ->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
+        ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
         // dd($model);
         if (isset($inputs['madv'])) {
             $model = $model->where('user_id', $inputs['madv']);
         }
 
-        if (isset($inputs['kydieutra'])) {
-            $model = $model->where('kydieutra', $inputs['kydieutra']);
-        }
+        // if (isset($inputs['kydieutra'])) {
+        //     $model = $model->where('kydieutra', $inputs['kydieutra']);
+        // }
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
@@ -318,7 +320,9 @@ class AdminDieutra extends Controller
         //     ->chunk(1000, function($danhsach){
         //         return $danhsach;
         //     });
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
+        ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
