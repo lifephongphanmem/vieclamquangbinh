@@ -52,8 +52,7 @@ class Nhankhau extends Model
 		$dataObj = new ColectionImport();
 		$theArray = Excel::toArray($dataObj, $file);
 		$arr = $theArray[0];
-		
-		//  dd($arr);
+		// dd($arr);
 		$arr_col = array('hoten', 'gioitinh', 'ngaysinh', 'cccd', 'bhxh', 'thuongtru', 'diachi', 'uutien', 'dantoc', 'trinhdogiaoduc', 'chuyenmonkythuat', 'chuyennganh', 'tinhtranghdkt', 'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec', 'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep', 'khongthamgiahdkt', 'mqh');
 		// check file excel
 		$lds = array();
@@ -68,6 +67,7 @@ class Nhankhau extends Model
 		}
 
 		$y=0;
+
 		for ($i = 11; $i < count($arr); $i++) {
 				//  dd($arr[$i]);
 			$data = array();
@@ -93,6 +93,9 @@ class Nhankhau extends Model
 			
 
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
+			if(strlen($data['cccd']) > 16){
+				$data['cccd']=substr($data['cccd'],0,16);
+			}
 
 			$data['danhsach_id'] = $cid;
 
@@ -146,6 +149,7 @@ class Nhankhau extends Model
 				foreach($a_loi2 as $tentruong){
 					if($data[$tentruong] != ''){
 						$loi2=true;
+						break;
 					}
 				}
 			}
@@ -161,6 +165,7 @@ class Nhankhau extends Model
 				foreach($a_loi3 as $tentruong){
 					if($data[$tentruong] != ''){
 						$loi3=true;
+						break;
 					}
 				}
 			}

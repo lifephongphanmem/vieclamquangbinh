@@ -254,9 +254,10 @@ class AdminDieutra extends Controller
     {
         $inputs = $request->all();
         // dd($inputs);
-        $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
-            ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
-            ->get();
+        // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
+        //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
+        //     ->get();
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         // dd($model);
         if (isset($inputs['madv'])) {
             $model = $model->where('user_id', $inputs['madv']);
@@ -376,17 +377,15 @@ class AdminDieutra extends Controller
     {
         $inputs = $request->all();
         // dd($inputs);
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        // dd($model);
+        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
+                ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
         $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();
 
-        if (isset($inputs['madv'])) {
-            $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
-            $model = $model->wherein('user_id', $a_donvi);
-        }
 
         // if (isset($inputs['kydieutra'])) {
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
