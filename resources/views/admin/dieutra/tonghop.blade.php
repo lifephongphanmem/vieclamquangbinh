@@ -50,12 +50,11 @@
             <td colspan="5" style="font-weight: bold; text-transform: uppercase;text-align: left">I. THÔNG TIN CUNG LAO
                 ĐỘNG</td>
         </tr>
-        <?php $model_tuoi = $model->where('tuoi', '>=', 15); ?>
         <tr>
             <td style="font-weight: bold;">1</td>
             <td style="font-weight: bold;">Số người từ 15 tuổi trở lên</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{count($model_tuoi)}}</td>
+            <td style="text-align: center;">{{count($model)}}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
@@ -66,14 +65,14 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_tuoi->where('khuvuc', 'thanhthi')) }}</td>
+            <td style="text-align: center;">{{ count($model->where('khuvuc', 'thanhthi')) }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_tuoi->where('khuvuc', 'nongthon')) }}</td>
+            <td style="text-align: center;">{{ count($model->where('khuvuc', 'nongthon')) }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
@@ -84,14 +83,14 @@
             <td></td>
             <td>- Nam</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_tuoi->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+            <td style="text-align: center;">{{ count($model->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nữ</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_tuoi->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+            <td style="text-align: center;">{{ count($model->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <?php $model_covieclam = $model->where('tinhtranghdkt', 1); ?>

@@ -276,24 +276,17 @@ class AdminDieutra extends Controller
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
         //    dd($model); 
+        $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
         foreach ($model as $ct) {
             // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            $danhmuc = $m_danhmuc
-            ->where('madv', $ct->user_id)
-            ->first();
-            if ($danhmuc->level == 'Xã') {
+            if ($a_dm[$ct->user_id] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-            $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            if(strlen($ngaysinh)< 9){
-                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            }
-            $ct->tuoi = isset($tuoi)??0;
         }
 
         $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
@@ -343,26 +336,19 @@ class AdminDieutra extends Controller
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
         // }
 
-        //    dd($model); 
+        //    dd($model);
+        $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
         foreach ($model as $ct) {
             // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            $danhmuc = $m_danhmuc
-            ->where('madv', $ct->user_id)
-            ->first();
-            if ($danhmuc->level == 'Xã') {
+
+            if ($a_dm[$ct->user_id] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-            $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            if(strlen($ngaysinh)< 9){
-                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            }
-
-            $ct->tuoi = isset($tuoi)??0;
         }
 
 
