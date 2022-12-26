@@ -9,7 +9,9 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\AdminNhankhausExport;
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dmloaihieuluchdld;
 use App\Models\danhsach;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
@@ -49,17 +51,23 @@ class AdminNhankhau extends Controller
 
 
         $m_donvi = getDonVi(session('admin')->sadmin);
+        
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
+        
         $a_kydieutra=array_column(danhsach::all()->toarray(),'kydieutra','kydieutra');
         $kydieutra=danhsach::orderBy('id', 'desc')->first();
+        
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
+      
         $lds = view_nhankhau_danhsach::where('kydieutra',$inputs['kydieutra'])
-        ->where('user_id',$inputs['madv'])->get();
+        // dd($inputs['madv']);
+       ->where('user_id',$inputs['madv'])->get();
+        
         $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
 
         $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
         $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();
-
+       
         foreach($lds as $ct){
             $ct->tenxa=ucwords($m_xa->name);
             $ct->tenhuyen=ucwords($m_huyen->name);
@@ -103,7 +111,7 @@ class AdminNhankhau extends Controller
         // 			})
 
         // 		->get();
-
+            
         $inputs['url'] = '/nhankhau/danhsach';
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
@@ -291,11 +299,12 @@ class AdminNhankhau extends Controller
         $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
         $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
         $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
-
+        $list_dtut = dmdoituonguutien::all();
+        $list_hlhd = dmloaihieuluchdld::all();
         $model = new Nhankhau();
 
         $ld = $model::find($nkid);
-
+       
         return view('admin.nhankhau.edit')
             ->with('ld', $ld)
             ->with('countries_list', $countries_list)
@@ -305,7 +314,9 @@ class AdminNhankhau extends Controller
             ->with('list_nghe', $list_nghe)
             ->with('list_vithe', $list_vithe)
             ->with('list_linhvuc', $list_linhvuc)
-            ->with('list_hdld', $list_hdld);
+            ->with('list_hdld', $list_hdld)
+            ->with('list_dtut', $list_dtut)
+            ->with('list_hlhd', $list_hlhd);
     }
 
     public function update(Request $request)

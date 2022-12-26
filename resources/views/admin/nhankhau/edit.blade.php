@@ -73,7 +73,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label> Giới tính </label>
-                                            <select class="form-control input-sm m-bot5" name="gioitinh">
+                                            <select class="form-control " name="gioitinh">
                                                 <option value='nu'>Nữ</option>
                                                 <option value='nam' <?php if ($ld->gioitinh == 'nam' || $ld->gioitinh == 'Nam') {
                                                     echo 'selected';
@@ -125,6 +125,25 @@
                                             </select>
                                         </div>
                                     </div>
+                                    @if ($ld->uutien != 'x')
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Đối tượng ưu tiên</label>
+                                                <select class="form-control" name="trinhdogiaoduc">
+                                                    <?php foreach ( $list_dtut as  $key=>$dt){ ?>
+                                                    <option value='{{ $ld->id }}' <?php if ($ld->uutien == $dt->madmdt) {
+                                                        echo 'selected';
+                                                    } ?>>
+                                                        {{ $dt->tendoituong }}
+                                                    </option>
+                                                    <?php } ?>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    @endif
+
+
                                 </div>
                                 <div class="col-md-12">
 
@@ -216,6 +235,12 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                
+                            </div>
+
+                        </div>
                     </form>
 
                 </div>
