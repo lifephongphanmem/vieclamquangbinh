@@ -55,7 +55,20 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
+
+                            {{-- {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!} --}}
+                            <select class="form-control select2basic" id="madv">
+                                @foreach ($m_diaban->where('capdo','H') as $diaban)
+                                    <optgroup label="{{ $diaban->name }}">
+                                        <?php $a_xa=array_column($m_diaban->where('parent',$diaban->maquocgia)->toarray(),'id') ?>
+                                        <?php $donvi = $m_donvi->wherein('madiaban', $a_xa); ?>
+                                        @foreach ($donvi as $ct)
+                                            <option {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}
+                                                value="{{ $ct->madv }}">{{ $ct->tendv }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
