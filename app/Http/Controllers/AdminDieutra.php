@@ -47,6 +47,8 @@ class AdminDieutra extends Controller
         $dm_filter = $request->dm_filter;
         $inputs = $request->all();
         $m_donvi = getDonVi(session('admin')->sadmin);
+        $m_diaban = danhmuchanhchinh::all();
+        // dd($m_diaban);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra=danhsach::orderBy('id', 'desc')->first();
@@ -92,13 +94,15 @@ class AdminDieutra extends Controller
         $data_loi=danhsachloi::where('kydieutra',$inputs['kydieutra'])->get();
 
         $a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
-
+        // dd($m_donvi);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
             ->with('data_loi', $data_loi)
             ->with('a_donvi', $a_donvi)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
+            ->with('m_diaban', $m_diaban)
+            ->with('m_donvi', $m_donvi)
             ->with('a_kydieutra', $a_kydieutra)
             ->with('search', $search)
             ->with('dmhc_list', $dmhc_list)
@@ -385,9 +389,12 @@ class AdminDieutra extends Controller
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
                 ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
+                // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
+
+        $a_dm=array_column($m_danhmuc->toarray(),'level','madv');
         $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();
 
 
@@ -401,20 +408,22 @@ class AdminDieutra extends Controller
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            $danhmuc = $m_danhmuc
-            ->where('madv', $ct->user_id)
-            ->first();
-            if ($danhmuc->level == 'Xã') {
+            // $danhmuc = $m_danhmuc
+            // ->where('madv', $ct->user_id)
+            // ->first();
+            if ($a_dm[$ct->user_id] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-            $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            if(strlen($ngaysinh)< 9){
-                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            }
+            // $ngaysinh=str_replace('-','',$ct->ngaysinh);
+            // if(strlen($ngaysinh)< 9){
+            //     $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
+            // }
 
-            $ct->tuoi = isset($tuoi)??0;
+            // $ct->tuoi = $tuoi??0;
+
+
         }
 
 
@@ -422,7 +431,8 @@ class AdminDieutra extends Controller
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
-        return view('admin.dieutra.baocaohuyen')
+        // dd($model);
+        return view('admin.dieutra.baocaotinh')
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('m_donvi', $m_donvi)

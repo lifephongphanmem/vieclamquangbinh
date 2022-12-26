@@ -119,6 +119,7 @@ class AdminNhankhau extends Controller
         // 			})
 
         // 		->get();
+        $m_diaban = danhmuchanhchinh::all();
 
         $inputs['url'] = '/nhankhau/danhsach';
         // dd($inputs['madv']);
@@ -132,6 +133,8 @@ class AdminNhankhau extends Controller
             ->with('inputs', $inputs)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
             ->with('a_kydieutra', $a_kydieutra)
+            ->with('m_diaban', $m_diaban)
+            ->with('m_donvi', $m_donvi)
             ->with('dmhc', $dmhc_list)
             ->with('search', $search)
             ->with('gioitinh_filter', $gioitinh_filter)
