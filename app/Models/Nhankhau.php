@@ -41,14 +41,14 @@ class Nhankhau extends Model
 	 */
 	public $timestamps = true;
 
-	public function import($cid)
+	public function import($cid, $inputs)
 	{
 
 		$request = request();
 		// Get the csv rows as an array
-		
+
 		$file = $request->file('import_file');
-		
+
 		$dataObj = new ColectionImport();
 		$theArray = Excel::toArray($dataObj, $file);
 		$arr = $theArray[0];
@@ -60,17 +60,20 @@ class Nhankhau extends Model
 		$errs = array();
 		$nfield = sizeof($arr_col);
 		$hoindex = 1;
-		if(DB::table('nhankhau')->count() > 0){
-			$idmax=DB::table('nhankhau')->where('id', \DB::raw("(select max(id) from nhankhau)"))->first()->id;
-		}else{
-			$idmax=1;
+		if (DB::table('nhankhau')->count() > 0) {
+			$idmax = DB::table('nhankhau')->where('id', \DB::raw("(select max(id) from nhankhau)"))->first()->id;
+		} else {
+			$idmax = 1;
 		}
 
-		$y=0;
+		$y = 0;
 
 		for ($i = 11; $i < count($arr); $i++) {
-				//  dd($arr[$i]);
+			//  dd($arr[$i]);
+
 			$data = array();
+			$data['madv'] = $inputs['madv'];
+			$data['kydieutra'] = $inputs['kydieutra'];
 			$data['ho'] = $arr[$i][0];
 			if ($data['ho'] != "") {
 				if (is_int($data['ho'])) {
@@ -79,22 +82,22 @@ class Nhankhau extends Model
 			} else {
 				$data['ho'] = $hoindex;
 			};
-			
+
 
 			for ($j = 0; $j < $nfield; $j++) {
 
-				$data[$arr_col[$j]] = $arr[$i][$j + 2]??'';
+				$data[$arr_col[$j]] = $arr[$i][$j + 2] ?? '';
 			}
 			// dd($data);
 			// check data
 			if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
 				continue;
 			};
-			
+
 
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
-			if(strlen($data['cccd']) > 16){
-				$data['cccd']=substr($data['cccd'],0,16);
+			if (strlen($data['cccd']) > 16) {
+				$data['cccd'] = substr($data['cccd'], 0, 16);
 			}
 
 			$data['danhsach_id'] = $cid;
@@ -124,9 +127,9 @@ class Nhankhau extends Model
 			}
 
 			// dd($data);
-			$data['maloi']=$idmax++;
-			$data['maloailoi']='';
-			
+			$data['maloi'] = $idmax++;
+			$data['maloailoi'] = '';
+
 
 			$array_loi = array('gioitinh', 'ngaysinh', 'cccd');
 			//Lọc trường lỗi để đẩy vào bảng danh sach loi
@@ -134,46 +137,50 @@ class Nhankhau extends Model
 			for ($j = 0; $j < count($array_loi); $j++) {
 				if ($data[$array_loi[$j]] == '' || $data[$array_loi[$j]] == null) {
 					$loi = true;
-					
+
 					break;
 				}
 			}
 			if ($loi == true) {
-				$data['maloailoi'].='LOAI1;';
+				$data['maloailoi'] .= 'LOAI1;';
 			}
 			//lỗi2
-			$loi2=false;
-			$a_loi2=array('nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
-			'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep');
-			if($data['tinhtranghdkt']== 3){
-				foreach($a_loi2 as $tentruong){
-					if($data[$tentruong] != ''){
-						$loi2=true;
+			$loi2 = false;
+			$a_loi2 = array(
+				'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+				'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
+			);
+			if ($data['tinhtranghdkt'] == 3) {
+				foreach ($a_loi2 as $tentruong) {
+					if ($data[$tentruong] != '') {
+						$loi2 = true;
 						break;
 					}
 				}
 			}
 			if ($loi2 == true) {
-				$data['maloailoi'].='LOAI2;';
+				$data['maloailoi'] .= 'LOAI2;';
 			}
 
 			//loi 3
-			$loi3=false;
-			$a_loi3=array('nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
-			'loaihinhnoilamviec', 'diachinoilamviec');
-			if($data['tinhtranghdkt']== 2){
-				foreach($a_loi3 as $tentruong){
-					if($data[$tentruong] != ''){
-						$loi3=true;
+			$loi3 = false;
+			$a_loi3 = array(
+				'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+				'loaihinhnoilamviec', 'diachinoilamviec'
+			);
+			if ($data['tinhtranghdkt'] == 2) {
+				foreach ($a_loi3 as $tentruong) {
+					if ($data[$tentruong] != '') {
+						$loi3 = true;
 						break;
 					}
 				}
 			}
 			if ($loi3 == true) {
-				$data['maloailoi'].='LOAI3;';
+				$data['maloailoi'] .= 'LOAI3;';
 			}
 			//
-			if ($loi || $loi2 ||$loi3) {
+			if ($loi || $loi2 || $loi3) {
 				$data_loi[] = $data['maloi'];
 			}
 			DB::table('nhankhau')->insert($data);
