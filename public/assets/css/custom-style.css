@@ -6,7 +6,7 @@ border:  1px solid #333;
 }
 .dataTables_wrapper .dataTable th, .dataTables_wrapper .dataTable td
 {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #333 !important;
     border-right: 1px solid #333;
 
 }

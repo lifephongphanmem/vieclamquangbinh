@@ -110,12 +110,12 @@
                     </thead>
                     <tbody>
                         <?php 
-		$i=($ctys->currentPage()-1)*$ctys->perPage();
-		foreach ($ctys as $cty ){
-			$i++;
+
+		foreach ($ctys as$key=>$cty ){
+
 	?>
                         <tr>
-                            <td>{{ $i }} </td>
+                            <td>{{ ++$key }} </td>
                             <td>{{ $cty->masodn }}</td>
                             <td><a href="{{ URL::to('doanhnghiep-be/' . $cty->id) }}">{{ $cty->name }}</a></td>
                             <td><span class="text-ellipsis"> </span> {{ $cty->adress }} - {{ $cty->xa }} -

@@ -55,14 +55,26 @@ class AdminDieutra extends Controller
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
         // dd($inputs['madv']);
         $inputs['url'] = '/dieutra/danhsach';
-        $dss = DB::table('danhsach')
-            ->when($search, function ($query, $search) {
-                return $query->whereRaw("(xa like  '%" . $search . "%' OR huyen like '%" . $search . "%')");
-            })
-            ->when($dm_filter, function ($query, $dm_filter) {
-                return $query->where('huyen', $dm_filter);
-            })
-            ->where('kydieutra', $inputs['kydieutra']);
+        $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
+        $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+        $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();   
+        $inputs['mahuyen']=$inputs['mahuyen']??$m_huyen->maquocgia;
+        $arr_xa=array_column(getMaXa($inputs['mahuyen'])->toarray(),'madv');
+// dd($a_xa);
+        $dss = DB::table('danhsach')->where('kydieutra', $inputs['kydieutra']);
+
+        if (in_array(session('admin')->sadmin, ['SSA', 'ssa','ADMIN'])){
+            $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
+            $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+            ->select('dmdonvi.madv','danhmuchanhchinh.name')
+            ->where('parent',$inputs['mahuyen'])->get();
+        }else{
+           
+            $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+            ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
+            ->where('madv',$inputs['madv'])->get();
+            $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$a_xa->first()->parent)->get()->toarray(),'name','maquocgia');
+        }
 
         // if(session('admin')->sadmin == 'ADMIN'){
         //     $dss=$dss->get();
@@ -73,7 +85,7 @@ class AdminDieutra extends Controller
 
         $donvi = User::where('madv', $inputs['madv'])->first();
         if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
-            $dss = $dss->get();
+            $dss = $dss->wherein('user_id',$arr_xa)->get();
         } elseif ($donvi->capdo == 'H') {
             $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
                 ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
@@ -99,6 +111,8 @@ class AdminDieutra extends Controller
             ->with('dss', $dss)
             ->with('data_loi', $data_loi)
             ->with('a_donvi', $a_donvi)
+            ->with('a_huyen', $a_huyen)
+            ->with('a_xa', $a_xa)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
             ->with('m_diaban', $m_diaban)
