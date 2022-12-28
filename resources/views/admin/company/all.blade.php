@@ -36,6 +36,9 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách doanh nghiệp</h3>
                     </div>
+                    <div class="card-toolbar">
+                        <a href="{{'doanh_nghiep/them_moi'}}" class="btn btn-sm btn-success">Thêm mới</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form class="form-inline" method="GET">
@@ -85,10 +88,10 @@
                             <div>
                                 <button class=" form-control " type="submit">Lọc</button>
                             </div>
-                            <div style=" margin-left:2%">
+                            {{-- <div style=" margin-left:2%">
                                 <button class=" form-control form-inline" name="export" value="1" type="submit">Xuất
                                     Excel</button>
-                            </div>
+                            </div> --}}
                         </div>
 
 

@@ -19,7 +19,7 @@
                 </g>
             </svg>
         </span>
-        <span class="menu-text font-weight-bold">Báo cáo, văn bản</span>
+        <span class="menu-text font-weight-bold">Báo cáo</span>
         <i class="menu-arrow"></i>
 
     </a>

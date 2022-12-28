@@ -43,6 +43,7 @@ use App\Http\Controllers\Controller;
 include('hethongchung.php');
 include('danhmuc.php');
 include('baocao.php');
+// include('doanhnghiep.php');
 // Route::get('/', [UserController::class, 'show_login' ]);
 
 // Route::get('/home',[UserController::class, 'show_login' ]);
@@ -87,7 +88,7 @@ Route::group(['prefix' => 'messages'], function () {
     Route::get('/', [MessagesController::class,'index'])->name('messages');
     Route::get('create', [MessagesController::class,'create']);
     Route::post('store', [MessagesController::class,'store']);
-    Route::get('{id}', [MessagesController::class,'show'])->name('messages.show');
+    Route::get('/{id}', [MessagesController::class,'show'])->name('messages.show');
     Route::put('{id}', [MessagesController::class,'update'])->name('messages.update');
 });
 
@@ -117,6 +118,7 @@ Route::get('/ doanhnghiep-bn',[AdminCompany::class,'new']);
 Route::get('/doanhnghiep-be/{cid}',[AdminCompany::class,'edit']);
 Route::post('/doanhnghiep-bu/{cid}',[AdminCompany::class,'update']);
 Route::get('/doanhnghiep-br/{cid}',[AdminCompany::class,'baocao145']);
+Route::get('/doanh_nghiep/them_moi', [CompanyController::class, 'create']);
 
 // Người lao động
 
