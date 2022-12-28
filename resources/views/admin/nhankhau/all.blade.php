@@ -33,7 +33,7 @@
                     '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
             });
             $('#mahuyen').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' +$('#madv').val() +
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' +
                     '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
             });
             $('#kydieutra').change(function() {
@@ -61,11 +61,22 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
-                        </div>
-                        <div class="col-md-4">
+                            <select class="form-control select2basic" id="madv">
+                                @foreach ($m_diaban->where('capdo','H') as $diaban)
+                                    <optgroup label="{{ $diaban->name }}">
+                                        <?php $a_xa=array_column($m_diaban->where('parent',$diaban->maquocgia)->toarray(),'id') ?>
+                                        <?php $donvi = $m_donvi->wherein('madiaban', $a_xa); ?>
+                                        @foreach ($donvi as $ct)
+                                            <option {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}
+                                                value="{{ $ct->madv }}">{{ $ct->tendv }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
+                        </div> --}}
+                        {{-- <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
 
                             <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
@@ -73,7 +84,7 @@
                                     <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                         {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
                             <a href="#" title="In báo cáo chi tiết" data-target="#cungld-modal" data-toggle="modal"
                                 class="btn btn-sm btn-clean btn-icon">
@@ -81,7 +92,7 @@
                             </a>
                         </div> --}}
                     </div>
-                    {{-- <div class="form-group row">
+                    <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Huyện</label>
                             <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
@@ -93,6 +104,7 @@
                         <div class="col-md-4">
                             <label style="font-weight: bold">Xã</label>
                             <select name="madv" id="madv"  class="form-control select2basic">
+                                <option value="">----Chọn xã---</option>
                                 @foreach ($a_xa as $key=>$ct )
                                 <option value="{{$ct->madv}}" {{$ct->madv == $inputs['madv']?'selected':''}}>{{$ct->name}}</option>
                                 @endforeach
@@ -107,7 +119,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div> --}}
+                    </div>
                     {{-- <form class="form-inline" method="GET">
                         <div class="row col-xl-4">
                             <div class="col-xl-12 m-b-xs">

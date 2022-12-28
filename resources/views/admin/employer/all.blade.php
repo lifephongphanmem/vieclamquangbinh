@@ -112,7 +112,7 @@
                             <tr>
                                 <td>{{ ++$key }} </td>
 
-                                <td><a href="{{ URL::to('employer-be/' . $ld->id) }}">{{ $ld->hoten }}</a></td>
+                                <td><a href="{{ '/nguoilaodong/ChiTiet/' . $ld->id }}">{{ $ld->hoten }}</a></td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cmnd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->ctyname }}</td>

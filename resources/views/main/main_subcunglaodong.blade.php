@@ -40,7 +40,7 @@
                     <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                         <ul class="menu-subnav">
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="{{URL::to('/dieutra/danhsach')}}" class="menu-link">
+                                <a href="{{URL::to('/dieutra/danhsach?madv='.'&&kydieutra='.date('Y').'&mahuyen=450')}}" class="menu-link">
     
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>

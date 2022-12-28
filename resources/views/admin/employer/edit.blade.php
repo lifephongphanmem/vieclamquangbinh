@@ -47,13 +47,13 @@
                         <div class="panel-body" id='dynamicTable'>
 
                             <div class="row">
-                                <fieldset class="col-sm-12 col-sm-offset-0">
+                                <fieldset class="col-md-12 col-sm-offset-0">
                                     <legend class="w-auto px-3">
                                         <button type="button" class="btn btn-success">Thông tin cơ bản</button>
                                     </legend>
-                                    <div class="col-sm-4 col-sm-offset-0">
+                                    <div class="col-md-12 col-sm-offset-0">
 
-                                        <div class="form-group">
+                                        <div class="form-group ">
                                             <label>Họ và Tên</label>
 
                                             <input type="text" name="hoten" value="{{ $ld->hoten }}"

@@ -47,20 +47,34 @@ class AdminDieutra extends Controller
         $dm_filter = $request->dm_filter;
         $inputs = $request->all();
         $m_donvi = getDonVi(session('admin')->sadmin);
+        $m_diaban = danhmuchanhchinh::all();
+        // dd($m_diaban);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra=danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
         // dd($inputs['madv']);
         $inputs['url'] = '/dieutra/danhsach';
-        $dss = DB::table('danhsach')
-            ->when($search, function ($query, $search) {
-                return $query->whereRaw("(xa like  '%" . $search . "%' OR huyen like '%" . $search . "%')");
-            })
-            ->when($dm_filter, function ($query, $dm_filter) {
-                return $query->where('huyen', $dm_filter);
-            })
-            ->where('kydieutra', $inputs['kydieutra']);
+        $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
+        $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+        $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();   
+        $inputs['mahuyen']=$inputs['mahuyen']??$m_huyen->maquocgia;
+        $arr_xa=array_column(getMaXa($inputs['mahuyen'])->toarray(),'madv');
+// dd($a_xa);
+        $dss = DB::table('danhsach')->where('kydieutra', $inputs['kydieutra']);
+
+        if (in_array(session('admin')->sadmin, ['SSA', 'ssa','ADMIN'])){
+            $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
+            $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+            ->select('dmdonvi.madv','danhmuchanhchinh.name')
+            ->where('parent',$inputs['mahuyen'])->get();
+        }else{
+           
+            $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+            ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
+            ->where('madv',$inputs['madv'])->get();
+            $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$a_xa->first()->parent)->get()->toarray(),'name','maquocgia');
+        }
 
         // if(session('admin')->sadmin == 'ADMIN'){
         //     $dss=$dss->get();
@@ -71,7 +85,7 @@ class AdminDieutra extends Controller
 
         $donvi = User::where('madv', $inputs['madv'])->first();
         if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
-            $dss = $dss->get();
+            $dss = $dss->wherein('user_id',$arr_xa)->get();
         } elseif ($donvi->capdo == 'H') {
             $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
                 ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
@@ -92,13 +106,17 @@ class AdminDieutra extends Controller
         $data_loi=danhsachloi::where('kydieutra',$inputs['kydieutra'])->get();
 
         $a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
-
+        // dd($m_donvi);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
             ->with('data_loi', $data_loi)
             ->with('a_donvi', $a_donvi)
+            ->with('a_huyen', $a_huyen)
+            ->with('a_xa', $a_xa)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
+            ->with('m_diaban', $m_diaban)
+            ->with('m_donvi', $m_donvi)
             ->with('a_kydieutra', $a_kydieutra)
             ->with('search', $search)
             ->with('dmhc_list', $dmhc_list)
@@ -192,7 +210,7 @@ class AdminDieutra extends Controller
 
         try {
         
-            $RetIm = $model->import($result);
+            $RetIm = $model->import($result,$inputs);
 
             $ld = $RetIm['valid'];
             $soho = $RetIm['soho'];
@@ -216,7 +234,7 @@ class AdminDieutra extends Controller
                 ->update(['soluong' => $ld, 'soho' => $soho]);
 
             // return redirect('dieutra-ba')->with('message', $ld . " nhân khẩu khai báo thành công");
-            return redirect('/dieutra/danhsach')->with('message', $ld . " nhân khẩu khai báo thành công");
+            return redirect('/dieutra/danhsach?mahuyen='.$inputs['huyen'])->with('message', $ld . " nhân khẩu khai báo thành công");
         } else {
             // redirect('dieutra-ba')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ']);
             redirect('/dieutra/danhsach')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ']);
@@ -258,13 +276,11 @@ class AdminDieutra extends Controller
         //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
         //     ->get();
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
-        ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
-        // dd($model);
-        if (isset($inputs['madv'])) {
-            $model = $model->where('user_id', $inputs['madv']);
-        }
+        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
 
+        if (isset($inputs['madv'])) {
+            $model = $model->where('madv', $inputs['madv']);
+        }
         // if (isset($inputs['kydieutra'])) {
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
         // }
@@ -272,24 +288,17 @@ class AdminDieutra extends Controller
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
         //    dd($model); 
+        $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
         foreach ($model as $ct) {
             // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            $danhmuc = $m_danhmuc
-            ->where('madv', $ct->user_id)
-            ->first();
-            if ($danhmuc->level == 'Xã') {
+            if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-            $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            if(strlen($ngaysinh)< 9){
-                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            }
-            $ct->tuoi = isset($tuoi)??0;
         }
 
         $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
@@ -321,8 +330,12 @@ class AdminDieutra extends Controller
         //         return $danhsach;
         //     });
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
-        ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
+        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
+        // $model=DB::table('nhankhau')->wherein('danhsach_id',$m_danhsach->toarray(),'id')->get();
+
+        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
@@ -332,33 +345,26 @@ class AdminDieutra extends Controller
 
         if (isset($inputs['madv'])) {
             $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
-            $model = $model->wherein('user_id', $a_donvi);
+            $model = $model->wherein('madv', $a_donvi);
         }
 
         // if (isset($inputs['kydieutra'])) {
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
         // }
 
-        //    dd($model); 
+        //    dd($model);
+        $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
         foreach ($model as $ct) {
             // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            $danhmuc = $m_danhmuc
-            ->where('madv', $ct->user_id)
-            ->first();
-            if ($danhmuc->level == 'Xã') {
+
+            if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-            $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            if(strlen($ngaysinh)< 9){
-                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            }
-
-            $ct->tuoi = isset($tuoi)??0;
         }
 
 
@@ -382,12 +388,16 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         // dd($inputs);
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
-                ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
+        // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
+        // $a_danhsach=array_column($m_danhsach->toarray(),'id');
+        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+
+                // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
+
+        $a_dm=array_column($m_danhmuc->toarray(),'level','madv');
         $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();
 
 
@@ -401,20 +411,22 @@ class AdminDieutra extends Controller
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            $danhmuc = $m_danhmuc
-            ->where('madv', $ct->user_id)
-            ->first();
-            if ($danhmuc->level == 'Xã') {
+            // $danhmuc = $m_danhmuc
+            // ->where('madv', $ct->user_id)
+            // ->first();
+            if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
-            $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            if(strlen($ngaysinh)< 9){
-                $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
-            }
+            // $ngaysinh=str_replace('-','',$ct->ngaysinh);
+            // if(strlen($ngaysinh)< 9){
+            //     $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
+            // }
 
-            $ct->tuoi = isset($tuoi)??0;
+            // $ct->tuoi = $tuoi??0;
+
+
         }
 
 
@@ -422,7 +434,8 @@ class AdminDieutra extends Controller
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
-        return view('admin.dieutra.baocaohuyen')
+        // dd($model);
+        return view('admin.dieutra.baocaotinh')
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('m_donvi', $m_donvi)

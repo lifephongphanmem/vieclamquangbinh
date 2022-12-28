@@ -60,13 +60,44 @@
                     <span class="menu-text font-weight-bold">Tuyển dụng</span>
                 </a>
             </li>
-            <li class="menu-item" aria-haspopup="true">
+            {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('employer-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
                     <span class="menu-text font-weight-bold">Người lao động</span>
                 </a>
+            </li> --}}
+            <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <i class="menu-bullet menu-bullet-dot">
+                        <span></span>
+                    </i>
+                    <span class="menu-text font-weight-bold">Người lao động</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                    <ul class="menu-subnav">
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{'/nguoilaodong/danhsach'}}" class="menu-link">
+
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text font-weight-bold">Danh sách</span>
+                            </a>
+                        </li>
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{URL::to('/laodongnuocngoai/danhsach')}}" class="menu-link">
+
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text font-weight-bold">Lao động nước ngoài</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('dichvu-ba') }}" class="menu-link">

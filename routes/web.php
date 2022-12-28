@@ -126,6 +126,16 @@ Route::get('/ employer-bn',[AdminEmployer::class,'new']);
 Route::get('/employer-be/{cid}',[AdminEmployer::class,'edit']);
 Route::post('/employer-bu/{cid}',[AdminEmployer::class,'update']);
 
+Route::prefix('nguoilaodong')->group(function(){
+    Route::get('/danhsach',[AdminEmployer::class,'show_all']);
+    Route::get('/ChiTiet/{id}',[AdminEmployer::class,'edit']);
+    Route::post('/update/{id}',[AdminEmployer::class,'update']);
+});
+
+Route::prefix('laodongnuocngoai')->group(function(){
+    Route::get('/danhsach',[AdminEmployer::class,'DanhSach_NN']);
+});
+
 // Tuyen dụng 
 
 Route::get('/tuyendung-ba/{cid?}',[AdminTuyendung::class,'show_all']); // all
