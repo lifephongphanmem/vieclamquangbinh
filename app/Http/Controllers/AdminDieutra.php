@@ -234,7 +234,7 @@ class AdminDieutra extends Controller
                 ->update(['soluong' => $ld, 'soho' => $soho]);
 
             // return redirect('dieutra-ba')->with('message', $ld . " nhân khẩu khai báo thành công");
-            return redirect('/dieutra/danhsach')->with('message', $ld . " nhân khẩu khai báo thành công");
+            return redirect('/dieutra/danhsach?mahuyen='.$inputs['huyen'])->with('message', $ld . " nhân khẩu khai báo thành công");
         } else {
             // redirect('dieutra-ba')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ']);
             redirect('/dieutra/danhsach')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ']);
@@ -276,13 +276,11 @@ class AdminDieutra extends Controller
         //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
         //     ->get();
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
-        ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
-        // dd($model);
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+
         if (isset($inputs['madv'])) {
             $model = $model->where('user_id', $inputs['madv']);
         }
-
         // if (isset($inputs['kydieutra'])) {
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
         // }
@@ -332,8 +330,7 @@ class AdminDieutra extends Controller
         //         return $danhsach;
         //     });
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
-        ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
@@ -387,8 +384,7 @@ class AdminDieutra extends Controller
         // dd($inputs);
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])
-                ->groupby('user_id','gioitinh','ngaysinh','chuyenmonkythuat','tinhtranghdkt','nguoicovieclam','thoigianthatnghiep','khongthamgiahdkt','kydieutra','id')->get();
+        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
                 // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
