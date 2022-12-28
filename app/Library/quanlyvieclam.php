@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdonvi;
 
 function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
@@ -83,4 +84,13 @@ function getNgayThang($date)
     else
         $newday = '';
     return $newday;
+}
+
+function getMaXa($mahuyen)
+{
+    $m_donvi=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                                ->select('dmdonvi.madv','danhmuchanhchinh.name','dmdonvi.tendv')
+                                ->where('danhmuchanhchinh.parent',$mahuyen)
+                                ->get();
+    return $m_donvi;
 }

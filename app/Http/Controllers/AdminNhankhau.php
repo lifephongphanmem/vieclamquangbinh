@@ -65,17 +65,29 @@ class AdminNhankhau extends Controller
         $lds = view_nhankhau_danhsach::where('kydieutra',$inputs['kydieutra'])
         ->where('user_id',$inputs['madv'])->get();
         $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
-
         $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
         $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();
+      
+                if (in_array(session('admin')->sadmin, ['SSA', 'ssa','ADMIN'])){
+                   
 
-        $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
-        $inputs['mahuyen']=isset($inputs['mahuyen'])??$inputs['mahuyen']=$m_huyen->maquocgia;
-
-        $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                ->select('dmdonvi.madv','danhmuchanhchinh.name')
-                ->where('parent',$inputs['mahuyen'])->get();
-
+                    // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+                    $model_huyen=danhmuchanhchinh::where('capdo','H')->get();       
+                    $inputs['mahuyen']=$inputs['mahuyen']??$model_huyen->first()->maquocgia;
+                    $a_huyen=array_column($model_huyen->toarray(),'name','maquocgia');
+                    $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv','danhmuchanhchinh.name')
+                    ->where('parent',$inputs['mahuyen'])->get();
+                }else{
+                    // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+                    // $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();       
+                    $inputs['mahuyen']=$inputs['mahuyen']??$m_huyen->maquocgia; 
+                    $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
+                    ->where('madv',$inputs['madv'])->get();
+                    $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$a_xa->first()->parent)->get()->toarray(),'name','maquocgia');
+                }
+        // dd($inputs);
         foreach($lds as $ct){
             $ct->tenxa=ucwords($m_xa->name);
             $ct->tenhuyen=ucwords($m_huyen->name);

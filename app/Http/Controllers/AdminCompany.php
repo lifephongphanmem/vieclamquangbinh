@@ -65,7 +65,7 @@ class AdminCompany extends Controller
 					return $query->having('employers_count', '=', 0)	;
 					})		
 				->orderBy('employers_count', 'desc')
-				->paginate(20);
+				->get();
 				
 			
 		return view ('admin.company.all')->with('ctys', $ctys)
