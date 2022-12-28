@@ -45,10 +45,10 @@
                         <h3 class="card-label text-uppercase">Danh sách điều tra</h3>
                     </div>
                     <div class="card-toolbar">
-                        <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
+                        {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
                             class="btn btn-sm btn-success" onclick="intonghop()">
                             <i class="icon-lg la flaticon2-print"></i> In tổng hợp
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 <div class="card-body">

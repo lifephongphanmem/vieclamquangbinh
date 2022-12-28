@@ -43,6 +43,8 @@
                                     </li>
                                     <li><a href="#" data-target="#modify-modal-huyen" data-toggle="modal">Báo cáo thông tin cung lao động - Huyện (Mẫu 03)</a>
                                     </li>
+                                    <li><a href="#" data-target="#modify-modal-tinh" data-toggle="modal">Báo cáo thông tin cung lao động (Mẫu 03)</a>
+                                        </li
                                     {{-- <li><a href="#" data-target="#doanhnghiep-modal" data-toggle="modal">Mẫu số
                                         01/PLI.
                                         Báo cáo tình hình sử dụng lao động (do người sử dụng lao động lập)</a>
@@ -96,6 +98,38 @@
         </div>
     </div>
 
+                <!-- modal in báo cáo tỉnh -->
+                <form method="POST" action="{{'/dieutra/inbaocaotinh'}}" accept-charset="UTF-8" id="frm_modify_tinh" target="_blank">
+                    @csrf
+                    <div id="modify-modal-tinh" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-xs">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-primary">
+                                    <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4>
+                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-lg-12">
+                                        <label class="control-label">Kỳ điều tra</label>
+                                        <select name="kydieutra" id="" class="form-control select2basic"
+                                            style="width:100%">
+                                            @foreach ($a_kydieutra as $key => $ct)
+                                                <option value="{{ $key }}">{{ $ct }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                    <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                                        ý</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
             <!-- modal in báo cáo xã -->
             <form method="POST" action="{{'/dieutra/intonghop'}}" accept-charset="UTF-8" id="frm_modify_xa" target="_blank">
                 @csrf
@@ -123,7 +157,6 @@
                                     <label class="control-label">Kỳ điều tra</label>
                                     <select name="kydieutra" id="" class="form-control select2basic"
                                         style="width:100%">
-                                        <option value="">Tất cả</option>
                                         @foreach ($a_kydieutra as $key => $ct)
                                             <option value="{{ $key }}">{{ $ct }}</option>
                                         @endforeach
@@ -167,7 +200,6 @@
                                                 <label class="control-label">Kỳ điều tra</label>
                                                 <select name="kydieutra" id="" class="form-control select2basic"
                                                     style="width:100%">
-                                                    <option value="">Tất cả</option>
                                                     @foreach ($a_kydieutra as $key => $ct)
                                                         <option value="{{ $key }}">{{ $ct }}</option>
                                                     @endforeach
