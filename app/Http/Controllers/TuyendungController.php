@@ -40,7 +40,8 @@ class TuyendungController extends Controller
     {
 		$state_filter = $request->input('state_filter',0);
 		
-		$uid= Auth::user()->id;
+		// $uid= Auth::user()->id;
+		$uid= session('admin')->id;
 		// get params
 		$dmhc =$this->getdanhmuc();
 		$list_cmkt=$this->getParamsByNametype('Trình độ CMKT');
@@ -57,7 +58,7 @@ class TuyendungController extends Controller
                     return $query->where('tuyendung.state', $state_filter);
 					})
 					->orderBy('id','DESC')
-					->paginate(20);
+					->get();
 		$vtmodel = new Vitrituyendung;
 		foreach($tds as $td){
 			$vitris= $vtmodel->getVitris($td->id);
@@ -159,7 +160,8 @@ class TuyendungController extends Controller
 	
 	public function save( Request $request)
 	{
-		$uid= Auth::user()->id;
+		// $uid= Auth::user()->id;
+		$uid= session('admin')->id;
 		
 		$qty=$request->quantity;
 		if(!$qty){

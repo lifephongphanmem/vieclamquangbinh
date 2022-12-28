@@ -93,8 +93,13 @@ class Nhankhau extends Model
 			if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
 				continue;
 			};
-
-
+			//Kiển tra trùng
+			$check=check_trung($arr,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
+			$check_insert=check_trung($lds,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
+			if(count($check)> 2 && $check_insert > 0){				
+				continue;
+			}
+			$data['soluongtrung']=count($check);
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
 			if (strlen($data['cccd']) > 16) {
 				$data['cccd'] = substr($data['cccd'], 0, 16);
@@ -183,8 +188,9 @@ class Nhankhau extends Model
 			if ($loi || $loi2 || $loi3) {
 				$data_loi[] = $data['maloi'];
 			}
+			// dd($data);
 			DB::table('nhankhau')->insert($data);
-			//  $lds[] = $data;
+			 $lds[] = ['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']];
 			$y++;
 		}
 

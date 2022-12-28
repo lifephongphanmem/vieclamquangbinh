@@ -19,6 +19,6 @@
 
     <!-- Submit Form Input -->
     <div class="form-group">
-        <button type="submit" class="btn btn-primary form-control">Gửi tin nhắn</button>
+        <button type="submit" class="btn btn-primary form-control" style="width:130px">Gửi tin nhắn</button>
     </div>
 </form>
