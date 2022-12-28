@@ -210,7 +210,7 @@ class AdminDieutra extends Controller
 
         try {
         
-            $RetIm = $model->import($result);
+            $RetIm = $model->import($result,$inputs);
 
             $ld = $RetIm['valid'];
             $soho = $RetIm['soho'];
@@ -276,10 +276,10 @@ class AdminDieutra extends Controller
         //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
         //     ->get();
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
 
         if (isset($inputs['madv'])) {
-            $model = $model->where('user_id', $inputs['madv']);
+            $model = $model->where('madv', $inputs['madv']);
         }
         // if (isset($inputs['kydieutra'])) {
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
@@ -294,7 +294,7 @@ class AdminDieutra extends Controller
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
-            if ($a_dm[$ct->user_id] == 'Xã') {
+            if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
@@ -330,7 +330,12 @@ class AdminDieutra extends Controller
         //         return $danhsach;
         //     });
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
+        // $model=DB::table('nhankhau')->wherein('danhsach_id',$m_danhsach->toarray(),'id')->get();
+
+        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
@@ -340,7 +345,7 @@ class AdminDieutra extends Controller
 
         if (isset($inputs['madv'])) {
             $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
-            $model = $model->wherein('user_id', $a_donvi);
+            $model = $model->wherein('madv', $a_donvi);
         }
 
         // if (isset($inputs['kydieutra'])) {
@@ -355,7 +360,7 @@ class AdminDieutra extends Controller
             //     ->where('dmdonvi.madv', $ct->user_id)
             //     ->first();
 
-            if ($a_dm[$ct->user_id] == 'Xã') {
+            if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
@@ -383,8 +388,10 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         // dd($inputs);
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
+        // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
+        // $a_danhsach=array_column($m_danhsach->toarray(),'id');
+        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+
                 // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
@@ -407,7 +414,7 @@ class AdminDieutra extends Controller
             // $danhmuc = $m_danhmuc
             // ->where('madv', $ct->user_id)
             // ->first();
-            if ($a_dm[$ct->user_id] == 'Xã') {
+            if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
