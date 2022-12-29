@@ -145,7 +145,8 @@
                                 <td><a href="#">{{ $td->soho }} </a></td>
                                 <td>{{ $td->kydieutra }}</td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
-                                <td><span class="text-ellipsis">{{ $td->user_id != null?$a_donvi[$td->user_id]:'' }} </span></td>
+                                {{-- <td><span class="text-ellipsis">{{ $td->user_id != null?$a_donvi[$td->user_id]:'' }} </span></td> --}}
+                                <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td>
 
                             </tr>
                             <?php } ?>

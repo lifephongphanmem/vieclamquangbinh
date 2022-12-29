@@ -61,9 +61,8 @@ class AdminController extends Controller
 			$request = request();
 			$m_filter_s = $request->m_filter_s;
 			$m_filter_e = $request->m_filter_e;
-	
+
 			$export= $request->export;
-		
 			if($export){
 				return Excel::download(new BaocaoExport, 'tinhhinhsudunglaodong'.date('m-d-Y-His A e').'.xlsx');
 				

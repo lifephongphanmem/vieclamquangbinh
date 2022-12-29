@@ -33,9 +33,8 @@ use App\Http\Controllers\AdminMessages;
 use App\Http\Controllers\AdminDichvu; 
 use App\Http\Controllers\AdminEmployer; 
 use App\Http\Controllers\AdminDieutra; 
-use App\Http\Controllers\AdminNhankhau; 
-
-
+use App\Http\Controllers\AdminNhankhau;
+use App\Http\Controllers\Baocao\baocaotonghopController;
 use App\Http\Controllers\Controller; 
 
 // Frontend SECTION
@@ -119,6 +118,7 @@ Route::get('/doanhnghiep-be/{cid}',[AdminCompany::class,'edit']);
 Route::post('/doanhnghiep-bu/{cid}',[AdminCompany::class,'update']);
 Route::get('/doanhnghiep-br/{cid}',[AdminCompany::class,'baocao145']);
 Route::get('/doanh_nghiep/them_moi', [CompanyController::class, 'create']);
+Route::get('/doanhnghiep/baocao',[baocaotonghopController::class,'BC_doanhnghiep']);
 
 // Người lao động
 
@@ -136,6 +136,7 @@ Route::prefix('nguoilaodong')->group(function(){
 
 Route::prefix('laodongnuocngoai')->group(function(){
     Route::get('/danhsach',[AdminEmployer::class,'DanhSach_NN']);
+    Route::get('/ThemMoi',[AdminEmployer::class,'ThemMoi_NN']);
 });
 
 // Tuyen dụng 

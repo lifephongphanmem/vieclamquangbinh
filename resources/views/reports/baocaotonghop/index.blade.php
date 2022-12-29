@@ -43,7 +43,7 @@
                                     </li>
                                     <li><a href="#" data-target="#modify-modal-huyen" data-toggle="modal">Báo cáo thông tin cung lao động - Huyện (Mẫu 03)</a>
                                     </li>
-                                    <li><a href="#" data-target="#modify-modal-tinh" data-toggle="modal">Báo cáo thông tin cung lao động (Mẫu 03)</a>
+                                    <li><a href="#" data-target="#modify-modal-tinh" data-toggle="modal">Báo cáo thông tin cung lao động - Tỉnh (Mẫu 03)</a>
                                         </li
                                     {{-- <li><a href="#" data-target="#doanhnghiep-modal" data-toggle="modal">Mẫu số
                                         01/PLI.

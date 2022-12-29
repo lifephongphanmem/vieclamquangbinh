@@ -1,9 +1,36 @@
-@extends ('admin.layout')
+@extends ('main')
+@section('custom-style')
+    <link rel="stylesheet" type="text/css"
+        href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
+    <style>
+        .col-md-3 {
+            float: left;
+        }
 
-@section ('content')
+        .wrapper {
+            margin-top: 0px;
+            padding: 0px 15px;
+        }
+    </style>
+@stop
+
+@section('custom-script')
+    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
+    </script>
+    <script type="text/javascript"
+        src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
+
+    <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            TableManaged3.init();
+        });
+    </script>
+@stop
+@section('content')
  
 
-<section class="panel">
+{{-- <section class="panel">
 	<header class="panel-heading">
 	  {{$info->name}}
 	</header>
@@ -15,7 +42,16 @@
 			@yield('top-menu') 
 		</div>
 	</div>
-	</div>
+	</div> --}}
+	<div class="row">
+        <div class="col-xl-12">
+            <div class="card card-custom">
+                <div class="card-header card-header-tabs-line">
+                    <div class="card-title">
+                        <h3 class="card-label text-uppercase">  {{$info->name}}</h3>
+                    </div>	
+                </div>
+				<div class="card-body">
 	<form role="form" method="POST" action="#" enctype= 'multipart/form-data'>
 									 {{ csrf_field() }}
 		 <table width="100%">
@@ -57,7 +93,7 @@
 			<tr>
 				<td>Tỉnh</td>
 				<td>
-				<select class="form-control input-sm m-bot5" name ="tinh" id='tinh' readonly>
+				<select class="form-control " name ="tinh" id='tinh' readonly>
 				<option   value="44" > Quảng Bình </option>
 				
 				</select>
@@ -65,7 +101,7 @@
 			</tr>
 			<tr>
 				<td>Huyện/Thị xã/Thành phố </td>
-				<td><select class="form-control input-sm m-bot5" name ="huyen" id='huyen' readonly>
+				<td><select class="form-control " name ="huyen" id='huyen' readonly>
 					<?php foreach ($dmhc as $dv){
 						if ($dv->level == 'Huyện' || $dv->level == 'Thành phố'||$dv->level =="Thị xã"){
 						?>	
@@ -78,7 +114,7 @@
 			<tr>
 				<td>Xã/Phường</td>
 				<td>
-				<select class="form-control input-sm m-bot5" name ="xa" id="xa" readonly>
+				<select class="form-control" name ="xa" id="xa" readonly>
 					<?php foreach ($dmhc as $dv){
 						if ($dv->level =="Xã"||$dv->level =="Phường"||$dv->level =="Thị trấn"){
 						?>	
@@ -108,7 +144,7 @@
 			</tr>
 			<tr>
 				<td>Khu công nghiệp</td>
-				<td><select class="form-control input-sm m-bot5" name ="khucn" readonly>
+				<td><select class="form-control" name ="khucn" readonly>
 					<option value=0 > Chọn khu công nghiệp </option>
 					<?php foreach ($kcn as $dv){
 					
@@ -122,7 +158,7 @@
 			</tr>
 			<tr>
 				<td>Loại hình doanh nghiệp</td>
-				<td><select class="form-control input-sm m-bot5" name ="loaihinh" readonly>
+				<td><select class="form-control" name ="loaihinh" readonly>
 					<?php foreach ($ctype as $dv){
 					
 						?>	
@@ -134,7 +170,7 @@
 			</tr>
 			<tr>
 				<td>Ngành nghề</td>
-				<td> <select class="form-control input-sm m-bot5" name ="nganhnghe" readonly >
+				<td> <select class="form-control" name ="nganhnghe" readonly >
 					<?php foreach ($cfield as $dv){
 					
 						?>	
@@ -153,6 +189,7 @@
 			
 		</form>
 		</div>
+	</div>
 
-</section>
+		</div>
 @endsection

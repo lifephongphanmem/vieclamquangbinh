@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\danhsach;
 use App\Models\danhsachloi;
+use App\Models\m_nhankhau;
 use App\Models\Nhankhau;
 use App\Models\User;
 use App\Models\view\view_bao_cao_tonghop;
@@ -276,8 +277,9 @@ class AdminDieutra extends Controller
         //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
         //     ->get();
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
-
+        // $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+        $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
+// dd($model);
         if (isset($inputs['madv'])) {
             $model = $model->where('madv', $inputs['madv']);
         }
@@ -334,7 +336,8 @@ class AdminDieutra extends Controller
         // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
         // $model=DB::table('nhankhau')->wherein('danhsach_id',$m_danhsach->toarray(),'id')->get();
 
-        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+        // $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+        $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
 
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
@@ -390,7 +393,8 @@ class AdminDieutra extends Controller
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
         // $a_danhsach=array_column($m_danhsach->toarray(),'id');
-        $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+        // $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+        $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
 
                 // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')

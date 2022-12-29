@@ -38,8 +38,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form class="form-inline" method="GET">
-                        <div class="row w3-res-tb">
+                    <div class="form-group row">
+                    {{-- <form class="form-inline" method="GET"> --}}
+                        {{-- <div class="row w3-res-tb">
                             <div class="col-sm-5 m-b-xs">
                                 <div class="input-group">
                                     <input type="month" name="time_filter" value="{{ $time_filter }}"
@@ -67,11 +68,45 @@
                                     } ?>>Thay đổi thông tin</option>
 
                                 </select>
-                            </div>
-                            <div class="col-sm-2 m-b-xs">
+                            </div> --}}
 
+                            <div class="col-md-4">
+                                <label>Từ ngày</label>
+                                <input type="date" class="form-control" name='tungay'>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-4">
+                                <label for="">Đến ngày</label>
+                                <input type="date" class="form-control" name='denngay'>
+                            </div>
+                            <div class="col-md-4">
+
+                                {{-- <div class="col-sm-2 m-b-xs"> --}}
+                                    <label for="">Loại khai báo</label>
+                                    <select class=" form-control select2basic" name="type_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="0">Tất cả khai báo</option>
+                                        <option value="baotang" <?php if ($type_filter == 'baotang') {
+                                            echo 'selected';
+                                        } ?>>Báo tăng</option>
+                                        <option value="baogiam"<?php if ($type_filter == 'baogiam') {
+                                            echo 'selected';
+                                        } ?>>Báo giảm</option>
+                                        <option value="tamdung"<?php if ($type_filter == 'tamdung') {
+                                            echo 'selected';
+                                        } ?>>Tạm dừng</option>
+                                        <option value="ketthuctamdung"<?php if ($type_filter == 'kethuctamdung') {
+                                            echo 'selected';
+                                        } ?>>Kết thúc tạm dừng</option>
+                                        <option value="updateinfo"<?php if ($type_filter == 'updateinfo') {
+                                            echo 'selected';
+                                        } ?>>Thay đổi thông tin</option>
+
+                                    </select>
+                                {{-- </div> --}}
+                            </div>
+                        {{-- </form> --}}
+                        </div>
+                            {{-- <div class="col-sm-3">
                                 <div class="input-group">
                                     <input type="text" class="input-sm form-control" id="search" name="search"
                                         value="{{ $search }}">
@@ -79,9 +114,9 @@
                                         <button class="btn btn-sm btn-default" type="submit">Tìm kiếm</button>
                                     </span>
                                 </div>
-                            </div>
-                        </div>
-                    </form>
+                            </div> --}}
+                            {{-- </div> --}}
+                   
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
@@ -99,11 +134,11 @@
                         </thead>
                         <tbody>
                             <?php 
-		$i=($reports->currentPage()-1)*$reports->perPage();
-		foreach ($reports as $rp ){
-			$i++;
+
+		foreach ($reports as $key=>$rp ){
+
 	?>
-                            <td>{{ $i }}</td>
+                            <td>{{ ++$key }}</td>
                             <td>
                                 <?php
                                 switch ($rp->type) {

@@ -133,7 +133,7 @@
                                     <i class="fa fa-eye"> </i>
                                 </div>
                                 <div class="col-md-8 market-update-left">
-                                    <h4>Người LĐ trên 15 tuổi</h4>
+                                    <h4>LĐ trên 15 tuổi</h4>
                                     <h4>{{ $tongsonhankhau }}</h4>
                                     
                                 </div>
@@ -147,7 +147,8 @@
                                 </div>
                                 <div class="col-md-8 market-update-left">
                                     <h4>LĐ có việc làm</h4>
-                                    <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4>
+                                    {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
+                                    <h4>{{ $ldcovieclam }}</h4>
                                    
                                 </div>
                                 <div class="clearfix"> </div>
@@ -160,7 +161,8 @@
                                 </div>
                                 <div class="col-md-8 market-update-left">
                                     <h4>LĐ thất nghiệp</h4>
-                                    <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3>
+                                    {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
+                                    <h3>{{ $ldthatnghiep }}</h3>
                                   
                                 </div>
                                 <div class="clearfix"> </div>
@@ -171,9 +173,10 @@
                                 <div class="col-md-4 market-update-right">
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ không tham gia hoạt động kinh tế</h4>
-                                    <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3>
+                                <div class="col-md-12 market-update-left">
+                                    <h4>LĐ không tham gia HĐKT</h4>
+                                    {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
+                                    <h3>{{ $ldkhongthamgia }}</h3>
                                  
                                 </div>
                                 <div class="clearfix"> </div>

@@ -20,6 +20,8 @@ use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use Illuminate\Support\Facades\Session;
+use App\Exports\BaocaoExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class baocaotonghopController extends Controller
 {
@@ -226,5 +228,18 @@ class baocaotonghopController extends Controller
         return view('reports.baocaotonghop.cauld.thongtinthitruongld',compact('loaihinhkt','company','nhucautuyendung',
         'dmmanghetrinhdo','nam','tonghopdanhsachcungld_ct','dmtrinhdokythuat','dmvithevieclam','tgthatnghiep','lydoktg','vitrivl','mathanhthi','manongthon'))
         ->with('pageTitle', 'Báo cáo về thông tin thị trường lao động');
+    }
+
+    public function BC_doanhnghiep()
+    {
+        $request = request();
+        
+        $export= $request->export;
+        if($export){
+            return Excel::download(new BaocaoExport, 'tinhhinhsudunglaodong'.date('m-d-Y-His A e').'.xlsx');
+            
+        } 
+        return view('reports.baocaotonghop.doanhnghiep')
+                ->with('pageTitle','Báo cáo tình hình sử dụng lao động');
     }
 }
