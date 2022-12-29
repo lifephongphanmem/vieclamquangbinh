@@ -410,6 +410,7 @@ class AdminDieutra extends Controller
         // }
 
         //    dd($model); 
+        $a_ketqua=['thanhthi'=>0,'nongthon'=>0,'nam'=>0,'nu'=>0];
         foreach ($model as $ct) {
             // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
@@ -420,8 +421,15 @@ class AdminDieutra extends Controller
             // ->first();
             if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
+                $a_ketqua['nongthon']++;
             } else {
                 $ct->khuvuc = 'thanhthi';
+                $a_ketqua['thanhthi']++;
+            }
+            if(in_array($ct->gioitinh,['nam','Nam']) ){
+                $a_ketqua['nam']++;
+            }else{
+                $a_ketqua['nu']++;
             }
             // $ngaysinh=str_replace('-','',$ct->ngaysinh);
             // if(strlen($ngaysinh)< 9){
@@ -442,6 +450,7 @@ class AdminDieutra extends Controller
         return view('admin.dieutra.baocaotinh')
             ->with('model', $model)
             ->with('inputs', $inputs)
+            ->with('a_ketqua', $a_ketqua)
             ->with('m_donvi', $m_donvi)
             ->with('a_cmkt', $a_cmkt)
             ->with('a_khongthamgia', $a_khongthamgia)
