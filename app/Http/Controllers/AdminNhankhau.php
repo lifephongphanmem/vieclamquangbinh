@@ -41,6 +41,7 @@ class AdminNhankhau extends Controller
 
     public function show_all(Request $request)
     {
+       
         $request = request();
         $inputs = $request->all();
         //filter
@@ -92,11 +93,12 @@ class AdminNhankhau extends Controller
                     $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$a_xa->first()->parent)->get()->toarray(),'name','maquocgia');
                 }
         // dd($inputs);
+       
         foreach($lds as $ct){
             $ct->tenxa=ucwords($m_xa->name);
             $ct->tenhuyen=ucwords($m_huyen->name);
-
-
+       
+        }
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
 
@@ -108,7 +110,7 @@ class AdminNhankhau extends Controller
             ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
             ->where('parent', $inputs['mahuyen'])->get();
 
-
+ 
         foreach ($lds as $ct) {
             $ct->tenxa = ucwords($m_xa->name);
             $ct->tenhuyen = ucwords($m_huyen->name);
@@ -158,6 +160,7 @@ class AdminNhankhau extends Controller
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
         $danhsach = danhsach::all();
+
         return view('admin.nhankhau.all', compact('danhsach', 'dmdonvi'))
             ->with('lds', $lds)
             ->with('a_huyen', $a_huyen)
@@ -172,6 +175,7 @@ class AdminNhankhau extends Controller
             ->with('search', $search)
             ->with('gioitinh_filter', $gioitinh_filter)
             ->with('age_filter', $age_filter);
+        }
     }
     public function show_ho(Request $request)
     {
