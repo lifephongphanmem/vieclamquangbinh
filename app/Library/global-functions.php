@@ -446,3 +446,43 @@ function danhsachtinhtrangvl()
 {
     return array('1'=>'Người có việc làm','2'=>'Người thất thất nghiệp','3'=>'Không tham gia hoạt động kinh tế');
 }
+
+function check_trung($array, $indexs, $justvals = false)
+{
+    $newarray = array();
+    if (is_array($array) && count($array) > 0) {
+        if (is_array($indexs) && count($indexs) > 0) {
+            //Tổng số điều kiện
+            $ninds = count($indexs);
+        } else return $newarray;
+
+        foreach ($array as $ar) {
+            //số phần tử thỏa mãn điều kiện
+            $count = 0;
+            foreach ($indexs as $indx => $val) {
+                if ($ar[$indx] == $val) {
+                    $count++;
+                }
+            }
+
+            if ($count == $ninds) {
+                if ($justvals) return $ar;
+                else $newarray[] = $ar;
+            }
+        }
+    }
+    return $newarray;
+}
+
+//Hàm tạo mảng mới bằng cách gộp những giá trị trùng nhau trong mảng cũ lại
+function a_unique($array)
+{
+    //return array_unique($array,SORT_REGULAR);
+    //return array_map('unserialize', array_unique(array_map('serialize', $array)));
+    $tmp = array();
+    foreach ($array as $row)
+        if (!in_array($row, $tmp)) {
+            array_push($tmp, $row);
+        }
+    return $tmp;
+}

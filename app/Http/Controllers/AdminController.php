@@ -14,12 +14,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Exports\BaocaoExport;
+use App\Models\danhsach;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class AdminController extends Controller
 {
     
+	public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     public function login()
     {
 		
@@ -51,9 +61,8 @@ class AdminController extends Controller
 			$request = request();
 			$m_filter_s = $request->m_filter_s;
 			$m_filter_e = $request->m_filter_e;
-	
+
 			$export= $request->export;
-		
 			if($export){
 				return Excel::download(new BaocaoExport, 'tinhhinhsudunglaodong'.date('m-d-Y-His A e').'.xlsx');
 				
@@ -67,9 +76,20 @@ class AdminController extends Controller
 			 
 			 $cus_rinfoup=$emodel->getEmployerStateById($cus_ebd->tang['eid']);
 			 $cus_rinfodown=$emodel->getEmployerStateById($cus_ebd->giam['eid']);
+
+			$tongsonhankhau=danhsach::where('kydieutra',date('Y'))->sum('soluong');
+			$ldcovieclam=DB::table('nhankhau')->where('kydieutra',date('Y'))->where('tinhtranghdkt','1')->count('id');
+			$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',date('Y'))->where('tinhtranghdkt','2')->count('id');
+			$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',date('Y'))->where('tinhtranghdkt','3')->count('id');
+			// dd($ldcovieclam);
+
 			 
 			return view('admin.dashboard')
 					->with('einfo',$einfo)
+					->with('tongsonhankhau',$tongsonhankhau) 
+					->with('ldcovieclam',$ldcovieclam) 
+					->with('ldthatnghiep',$ldthatnghiep) 
+					->with('ldkhongthamgia',$ldkhongthamgia) 
 					->with('dinfo',$dinfo) 
 					->with('last_rinfoup',$last_rinfoup)
 					->with('last_rinfodown',$last_rinfodown)

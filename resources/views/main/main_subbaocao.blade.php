@@ -19,7 +19,7 @@
                 </g>
             </svg>
         </span>
-        <span class="menu-text font-weight-bold">Báo cáo, văn bản</span>
+        <span class="menu-text font-weight-bold">Báo cáo</span>
         <i class="menu-arrow"></i>
 
     </a>
@@ -27,11 +27,19 @@
         <i class="menu-arrow"></i>
         <ul class="menu-subnav">
             <li class="menu-item" aria-haspopup="true">
+                <a href="{{ url('/doanhnghiep/baocao') }}" class="menu-link">
+                    <i class="menu-bullet menu-bullet-dot">
+                        <span></span>
+                    </i>
+                    <span class="menu-text">Doanh nghiệp</span>
+                </a>
+            </li>
+            <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/bao_cao_tong_hop') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
-                    <span class="menu-text">Báo cáo</span>
+                    <span class="menu-text">Cung lao động</span>
                 </a>
             </li>
             {{-- <li class="menu-item" aria-haspopup="true">

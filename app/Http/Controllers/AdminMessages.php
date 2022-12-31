@@ -72,7 +72,7 @@ class AdminMessages extends Controller
      */
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::where('id', '!=', session('admin')->id)->get();
 
         return view('admin.messenger.create', compact('users'));
     }

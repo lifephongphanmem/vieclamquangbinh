@@ -51,9 +51,10 @@ class AdminReport extends Controller
 				->when($uid, function ($query, $uid) {
                     return $query->where('report.user', $uid);
 					})
-				
+				->where('datatable','!=','nhankhau')
 				->orderBy('id', 'desc')
-				->paginate(20);
+				->paginate(40);
+				// ->get();
 			
 		
 		foreach($reports as $report){

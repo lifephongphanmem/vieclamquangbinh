@@ -198,4 +198,9 @@ class AdminEmployer extends Controller
                     ->with('model',$model);	
     }
 
+	public function ThemMoi_NN()
+	{
+		return view('admin.employer.laodongnuocngoai.create');
+	}
+
 }

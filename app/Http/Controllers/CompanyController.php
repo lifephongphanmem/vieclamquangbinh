@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmloaihinhhdkt;
 use Illuminate\Http\Request;
 use DB;
 use Session;
@@ -66,7 +68,7 @@ class CompanyController extends Controller
 		$info =$this->getInfo($uid);
 	
 		if(!$info->email ){
-			$info->email=Auth::user()->email;
+			$info->email=session('admin')->email;
 		};
 		
 		// Thông tin người lao động
@@ -195,6 +197,24 @@ class CompanyController extends Controller
 			 }else{
 			 return $code;
 		 }
+	}
+
+	public function create()
+	{
+		// if (!chkPhanQuyen('danhsachdoanhnghiep', 'thaydoi')) {
+        //     return view('errors.noperm')->with('machucnang', 'danhsachdoanhnghiep');
+        // }
+		$kcn = $this->getParamsByNametype("Khu công nghiệp");// lấy danh mục khu công nghiệp
+		// $ctype = $this->getParamsByNametype("Loại hình doanh nghiệp");// lấy loại hình doanh nghiệp
+		$ctype=dmloaihinhhdkt::all();
+		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp");// lấy ngành nghề doanh nghiệp
+
+		$dmhanhchinh=danhmuchanhchinh::all();
+		return view('admin.company.create')
+					->with('kcn',$kcn)
+					->with('loaihinh',$ctype)
+					->with('dmhanhchinh',$dmhanhchinh)
+					->with('nganhnghe',$cfield);
 	}
 	
 }

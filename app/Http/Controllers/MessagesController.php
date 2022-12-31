@@ -49,6 +49,7 @@ class MessagesController extends Controller
      */
     public function show($id)
     {
+
         try {
             $thread = Thread::findOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -61,7 +62,7 @@ class MessagesController extends Controller
         // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
         // don't show the current user in list
-        $userId = Auth::id();
+        $userId = session('admin')->id;
         $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
 
         $thread->markAsRead($userId);

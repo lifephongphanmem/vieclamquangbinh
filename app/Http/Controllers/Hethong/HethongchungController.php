@@ -44,7 +44,7 @@ class HethongchungController extends Controller
 		if (!isset($user)) {
 			return view('errors.tontai_dulieu')
 				->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập')
-				->with('furl', '/home');
+				->with('furl', '/');
 		}
 		//Tài khoản đang bị khóa
 		if ($user->status == 2) {

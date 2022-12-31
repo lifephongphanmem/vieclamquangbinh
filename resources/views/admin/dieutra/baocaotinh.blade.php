@@ -66,14 +66,16 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model->where('khuvuc', 'thanhthi')) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model->where('khuvuc', 'thanhthi')) }}</td> --}}
+            <td style="text-align: center;">{{ $a_ketqua['thanhthi'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model->where('khuvuc', 'nongthon')) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model->where('khuvuc', 'nongthon')) }}</td> --}}
+            <td style="text-align: center;">{{ $a_ketqua['nongthon'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
@@ -84,14 +86,16 @@
             <td></td>
             <td>- Nam</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model->wherein('gioitinh', ['nam', 'Nam'])) }}</td> --}}
+            <td style="text-align: center;">{{ $a_ketqua['nam'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nữ</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td> --}}
+            <td style="text-align: center;">{{ $a_ketqua['nu'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <?php $model_covieclam = $model->where('tinhtranghdkt', 1); ?>
