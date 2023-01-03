@@ -126,6 +126,7 @@
                                 <th>Kỳ</th>
                                 <th>Ngày đăng</th>
                                 <th>Người cập nhật</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,6 +148,13 @@
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
                                 {{-- <td><span class="text-ellipsis">{{ $td->user_id != null?$a_donvi[$td->user_id]:'' }} </span></td> --}}
                                 <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td>
+                                <td>
+                                    <button title="Xóa thông tin" type="button"
+                                    onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id.'?mahuyen='.$inputs['mahuyen'].'&kydieutra='.$inputs['kydieutra'] }}')"
+                                    class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
+                                    data-toggle="modal">
+                                    <i class="icon-lg flaticon-delete text-danger"></i></button>
+                                </td>
 
                             </tr>
                             <?php } ?>
@@ -155,7 +163,29 @@
                 </div>
             </div>
         </div>
+    <!--Model delete-->
+    <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xóa</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                       <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra này</b></label>
+                    </div>
 
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
         <!-- modal in tổng hợp -->
         <form method="POST" action="" accept-charset="UTF-8" id="frm_modify_in" target="_blank">
             @csrf
@@ -205,5 +235,13 @@
                 var url = '/dieutra/intonghop'
                 $('#frm_modify_in').attr('action', url);
             }
+
+            function cfDel(url) {
+            $('#frmDelete').attr('action', url);
+        }
+
+        function subDel() {
+            $('#frmDelete').submit();
+        }
         </script>
     @endsection

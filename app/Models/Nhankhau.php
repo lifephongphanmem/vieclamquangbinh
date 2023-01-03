@@ -108,23 +108,32 @@ class Nhankhau extends Model
 			$data['danhsach_id'] = $cid;
 
 			if ($data['ngaysinh']) {
-				if (!is_numeric($data['ngaysinh'])) {
-					$data['ngaysinh'] = 0;
-				};
-				$unix_date = ($data['ngaysinh'] - 25569) * 86400;
+				// if (!is_numeric($data['ngaysinh'])) {
+				// 	$data['ngaysinh'] = 0;
+				// };
+				// $unix_date = ($data['ngaysinh'] - 25569) * 86400;
+				// $data['ngaysinh'] = date('Y-m-d', $unix_date);
 
-				$data['ngaysinh'] = date('Y-m-d', $unix_date);
-
+				if (is_numeric($data['ngaysinh'])) {
+					$unix_date = ($data['ngaysinh'] - 25569) * 86400;
+					$data['ngaysinh'] = date('Y-m-d', $unix_date);
+				};								
 				$data['gioitinh'] = "Nữ";
 			} elseif ($data['gioitinh']) {
 
-				if (!is_numeric($data['gioitinh'])) {
-					$data['gioitinh'] = 0;
+				// if (!is_numeric($data['gioitinh'])) {
+				// 	$data['gioitinh'] = 0;
+				// };
+
+				// $unix_date = ($data['gioitinh'] - 25569) * 86400;
+
+				// $data['ngaysinh'] = date('Y-m-d', $unix_date);
+				
+				if (is_numeric($data['gioitinh'])) { 
+					$unix_date = ($data['gioitinh'] - 25569) * 86400;
+					$data['ngaysinh'] = date('Y-m-d', $unix_date);
 				};
-
-				$unix_date = ($data['gioitinh'] - 25569) * 86400;
-
-				$data['ngaysinh'] = date('Y-m-d', $unix_date);
+				// $data['ngaysinh']=$data['gioitinh'];
 
 				$data['gioitinh'] = "Nam";
 			} else {
