@@ -77,10 +77,13 @@ class AdminController extends Controller
 			 $cus_rinfoup=$emodel->getEmployerStateById($cus_ebd->tang['eid']);
 			 $cus_rinfodown=$emodel->getEmployerStateById($cus_ebd->giam['eid']);
 
-			$tongsonhankhau=danhsach::where('kydieutra',date('Y'))->sum('soluong');
-			$ldcovieclam=DB::table('nhankhau')->where('kydieutra',date('Y'))->where('tinhtranghdkt','1')->count('id');
-			$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',date('Y'))->where('tinhtranghdkt','2')->count('id');
-			$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',date('Y'))->where('tinhtranghdkt','3')->count('id');
+			 $kydieutra=danhsach::select('kydieutra')->orderBy('id','desc')->first()->kydieutra;
+
+
+			$tongsonhankhau=danhsach::where('kydieutra',$kydieutra)->sum('soluong');
+			$ldcovieclam=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','1')->count('id');
+			$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','2')->count('id');
+			$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','3')->count('id');
 			// dd($ldcovieclam);
 
 			 

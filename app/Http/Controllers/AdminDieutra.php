@@ -458,4 +458,16 @@ class AdminDieutra extends Controller
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
             ->with('pageTitle', 'Tổng hợp cung lao động');
     }
+
+    public function XoaDanhSach(Request $request,$id)
+    {
+        $inputs=$request->all();
+        $model=danhsach::findOrFail($id);
+        if(isset($model)){
+            DB::table('nhankhau')->where('danhsach_id',$model->id)->delete();
+        }
+        $model->delete();
+
+        return redirect('/dieutra/danhsach?mahuyen='.$inputs['mahuyen'] .'&kydieutra='.$inputs['kydieutra']);
+    }
 }
