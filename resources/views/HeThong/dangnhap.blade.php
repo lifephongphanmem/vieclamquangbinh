@@ -34,7 +34,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Global Theme Styles-->
     <!--begin::Layout Themes(used by all pages)-->
     <!--end::Layout Themes-->
-    <link rel="shortcut icon" href="{{ url('assets/media/logos/LIFESOFT.png') }}" />
+    <link rel="shortcut icon" href="{{ url('assets/media/logos/ttdvvl.png') }}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -53,7 +53,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!--begin:Aside Content-->
                         <div class="text-dark-75">
                             <a href="#">
-                                <img src="{{ url('assets/media/logos/LIFESOFT.png') }}" class="max-h-75px"
+                                <img src="{{ url('assets/media/logos/ttdvvl.png') }}" class="max-h-150px"
                                     alt="" />
                             </a>
                             <h3 class="mb-8 mt-22 font-weight-bold text-uppercase">Phần mềm quản lý việc làm</h3>
