@@ -65,6 +65,7 @@
                                 <td><span class="text-ellipsis"> </span>{{ $ld->mqh }}</td>
 
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
+                 
                             </tr>
                             <?php } ?>
 

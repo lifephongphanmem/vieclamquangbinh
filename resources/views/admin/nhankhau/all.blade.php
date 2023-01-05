@@ -85,12 +85,12 @@
                                 @endforeach
                             </select>
                         </div> --}}
-                        {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
+                        <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
                             <a href="#" title="In báo cáo chi tiết" data-target="#cungld-modal" data-toggle="modal"
                                 class="btn btn-sm btn-clean btn-icon">
                                 <i class="icon-lg la flaticon2-print text-primary"></i>
                             </a>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">

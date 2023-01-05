@@ -33,8 +33,7 @@ class AdminReport extends Controller
 		$search = $request->search;
 		$type_filter = $request->type_filter;
 		$time_filter = $request->time_filter;
-		
-		
+		dd($search);
 		$reports= DB::table('report')
 				->when($search, function ($query, $search) {
                     return $query->where('report.note', 'like', '%'.$search.'%');
@@ -42,12 +41,12 @@ class AdminReport extends Controller
 				->when($type_filter, function ($query, $type_filter) {
                     return $query->where('report.type', $type_filter);
 					})
-				->when($time_filter, function ($query, $time_filter) {
-						$ym = explode('-',$time_filter,2);
-						$timeS = Carbon::create($ym[0],$ym[1])->startOfMonth();
-						$timeE =Carbon::create($ym[0],$ym[1])->endOfMonth();
-						return $query->whereBetween("time",[$timeS,$timeE] );
-					})
+				// ->when($time_filter, function ($query, $time_filter) {
+				// 		$ym = explode('-',$time_filter,2);
+				// 		$timeS = Carbon::create($ym[0],$ym[1])->startOfMonth();
+				// 		$timeE =Carbon::create($ym[0],$ym[1])->endOfMonth();
+				// 		return $query->whereBetween("time",[$timeS,$timeE] );
+				// 	})
 				->when($uid, function ($query, $uid) {
                     return $query->where('report.user', $uid);
 					})
@@ -56,7 +55,7 @@ class AdminReport extends Controller
 				->paginate(40);
 				// ->get();
 			
-		
+		// $reports = array_unique($reports);
 		foreach($reports as $report){
 			$ct=DB::table('company')->where('user',$report->user)->get()->first();
 			if ($ct){
@@ -65,11 +64,12 @@ class AdminReport extends Controller
 				$report->ctyname ="";
 			}
 		}
-			
+		$inputs['url'] = '/report-ba';
 		return view ('admin.report.all')->with('reports', $reports)
 					->with('search', $search)
 					->with('time_filter', $time_filter)
-					->with('type_filter', $type_filter);
+					->with('type_filter', $type_filter)
+					->with('inputs', $inputs);
 	}
 	
 	public function getDmhc()

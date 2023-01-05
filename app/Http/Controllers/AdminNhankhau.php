@@ -12,7 +12,6 @@ use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Danhmuc\dmloaihieuluchdld;
-
 use App\Models\Danhmuc\dmloaihinhhdkt;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
@@ -20,10 +19,10 @@ use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
 use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
-
 use App\Models\danhsach;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminNhankhau extends Controller
@@ -41,7 +40,6 @@ class AdminNhankhau extends Controller
 
     public function show_all(Request $request)
     {
-       
         $request = request();
         $inputs = $request->all();
         //filter
@@ -49,7 +47,8 @@ class AdminNhankhau extends Controller
         $gioitinh_filter = $request->gioitinh_filter;
         $age_filter = $request->age_filter;
 
-        $dmhc_list = $this->getdanhmuc();
+        $dmhc_list
+         = $this->getdanhmuc();
 
         $dm_filter = $request->dm_filter;
 
@@ -61,56 +60,36 @@ class AdminNhankhau extends Controller
 
 
         $m_donvi = getDonVi(session('admin')->sadmin);
-
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-
-        $a_kydieutra=array_column(danhsach::all()->toarray(),'kydieutra','kydieutra');
-        $kydieutra=danhsach::orderBy('id', 'desc')->first();
-        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
-        $lds = view_nhankhau_danhsach::where('kydieutra',$inputs['kydieutra'])
-        ->where('user_id',$inputs['madv'])->get();
-        $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
-        $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
-        $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();
-      
-                if (in_array(session('admin')->sadmin, ['SSA', 'ssa','ADMIN'])){
-                   
-
-                    // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
-                    $model_huyen=danhmuchanhchinh::where('capdo','H')->get();       
-                    $inputs['mahuyen']=$inputs['mahuyen']??$model_huyen->first()->maquocgia;
-                    $a_huyen=array_column($model_huyen->toarray(),'name','maquocgia');
-                    $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                    ->select('dmdonvi.madv','danhmuchanhchinh.name')
-                    ->where('parent',$inputs['mahuyen'])->get();
-                }else{
-                    // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
-                    // $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();       
-                    $inputs['mahuyen']=$inputs['mahuyen']??$m_huyen->maquocgia; 
-                    $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                    ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
-                    ->where('madv',$inputs['madv'])->get();
-                    $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$a_xa->first()->parent)->get()->toarray(),'name','maquocgia');
-                }
-        // dd($inputs);
-       
-        foreach($lds as $ct){
-            $ct->tenxa=ucwords($m_xa->name);
-            $ct->tenhuyen=ucwords($m_huyen->name);
-       
-        }
+        $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+        $kydieutra = danhsach::orderBy('id', 'desc')->first();
+        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
+        $lds = view_nhankhau_danhsach::where('kydieutra', $inputs['kydieutra'])
+            ->where('user_id', $inputs['madv'])->get();
+        $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
 
+        if (in_array(session('admin')->sadmin, ['SSA', 'ssa', 'ADMIN'])) {
 
-        $a_huyen = array_column(danhmuchanhchinh::where('capdo', 'H')->get()->toarray(), 'name', 'maquocgia');
-        $inputs['mahuyen'] = isset($inputs['mahuyen']) ?? $inputs['mahuyen'] = $m_huyen->maquocgia;
 
-        $a_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-            ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
-            ->where('parent', $inputs['mahuyen'])->get();
-
- 
+            // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+            $model_huyen = danhmuchanhchinh::where('capdo', 'H')->get();
+            $inputs['mahuyen'] = $inputs['mahuyen'] ?? $model_huyen->first()->maquocgia;
+            $a_huyen = array_column($model_huyen->toarray(), 'name', 'maquocgia');
+            $a_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
+                ->where('parent', $inputs['mahuyen'])->get();
+        } else {
+            // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+            // $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();       
+            $inputs['mahuyen'] = $inputs['mahuyen'] ?? $m_huyen->maquocgia;
+            $a_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'danhmuchanhchinh.parent')
+                ->where('madv', $inputs['madv'])->get();
+            $a_huyen = array_column(danhmuchanhchinh::where('maquocgia', $a_xa->first()->parent)->get()->toarray(), 'name', 'maquocgia');
+        }
+        // dd($inputs);
         foreach ($lds as $ct) {
             $ct->tenxa = ucwords($m_xa->name);
             $ct->tenhuyen = ucwords($m_huyen->name);
@@ -160,7 +139,6 @@ class AdminNhankhau extends Controller
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
         $danhsach = danhsach::all();
-
         return view('admin.nhankhau.all', compact('danhsach', 'dmdonvi'))
             ->with('lds', $lds)
             ->with('a_huyen', $a_huyen)
@@ -175,7 +153,6 @@ class AdminNhankhau extends Controller
             ->with('search', $search)
             ->with('gioitinh_filter', $gioitinh_filter)
             ->with('age_filter', $age_filter);
-        }
     }
     public function show_ho(Request $request)
     {
@@ -351,7 +328,6 @@ class AdminNhankhau extends Controller
         // $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
         // $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
         $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
-
         $m_uutien = dmdoituonguutien::all();
         $m_tinhtrangvl = dmtinhtrangthamgiahdkt::all();
         $m_vithevl = dmtinhtrangthamgiahdktct2::all();
@@ -362,7 +338,6 @@ class AdminNhankhau extends Controller
         $m_nguoithatnghiep = $dm_tinhtrangct->where('manhom', 20221220175720);
         $lydo = $dm_tinhtrangct->where('manhom', 20221220175728);
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
-
 
         $model = new Nhankhau();
 
@@ -384,7 +359,6 @@ class AdminNhankhau extends Controller
             ->with('list_cmkt', $list_cmkt)
             ->with('list_tdgd', $list_tdgd)
             ->with('list_nghe', $list_nghe)
-
             // ->with('list_vithe', $list_vithe)
             // ->with('list_linhvuc', $list_linhvuc)
             ->with('list_hdld', $list_hdld);
@@ -430,9 +404,21 @@ class AdminNhankhau extends Controller
         $model = $model->get();
 
         return view('admin.nhankhau.inchitiet', compact('model'))
-            ->with('pageTitle', 'Danh sách thông tin chi tiết cung lao động');
+            ->with('pageTitle', 'Danh sách thông tin chi tiết cung dụng lao động');
     }
 
+    public function inchitiethgd(Request $request)
+    {
+        $hgd = Nhankhau::where('id',$request->id)->first();
+        $model = Nhankhau::where('ho', $hgd->ho )->where('madv', $hgd->madv )->join('danhsach', 'danhsach.id', 'Nhankhau.danhsach_id')->select('Nhankhau.*', 'danhsach.user_id')->get();
+
+        // if ( $hgd != null ) {
+        //     $model = $model->where('ho', $hgd->ho )->get();
+        // }
+        //kỳ điều tra
+        return view('admin.nhankhau.inchitiet', compact('model'))
+            ->with('pageTitle', 'Danh sách thông tin chi tiết hộ gia đình');
+    }
 
     public function ajax_getxa(Request $request)
     {
@@ -450,7 +436,9 @@ class AdminNhankhau extends Controller
         return response()->json($html);
     }
 
-    public function innguoilaodong(Request $request){
+
+    public function innguoilaodong(Request $request)
+    {
 
         $model = Nhankhau::find($request->id);
         $uutien = dmdoituonguutien::all();
@@ -462,10 +450,21 @@ class AdminNhankhau extends Controller
         $tgthatnghiep = dmthoigianthatnghiep::all();
         $khongthamgiahdkt = dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get();
         $hdld = dmloaihieuluchdld::all();
-        $bhxh = [1=>'Bắt buộc',2=>'Tự nguyện',3=>'Không tham gia'];
+        $bhxh = [1 => 'Bắt buộc', 2 => 'Tự nguyện', 3 => 'Không tham gia'];
 
-        return view('admin.nhankhau.innguoilaodong', compact('model','uutien','trinhdogdpt','trinhdocmkt','dmtinhtrangthamgiahdkt',
-        'dmvithevieclam','dmthatnggiep','tgthatnghiep','khongthamgiahdkt','hdld','bhxh') )
-        ->with('pageTitle', 'Thông tin chi tiết người lao động');
+        return view('admin.nhankhau.innguoilaodong', compact(
+            'model',
+            'uutien',
+            'trinhdogdpt',
+            'trinhdocmkt',
+            'dmtinhtrangthamgiahdkt',
+            'dmvithevieclam',
+            'dmthatnggiep',
+            'tgthatnghiep',
+            'khongthamgiahdkt',
+            'hdld',
+            'bhxh'
+        ))
+            ->with('pageTitle', 'Thông tin chi tiết người lao động');
     }
 }

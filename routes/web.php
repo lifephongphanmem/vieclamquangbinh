@@ -173,6 +173,7 @@ Route::get('/nhankhau-beho/{cid?}',[AdminNhankhau::class,'editho']); // all
 
 Route::get('/nhankhau-be/{nkid}',[AdminNhankhau::class,'edit']); // edit
 Route::get('/nhankhau-in',[AdminNhankhau::class,'inchitiet']); // in chi tiết
+Route::get('/nhankhau-inhgd',[AdminNhankhau::class,'inchitiethgd']); // in chi tiết
 Route::get('/nhankhau-innguoilaodong',[AdminNhankhau::class,'innguoilaodong']); // in chi tiết
 Route::prefix('nhankhau')->group(function(){
     Route::get('/danhsach/{cid?}',[AdminNhankhau::class,'show_all']); // all
