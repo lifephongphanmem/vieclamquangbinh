@@ -35,6 +35,7 @@
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' +
                     '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
             });
+
             $('#kydieutra').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
                     '&kydieutra=' + $('#kydieutra').val();
@@ -84,7 +85,7 @@
                         </div> --}}
                             <div class="col-md-4">
                                 <label style="font-weight: bold">Huyện</label>
-                                <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
+                                <select name="mahuyen" id="mahuyen" onchange="MaHuyen()"  class="form-control select2basic">
                                     @foreach ($a_huyen as $key=>$ct )
                                         <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
                                     @endforeach
@@ -146,8 +147,8 @@
                                 <td><a href="#">{{ $td->soho }} </a></td>
                                 <td>{{ $td->kydieutra }}</td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
-                                {{-- <td><span class="text-ellipsis">{{ $td->user_id != null?$a_donvi[$td->user_id]:'' }} </span></td> --}}
-                                <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td>
+                                <td><span class="text-ellipsis">{{ $td->donvinhap != null?$a_donvi[$td->donvinhap]:'' }} </span></td>
+                                {{-- <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td> --}}
                                 <td>
                                     <button title="Xóa thông tin" type="button"
                                     onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id.'?mahuyen='.$inputs['mahuyen'].'&kydieutra='.$inputs['kydieutra'] }}')"
@@ -243,5 +244,6 @@
         function subDel() {
             $('#frmDelete').submit();
         }
+
         </script>
     @endsection

@@ -115,14 +115,16 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_covieclam->where('khuvuc', 'thanhthi')) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model_covieclam->where('khuvuc', 'thanhthi')) }}</td> --}}
+            <td style="text-align: center;">{{$a_covl['thanhthi'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_covieclam->where('khuvuc', 'nongthon')) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model_covieclam->where('khuvuc', 'nongthon')) }}</td> --}}
+            <td style="text-align: center;">{{ $a_covl['nongthon']}}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
@@ -136,6 +138,7 @@
                 <td>{{ $ct }}</td>
                 <td style="text-align: center;">Người</td>
                 <td style="text-align: center;">{{ count($model_covieclam->where('chuyenmonkythuat', $key)) }}</td>
+                {{-- <td style="text-align: center;">{{ $cmkt_covl[$key] }}</td> --}}
                 <td style="text-align: center;"></td>
             </tr>
         @endforeach
@@ -151,6 +154,7 @@
                 <td>{{$val}}</td>
                 <td style="text-align: center;">Người</td>
                 <td style="text-align: center;">{{ count($model_covieclam->where('nguoicovieclam', $k)) }}</td>
+                {{-- <td style="text-align: center;">{{ $_vithevl[$k] }}</td> --}}
                 <td style="text-align: center;"></td>
             </tr>
         @endforeach
@@ -172,14 +176,16 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_thatnghiep->where('khuvuc', 'thanhthi')) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model_thatnghiep->where('khuvuc', 'thanhthi')) }}</td> --}}
+            <td style="text-align: center;">{{ $a_thatnghiep['thanhthi'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_thatnghiep->where('khuvuc', 'nongthon')) }}</td>
+            {{-- <td style="text-align: center;">{{ count($model_thatnghiep->where('khuvuc', 'nongthon')) }}</td> --}}
+            <td style="text-align: center;">{{ $a_thatnghiep['nongthon'] }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
@@ -193,6 +199,7 @@
                 <td>{{ $ct }}</td>
                 <td style="text-align: center;">Người</td>
                 <td style="text-align: center;">{{ count($model_thatnghiep->where('chuyenmonkythuat', $key)) }}</td>
+                {{-- <td style="text-align: center;">{{ $cmkt_thatnghiep[$key] }}</td> --}}
                 <td style="text-align: center;"></td>
             </tr>
         @endforeach
@@ -209,6 +216,7 @@
                 <td>{{ $ct }}</td>
                 <td style="text-align: center;">Người</td>
                 <td style="text-align: center;">{{ count($model_thatnghiep->where('thoigianthatnghiep', $key)) }}</td>
+                {{-- <td style="text-align: center;">{{ $_thoigianthatnghiep[$key] }}</td> --}}
                 <td style="text-align: center;"></td>
             </tr>
         @endforeach
@@ -226,6 +234,7 @@
             <td>{{$item}}</td>
             <td style="text-align: center;">Người</td>
             <td style="text-align: center;">{{ count($model_khongthamgia->where('khongthamgiahdkt', $k)) }}</td>
+            {{-- <td style="text-align: center;">{{ $_khongthamgia[$k] }}</td> --}}
             <td style="text-align: center;"></td>
         </tr>
         @endforeach
