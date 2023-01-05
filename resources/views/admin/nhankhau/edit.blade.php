@@ -77,7 +77,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Ngày tháng năm sinh</label>
-                                            <input type="date" name="ngaysinh" value="{{ $ld->ngaysinh }}"
+                                            <input type="text" name="ngaysinh" value="{{ $ld->ngaysinh }}"
                                                 class="form-control" required>
                                         </div>
                                     </div>
@@ -127,6 +127,7 @@
                                         <div class="form-group">
                                             <label>Trình độ Giáo dục</label>
                                             <select class="form-control" name="trinhdogiaoduc">
+                                                <option value="">--- Chọn trình độ giáo dục ---</option>
                                                 <?php foreach ( $list_tdgd as  $key=>$td){ ?>
                                                 <option value='{{ $td->stt }}' <?php if ($ld->trinhdogiaoduc == $td->stt) {
                                                     echo 'selected';
@@ -141,7 +142,7 @@
                                         <div class="form-group">
                                             <label>Trình độ CMKT</label>
                                             <select class="form-control" name="chuyenmonkythuat">
-
+                                                <option value="">--- Chọn trình độ cmkt ---</option>
                                                 <?php foreach ( $list_cmkt as $key=>$td){ ?>
                                                 <option value='{{ $td->stt }}' <?php if ($ld->chuyenmonkythuat == $td->stt) {
                                                     echo 'selected';
