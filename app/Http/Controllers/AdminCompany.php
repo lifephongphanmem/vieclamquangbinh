@@ -10,6 +10,8 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CompaniesExport;
+use App\Imports\ColectionImport;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
 class AdminCompany extends Controller
 {
@@ -253,6 +255,40 @@ class AdminCompany extends Controller
 			$cats=DB::table('param')->where('type',$type->id)->get();
 		}
 		return $cats;
+	}
+
+	public function import(Request $request)
+	{
+		$file = $request->file('import_file');
+
+		$dataObj = new ColectionImport();
+		$theArray = Excel::toArray($dataObj, $file);
+		$arr = $theArray[0];
+		// dd($arr);
+		$arr_col = array('name','masodn','dkkd','phone','email','tinh','huyen','xa','adress','khucn','loaihinh','nganhnghe','quymo');
+		$nfield = sizeof($arr_col);
+		$sldn=array();
+		for ($i = 4; $i < count($arr); $i++) {
+			$data = array();
+			for ($j = 0; $j < $nfield; $j++) {
+
+				$data[$arr_col[$j]] = $arr[$i][$j + 1] ?? '';
+				// $data[$arr[4][$j]] = $arr[$i][$j]??'';
+			}
+
+			$dkkd=DB::table('company')->where('dkkd',$data['dkkd'])->first();
+			if(isset($dkkd)){
+				continue;
+			}
+
+			DB::table('company')->insert($data);
+			// $sldn[]=$data;
+		}
+
+		return redirect('/doanhnghiep-ba')
+					->with('success','Thêm thành công');
+
+		// dd($sldn);
 	}
 
 }
