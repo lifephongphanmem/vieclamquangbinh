@@ -53,10 +53,10 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!--begin:Aside Content-->
                         <div class="text-dark-75">
                             <a href="#">
-                                <img src="{{ url('assets/media/logos/ttdvvl.png') }}" class="max-h-150px"
+                                <img src="{{ url('assets/media/logos/ttdvvl.png') }}" class="max-h-200px"
                                     alt="" />
                             </a>
-                            <h3 class="mb-8 mt-22 font-weight-bold text-uppercase">Phần mềm quản lý việc làm</h3>
+                            <h3 class="mb-8 mt-10 font-weight-bold text-uppercase">Phần mềm quản lý việc làm</h3>
                             <p class="mb-15 text-muted font-weight-bold text-uppercase">
                                 <a href="https://phanmemcuocsong.com/" target="_blank">
                                     Tiện ích hơn - hiệu quả hơn
