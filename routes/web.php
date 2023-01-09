@@ -118,7 +118,11 @@ Route::get('/doanhnghiep-be/{cid}',[AdminCompany::class,'edit']);
 Route::post('/doanhnghiep-bu/{cid}',[AdminCompany::class,'update']);
 Route::get('/doanhnghiep-br/{cid}',[AdminCompany::class,'baocao145']);
 Route::get('/doanh_nghiep/them_moi', [CompanyController::class, 'create']);
-Route::get('/doanhnghiep/baocao',[baocaotonghopController::class,'BC_doanhnghiep']);
+
+Route::prefix('doanhnghiep')->group(function(){
+    Route::get('/baocao',[baocaotonghopController::class,'BC_doanhnghiep']);
+    Route::post('/import',[AdminCompany::class,'import']);
+});
 
 // Người lao động
 

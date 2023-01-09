@@ -669,6 +669,10 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
         'App\\Models\\Vitrituyendung' => __DIR__ . '/../..' . '/app/Models/Vitrituyendung.php',
         'App\\Models\\danhsach' => __DIR__ . '/../..' . '/app/Models/danhsach.php',
         'App\\Models\\danhsachloi' => __DIR__ . '/../..' . '/app/Models/danhsachloi.php',
+<<<<<<< HEAD
+=======
+        'App\\Models\\danhsachnhankhau' => __DIR__ . '/../..' . '/app/Models/danhsachnhankhau.php',
+>>>>>>> 5b77d28ce2874bd5ea96baaf10f45d90d23fb5f5
         'App\\Models\\m_nhankhau' => __DIR__ . '/../..' . '/app/Models/m_nhankhau.php',
         'App\\Models\\view\\view_bao_cao_tonghop' => __DIR__ . '/../..' . '/app/Models/view/view_bao_cao_tonghop.php',
         'App\\Models\\view\\view_nhankhau_danhsach' => __DIR__ . '/../..' . '/app/Models/view/view_nhankhau_danhsach.php',

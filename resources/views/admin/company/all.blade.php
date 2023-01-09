@@ -38,6 +38,10 @@
                     </div>
                     <div class="card-toolbar">
                         <a href="{{'doanh_nghiep/them_moi'}}" class="btn btn-sm btn-success">Thêm mới</a>
+                        <button class="btn btn-xs btn-success mr-2 ml-2" title="Nhận dữ liệu từ file Excel"
+                        data-target="#modal-nhanexcel" data-toggle="modal">
+                        <i class="fas fa-file-import">Nhận Excel</i>
+                    </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -100,7 +104,7 @@
                     <thead>
                         <tr>
                             <th> STT </th>
-                            <th>Mã DN</th>
+                            <th>Mã ĐKKD</th>
                             <th>Tên doanh nghiệp</th>
                             <th>Địa chỉ</th>
                             <th>Điện thoại</th>
@@ -119,12 +123,12 @@
 	?>
                         <tr>
                             <td>{{ ++$key }} </td>
-                            <td>{{ $cty->masodn }}</td>
+                            <td>{{ $cty->dkkd }}</td>
                             <td><a href="{{ URL::to('doanhnghiep-be/' . $cty->id) }}">{{ $cty->name }}</a></td>
                             <td><span class="text-ellipsis"> </span> {{ $cty->adress }} - {{ $cty->xa }} -
                                 {{ $cty->huyen }}</td>
                             <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
-                            <td><span class="text-ellipsis"> </span>{{ $cty->employers_count }}</td>
+                            <td><span class="text-ellipsis"> </span>{{ $cty->quymo }}</td>
                             <td><span class="text-ellipsis">
                                     <?php if ($cty->public==1){ 
 				?>
@@ -145,6 +149,35 @@
                 </table>
             </div>
         </div>
+    </div>
+<!-- Modal nhận excel -->
+    <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form action="{{ '/doanhnghiep/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+            @csrf
+            <div class="modal-dialog modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách người lao động từ file Excel</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <input type="file" name="import_file" class="form-control">
+                        </div>
+                    </div>
+                    {{-- <div class="form-group row">
+                        <div class="col-lg-12">
+                            <p class="float-left mr-3">Tải file excel mẫu </p><a href="{{asset('excel/maunhapnguoilaodong.xlsx')}}">tại đây</a>
+                        </div>
+                    </div> --}}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
+                </div>
+            </div>
+        </form>
     </div>
 
 @endsection

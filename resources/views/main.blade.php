@@ -52,7 +52,7 @@
     <!--begin::Layout Themes(used by all pages)-->
     <!--end::Layout Themes-->
     @yield('custom-style')
-    <link rel="shortcut icon" href="{{ url('assets/media/logos/Icon_Life.png') }}" />
+    <link rel="shortcut icon" href="{{ url('assets/media/logos/ttdvvl.png') }}" />
 </head>
 
 <!--end::Head-->

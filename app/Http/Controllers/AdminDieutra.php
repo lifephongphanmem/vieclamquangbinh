@@ -12,11 +12,13 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\danhsach;
 use App\Models\danhsachloi;
+use App\Models\danhsachnhankhau;
 use App\Models\m_nhankhau;
 use App\Models\Nhankhau;
 use App\Models\User;
 use App\Models\view\view_bao_cao_tonghop;
 use Carbon\Carbon;
+use Hamcrest\Type\IsNumeric;
 use Session;
 use Illuminate\Http\RedirectResponse;
 
@@ -182,6 +184,7 @@ class AdminDieutra extends Controller
         $data['huyen'] = $request->huyen;
         $data['tinh'] = $request->tinh;
         $data['user_id'] = $uid;
+        $data['donvinhap']=session('admin')->madv;
         $data['kydieutra'] = $request->kydieutra;
         $data['ghichu'] = $request->ghichu;
 
@@ -390,10 +393,8 @@ class AdminDieutra extends Controller
     {
         $inputs = $request->all();
         // dd($inputs);
-        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
-        // $a_danhsach=array_column($m_danhsach->toarray(),'id');
-        // $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
+        $a_chuyenmon=dmtrinhdokythuat::select('tentdkt','stt')->get()->toarray();
+        // dd($a_chuyenmon);
         $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
 
                 // dd($model);
@@ -402,55 +403,69 @@ class AdminDieutra extends Controller
         ->get();
 
         $a_dm=array_column($m_danhmuc->toarray(),'level','madv');
-        $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();
+        $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();    
+        $a_cmkt = array_column($a_chuyenmon, 'tentdkt', 'stt');        
+        $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
+        $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
+        $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
+        
 
 
-        // if (isset($inputs['kydieutra'])) {
-        //     $model = $model->where('kydieutra', $inputs['kydieutra']);
-        // }
-
-        //    dd($model); 
         $a_ketqua=['thanhthi'=>0,'nongthon'=>0,'nam'=>0,'nu'=>0];
+        $a_covl=['thanhthi'=>0,'nongthon'=>0];
+        $a_thatnghiep=['thanhthi'=>0,'nongthon'=>0];
         foreach ($model as $ct) {
-            // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-            //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
-            //     ->where('dmdonvi.madv', $ct->user_id)
-            //     ->first();
-            // $danhmuc = $m_danhmuc
-            // ->where('madv', $ct->user_id)
-            // ->first();
             if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
                 $a_ketqua['nongthon']++;
+
+                //có việc làm và thất nghiệp
+                if($ct->tinhtranghdkt == 1){
+                    $a_covl['nongthon']++;
+                }elseif($ct->tinhtranghdkt == 2){
+                    $a_thatnghiep['nongthon']++;
+                }
             } else {
                 $ct->khuvuc = 'thanhthi';
                 $a_ketqua['thanhthi']++;
+
+                //có việc làm và thất nghiệp
+                if($ct->tinhtranghdkt == 1){
+                    $a_covl['thanhthi']++;
+                }elseif($ct->tinhtranghdkt == 2){
+                    $a_thatnghiep['thanhthi']++;
+                }
             }
+
             if(in_array($ct->gioitinh,['nam','Nam']) ){
                 $a_ketqua['nam']++;
             }else{
                 $a_ketqua['nu']++;
-            }
-            // $ngaysinh=str_replace('-','',$ct->ngaysinh);
-            // if(strlen($ngaysinh)< 9){
-            //     $tuoi = getAge(Carbon::parse($ct->ngaysinh)->format('Y-m-d'));
+            } 
+
+            // if($ct->tinhtranghdkt ==1){
+            //    is_numeric($ct->chuyenmonkythuat)?($cmkt_covl[$ct->chuyenmonkythuat]?$cmkt_covl[$ct->chuyenmonkythuat]++:'' ): '';
+            //    is_numeric($ct->nguoicovieclam) ? ($_vithevl[$ct->nguoicovieclam]?$_vithevl[$ct->nguoicovieclam]++:'' ): '';
+            // }elseif($ct->tinhtranghdkt == 2){
+            //    is_numeric($ct->chuyenmonkythuat)? ($cmkt_thatnghiep[$ct->chuyenmonkythuat]?$cmkt_thatnghiep[$ct->chuyenmonkythuat]++:'' ): '';
+            //    is_numeric($ct->thoigianthatnghiep)? ($_thoigianthatnghiep[$ct->thoigianthatnghiep]? $_thoigianthatnghiep[$ct->thoigianthatnghiep]++:'' ): '';
+            // }else{
+            //     if( is_numeric($ct->khongthamgiahdkt)){
+            //         $khongthamgia=str_replace('0','',$ct->khongthamgiahdkt);
+            //         $_khongthamgia[$khongthamgia]++;
+            //     }
             // }
-
-            // $ct->tuoi = $tuoi??0;
-
-
+            
         }
 
 
-        $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
-        $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
-        $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
-        $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
         // dd($model);
         return view('admin.dieutra.baocaotinh')
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('a_ketqua', $a_ketqua)
+            ->with('a_covl', $a_covl)
+            ->with('a_thatnghiep', $a_thatnghiep)
             ->with('m_donvi', $m_donvi)
             ->with('a_cmkt', $a_cmkt)
             ->with('a_khongthamgia', $a_khongthamgia)
@@ -464,7 +479,17 @@ class AdminDieutra extends Controller
         $inputs=$request->all();
         $model=danhsach::findOrFail($id);
         if(isset($model)){
-            DB::table('nhankhau')->where('danhsach_id',$model->id)->delete();
+            
+            $danhsach=danhsachnhankhau::where('danhsach_id',$model->id)->get();
+            $maloi=array_column($danhsach->toarray(),'maloi');  
+            foreach($danhsach as $val){
+                    $val->delete();
+                }
+           $dsloi=danhsachloi::wherein('nhankhau_id',$maloi)->get();
+            foreach($dsloi as $ct)
+            {
+                $ct->delete();
+            }
         }
         $model->delete();
 

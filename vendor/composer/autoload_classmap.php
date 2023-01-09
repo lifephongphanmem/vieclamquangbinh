@@ -120,6 +120,10 @@ return array(
     'App\\Models\\Vitrituyendung' => $baseDir . '/app/Models/Vitrituyendung.php',
     'App\\Models\\danhsach' => $baseDir . '/app/Models/danhsach.php',
     'App\\Models\\danhsachloi' => $baseDir . '/app/Models/danhsachloi.php',
+<<<<<<< HEAD
+=======
+    'App\\Models\\danhsachnhankhau' => $baseDir . '/app/Models/danhsachnhankhau.php',
+>>>>>>> 5b77d28ce2874bd5ea96baaf10f45d90d23fb5f5
     'App\\Models\\m_nhankhau' => $baseDir . '/app/Models/m_nhankhau.php',
     'App\\Models\\view\\view_bao_cao_tonghop' => $baseDir . '/app/Models/view/view_bao_cao_tonghop.php',
     'App\\Models\\view\\view_nhankhau_danhsach' => $baseDir . '/app/Models/view/view_nhankhau_danhsach.php',
