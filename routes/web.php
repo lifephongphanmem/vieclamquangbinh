@@ -247,7 +247,7 @@ Route::post('/dmhc-bu/',[AdminDanhmuchanhchinh::class,'update']);
 
 // Lao động Biến động
 Route::get('/report-ba/{cid?}',[AdminReport::class,'show_all']);
-
+Route::get('/report-detail',[AdminReport::class,'detail']);
 Route::get('/report-be/{id}',[AdminReport::class,'edit']);
 
 

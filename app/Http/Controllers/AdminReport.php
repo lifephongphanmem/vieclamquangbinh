@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Employer;
@@ -9,221 +10,321 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Report;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\ToArray;
 
 class AdminReport extends Controller
 {
-   
 
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (!Session::has('admin')) {
-                return redirect('/');
-            };
-            return $next($request);
-        });
-    }
-	
-   public function show_all($uid=null)
+
+	public function __construct()
 	{
-	
-		$request= request();
-		
-		//filter
+		$this->middleware(function ($request, $next) {
+			if (!Session::has('admin')) {
+				return redirect('/');
+			};
+			return $next($request);
+		});
+	}
+
+	public function show_all($uid = null)
+	{
+		$request = request();
 		$search = $request->search;
-		$type_filter = $request->type_filter;
 		$time_filter = $request->time_filter;
-		dd($search);
-		$reports= DB::table('report')
-				->when($search, function ($query, $search) {
-                    return $query->where('report.note', 'like', '%'.$search.'%');
-					})
-				->when($type_filter, function ($query, $type_filter) {
-                    return $query->where('report.type', $type_filter);
-					})
-				// ->when($time_filter, function ($query, $time_filter) {
-				// 		$ym = explode('-',$time_filter,2);
-				// 		$timeS = Carbon::create($ym[0],$ym[1])->startOfMonth();
-				// 		$timeE =Carbon::create($ym[0],$ym[1])->endOfMonth();
-				// 		return $query->whereBetween("time",[$timeS,$timeE] );
-				// 	})
-				->when($uid, function ($query, $uid) {
-                    return $query->where('report.user', $uid);
-					})
-				->where('datatable','!=','nhankhau')
-				->orderBy('id', 'desc')
-				->paginate(40);
-				// ->get();
-			
-		// $reports = array_unique($reports);
-		foreach($reports as $report){
-			$ct=DB::table('company')->where('user',$report->user)->get()->first();
-			if ($ct){
-				$report->ctyname =$ct->name;
-			}else{
-				$report->ctyname ="";
+		if ($request->tungay == null && $request->denngay == null) {
+
+			$tungay = date('Y-m-5');
+			$denngay = date('Y-m-d');
+		}
+		else{
+			$tungay = $request->tungay;
+			$denngay = $request->denngay;
+		}
+		if ($request->type_filter == 'chuakhaibao') {
+			$type_filter = null;
+		} else {
+			$type_filter = $request->type_filter;
+		}
+		$reports = DB::table('report')
+
+			// ->when($search, function ($query, $search) {
+			// 	return $query->where('report.note', 'like', '%' . $search . '%');
+			// })
+			->when($type_filter, function ($query, $type_filter) {
+
+				return $query->where('type', $type_filter);
+			})
+			// ->when($tungay, function ($query, $tungay) {
+			// 	return $query->where('type', '>=', $tungay);
+			// })
+			// ->when($denngay, function ($query, $denngay) {
+			// 	return $query->where('type', '<=', $denngay);
+			// })
+			// ->when($time_filter, function ($query, $time_filter) {
+			// 	$ym = explode('-', $time_filter, 2);
+			// 	$timeS = Carbon::create($ym[0], $ym[1])->startOfMonth();
+			// 	$timeE = Carbon::create($ym[0], $ym[1])->endOfMonth();
+			// 	return $query->whereBetween("time", [$timeS, $timeE]);
+			// })
+			// ->when($uid, function ($query, $uid) {
+			// 	return $query->where('user', $uid);
+			// })
+			->where('datatable', '!=', 'nhankhau')
+			->orderBy('id', 'desc')
+			->get();
+		$a = [];
+		if ($tungay != null && $denngay != null) {
+			foreach ($reports as $item) {
+				$dt = Carbon::parse($item->time);
+				if ($dt->toDateString() <= $denngay && $tungay <= $dt->toDateString()) {
+					array_push($a, $item);
+				}
+			}
+		} else {
+			if ($tungay != null) {
+
+				foreach ($reports as $item) {
+					$dt = Carbon::parse($item->time);
+					// dd($dt->toDateString() >= $tungay);
+					if ($dt->toDateString() >= $tungay) {
+						array_push($a, $item);
+					}
+				}
+			}
+
+			if ($denngay != null) {
+
+				foreach ($reports as $item) {
+					$dt = Carbon::parse($item->time);
+					if ($dt->toDateString() <= $denngay) {
+						array_push($a, $item);
+					}
+				}
 			}
 		}
+		// foreach ($reports as $report) {
+		// 	$ct = DB::table('company')->where('user', $report->user)->get()->first();
+		// 	if ($ct) {
+		// 		$report->ctyname = $ct->name;
+		// 	} else {
+		// 		$report->ctyname = "";
+		// 	}
+		// }
+		$b = [];
+		if ($tungay == null && $denngay == null) {
+			if ($request->type_filter == 'chuakhaibao') {
+				foreach ($reports as $item) {
+					if ($item->datatable == 'nguoilaodong' || $item->datatable == 'notable') {
+						array_push($b, $item);
+					}
+				}
+				$a = a_unique(array_column($b, 'user'));
+			} else {
+				$a = a_unique(array_column($reports->toarray(), 'user'));
+			}
+		} else {
+			if ($request->type_filter == 'chuakhaibao') {
+				foreach ($a as $item) {
+					if ($item->datatable == 'nguoilaodong' || $item->datatable == 'notable') {
+						array_push($b, $item);
+					}
+				}
+				$a = a_unique(array_column($b, 'user'));
+			} else {
+				$a = a_unique(array_column($a, 'user'));
+			}
+		}
+		// $a = a_unique(array_column($a->toarray(), 'user'));
+		if ($request->type_filter == 'chuakhaibao') {
+			$model_congty = Company::join('users', 'users.id', 'company.user')
+				->select('company.name', 'users.id')
+				->whereNotIn('users.id', $a)
+				->get();
+		} else {
+			$model_congty = Company::join('users', 'users.id', 'company.user')
+				->select('company.name', 'users.id')
+				->wherein('users.id', $a)
+				->get();
+		}
 		$inputs['url'] = '/report-ba';
-		return view ('admin.report.all')->with('reports', $reports)
-					->with('search', $search)
-					->with('time_filter', $time_filter)
-					->with('type_filter', $type_filter)
-					->with('inputs', $inputs);
+		$type_filter = $request->type_filter;
+		if ($request->tungay == null && $request->denngay == null) {
+
+			$tungay = null;
+			$denngay = null;
+		}
+		return view('admin.report.all')->with('model_congty', $model_congty)
+			->with('search', $search)
+			->with('time_filter', $time_filter)
+			->with('type_filter', $type_filter)
+			->with('inputs', $inputs)
+			->with('tungay', $tungay)
+			->with('denngay', $denngay);
 	}
-	
+
+
+	public function detail(Request $request)
+	{
+		$reports = Report::where('user', $request->user)->get();
+
+		foreach ($reports as $report) {
+			$ct = DB::table('company')->where('user', $report->user)->get()->first();
+			if ($ct) {
+				$report->ctyname = $ct->name;
+			} else {
+				$report->ctyname = "";
+			}
+		}
+		return view('admin.report.detail')->with('reports', $reports);
+	}
+
+
 	public function getDmhc()
 	{
-		$cats=DB::table('danhmuchanhchinh')->where('level','huyện')->orwhere('level','thành phố')->get();
+		$cats = DB::table('danhmuchanhchinh')->where('level', 'huyện')->orwhere('level', 'thành phố')->get();
 		return $cats;
 	}
+
 	public function getParams($paramtype)
 	{
-		$type= DB::table('paramtype')->where('name',$paramtype)->get()->first();
-		$cats=DB::table('param')->where('type',$type->id)->get();
+		$type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
+		$cats = DB::table('param')->where('type', $type->id)->get();
 		return $cats;
 	}
-	
-	 
-	public function getInfo28($cid){
-		  
-		$dn= DB::table('company')->where('id',$cid)->first();
-		$em= new Employer;
-		$other_info=$em->getTonghop($dn->id);
-		$dn->tonghop =$other_info;
-		$dn->pbcmkt=$em->getPhanbo($dn->id,3);
-		$dn->pblvdt=$em->getPhanbo($dn->id,11);
-		$dn->pbnghenghiep=$em->getPhanbo($dn->id,9);
-		return $dn;
-	  }
-	public function getInfo45($cid){
-		  
-		$dn= DB::table('company')->where('id',$cid)->first();
-		$em= new Employer;
-		$other_info=$em->getTonghop($dn->id);
-		$dn->tonghop =$other_info;
-		$dn->pbcmkt=$em->getPhanbo($dn->id,3);
-		$dn->pblvdt=$em->getPhanbo($dn->id,11);
-		$dn->pbnghenghiep=$em->getPhanbo($dn->id,9);
-		return $dn;
-	  }
-	 public function new()
+
+
+	public function getInfo28($cid)
 	{
-		return view ('admin.company.new');
+
+		$dn = DB::table('company')->where('id', $cid)->first();
+		$em = new Employer;
+		$other_info = $em->getTonghop($dn->id);
+		$dn->tonghop = $other_info;
+		$dn->pbcmkt = $em->getPhanbo($dn->id, 3);
+		$dn->pblvdt = $em->getPhanbo($dn->id, 11);
+		$dn->pbnghenghiep = $em->getPhanbo($dn->id, 9);
+		return $dn;
 	}
-	
-	 public function save( Request $request)
+	public function getInfo45($cid)
+	{
+
+		$dn = DB::table('company')->where('id', $cid)->first();
+		$em = new Employer;
+		$other_info = $em->getTonghop($dn->id);
+		$dn->tonghop = $other_info;
+		$dn->pbcmkt = $em->getPhanbo($dn->id, 3);
+		$dn->pblvdt = $em->getPhanbo($dn->id, 11);
+		$dn->pbnghenghiep = $em->getPhanbo($dn->id, 9);
+		return $dn;
+	}
+	public function new()
+	{
+		return view('admin.company.new');
+	}
+
+	public function save(Request $request)
 	{
 		$data = array();
-		$data['name']= $request->name;
-		$data['description']= $request->description;	
-		$result= DB::table('paramtype')->insert($data);
-		
-		if($result){
-			
-			Session::put('message',"Thêm mới thành công");
+		$data['name'] = $request->name;
+		$data['description'] = $request->description;
+		$result = DB::table('paramtype')->insert($data);
+
+		if ($result) {
+
+			Session::put('message', "Thêm mới thành công");
 			return redirect('ptype-ba');
-		}
-		
-        else{
-			Session::put('message',"Có lỗi xảy ra");
+		} else {
+			Session::put('message', "Có lỗi xảy ra");
 			return redirect('ptype-bn');
 		}
-		
 	}
-	
-	 
-	 public function edit($cid)
-	{	$dmhc =$this->getdanhmuc();
-		$kcn = $this->getParamsByNametype("Khu công nghiệp");// lấy danh mục khu công nghiệp
-		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp");// lấy loại hình doanh nghiệp
-		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp");// lấy ngành nghề doanh nghiệp
-		
-		$company= DB::table('company')->where('id',$cid)->first();
+
+
+	public function edit($cid)
+	{
+		$dmhc = $this->getdanhmuc();
+		$kcn = $this->getParamsByNametype("Khu công nghiệp"); // lấy danh mục khu công nghiệp
+		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
+		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp"); // lấy ngành nghề doanh nghiệp
+
+		$company = DB::table('company')->where('id', $cid)->first();
 		//print_r($cat);
-		return view ('admin.company.edit')
-				->with('dmhc', $dmhc)
-				->with('info', $company)
-				->with('ctype',$ctype)
-				->with('kcn',$kcn)
-				->with('cfield',$cfield);
-		
+		return view('admin.company.edit')
+			->with('dmhc', $dmhc)
+			->with('info', $company)
+			->with('ctype', $ctype)
+			->with('kcn', $kcn)
+			->with('cfield', $cfield);
 	}
-	
-	
-	public function update( Request $request)
+
+
+	public function update(Request $request)
 	{
 		$data = array();
-		$data['name']= $request->name;
-		$data['description']= $request->desc;
-		
-		$catid= $request->catid;
-		
-		$result= DB::table('paramtype')->where('id',$catid)->update($data);
-		
-		if($result){
-			
-			Session::put('message',"Cập nhật thành công");
+		$data['name'] = $request->name;
+		$data['description'] = $request->desc;
+
+		$catid = $request->catid;
+
+		$result = DB::table('paramtype')->where('id', $catid)->update($data);
+
+		if ($result) {
+
+			Session::put('message', "Cập nhật thành công");
 			return redirect('ptype-bs');
+		} else {
+			Session::put('message', "Có lỗi xảy ra");
+			return redirect('/ptype-be/' . $catid);
 		}
-		
-        else{
-			Session::put('message',"Có lỗi xảy ra");
-			return redirect('/ptype-be/'.$catid);
-		}
-		
 	}
 	public function delete($catid)
 	{
 		// Check param
-		$param= DB::table('param')->where('type',$catid)->count();
-			if ($param){
-				Session::put('message'," Tham số còn có giá trị, không thể xóa");
-				return redirect('ptype-bs');
-			}
-		
-		
-		
+		$param = DB::table('param')->where('type', $catid)->count();
+		if ($param) {
+			Session::put('message', " Tham số còn có giá trị, không thể xóa");
+			return redirect('ptype-bs');
+		}
+
+
+
 		// Delete
-		$result= DB::table('paramtype')->where('id',$catid)->delete();
-		
-		if($result){
-			
-			Session::put('message',"Xóa thành công");
+		$result = DB::table('paramtype')->where('id', $catid)->delete();
+
+		if ($result) {
+
+			Session::put('message', "Xóa thành công");
+			return redirect('ptype-bs');
+		} else {
+			Session::put('message', "Có lỗi xảy ra");
 			return redirect('ptype-bs');
 		}
-		
-        else{
-			Session::put('message',"Có lỗi xảy ra");
-			return redirect('ptype-bs');
-		}
-		
 	}
-	public function report($type,$result,$tbl,$rowid){
+	public function report($type, $result, $tbl, $rowid)
+	{
 		// write report 
 		$r = array();
-		$r['type']= $type;
-		$r['result']= $result;
-		$r['tbl']= $tbl;	
-		$r['tbl']= $rowid;	
-		$r['user']= $rowid;	
-		$r['time']= $rowid;	
-	
+		$r['type'] = $type;
+		$r['result'] = $result;
+		$r['tbl'] = $tbl;
+		$r['tbl'] = $rowid;
+		$r['user'] = $rowid;
+		$r['time'] = $rowid;
 	}
-	
-	 public function getdanhmuc(){
-		  
-		 $dm= DB::table('danhmuchanhchinh')->where('public','1')->get();
-		 return $dm;
-	  }
-	   public function getParamsByNametype($paramtype)
+
+	public function getdanhmuc()
 	{
-		$cats= array();
-		$type= DB::table('paramtype')->where('name',$paramtype)->get()->first();
-		if($type){
-			$cats=DB::table('param')->where('type',$type->id)->get();
+
+		$dm = DB::table('danhmuchanhchinh')->where('public', '1')->get();
+		return $dm;
+	}
+	public function getParamsByNametype($paramtype)
+	{
+		$cats = array();
+		$type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
+		if ($type) {
+			$cats = DB::table('param')->where('type', $type->id)->get();
 		}
 		return $cats;
 	}
-
 }
