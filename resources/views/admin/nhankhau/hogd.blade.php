@@ -68,7 +68,7 @@
                                 <th>Ngày sinh</th>
                                 <th>Địa chỉ</th>
                                 <th>Nơi làm việc</th>
-
+                                <th>thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,12 +77,19 @@
                                 <tr>
                                     <td>{{ ++$key }} </td>
 
-                                    <td><a href="{{ URL::to('/nhankhau/ChiTietHoGiaDinh/' . $ld->id) }}">{{ $ld->hoten }}</a></td>
+                                    <td><a
+                                            href="{{ URL::to('/nhankhau/ChiTietHoGiaDinh/' . $ld->id) }}">{{ $ld->hoten }}</a>
+                                    </td>
                                     <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
                                     <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
                                     <td><span class="text-ellipsis"> </span>{{ $ld->diachi }}</td>
 
                                     <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
+                                    <td class="text-ellipsis">
+                                        <a href="{{ '/nhankhau-inhgd?id='.$ld->id }}" class="btn btn-sm mr-2"
+                                            title="In danh sách" target="_blank">
+                                            <i class="icon-lg la flaticon2-print text-dark"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
 
