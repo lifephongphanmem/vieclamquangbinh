@@ -84,10 +84,10 @@
                                 </select>
                             </div>
                            
-                            <div class="col-sm-2 m-b-xs" style="margin-left: 10%">
+                            {{-- <div class="col-sm-2 m-b-xs" style="margin-left: 10%">
                                 <button class="btn btn-sm btn-default" name="export" value="1" type="submit">Xuất
                                     Excel</button>
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
 
@@ -114,8 +114,9 @@
 
                                 <td><a href="{{ '/nguoilaodong/ChiTiet/' . $ld->id }}">{{ $ld->hoten }}</a></td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cmnd }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->ctyname }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
+                                {{-- <td><span class="text-ellipsis"> </span>{{ $ld->ctyname }}</td> --}}
+                                <td><span class="text-ellipsis"> </span>{{ $ld->company != null?$a_congty[$ld->company]:'' }}</td>
 
                                 <td><span class="text-ellipsis"> </span>{{ $ld->tinh }}</td>
                             </tr>

@@ -326,20 +326,6 @@ class AdminDieutra extends Controller
     {
         $inputs = $request->all();
         // dd($inputs);
-        // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
-        //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
-        //     ->get();
-        // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
-        //     ->select('nhankhau.*', 'danhsach.user_id', 'danhsach.soluong', 'danhsach.kydieutra', 'danhsach.soho')
-        //     ->chunk(1000, function($danhsach){
-        //         return $danhsach;
-        //     });
-        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
-        // $m_danhsach=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
-        // $model=DB::table('nhankhau')->wherein('danhsach_id',$m_danhsach->toarray(),'id')->get();
-
-        // $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
         $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
 
         // dd($model);
@@ -347,30 +333,27 @@ class AdminDieutra extends Controller
         ->select('danhmuchanhchinh.*','dmdonvi.madv')
         ->get();
         $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
-        $m_donvi->huyen=$m_danhmuc->where('maquocgia',$m_donvi->parent)->first()->name;
+        // $m_donvi->huyen=$m_danhmuc->where('maquocgia',$m_donvi->parent)->first()->name;
 
         if (isset($inputs['madv'])) {
             $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
             $model = $model->wherein('madv', $a_donvi);
         }
 
-        // if (isset($inputs['kydieutra'])) {
-        //     $model = $model->where('kydieutra', $inputs['kydieutra']);
-        // }
-
         //    dd($model);
         $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
         foreach ($model as $ct) {
-            // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-            //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
-            //     ->where('dmdonvi.madv', $ct->user_id)
-            //     ->first();
 
             if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
             } else {
                 $ct->khuvuc = 'thanhthi';
             }
+
+            if($ct->gioitinh == null){
+                $ct->gioitinh='Nam';
+            }
+
         }
 
 
@@ -480,16 +463,25 @@ class AdminDieutra extends Controller
         $model=danhsach::findOrFail($id);
         if(isset($model)){
             
-            $danhsach=danhsachnhankhau::where('danhsach_id',$model->id)->get();
-            $maloi=array_column($danhsach->toarray(),'maloi');  
-            foreach($danhsach as $val){
-                    $val->delete();
-                }
-           $dsloi=danhsachloi::wherein('nhankhau_id',$maloi)->get();
-            foreach($dsloi as $ct)
-            {
-                $ct->delete();
-            }
+            // $danhsach=danhsachnhankhau::where('danhsach_id',$model->id)->get();
+            $danhsach=DB::table('nhankhau')->where('danhsach_id',$model->id)->delete();
+            // $maloi=array_column($danhsach->toarray(),'maloi');  
+            // foreach($danhsach as $val){
+            //         $val->delete();
+            //     }
+            $dsloi=DB::table('danhsachloi')->where('madv',$model->user_id)->where('kydieutra',$model->kydieutra)->delete();
+  
+            // foreach(array_chunk($maloi,1000) as $loi){
+            //     $dsloi=danhsachloi::wherein('nhankhau_id',$loi)->get();
+            //     dd($dsloi);
+               
+            // }
+
+          
+            // foreach($dsloi as $ct)
+            // {
+            //     $ct->delete();
+            // }
         }
         $model->delete();
 

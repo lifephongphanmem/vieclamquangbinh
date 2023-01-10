@@ -317,7 +317,7 @@ class Employer extends Model
 	{ 
 	  $request= request();
 	  
-	  $uid = $request->user()->id;
+	  $uid = session('admin')->id;
 	  $cid= DB::table('company')->select('id')->where('user',$uid)->first();
 
 	  $lds= Employer::select("hoten","gioitinh","ngaysinh","cmnd","dantoc","nation","tinh","huyen","xa","address","sobaohiem","trinhdogiaoduc","trinhdocmkt","nghenghiep","linhvucdaotao","loaihdld","bdhopdong","kthopdong","luong","pcchucvu","pcthamnien","pcthamniennghe","pcluong","pcbosung","bddochai","ktdochai","vitri","chucvu","bdbhxh","ktbhxh","luongbhxh","ghichu","created_at","updated_at", "state","fromttdvvl")

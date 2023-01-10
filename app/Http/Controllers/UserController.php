@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Danhmuc\Chucnang;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdonvi;
@@ -395,7 +396,65 @@ class UserController extends Controller
 		
 	}
 
-	
+	public function edit_tk($id)
+	{
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'chucnang');
+        }
+
+		
+		$model = User::findOrFail($id);
+		if($model->phanloaitk ==1){
+			$model_dv = dmdonvi::where('madv', $model->madv)->first();
+			$model_dvbc=User::where('tonghop',1)->get();
+			return view('HeThong.manage.taikhoan.edit')
+				->with('model', $model)
+				->with('model_dvbc', $model_dvbc)
+				->with('model_dv', $model_dv);
+		}else{
+			$model_cty=Company::where('user',$model->id)->first();
+
+			return view('HeThong.manage.taikhoan.edit_doanhnghiep')
+					->with('model',$model)
+					->with('model_cty',$model_cty);
+		}
+
+	}
+
+	public function update_tk(Request $request, $id)
+	{
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
+		$inputs = $request->all();
+		$model = User::findOrFail($id);
+		// $model = User::where('username',$inputs['username'])->first();
+		if ($inputs['password'] == '') {
+			$inputs['password'] = $model->password;
+		} else {
+			$inputs['password'] = md5($inputs['password']);
+		}
+		// $inputs['phanloai'] == 'tonghop'?$inputs['tonghop']=1:$inputs['nhaplieu']=1;
+		if($model->phanloaitk ==1){
+		if($inputs['phanloai'] == 'tonghop'){
+			$inputs['tonghop']=1;
+			$inputs['nhaplieu']=0;
+		}else{
+			$inputs['tonghop']=0;
+			$inputs['nhaplieu']=1;
+		}
+	}else{
+		$inputs['madv']=$inputs['dkkd'];
+	}
+		Company::where('user',$model->id)->first()->update(['madv'=>$inputs['madv']]);
+		$model->update($inputs);
+		if($model->phanloaitk ==1){
+			return redirect('/TaiKhoan/DanhSach?madv=' . $model->madv);
+		}else{
+			return redirect('/TaiKhoan/ThongTin?phanloaitk=2');
+		}
+		
+	}	
 }
 
 ?>

@@ -66,7 +66,7 @@ class AdminCompany extends Controller
 				 ->when($quymo_max_filter==0&&!is_null($quymo_max_filter), function ($query, $quymo_max_filter) {
 					return $query->having('employers_count', '=', 0)	;
 					})		
-				->orderBy('employers_count', 'desc')
+				// ->orderBy('employers_count', 'desc')
 				->get();
 				
 			
@@ -289,6 +289,25 @@ class AdminCompany extends Controller
 					->with('success','Thêm thành công');
 
 		// dd($sldn);
+	}
+
+	public function store(Request $request)
+	{
+		$inputs=$request->all();
+
+		$inputs['madv']=$inputs['dkkd'];
+		$model=DB::table('company')->where('dkkd',$inputs['dkkd'])->first();
+		if(isset($model) && $model->user != null)
+		{
+			return view('errors.tontai_dulieu')
+					->with('message','Doanh nghiệp đăng ký')
+					->with('furl','/doanhnghiep-ba');
+		}
+		unset($inputs['_token']);
+		// dd($inputs);
+		DB::table('company')->insert($inputs);
+
+		return redirect('/doanhnghiep-ba');
 	}
 
 }

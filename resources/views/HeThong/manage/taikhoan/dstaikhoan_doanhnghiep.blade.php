@@ -66,7 +66,7 @@
                                 <tr class="text-center">
                                     <td style="width: 2%">{{ ++$key }}</td>
                                     <td class="text-left" style="width: 50%">{{ $tk->name }}</td>
-                                    <td class="text-left" style="width: 10%">{{ $tk->username }}</td>
+                                    <td class="text-left" style="width: 10%">{{ $tk->email }}</td>
                                     @if ($tk->status == 1)
                                         <td class="text-center">
                                             <button title="Tài khoản đang được kích hoạt"

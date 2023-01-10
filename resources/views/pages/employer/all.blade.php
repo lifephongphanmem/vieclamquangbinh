@@ -107,7 +107,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td> {{ $ld->hoten }}</td>
-                                    <td> {{ $ld->ngaysinh }}</td>
+                                    <td> {{ getDayvn($ld->ngaysinh) }}</td>
                                     <td> {{ $ld->gioitinh == 'nam' || $ld->gioitinh == 'Nam' ? 'Nam' : 'Nữ' }}</td>
                                     <td> {{ $ld->cmnd }}</td>
                                     <td> {{ $ld->address }} {{ $ld->xa }} {{ $ld->huyen }}

@@ -107,7 +107,7 @@
                             <th>Mã ĐKKD</th>
                             <th>Tên doanh nghiệp</th>
                             <th>Địa chỉ</th>
-                            <th>Điện thoại</th>
+                            <th style="width:10%">Điện thoại</th>
                             <th>Quy mô</th>
                             <th>Tình trạng</th>
                             <th>Biến động</th>
@@ -156,7 +156,7 @@
             @csrf
             <div class="modal-dialog modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách người lao động từ file Excel</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách doanh nghiệp từ file Excel</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                 </div>
                 <div class="modal-body">

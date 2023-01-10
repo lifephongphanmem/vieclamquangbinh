@@ -37,8 +37,14 @@ class HethongchungController extends Controller
 	{
 
 		$inputs = $request->all();
+		
+		$user_gmail=User::where('email',$inputs['username'])->first();
+		if(isset($user_gmail)){
+			$user=$user_gmail;
+		}else{
+			$user = User::where('username', $inputs['username'])->first();
+		}
 
-		$user = User::where('username', $inputs['username'])->first();
 // dd($user);
 		//tài khoản không tồn tại
 		if (!isset($user)) {
@@ -70,7 +76,7 @@ class HethongchungController extends Controller
                     .Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại');
 			}
 		}
-
+// dd($user);
 		//kiểm tra tài khoản
 		//1. level = SSA ->
 		if ($user->sadmin != "SSA") {
@@ -181,4 +187,6 @@ class HethongchungController extends Controller
 		return redirect('/')
 			->with('success', 'Đăng ký thành công');
 	}
+
+
 }

@@ -122,6 +122,7 @@ Route::get('/doanh_nghiep/them_moi', [CompanyController::class, 'create']);
 Route::prefix('doanhnghiep')->group(function(){
     Route::get('/baocao',[baocaotonghopController::class,'BC_doanhnghiep']);
     Route::post('/import',[AdminCompany::class,'import']);
+    Route::post('/store',[AdminCompany::class,'store']);
 });
 
 // Người lao động
