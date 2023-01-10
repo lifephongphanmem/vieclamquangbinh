@@ -66,7 +66,9 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label> Giới tính </label>
+
                                             <select class="form-control" name="gioitinh">
+
                                                 <option value='nu'>Nữ</option>
                                                 <option value='nam' <?php if ($ld->gioitinh == 'nam' || $ld->gioitinh == 'Nam') {
                                                     echo 'selected';
@@ -114,6 +116,7 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Số sổ bảo hiểm</label>
@@ -121,6 +124,7 @@
                                                 class="form-control">
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="col-md-12">
                                     <div class="col-md-3">
@@ -325,7 +329,16 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
+
+                            <div class="row">
+                                
+                            </div>
+
+                        </div>
+=======
                         @endif
+>>>>>>> b3e4c87704b1042b390ec0744992c2a286e48328
                     </form>
 
                 </div>

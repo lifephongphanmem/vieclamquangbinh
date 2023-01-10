@@ -28,12 +28,12 @@
             $('#madv').change(function() {
                 // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
                 //     '&kydieutra=' + $('#kydieutra').val();
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' +$('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
             });
             $('#mahuyen').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val();
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
             });
 
             $('#kydieutra').change(function() {
@@ -64,9 +64,9 @@
                             <label style="font-weight: bold">Đơn vị</label>
 
                             <select class="form-control select2basic" id="madv">
-                                @foreach ($m_diaban->where('capdo','H') as $diaban)
+                                @foreach ($m_diaban->where('capdo', 'H') as $diaban)
                                     <optgroup label="{{ $diaban->name }}">
-                                        <?php $a_xa=array_column($m_diaban->where('parent',$diaban->maquocgia)->toarray(),'id') ?>
+                                        <?php $a_xa = array_column($m_diaban->where('parent', $diaban->maquocgia)->toarray(), 'id'); ?>
                                         <?php $donvi = $m_donvi->wherein('madiaban', $a_xa); ?>
                                         @foreach ($donvi as $ct)
                                             <option {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}
@@ -83,32 +83,37 @@
                                 'id' => 'kydieutra',
                             ]) !!}
                         </div> --}}
-                            <div class="col-md-4">
-                                <label style="font-weight: bold">Huyện</label>
-                                <select name="mahuyen" id="mahuyen" onchange="MaHuyen()"  class="form-control select2basic">
-                                    @foreach ($a_huyen as $key=>$ct )
-                                        <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label style="font-weight: bold">Xã</label>
-                                <select name="madv" id="madv"  class="form-control select2basic">
-                                    <option value="">----Chọn xã ---</option>
-                                    @foreach ($a_xa as $key=>$ct )
-                                    <option value="{{$ct->madv}}" {{$ct->madv == $inputs['madv']?'selected':''}}>{{$ct->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label style="font-weight: bold">Kỳ điều tra</label>
-    
-                                <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
-                                    @foreach ($a_kydieutra as $key=>$ct )
-                                        <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Huyện</label>
+                            <select name="mahuyen" id="mahuyen" onchange="MaHuyen()" class="form-control select2basic">
+                                @foreach ($a_huyen as $key => $ct)
+                                    <option value="{{ $key }}"
+                                        {{ isset($inputs['mahuyen']) ? ($inputs['mahuyen'] == $key ? 'selected' : '') : '' }}>
+                                        {{ $ct }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Xã</label>
+                            <select name="madv" id="madv" class="form-control select2basic">
+                                <option value="">----Chọn xã ---</option>
+                                @foreach ($a_xa as $key => $ct)
+                                    <option value="{{ $ct->madv }}" {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Kỳ điều tra</label>
+
+                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()"
+                                class="form-control select2basic">
+                                @foreach ($a_kydieutra as $key => $ct)
+                                    <option value="{{ $key }}" {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
+                                        {{ $ct }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         {{-- <div class="col-md-4 float-right">
                         </div> --}}
@@ -143,18 +148,26 @@
                                 <td>{{ $dmhc_names[$td->xa] }}</td>
                                 <td>{{ $dmhc_names[$td->huyen] }}</td>
                                 <td><a href="#">{{ $td->soluong }} </a></td>
-                                <td><a href="#">{{ count($data_loi->where('madv',$td->user_id)) }} </a></td>
+                                <td><a href="#">{{ count($data_loi->where('madv', $td->user_id)) }} </a></td>
                                 <td><a href="#">{{ $td->soho }} </a></td>
                                 <td>{{ $td->kydieutra }}</td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
-                                <td><span class="text-ellipsis">{{ $td->donvinhap != null?$a_donvi[$td->donvinhap]:'' }} </span></td>
+                                <td><span class="text-ellipsis">{{ $td->donvinhap != null ? $a_donvi[$td->donvinhap] : '' }}
+                                    </span></td>
                                 {{-- <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td> --}}
                                 <td>
                                     <button title="Xóa thông tin" type="button"
-                                    onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id.'?mahuyen='.$inputs['mahuyen'].'&kydieutra='.$inputs['kydieutra'] }}')"
-                                    class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
-                                    data-toggle="modal">
-                                    <i class="icon-lg flaticon-delete text-danger"></i></button>
+                                        onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id . '?mahuyen=' . $inputs['mahuyen'] . '&kydieutra=' . $inputs['kydieutra'] }}')"
+                                        class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
+                                        data-toggle="modal">
+                                        <i class="icon-lg flaticon-delete text-danger"></i>
+                                    </button>
+
+                                    <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
+                                        <a href="{{'/nhankhau-in?user_id='.$td->user_id.'&danhsach_id='.$danhsach_id->id}}" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la flaticon2-print text-primary"></i>
+                                        </a>
+                                    </div>
                                 </td>
 
                             </tr>
@@ -164,29 +177,30 @@
                 </div>
             </div>
         </div>
-    <!--Model delete-->
-    <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xóa</h4>
-                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                       <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra này</b></label>
-                    </div>
+        <!--Model delete-->
+        <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xóa</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra
+                                    này</b></label>
+                        </div>
 
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
-                            ý</button>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
         <!-- modal in tổng hợp -->
         <form method="POST" action="" accept-charset="UTF-8" id="frm_modify_in" target="_blank">
             @csrf
@@ -202,7 +216,8 @@
                             <div class="col-lg-12 mb-2">
                                 <label class="control-label">Đơn vị</label>
                                 {{-- {!! Form::select('tinhtrangvl', setArray($a_tinhtrangvl,'Tất cả',null), ['id' => 'tinhtrangvl', 'class' => 'form-control select2basic']) !!} --}}
-                                <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                                <select name="madv" id="" class="form-control select2basic"
+                                    style="width:100%">
                                     <option value="">Tất cả</option>
                                     @foreach ($a_dsdv as $key => $ct)
                                         <option value="{{ $key }}">{{ $ct }}</option>
@@ -223,7 +238,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                            <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                            <button type="submit" id="submit" name="submit" value="submit"
+                                class="btn btn-primary">Đồng
                                 ý</button>
                         </div>
                     </div>
@@ -238,12 +254,11 @@
             }
 
             function cfDel(url) {
-            $('#frmDelete').attr('action', url);
-        }
+                $('#frmDelete').attr('action', url);
+            }
 
-        function subDel() {
-            $('#frmDelete').submit();
-        }
-
+            function subDel() {
+                $('#frmDelete').submit();
+            }
         </script>
     @endsection

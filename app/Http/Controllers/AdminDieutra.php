@@ -56,6 +56,7 @@ class AdminDieutra extends Controller
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra=danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
+        $danhsach_id = danhsach::select('id')->where('kydieutra',$inputs['kydieutra'])->first();
         // dd($inputs['madv']);
         $inputs['url'] = '/dieutra/danhsach';
         $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
@@ -105,7 +106,7 @@ class AdminDieutra extends Controller
             $dss = $dss->where('danhsach.user_id', $inputs['madv'])
                 ->get();
         }
-
+       
         $data_loi=danhsachloi::where('kydieutra',$inputs['kydieutra'])->get();
 
         $a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
@@ -124,7 +125,8 @@ class AdminDieutra extends Controller
             ->with('search', $search)
             ->with('dmhc_list', $dmhc_list)
             ->with('huyen_list', $huyen_list)
-            ->with('dm_filter', $dm_filter);
+            ->with('dm_filter', $dm_filter)
+            ->with('danhsach_id', $danhsach_id);
     }
 
     public function getDmhc()

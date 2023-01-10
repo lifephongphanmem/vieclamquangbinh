@@ -203,7 +203,7 @@
                                 <th>Địa chỉ</th>
                                 <th>Tình trạng việc làm</th>
                                 <th>Nơi làm việc</th>
-                                {{-- <th>Thao tác</th> --}}
+                                <th>Thao tác</th>
 
                             </tr>
                         </thead>
@@ -220,6 +220,10 @@
                                 <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
                                 </td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
+                                <td class="text-ellipsis">
+                                    <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
+                                        <i class="icon-lg la flaticon2-print text-dark"></i></a>
+                                </td>
                             </tr>
                             <?php } ?>
                         </tbody>
