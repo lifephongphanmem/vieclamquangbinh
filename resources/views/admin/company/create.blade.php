@@ -44,7 +44,7 @@
 
             <div class="card-body form" id="form_wizard">
                 {{-- {!! Form::open(['url'=>'/nghiep_vu/ho_so/store','method'=>'post' , 'files'=>true, 'id' => 'create_hscb','enctype'=>'multipart/form-data']) !!} --}}
-                <form action="{{'/doanh_nghiep/store'}}" method="POST" enctype="multipart/form-data">
+                <form action="{{'/doanhnghiep/store'}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
                         <div class="row">
@@ -65,7 +65,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Quy mô</label>
                                     {{-- {!!Form::text('tencanbo', null, array('id' => 'tencanbo','class' => 'form-control', 'required'=>'required'))!!} --}}
-                                    <input type="text" name="masodn" class="form-control" value="{{isset($model)?$model->masodn:''}}" required>
+                                    <input type="text" name="quymo" class="form-control" value="{{isset($model)?$model->quymo:''}}" required>
                                 </div>
                             </div>
 
@@ -124,6 +124,7 @@
                                     <label class="control-label">Huyện/Thị xã/Thành phố</label>
                                     <?php $huyen=$dmhanhchinh->wherein('level',['Thành phố','Huyện','Thị xã'])?>
                                     <select name="huyen" class="form-control select2basic" id="">
+                                        <option value="">--- Chọn Huyện ----</option>
                                     @foreach ($huyen as $h )
                                         <option value="{{$h->id}}">{{$h->name}}</option>
                                     @endforeach
@@ -136,6 +137,7 @@
                                     <label class="control-label">Xã/Phường</label>
                                     <select name="xa" class="form-control select2basic" id="">
                                     <?php $xa=$dmhanhchinh->wherein('level',['Phường','Xã','Thị trấn'])?>
+                                    <option value="">--- Chọn xã ---</option>
                                     @foreach ($xa as $x )
                                     <option value="{{$x->id}}">{{$x->name}}</option>
                                 @endforeach

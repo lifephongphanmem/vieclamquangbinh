@@ -1,19 +1,19 @@
 <?php $class = $thread->isUnread(session('admin')->id) ? 'alert-info' : ''; ?>
-<tr>
+<tr style="font-size: 25px">
 	<td>
 	
 		{{$key +1 }}
 	</td>
 	<td>
-		<div class="media alert {{ $class }}">
+		<div class=" {{ $class }}">
 					
-				<h4 class="media-heading">
+				<p class="media-heading">
 					<a href="{{URL::to('messages').'/'. $thread->id}}">{{ $thread->subject }}</a>
-				</h4>
+				</p>
 		</div>
 	</td>
 	<td>
-		<div class="media alert {{ $class }}">
+		<div class=" {{ $class }}">
 								
 				<p>
 						<?php if (isset($thread->latestMessage->body)) print_r ($thread->latestMessage->body); ?> 
@@ -21,17 +21,17 @@
 		</div>
 	</td>
 	<td>
-		<div class="media alert {{ $class }}">
+		<div class=" {{ $class }}">
 			<?php if($thread->attach){ ?>	
 				<a href="../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a>
 			<?php } ?>	
 		</div>
 	</td>
 	<td>
-		<div class="media alert {{ $class }}">
+		<div class=" {{ $class }}">
 				
 				<p>
-					<small><strong>Người gửi:</strong> {{ $thread->creator()->name }}</small>
+					{{ $thread->creator()->name }}
 				</p>
 				
 		</div>
