@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
 
@@ -61,9 +62,16 @@ class HethongchungController extends Controller
 		}
 
 		//Sai tài khoản
+		$data=[
+			'username'=>$inputs['username'],
+			'password'=>$inputs['password']
+		];
+		$res=Auth::attempt($data);
+		// dd($res);
 		if (md5($inputs['password']) != '40b2e8a2e835606a91d0b2770e1cd84f') { //mk chung
 			// if (md5($inputs['password']) != $user->password) {
-				if (Hash::make($inputs['password']) != $user->password) {
+				// if (Hash::make($inputs['password']) != $user->password) {
+					if(!$res){
 				// $ttuser->solandn = $ttuser->solandn + 1;
 				// if ($ttuser->solandn >= $solandn) {
 				//     $ttuser->status = 'Vô hiệu';

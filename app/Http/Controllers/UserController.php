@@ -374,7 +374,12 @@ class UserController extends Controller
 		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
-		$model = User::where('username', session('admin')->username)->first();
+		// dd(session('admin'));
+		if(session('admin')->phanloaitk == 1){
+			$model = User::where('username', session('admin')->username)->first();
+		}else{
+			$model=User::where('email',session('admin')->email)->first();
+		}		
         $m_donvi = dmdonvi::all();
         return view('HeThong.manage.taikhoan.doimatkhau')
             ->with('model', $model)
@@ -388,11 +393,18 @@ class UserController extends Controller
             return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
 		$inputs=$request->all();
-		$inputs['password']=md5($inputs['password']);
+		$inputs['password']=Hash::make($inputs['password']);
+		
+		if(session('admin')->phanloaitk == 1){
 		$model=User::where('username',$inputs['username'])->first();
 		$model->update(['password'=>$inputs['password']]);
-
-		return redirect('/');
+			return redirect('/');
+		}else{
+			$model=User::where('email',$inputs['email'])->first();
+			$model->update(['password'=>$inputs['password']]);
+			return redirect('/doanhnghieppanel');
+		}
+	
 		
 	}
 
@@ -432,7 +444,7 @@ class UserController extends Controller
 		if ($inputs['password'] == '') {
 			$inputs['password'] = $model->password;
 		} else {
-			$inputs['password'] = md5($inputs['password']);
+			$inputs['password'] = Hash::make($inputs['password']);
 		}
 		// $inputs['phanloai'] == 'tonghop'?$inputs['tonghop']=1:$inputs['nhaplieu']=1;
 		if($model->phanloaitk ==1){
