@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CompaniesExport;
 use App\Imports\ColectionImport;
+use App\Models\modelcompany;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
 class AdminCompany extends Controller
@@ -66,9 +67,9 @@ class AdminCompany extends Controller
 				 ->when($quymo_max_filter==0&&!is_null($quymo_max_filter), function ($query, $quymo_max_filter) {
 					return $query->having('employers_count', '=', 0)	;
 					})		
-				->orderBy('employers_count', 'desc')
+				// ->orderBy('employers_count', 'desc')
 				->get();
-				
+				// dd($ctys);
 			
 		return view ('admin.company.all')->with('ctys', $ctys)
 					->with('dmhc_list', $dmhc_list)
@@ -265,30 +266,55 @@ class AdminCompany extends Controller
 		$theArray = Excel::toArray($dataObj, $file);
 		$arr = $theArray[0];
 		// dd($arr);
-		$arr_col = array('name','masodn','dkkd','phone','email','tinh','huyen','xa','adress','khucn','loaihinh','nganhnghe','quymo');
+		// $arr_col = array('name','masodn','dkkd','phone','email','tinh','huyen','xa','adress','khucn','loaihinh','nganhnghe','quymo');
+		$arr_col = array('name','adress','phone','quymo');
 		$nfield = sizeof($arr_col);
 		$sldn=array();
-		for ($i = 4; $i < count($arr); $i++) {
+		for ($i = 1; $i < count($arr); $i++) {
 			$data = array();
 			for ($j = 0; $j < $nfield; $j++) {
 
-				$data[$arr_col[$j]] = $arr[$i][$j + 1] ?? '';
+				// $data[$arr_col[$j]] = $arr[$i][$j] ?? '';
+				$data[$arr_col[$j]] = $arr[$i][$j + 1] ?? ''; 
 				// $data[$arr[4][$j]] = $arr[$i][$j]??'';
 			}
-
-			$dkkd=DB::table('company')->where('dkkd',$data['dkkd'])->first();
-			if(isset($dkkd)){
-				continue;
-			}
-
+			// dd($data);
+			// $dkkd=DB::table('company')->where('dkkd',$data['dkkd'])->first();
+			// $data['dkkd']=floatval($data['dkkd']);
+			// $dkkd=modelcompany::where('dkkd',$data['dkkd'])->first();
+			// if(isset($dkkd)){
+			// 	continue;
+			// }
+			$data['sld']=$data['quymo'];
+			$data['loaihinh']=$data['loaihinh']??1;
+// dd($data);
 			DB::table('company')->insert($data);
 			// $sldn[]=$data;
 		}
-
+// dd($sldn);
 		return redirect('/doanhnghiep-ba')
 					->with('success','Thêm thành công');
 
 		// dd($sldn);
+	}
+
+	public function store(Request $request)
+	{
+		$inputs=$request->all();
+
+		$inputs['madv']=$inputs['dkkd'];
+		$model=DB::table('company')->where('dkkd',$inputs['dkkd'])->first();
+		if(isset($model) && $model->user != null)
+		{
+			return view('errors.tontai_dulieu')
+					->with('message','Doanh nghiệp đăng ký')
+					->with('furl','/doanhnghiep-ba');
+		}
+		unset($inputs['_token']);
+		// dd($inputs);
+		DB::table('company')->insert($inputs);
+
+		return redirect('/doanhnghiep-ba');
 	}
 
 }

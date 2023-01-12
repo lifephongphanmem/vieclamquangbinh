@@ -96,9 +96,9 @@ class Nhankhau extends Model
 			//Kiển tra trùng
 			$check=check_trung($arr,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
 			$check_insert=check_trung($lds,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
-			if(count($check)> 2 && $check_insert > 0){				
-				continue;
-			}
+			// if(count($check)> 2 && $check_insert > 0){				
+			// 	continue;
+			// }
 			$data['soluongtrung']=count($check);
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
 			if (strlen($data['cccd']) > 16) {
@@ -137,12 +137,13 @@ class Nhankhau extends Model
 
 				$data['gioitinh'] = "Nam";
 			} else {
+				$data['gioitinh']="Nam";
 				Session::put('message', "Lỗi ngày sinh dòng " . $i);
 			}
-
 			// dd($data);
 			$data['maloi'] = $idmax++;
 			$data['maloailoi'] = '';
+
 
 
 			$array_loi = array('gioitinh', 'ngaysinh', 'cccd');
@@ -165,11 +166,16 @@ class Nhankhau extends Model
 				'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
 			);
 			if ($data['tinhtranghdkt'] == 3) {
+
 				foreach ($a_loi2 as $tentruong) {
 					if ($data[$tentruong] != '') {
 						$loi2 = true;
 						break;
 					}
+				}
+
+				if($data['khongthamgiahdkt'] == null){
+					$data['khongthamgiahdkt']=5;
 				}
 			}
 			if ($loi2 == true) {
@@ -188,6 +194,10 @@ class Nhankhau extends Model
 						$loi3 = true;
 						break;
 					}
+				}
+
+				if($data['thoigianthatnghiep'] == null){
+					$data['thoigianthatnghiep']=3;
 				}
 			}
 			if ($loi3 == true) {

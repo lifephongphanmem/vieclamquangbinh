@@ -40,35 +40,37 @@ class AdminEmployer extends Controller
 		
 			}
 			
-		$lds= DB::table('nguoilaodong')
-				->when($search, function ($query, $search) {
-                    return $query->whereRaw("(hoten like  '%".$search."%' OR cmnd like '%".$search."%')");
-					})
-				->when($cid, function ($query, $cid) {
-                    return $query->where('nguoilaodong.company', $cid);
-					})
-				->when($state_filter, function ($query, $state_filter) {
-                    return $query->where('nguoilaodong.state', $state_filter);
-					})
-				->when($gioitinh_filter, function ($query, $gioitinh_filter) {
-                    return $query->where('nguoilaodong.gioitinh','like', '%'.$gioitinh_filter.'%');
-					})
-				->when($age_filter, function ($query, $age_filter) {
-                    return $query->whereRaw("YEAR(GETDATE())-YEAR(`ngaysinh`) > ".$age_filter);
-					})
-				->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+		// $lds= DB::table('nguoilaodong')
+		// 		->when($search, function ($query, $search) {
+        //             return $query->whereRaw("(hoten like  '%".$search."%' OR cmnd like '%".$search."%')");
+		// 			})
+		// 		->when($cid, function ($query, $cid) {
+        //             return $query->where('nguoilaodong.company', $cid);
+		// 			})
+		// 		->when($state_filter, function ($query, $state_filter) {
+        //             return $query->where('nguoilaodong.state', $state_filter);
+		// 			})
+		// 		->when($gioitinh_filter, function ($query, $gioitinh_filter) {
+        //             return $query->where('nguoilaodong.gioitinh','like', '%'.$gioitinh_filter.'%');
+		// 			})
+		// 		->when($age_filter, function ($query, $age_filter) {
+        //             return $query->whereRaw("YEAR(GETDATE())-YEAR(`ngaysinh`) > ".$age_filter);
+		// 			})
+		// 		->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 							
-				->get();
+		// 		->get();
+		$lds=DB::table('nguoilaodong')->select('id','hoten','cmnd','ngaysinh','company','tinh')->get();
 		
-
-		foreach($lds as $ld){
+		$a_congty=array_column(DB::table('company')->get()->toarray(),'name','id');
+		// foreach($lds as $ld){
 			
-			$cty= DB::table('company')->where('id',$ld->company)->get()->first();
-			$ld->ctyname=$cty->name;
-		}		
+		// 	$cty= DB::table('company')->where('id',$ld->company)->get()->first();
+		// 	$ld->ctyname=$cty->name;
+		// }		
 		return view ('admin.employer.all')
 					->with('lds', $lds)
 					->with('search', $search)
+					->with('a_congty', $a_congty)
 					->with('gioitinh_filter', $gioitinh_filter)
 					->with('state_filter', $state_filter)
 					->with('age_filter', $age_filter)
@@ -188,7 +190,7 @@ class AdminEmployer extends Controller
 
     public function DanhSach_NN()
     {
-        $model=DB::table('nguoilaodong')->wherenotin('nation',['VN','Viet Nam','vn','Việt Nam'])->get();
+        $model=DB::table('nguoilaodong')->wherenotin('nation',['VN','Viet Nam','vn','Việt Nam','không'])->get();
         foreach($model as $ld){
 			
 			$cty= DB::table('company')->where('id',$ld->company)->get()->first();

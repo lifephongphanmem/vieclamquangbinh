@@ -11,10 +11,8 @@
         type="text/css" />
     <link href="{{ url('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet"
         type="text/css" />
-    <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link href="{{ url('assets/global/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/global/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet"
         type="text/css" />
     <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
@@ -38,13 +36,13 @@
     <link href="{{ url('assets/admin/layout4/css/layout.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/admin/layout4/css/themes/light.css') }}" rel="stylesheet" type="text/css"
         id="style_color" />
-    <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ url('assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
 
     {{-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> --}}
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" /> --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="{{ url('images/LIFESOFT.png') }}" type="image/x-icon">
@@ -156,9 +154,10 @@
             document.body.removeChild(fileDownload);
         }
 
-        function exportTableToExcel() {
+        function exportTableToExcel(type) {
             var downloadLink;
-            var dataType = 'application/vnd.ms-excel';
+            // var dataType = 'application/vnd.ms-excel';
+            var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;';
             var tableHTML = '';
             //Tiêu đề
             var data_header = document.getElementById('data_header');
@@ -230,7 +229,7 @@
 
                 //triggering the function
                 downloadLink.click();
-            }
+        }
         }
     </script>
 </head>

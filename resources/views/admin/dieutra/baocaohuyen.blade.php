@@ -26,7 +26,7 @@
         </tr>
     </table>
     <p id="data_body1" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO <br>VỀ THÔNG TIN
-        CUNG LAO ĐỘNG NĂM {{date('Y',strtotime($inputs['kydieutra']))}}</p>
+        CUNG LAO ĐỘNG NĂM {{$inputs['kydieutra']}}</p>
     <p id="data_body2" style="text-align: center;font-style: italic;">Kính gửi: Sở Lao động - Thương binh và Xã hội</p>
 
     <table id="data_body3" cellspacing="0" cellpadding="0" border="1"
@@ -224,8 +224,6 @@
             <td style="text-align: center;"></td>
         </tr>
         @endforeach
-
-
     </table>
     <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0"
         style="margin: 20px auto;text-align: center; height:200px">

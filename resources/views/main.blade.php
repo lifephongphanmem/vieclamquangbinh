@@ -7,7 +7,8 @@
 <head>
     <base href="">
     <meta charset="utf-8" />
-    <title>Quản lý việc làm | LifeSoft</title>
+    {{-- <title>Quản lý việc làm | LifeSoft</title> --}}
+    <title>Trung tâm dịch vụ việc làm Quảng Bình</title>
     <meta name="description" content="Quản lý việc làm" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="canonical" href="https://phanmemcuocsong.com" />

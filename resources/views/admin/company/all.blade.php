@@ -92,10 +92,10 @@
                             <div>
                                 <button class=" form-control " type="submit">Lọc</button>
                             </div>
-                            {{-- <div style=" margin-left:2%">
+                            <div style=" margin-left:2%">
                                 <button class=" form-control form-inline" name="export" value="1" type="submit">Xuất
                                     Excel</button>
-                            </div> --}}
+                            </div>
                         </div>
 
 
@@ -107,7 +107,7 @@
                             <th>Mã ĐKKD</th>
                             <th>Tên doanh nghiệp</th>
                             <th>Địa chỉ</th>
-                            <th>Điện thoại</th>
+                            <th style="width:10%">Điện thoại</th>
                             <th>Quy mô</th>
                             <th>Tình trạng</th>
                             <th>Biến động</th>
@@ -128,7 +128,7 @@
                             <td><span class="text-ellipsis"> </span> {{ $cty->adress }} - {{ $cty->xa }} -
                                 {{ $cty->huyen }}</td>
                             <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
-                            <td><span class="text-ellipsis"> </span>{{ $cty->quymo }}</td>
+                            <td><span class="text-ellipsis"> </span>{{ $cty->quymo != null?$cty->quymo:$cty->employers_count}}</td>
                             <td><span class="text-ellipsis">
                                     <?php if ($cty->public==1){ 
 				?>
@@ -156,7 +156,7 @@
             @csrf
             <div class="modal-dialog modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách người lao động từ file Excel</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách doanh nghiệp từ file Excel</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                 </div>
                 <div class="modal-body">
