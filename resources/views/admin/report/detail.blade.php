@@ -36,6 +36,10 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách khai báo</h3>
                     </div>
+                    <div class="card-toolbar">
+                        <a href="{{ URL::to($url) }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
+                                &ensp;Trở về</a></i>
+                    </div>
                 </div>
                 <div class="card-body">
 
