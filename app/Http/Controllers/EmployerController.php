@@ -37,7 +37,7 @@ class EmployerController extends Controller
           return $next($request);
       });
   }
-   
+
     public function show_all($action=null)
     {
 		$request=request();

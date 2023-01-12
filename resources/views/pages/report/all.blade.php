@@ -46,7 +46,7 @@
                         <div class="row ">
                             <div class="col-sm-7 col-sm-offset-1">
                                 <label>Lọc theo kỳ</label>
-                                <select class="input-sm form-control w-sm inline v-middle" name="time_filter"
+                                <select style="margin-bottom: 4%" class=" form-control w-sm inline v-middle" name="time_filter"
                                     onchange="this.form.submit()">
                                     <option value="1" <?php if ($time_filter == 1) {
                                         echo 'selected';
@@ -120,7 +120,6 @@
                                 <td> {{ $rp->numrow }}</td>
                                 <td> {{ $rp->note }}</td>
                                 <td> {{ $rp->time }}</td>
-
 
                             </tr>
                             <?php } ?>

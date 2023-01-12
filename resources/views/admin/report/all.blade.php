@@ -30,10 +30,21 @@
 
             $('#type_filter').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?type_filter=' + $('#type_filter').val() +
-                    '&tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val() +
-                    '&search=' + $('#search').val();
+                    '&tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val();
             });
-
+            
+            $('#tungay').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?type_filter=' + $('#type_filter').val() +
+                    '&tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val();
+            });
+            $('#denngay').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?type_filter=' + $('#type_filter').val() +
+                    '&tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val();
+            });
+            $('#detail').onclick(function() {
+                window.location.href = "{{'/report-detail'}}" + '?user=' + $('#user').val() +
+                    '&tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val();
+            });
         });
     </script>
 @stop
@@ -48,7 +59,6 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-
 
                         <div class="col-md-4">
                             <label>Từ ngày</label>
@@ -90,16 +100,6 @@
                         </div>
                         {{-- </form> --}}
                     </div>
-                    {{-- <div class="col-sm-3">
-                                <div class="input-group">
-                                    <input type="text" class="input-sm form-control" id="search" name="search"
-                                        value="{{ $search }}">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-sm btn-default" type="submit">Tìm kiếm</button>
-                                    </span>
-                                </div>
-                            </div> --}}
-                    {{-- </div> --}}
 
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
@@ -116,7 +116,7 @@
 		                    foreach ($model_congty as $key=>$rp ){ ?>
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td><a href="{{ URL::to('/report-detail?user=' . $rp->id) }}">{{ $rp->name }}</a></td>
+                                <td id="detail"><a href="{{ URL::to('/report-detail?user='.$rp->id.'&tungay='.$tungay.'&denngay='.$denngay.'&type_filter='.$type_filter) }}">{{ $rp->name }}</a></td>
                             </tr>
 
                             <?php } ?>

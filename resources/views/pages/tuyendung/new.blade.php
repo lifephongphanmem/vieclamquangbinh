@@ -147,7 +147,7 @@
                                             <tr>
                                                 <td>Trình độ văn hóa</td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot5" name="tdgd[]">
+                                                    <select class="form-control " name="tdgd[]">
                                                         <?php foreach ( $list_tdgd as $td){ ?>
                                                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
                                                         <?php } ?>
@@ -158,7 +158,7 @@
                                             <tr>
                                                 <td>Trình độ CMKT</td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot5" name="tdcmkt[]">
+                                                    <select class="form-control " name="tdcmkt[]">
                                                         <?php foreach ( $list_cmkt as $td){ ?>
                                                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
                                                         <?php } ?>
@@ -168,7 +168,7 @@
                                             <tr>
                                                 <td>Chuyên ngành đào tạo</td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot15" name="chuyennganh[]">
+                                                    <select class="form-control " name="chuyennganh[]">
 
                                                         <?php foreach ( $list_linhvuc as $td){ ?>
                                                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
@@ -183,7 +183,7 @@
                                                     Ngoại ngữ 1 <input type="text" size=10 name="ngoaingu1[]"
                                                         value=""> Chứng chỉ <input type="text" size=2
                                                         name="chungchinn1[]" value=" ">
-                                                    <select class="form-control input-sm m-bot5" name="xeploainn1[]">
+                                                    <select class="form-control " name="xeploainn1[]">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
@@ -192,7 +192,7 @@
                                                     Ngoại ngữ 2 <input type="text" size=10 value=" "
                                                         name="ngoaingu2[]"> Chứng chỉ <input type="text" size=2
                                                         name="chungchinn2[]"value=" ">
-                                                    <select class="form-control input-sm m-bot5" name="xeploainn1[]">
+                                                    <select class="form-control " name="xeploainn1[]">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
@@ -202,14 +202,14 @@
                                             <tr>
                                                 <td>Trình độ tin học</td>
                                                 <td>Tin học văn phòng
-                                                    <select class="form-control input-sm m-bot5" name="loaithvp[]">
+                                                    <select class="form-control " name="loaithvp[]">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
                                                     </select>
                                                     Khác <input type="text" size=10 value=" "
                                                         name="tinhockhac[]">
-                                                    <select class="form-control input-sm m-bot5" name="loaithk[]">
+                                                    <select class="form-control " name="loaithk[]">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
@@ -250,7 +250,7 @@
                                             <tr>
                                                 <td>Yêu cầu kinh nghiệm</td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot5" name="yeucaukn[]">
+                                                    <select class="form-control " name="yeucaukn[]">
                                                         <option value='Không yêu cầu' selected>Không yêu cầu</option>
                                                         <option value='>Dưới 1 năm'>Dưới 1 năm</option>
                                                         <option value='1 đến 2 năm'>1 đến 2 năm</option>
@@ -273,7 +273,7 @@
                                             <tr>
                                                 <td>Hình thức làm việc</td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot5" name="hinhthuclv[]">
+                                                    <select class="form-control " name="hinhthuclv[]">
                                                         <option value='Toàn thời gian' selected>Toàn thời gian</option>
                                                         <option value='Bán thời gian'>Bán thời gian</option>
 
@@ -283,7 +283,7 @@
                                             <tr>
                                                 <td>Mục đích làm việc</td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot5" name="mucdichlv[]">
+                                                    <select class="form-control " name="mucdichlv[]">
                                                         <option value='Làm lâu dài' selected>Làm lâu dài</option>
                                                         <option value='Làm tạm thời'>Làm tạm thời</option>
                                                         <option value='Làm thêm'>Làm thêm</option>
@@ -308,7 +308,7 @@
                                             <tr>
                                                 <td>Hỗ trợ ăn uống </td>
                                                 <td>
-                                                    <select class="form-control input-sm m-bot5" name="hotroan[]">
+                                                    <select class="form-control " name="hotroan[]">
                                                         <option value='Không' selected> Không</option>
                                                         <option value='1 Bữa'>1 Bữa</option>
                                                         <option value='2 Bữa'>2 Bữa</option>
