@@ -55,9 +55,10 @@
 				<div class="card-body">
                 <form class="form-inline" method="GET">
                     <div class="row ">
-                        <div class="col-sm-7 col-sm-offset-1">
+                        <div style="margin-bottom: 4%" class="col-sm-12 col-sm-offset-1">
                             <label>Lọc theo tình trạng</label>
-                            <select class="input-sm form-control w-sm inline v-middle" name="state_filter"
+                            
+                            <select class=" form-control inline v-middle" name="state_filter"
                                 onchange="this.form.submit()">
                                 <option value="0">Tất cả</option>
                                 <option value="1" <?php if ($state_filter == 1) {
@@ -68,7 +69,8 @@
                                 } ?>>Tạm dừng</option>
                             </select>
                         </div>
-                        <div class="col-sm-3 ">
+                        
+                        {{-- <div class="col-sm-3 ">
                             <div class="function-search pull-right">
                                 <div class="input-group">
                                     <input type="text" name="search" class="input-sm form-control"
@@ -78,9 +80,9 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
-
+<br>
                 </form>
                 {{-- <div class="row "> --}}
                         <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">

@@ -32,8 +32,9 @@ class AdminReport extends Controller
 		$search = $request->search;
 		$time_filter = $request->time_filter;
 		if ($request->tungay == null && $request->denngay == null) {
-
-			$tungay = date('Y-m-5');
+			$nam = date('Y');
+			$thang = date('m');
+			$tungay = Carbon::create($nam, $thang, 5)->toDateString();
 			$denngay = date('Y-m-d');
 		}
 		else{
@@ -46,10 +47,6 @@ class AdminReport extends Controller
 			$type_filter = $request->type_filter;
 		}
 		$reports = DB::table('report')
-
-			// ->when($search, function ($query, $search) {
-			// 	return $query->where('report.note', 'like', '%' . $search . '%');
-			// })
 			->when($type_filter, function ($query, $type_filter) {
 
 				return $query->where('type', $type_filter);
@@ -148,11 +145,7 @@ class AdminReport extends Controller
 		}
 		$inputs['url'] = '/report-ba';
 		$type_filter = $request->type_filter;
-		if ($request->tungay == null && $request->denngay == null) {
 
-			$tungay = null;
-			$denngay = null;
-		}
 		return view('admin.report.all')->with('model_congty', $model_congty)
 			->with('search', $search)
 			->with('time_filter', $time_filter)
@@ -165,7 +158,8 @@ class AdminReport extends Controller
 
 	public function detail(Request $request)
 	{
-		$reports = Report::where('user', $request->user)->get();
+		
+		$reports = Report::where('user', $request->user)->where('time','>=', $request->tungay)->where('time','<=', $request->denngay)->get();
 
 		foreach ($reports as $report) {
 			$ct = DB::table('company')->where('user', $report->user)->get()->first();
@@ -175,7 +169,8 @@ class AdminReport extends Controller
 				$report->ctyname = "";
 			}
 		}
-		return view('admin.report.detail')->with('reports', $reports);
+		$url = '/report-ba?type_filter='.$request->type_filter .'&tungay='.$request->tungay . '&denngay='. $request->denngay;
+		return view('admin.report.detail')->with('reports', $reports)->with('url', $url);
 	}
 
 
@@ -195,7 +190,6 @@ class AdminReport extends Controller
 
 	public function getInfo28($cid)
 	{
-
 		$dn = DB::table('company')->where('id', $cid)->first();
 		$em = new Employer;
 		$other_info = $em->getTonghop($dn->id);
