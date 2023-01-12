@@ -486,14 +486,14 @@
                         </thead>
                         <tbody>
                             <?php 
-							$i=($lds->currentPage()-1)*$lds->perPage();
-							foreach ($lds as $ld ){
-								$i++;
+							// $i=($lds->currentPage()-1)*$lds->perPage();
+							foreach ($lds as $key=>$ld ){
+								// $i++;
 						?>
                             <tr>
-                                <td>{{ $i }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td> {{ $ld->hoten }}</td>
-                                <td> {{ $ld->ngaysinh }}</td>
+                                <td> {{ getDayVn($ld->ngaysinh) }}</td>
                                 <td> {{ $ld->gioitinh == 'nam' || $ld->gioitinh == 'Nam' ? 'Nam' : 'Nữ' }}
                                 </td>
                                 <td> {{ $ld->cmnd }}</td>
@@ -542,8 +542,4 @@
                 </div>
             </div>
         </div>
-
-
-
-
-    @endsection
+@endsection

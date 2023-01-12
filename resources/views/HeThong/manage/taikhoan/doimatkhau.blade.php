@@ -33,6 +33,7 @@
         </div>
     </div>
     <div class="card-body">
+        @if(session('admin')->phanloaitk ==1)
         <div class="form-group row">
             <div class="col-lg-4">
                 <label>Đơn vị quản lý</label>
@@ -56,6 +57,24 @@
                 <input type="text" name="password" class="form-control" required>
             </div>
         </div>
+        @else
+        <div class="form-group row">
+            <div class="col-lg-4">
+                <label>Email <span class="require">*</span></label>
+                {!! Form::text('email', $model->email, ['class' => 'form-control','required','readonly'=>'true']) !!}
+            </div>
+
+            <div class="col-lg-4">
+                <label>Tên <span class="require">*</span></label>
+                {!! Form::text('name', $model->name, ['class' => 'form-control', 'required', 'readonly'=>'true']) !!}
+            </div> 
+            <div class="col-lg-4">
+                <label>Mật khẩu mới<span class="require">*</span></label>
+                {{-- {!! Form::text('password', null, ['class' => 'form-control','required']) !!} --}}
+                <input type="text" name="password" class="form-control" required>
+            </div>              
+        </div>
+        @endif
     </div>
     <div class="card-footer">
         <div class="row text-center">

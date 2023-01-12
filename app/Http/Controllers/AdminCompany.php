@@ -67,7 +67,7 @@ class AdminCompany extends Controller
 				 ->when($quymo_max_filter==0&&!is_null($quymo_max_filter), function ($query, $quymo_max_filter) {
 					return $query->having('employers_count', '=', 0)	;
 					})		
-				// ->orderBy('employers_count', 'desc')
+				->orderBy('employers_count', 'desc')
 				->get();
 				// dd($ctys);
 			
@@ -278,14 +278,17 @@ class AdminCompany extends Controller
 				$data[$arr_col[$j]] = $arr[$i][$j + 1] ?? ''; 
 				// $data[$arr[4][$j]] = $arr[$i][$j]??'';
 			}
-			// dd($data);
 			// $dkkd=DB::table('company')->where('dkkd',$data['dkkd'])->first();
-			// $data['dkkd']=floatval($data['dkkd']);
+			// if($data['dkkd'] != null){
+			// 	$data['dkkd']=floatval($data['dkkd']);
+			// }			
 			// $dkkd=modelcompany::where('dkkd',$data['dkkd'])->first();
 			// if(isset($dkkd)){
 			// 	continue;
 			// }
-			$data['sld']=$data['quymo'];
+			if(is_numeric($data['quymo'])){
+				$data['sld']=$data['quymo'];
+			}			
 			$data['loaihinh']=$data['loaihinh']??1;
 // dd($data);
 			DB::table('company')->insert($data);
