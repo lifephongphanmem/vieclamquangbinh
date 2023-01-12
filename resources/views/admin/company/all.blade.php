@@ -92,10 +92,10 @@
                             <div>
                                 <button class=" form-control " type="submit">Lọc</button>
                             </div>
-                            {{-- <div style=" margin-left:2%">
+                            <div style=" margin-left:2%">
                                 <button class=" form-control form-inline" name="export" value="1" type="submit">Xuất
                                     Excel</button>
-                            </div> --}}
+                            </div>
                         </div>
 
 
@@ -128,7 +128,7 @@
                             <td><span class="text-ellipsis"> </span> {{ $cty->adress }} - {{ $cty->xa }} -
                                 {{ $cty->huyen }}</td>
                             <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
-                            <td><span class="text-ellipsis"> </span>{{ $cty->quymo }}</td>
+                            <td><span class="text-ellipsis"> </span>{{ $cty->quymo != null?$cty->quymo:$cty->employers_count}}</td>
                             <td><span class="text-ellipsis">
                                     <?php if ($cty->public==1){ 
 				?>

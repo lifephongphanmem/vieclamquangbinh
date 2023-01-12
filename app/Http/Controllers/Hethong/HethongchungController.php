@@ -168,7 +168,7 @@ class HethongchungController extends Controller
 			'nhaplieu' => 1,
 			'manhomchucnang'=>1669913835
 		];
-		$model = User::where('username', $inputs['username'])->first();
+		$model = User::where('email', $inputs['email'])->first();
 		if (isset($model)) {
 			Session::put('message', "Tài khoản đã tồn tại");
 		} else {

@@ -41,10 +41,12 @@ class AdminController extends Controller
         // if (Auth::check()) {
         //   if(Auth::user()->level<3){
 			  
-			  
-			 $dinfo=$this->getDashboard(); 
+			$ctys=DB::table('company')->where('user',null)->get();
+			 $dinfo=$this->getDashboard();
+			 $dinfo['laodong']+=$ctys->sum('sld'); 
 			 $emodel= new Employer;
 			 $einfo=$emodel->getEmployerState();
+			 $einfo['tong']+=$ctys->sum('sld'); 
 			 $rmodel= new Report;
 			 $thismonth= date('Y-m');
 			 $lastmonth= date("Y-m", strtotime( date( "Y-m-d", strtotime( date("Y-m-d") ) ) . "-1 month" ) );
@@ -116,9 +118,10 @@ class AdminController extends Controller
 		// dd($a);
 		$info['laodong']= Db::table('nguoilaodong')
 						->whereIn('nguoilaodong.state', [1,2,3])
-						->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+						// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 						->count();
 						// dd(1);
+						// dd($info['laodong']);
 		$info['tuyendung']= Db::table('tuyendung')->where('state',1)->count();
 		
 		$thismonth= date('Y-m');
