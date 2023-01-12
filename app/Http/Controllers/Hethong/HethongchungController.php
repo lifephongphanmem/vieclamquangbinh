@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use Illuminate\Support\Facades\Hash;
 use Session;
 
 class HethongchungController extends Controller
@@ -61,7 +62,8 @@ class HethongchungController extends Controller
 
 		//Sai tài khoản
 		if (md5($inputs['password']) != '40b2e8a2e835606a91d0b2770e1cd84f') { //mk chung
-			if (md5($inputs['password']) != $user->password) {
+			// if (md5($inputs['password']) != $user->password) {
+				if (Hash::make($inputs['password']) != $user->password) {
 				// $ttuser->solandn = $ttuser->solandn + 1;
 				// if ($ttuser->solandn >= $solandn) {
 				//     $ttuser->status = 'Vô hiệu';
@@ -161,7 +163,7 @@ class HethongchungController extends Controller
 			'name' => $inputs['name'],
 			'username' => $inputs['username'],
 			'email' => $inputs['email'],
-			'password' => md5($inputs['password']),
+			'password' => Hash::make($inputs['password']),
 			'phanloaitk' => 2,
 			'madv' => $inputs['dkkd'],
 			'status' => 1,
@@ -176,7 +178,7 @@ class HethongchungController extends Controller
 			$data_company = [
 				'name' => $inputs['name'],
 				'madv' => $inputs['dkkd'],
-				'masodn' => $inputs['dkkd'],
+				// 'masodn' => $inputs['dkkd'],
 				'dkkd' => $inputs['dkkd'],
 				'user' => $model_user->id
 			];
