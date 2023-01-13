@@ -78,6 +78,7 @@ Route::prefix('nhomchucnang')->group(function(){
     Route::post('/PhanQuyen',[dsnhomtaikhoanController::class,'LuuPhanQuyen']);
 
     Route::get('/danhsach_donvi',[dsnhomtaikhoanController::class,'DanhSachDonVi']);
+    Route::post('/ThietLapLai', [dsnhomtaikhoanController::class, 'ThietLapLai']);
 });
 
 Route::prefix('dmthonxom')->group(function(){

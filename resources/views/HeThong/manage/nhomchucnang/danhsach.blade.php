@@ -2,16 +2,24 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ url('assets/global/plugins/select2/select2.css') }}" />
+        <style>
+            .col-md-3 {
+                float: left;
+            }
+    
+            .wrapper {
+                margin-top: 0px;
+                padding: 0px 15px;
+            }
+        </style>
 @stop
 
 @section('custom-script')
-    <script type="text/javascript" src="{{ url('assets/global/plugins/select2/select2.min.js') }}"></script>
-    <script src="{{ url('assets/js/pages/select2.js') }}"></script>
-    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
-    </script>
-
-    <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
+<script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
+</script>
+<script type="text/javascript"
+src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
+<script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
@@ -40,9 +48,9 @@
                     <div class="card-toolbar">
                         <!--begin::Button-->
                         {{-- @if (chkPhanQuyen('dsnhomtaikhoan', 'thaydoi')) --}}
-                        {{-- <button type="button" class="btn btn-success btn-xs"
+                        <button type="button" class="btn btn-success btn-xs"
                         data-target="#modify-modal" data-toggle="modal">
-                        <i class="icon-lg flaticon-refresh"></i>&nbsp;Thiết lập lại quyền</button> --}}
+                        <i class="icon-lg flaticon-refresh"></i>&nbsp;Thiết lập lại quyền</button>
                         {{-- @endif --}}
                         <!--end::Button-->
                     </div>
@@ -82,7 +90,7 @@
     </div>
     <!--end::Row-->
 
-    {!! Form::open(['url' => '/NhomChucNang/ThietLapLai', 'id' => 'frm_modify']) !!}
+    {!! Form::open(['url' => '/nhomchucnang/ThietLapLai', 'id' => 'frm_modify']) !!}
     <input type="hidden" name="manhomchucnang" value="{{ $inputs['manhomchucnang'] }}" />
     <div id="modify-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <div class="modal-dialog">

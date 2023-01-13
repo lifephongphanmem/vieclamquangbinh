@@ -1,4 +1,4 @@
-{{-- @if (chkPhanQuyen('cunglaodong', 'phanquyen')) --}}
+@if (chkPhanQuyen('cunglaodong', 'phanquyen'))
     {{-- <li class="menu-section">
         <h4 class="menu-text">QUẢN LÝ CUNG LAO ĐỘNG</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -26,7 +26,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                {{-- @if (chkPhanQuyen('tonghopcunglaodongtinh', 'phanquyen')) --}}
+                @if (chkPhanQuyen('danhsachdieutra', 'phanquyen'))
 
                 {{-- @endif --}}
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
@@ -60,6 +60,8 @@
                         </ul>
                     </div>
                 </li>
+                @endif
+                @if (chkPhanQuyen('nhankhau', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="menu-bullet menu-bullet-dot">
@@ -82,6 +84,8 @@
                         </ul>
                     </div>
                 </li>
+                @endif
+                @if (chkPhanQuyen('hogiadinh', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="menu-bullet menu-bullet-dot">
@@ -104,10 +108,10 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
             </ul>
         </div>
     </li>
             
-    {{-- @endif
-@endif --}}
+@endif

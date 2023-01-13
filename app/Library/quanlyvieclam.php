@@ -16,8 +16,8 @@ function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
         return true;
     }
     // dd(session('phanquyen'));
-    // return session('phanquyen')[$machucnang][$tenphanquyen] ?? 0;
-    return true;
+    return session('phanquyen')[$machucnang][$tenphanquyen] ?? 0;
+    
 }
 
 function chkGiaoDien($machucnang, $tentruong = 'trangthai')

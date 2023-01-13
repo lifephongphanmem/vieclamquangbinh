@@ -40,6 +40,9 @@ class AdminDieutra extends Controller
 
     public function show_all(Request $request, $cid = null)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $request = request();
 
         //filter
@@ -149,6 +152,9 @@ class AdminDieutra extends Controller
 
     public function new(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
@@ -177,7 +183,9 @@ class AdminDieutra extends Controller
 
     public function save(Request $request)
     {
-
+        if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $request = request();
         $inputs = $request->all();
         $uid = $inputs['madv'];
@@ -276,6 +284,9 @@ class AdminDieutra extends Controller
 
     public function intonghop(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         // dd($inputs);
         // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
@@ -326,6 +337,9 @@ class AdminDieutra extends Controller
     }
     public function inbaocaohuyen(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         // dd($inputs);
         $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
@@ -376,6 +390,9 @@ class AdminDieutra extends Controller
 
     public function inbaocaotinh(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         // dd($inputs);
         $a_chuyenmon=dmtrinhdokythuat::select('tentdkt','stt')->get()->toarray();
@@ -461,6 +478,9 @@ class AdminDieutra extends Controller
 
     public function XoaDanhSach(Request $request,$id)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs=$request->all();
         $model=danhsach::findOrFail($id);
         if(isset($model)){
