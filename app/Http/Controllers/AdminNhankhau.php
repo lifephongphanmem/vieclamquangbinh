@@ -40,6 +40,9 @@ class AdminNhankhau extends Controller
 
     public function show_all(Request $request)
     {
+        if (!chkPhanQuyen('danhsachnhankhau', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'nhankhau');
+        }
         $request = request();
         $inputs = $request->all();
         //filter
@@ -156,6 +159,9 @@ class AdminNhankhau extends Controller
     }
     public function show_ho(Request $request)
     {
+        if (!chkPhanQuyen('danhsachhogiadinh', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'hogiadinh');
+        }
         $request = request();
         $inputs = $request->all();
         //filter

@@ -60,12 +60,22 @@ class HethongchungController extends Controller
 				->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở tài khoản')
 				->with('furl', '/home');
 		}
+		// dd(emailValid('hailinhsale01@gmail.com'));
+		$email=$inputs['username'];
+		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$data=[
+				'email'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  } else {
+			$data=[
+				'username'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  }
 
 		//Sai tài khoản
-		$data=[
-			'username'=>$inputs['username'],
-			'password'=>$inputs['password']
-		];
+
 		$res=Auth::attempt($data);
 		// dd($res);
 		if (md5($inputs['password']) != '40b2e8a2e835606a91d0b2770e1cd84f') { //mk chung

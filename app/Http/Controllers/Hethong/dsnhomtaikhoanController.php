@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Danhmuc\Chucnang;
 use App\Models\Danhmuc\dsnhomtaikhoan;
 use App\Models\Danhmuc\dsnhomtaikhoan_phanquyen;
+use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -186,5 +187,39 @@ class dsnhomtaikhoanController extends Controller
             ->with('m_nhom', $m_nhom)
             ->with('inputs', $inputs)
             ->with('pageTitle', 'Danh sách tài khoản trong nhóm');
+    }
+
+    public function ThietLapLai(Request $request)
+    {
+        // if (!chkPhanQuyen('dsnhomtaikhoan', 'danhsach')) {
+        //     return view('errors.noperm')->with('machucnang', 'dsnhomtaikhoan');
+        // }
+
+        $inputs = $request->all();
+
+        $model = User::where('manhomchucnang', $inputs['manhomchucnang'])->get();
+        $model_phanquyen = dsnhomtaikhoan_phanquyen::where('manhomchucnang', $inputs['manhomchucnang'])->get();
+
+        $a_phanquyen = [];
+        foreach ($model as $taikhoan) {
+            foreach ($model_phanquyen as $phanquyen) {
+                $a_phanquyen[] = [
+                    'tendangnhap' => $taikhoan->username,
+                    'machucnang' => $phanquyen->machucnang,
+                    'phanquyen' => $phanquyen->phanquyen,
+                    'danhsach' => $phanquyen->danhsach,
+                    'thaydoi' => $phanquyen->thaydoi,
+                    'hoanthanh' => $phanquyen->hoanthanh,
+                ];
+            }
+        }
+        // dd($a_phanquyen);
+        foreach (array_chunk(array_column($model->toarray(), 'username'), 100) as $data) {
+            dstaikhoan_phanquyen::wherein('tendangnhap', $data)->delete();
+        }
+        foreach (array_chunk($a_phanquyen, 200) as $data) {
+            dstaikhoan_phanquyen::insert($data);
+        }
+        return redirect('/nhomchucnang/danhsach_donvi?manhomchucnang=' . $inputs['manhomchucnang']);
     }
 }
