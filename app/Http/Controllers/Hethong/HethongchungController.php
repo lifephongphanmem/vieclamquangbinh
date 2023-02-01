@@ -129,10 +129,14 @@ class HethongchungController extends Controller
 				// $m_diaban = dsdiaban::where('madiaban', $user->madiaban)->first();
 
 				$user->tendiaban = $diaban->name;
+				$user->maquocgia = $diaban->maquocgia;
 				$user->capdodiaban = $diaban->capdo;
 				$user->phanquyen = json_decode($user->phanquyen, true);
 			} else {
 				$cty = Company::where('madv', $user->madv)->first();
+				if(!isset($cty)){
+					return view('errors.tontai_dulieu')->with('message', 'Doanh nghiệp chưa đăng ký tài khoản');
+				}
 				$user->tendv = $cty->name;
 				$user->maxa = $cty->xa;
 				$user->mahuyen = $cty->huyen;
@@ -188,7 +192,9 @@ class HethongchungController extends Controller
 			'nhaplieu' => 1,
 			'manhomchucnang'=>1669913835
 		];
+		$cty=DB::table('company')->where('name','like',$inputs['username'])->first();
 		$model = User::where('email', $inputs['email'])->first();
+
 		if (isset($model)) {
 			Session::put('message', "Tài khoản đã tồn tại");
 		} else {
@@ -207,6 +213,8 @@ class HethongchungController extends Controller
 		return redirect('/')
 			->with('success', 'Đăng ký thành công');
 	}
+
+
 
 
 }

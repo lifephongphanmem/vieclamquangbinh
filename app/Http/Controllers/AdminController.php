@@ -81,11 +81,24 @@ class AdminController extends Controller
 
 			 $kydieutra=danhsach::select('kydieutra')->orderBy('id','desc')->first()->kydieutra;
 
+			if(in_array(session('admin')->sadmin,['ADMIN','SSA'])){
+				$tongsonhankhau=danhsach::where('kydieutra',$kydieutra)->sum('soluong');
+				$ldcovieclam=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','1')->count('id');
+				$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','2')->count('id');
+				$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','3')->count('id');
+			}else if (session('admin')->capdo == 'H'){
+				$madv=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
+				$tongsonhankhau=danhsach::where('kydieutra',$kydieutra)->wherein('user_id',$madv)->sum('soluong');
+				$ldcovieclam=DB::table('nhankhau')->where('kydieutra',$kydieutra)->wherein('madv',$madv)->where('tinhtranghdkt','1')->count('id');
+				$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',$kydieutra)->wherein('madv',$madv)->where('tinhtranghdkt','2')->count('id');
+				$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',$kydieutra)->wherein('madv',$madv)->where('tinhtranghdkt','3')->count('id');
+			}else{
+				$tongsonhankhau=danhsach::where('kydieutra',$kydieutra)->where('user_id',session('admin')->madv)->sum('soluong');
+				$ldcovieclam=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('madv',session('admin')->madv)->where('tinhtranghdkt','1')->count('id');
+				$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('madv',session('admin')->madv)->where('tinhtranghdkt','2')->count('id');
+				$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('madv',session('admin')->madv)->where('tinhtranghdkt','3')->count('id');
+			}
 
-			$tongsonhankhau=danhsach::where('kydieutra',$kydieutra)->sum('soluong');
-			$ldcovieclam=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','1')->count('id');
-			$ldthatnghiep=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','2')->count('id');
-			$ldkhongthamgia=DB::table('nhankhau')->where('kydieutra',$kydieutra)->where('tinhtranghdkt','3')->count('id');
 			// dd($ldcovieclam);
 
 			 

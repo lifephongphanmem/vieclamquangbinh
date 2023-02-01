@@ -95,7 +95,7 @@
                                             </button>
 
                                             <button title="Xóa thông tin" type="button"
-                                                onclick="cfDel('{{ '/TaiKhoan/delete/' . $tk->id }}')"
+                                                onclick="cfDel('{{ '/TaiKhoan/delete/' . $tk->id.'?phanloaitk=2' }}')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                                 data-toggle="modal">
                                                 <i class="icon-lg la fa-trash-alt text-danger icon-2x"></i></button>
@@ -143,8 +143,33 @@
         {!! Form::close() !!}
     </div>
 
-    @include('includes.delete')
+    <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xoá?</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true"
+                                class="close">&times;</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {{-- @include('includes.delete') --}}
     <script>
+            function cfDel(url){
+        $('#frmDelete').attr('action', url);
+    }
+
+    function subDel(){
+        $('#frmDelete').submit();
+    }
             function clickNhanvaTKT() {
         $('#frm_nhomchucnang').submit();
     }

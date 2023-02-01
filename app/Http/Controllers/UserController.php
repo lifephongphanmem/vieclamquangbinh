@@ -411,7 +411,7 @@ class UserController extends Controller
 	public function edit_tk($id)
 	{
 		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
-            return view('errors.noperm')->with('machucnang', 'chucnang');
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
         }
 
 		
@@ -466,7 +466,25 @@ class UserController extends Controller
 			return redirect('/TaiKhoan/ThongTin?phanloaitk=2');
 		}
 		
-	}	
+	}
+	
+	public function destroy(Request $request,$id)
+	{
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
+		
+		$inputs=$request->all();
+		$model = User::findOrFail($id);
+		$model->delete();
+		if($inputs['phanloaitk']==2){
+			return redirect('/TaiKhoan/ThongTin?phanloaitk=2');
+			
+		}else{
+			return redirect('/TaiKhoan/DanhSach?madv=' . $model->madv);
+		}
+		
+	}
 }
 
 ?>

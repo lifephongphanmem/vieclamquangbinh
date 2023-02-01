@@ -44,7 +44,7 @@
                 </a>
             </li>
             @endif
-            @if (chkPhanQuyen('khaiboa', 'phanquyen'))
+            @if (chkPhanQuyen('khaibao', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('report-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
