@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
 use App\Models\Employer;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
 {
@@ -82,9 +83,9 @@ class CompanyController extends Controller
 					->when($state_filter, function ($query, $state_filter) {
                     return $query->where('nguoilaodong.state', $state_filter);
 					})
-					->paginate(20);
+					// ->paginate(20);
+					->get();
 	
-		
 		return view('pages.doanhnghiep')
 				->with('info',$info)
 				->with('ctype',$ctype)

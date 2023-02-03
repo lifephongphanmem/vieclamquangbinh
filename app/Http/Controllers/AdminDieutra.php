@@ -40,6 +40,9 @@ class AdminDieutra extends Controller
 
     public function show_all(Request $request, $cid = null)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $request = request();
 
         //filter
@@ -69,17 +72,26 @@ class AdminDieutra extends Controller
 
         if (in_array(session('admin')->sadmin, ['SSA', 'ssa','ADMIN'])){
             $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
-            $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+            $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
             ->select('dmdonvi.madv','danhmuchanhchinh.name')
             ->where('parent',$inputs['mahuyen'])->get();
         }else{
            
-            $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-            ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
-            ->where('madv',$inputs['madv'])->get();
-            $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$a_xa->first()->parent)->get()->toarray(),'name','maquocgia');
-        }
 
+            if(session('admin')->capdo == 'H'){
+                $a_huyen=[session('admin')->maquocgia => session('admin')->tendiaban];
+                $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
+                ->where('danhmuchanhchinh.parent', session('admin')->maquocgia )->get();
+            }else{
+                $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
+                ->where('madv',$inputs['madv'])->get();
+                $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$m_xa->first()->parent)->get()->toarray(),'name','maquocgia');
+            }
+            
+        }
+// dd($a_huyen);
         // if(session('admin')->sadmin == 'ADMIN'){
         //     $dss=$dss->get();
         // }else{
@@ -93,30 +105,31 @@ class AdminDieutra extends Controller
         } elseif ($donvi->capdo == 'H') {
             $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
                 ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
-                ->where('dmdonvi.madv', $inputs['madv'])
+                // ->where('dmdonvi.madv', $inputs['madv'])
+                ->where('dmdonvi.madv', session('admin')->madv)
                 ->first();
-            $xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-                ->select('dmdonvi.madv', 'dmdonvi.tendv')
+            $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'dmdonvi.tendv','danhmuchanhchinh.name')
                 ->where('danhmuchanhchinh.parent', $huyen->maquocgia)
                 ->get();
-            $a_xa = array_column($xa->toarray(), 'madv');
+            $a_xa = array_column($m_xa->toarray(), 'madv');
             $dss = $dss->wherein('danhsach.user_id', $a_xa)
                 ->get();
         } else {
             $dss = $dss->where('danhsach.user_id', $inputs['madv'])
                 ->get();
         }
-       
         $data_loi=danhsachloi::where('kydieutra',$inputs['kydieutra'])->get();
 
         $a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
+        // dd($m_xa);
         // dd($m_donvi);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
             ->with('data_loi', $data_loi)
             ->with('a_donvi', $a_donvi)
             ->with('a_huyen', $a_huyen)
-            ->with('a_xa', $a_xa)
+            ->with('a_xa', $m_xa)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
             ->with('m_diaban', $m_diaban)
@@ -149,6 +162,9 @@ class AdminDieutra extends Controller
 
     public function new(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
@@ -177,7 +193,9 @@ class AdminDieutra extends Controller
 
     public function save(Request $request)
     {
-
+        if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $request = request();
         $inputs = $request->all();
         $uid = $inputs['madv'];
@@ -276,6 +294,9 @@ class AdminDieutra extends Controller
 
     public function intonghop(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         // dd($inputs);
         // $model = danhsach::join('nhankhau', 'nhankhau.danhsach_id', 'danhsach.id')
@@ -326,6 +347,9 @@ class AdminDieutra extends Controller
     }
     public function inbaocaohuyen(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         // dd($inputs);
         $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
@@ -376,6 +400,9 @@ class AdminDieutra extends Controller
 
     public function inbaocaotinh(Request $request)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs = $request->all();
         // dd($inputs);
         $a_chuyenmon=dmtrinhdokythuat::select('tentdkt','stt')->get()->toarray();
@@ -461,6 +488,9 @@ class AdminDieutra extends Controller
 
     public function XoaDanhSach(Request $request,$id)
     {
+        if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        }
         $inputs=$request->all();
         $model=danhsach::findOrFail($id);
         if(isset($model)){

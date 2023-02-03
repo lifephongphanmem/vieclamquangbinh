@@ -337,7 +337,6 @@ class Employer extends Model
 						->where('state','<',3)
 						->where('company', $cid->id)
 						->get();
-		
 	 $parramfields= ["trinhdogiaoduc","trinhdocmkt","nghenghiep","linhvucdaotao","loaihdld"];	
 	 
 		foreach($lds as $ld){
@@ -345,7 +344,7 @@ class Employer extends Model
 			foreach ($parramfields as $key=>$field){
 				
 				$pid=$ld->$field;
-				$pname= DB::table('param')->select('name')->where('id',$pid)->first();
+				$pname= DB::table('param')->select('name')->where('name',$pid)->first();
 				if($pname){$ld->$field = $pname->name;};
 
 			}
@@ -353,7 +352,7 @@ class Employer extends Model
 		}
 		;
 
-
+// dd($lds);
 		return $lds;
 	}
 	// Cập nhật thông tin người lao động

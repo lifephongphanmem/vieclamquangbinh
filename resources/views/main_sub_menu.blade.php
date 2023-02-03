@@ -8,6 +8,9 @@
             data-menu-dropdown-timeout="500">
             <!--begin::Menu Nav-->
             <ul class="menu-nav">
+                {{-- @if (session('admin')->phanloaitk ==1) --}}
+                    
+                @if (chkPhanQuyen('trangchu', 'phanquyen'))
                 <li class="menu-item font-weight-bold" aria-haspopup="true">
                     <a href="{{ url('/dashboard') }}" class="menu-link">
                         <span class="svg-icon menu-icon">
@@ -29,8 +32,10 @@
                         <span class="menu-text font-weight-bold">Trang chủ</span>
                     </a>
                 </li>
+                @endif
+                {{-- @endif --}}
                 @if (session('admin')->phanloaitk == 1)
-
+                    
                     @include('main.main_subdoanhnghiep')
                     @include('main.main_subcunglaodong')
                     @include('main.main_subbaocao')

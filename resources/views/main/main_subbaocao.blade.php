@@ -1,5 +1,5 @@
 
-{{-- @if (chkPhanQuyen('baocao', 'phanquyen')) --}}
+@if (chkPhanQuyen('baocao', 'phanquyen'))
 {{-- <li class="menu-section">
     <h4 class="menu-text">BÁO CÁO</h4>
     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -26,6 +26,7 @@
     <div class="menu-submenu">
         <i class="menu-arrow"></i>
         <ul class="menu-subnav">
+            @if (chkPhanQuyen('doanhnghiep', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/doanhnghiep/baocao') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -34,6 +35,8 @@
                     <span class="menu-text">Doanh nghiệp</span>
                 </a>
             </li>
+            @endif
+            @if (chkPhanQuyen('cunglaodong', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/bao_cao_tong_hop') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -42,6 +45,7 @@
                     <span class="menu-text">Cung lao động</span>
                 </a>
             </li>
+            @endif
             {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/vanban/danhsach') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -62,4 +66,4 @@
         </ul>
     </div>
 </li>
-{{-- @endif --}}
+@endif

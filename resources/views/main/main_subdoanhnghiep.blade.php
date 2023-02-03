@@ -1,4 +1,4 @@
-{{-- @if (chkPhanQuyen('doanhnghiep', 'phanquyen')) --}}
+@if (chkPhanQuyen('doanhnghiep', 'phanquyen'))
     {{-- <li class="menu-section">
         <h4 class="menu-text">DOANH NGHIỆP</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -24,7 +24,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                {{-- @if (chkPhanQuyen('danhsachdoanhnghiep', 'phanquyen')) --}}
+                @if (chkPhanQuyen('danhsachdoanhnghiep', 'phanquyen'))
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ URL::to('doanhnghiep-ba') }}" class="menu-link">
                         <i class="menu-bullet menu-bullet-dot">
@@ -33,8 +33,8 @@
                         <span class="menu-text font-weight-bold">Danh sách doanh nghiệp</span>
                     </a>
                 </li>
-            {{-- @endif --}}
-
+            @endif
+            @if (chkPhanQuyen('hopthu', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('admessages') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -43,7 +43,8 @@
                     <span class="menu-text font-weight-bold">Hộp thư doanh nghiệp</span>
                 </a>
             </li>
-
+            @endif
+            @if (chkPhanQuyen('khaibao', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('report-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -52,6 +53,8 @@
                     <span class="menu-text font-weight-bold">Khai báo</span>
                 </a>
             </li>
+            @endif
+            @if (chkPhanQuyen('tuyendung', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('tuyendung-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -60,6 +63,7 @@
                     <span class="menu-text font-weight-bold">Tuyển dụng</span>
                 </a>
             </li>
+            @endif
             {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('employer-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -68,6 +72,7 @@
                     <span class="menu-text font-weight-bold">Người lao động</span>
                 </a>
             </li> --}}
+            @if (chkPhanQuyen('nguoilaodong', 'phanquyen'))
             <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <i class="menu-bullet menu-bullet-dot">
@@ -99,6 +104,8 @@
                     </ul>
                 </div>
             </li>
+            @endif
+            @if (chkPhanQuyen('dichvu', 'phanquyen'))
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ URL::to('dichvu-ba') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -107,7 +114,8 @@
                     <span class="menu-text font-weight-bold">Dịch vụ</span>
                 </a>
             </li>
-                @if (chkPhanQuyen('chitietdoanhnghiep', 'phanquyen'))
+            @endif
+                {{-- @if (chkPhanQuyen('chitietdoanhnghiep', 'phanquyen'))
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ url('/doanh_nghiep/thongtin') }}" class="menu-link">
                             <i class="menu-bullet menu-bullet-dot">
@@ -116,7 +124,7 @@
                             <span class="menu-text font-weight-bold">Thông tin doanh nghiệp</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/messages') }}" class="menu-link">
@@ -130,4 +138,4 @@
             </ul>
         </div>
     </li>
-{{-- @endif --}}
+@endif

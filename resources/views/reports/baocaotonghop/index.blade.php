@@ -39,12 +39,18 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <ol>
+                                    @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
                                     <li><a href="#" data-target="#modify-modal-xa" data-toggle="modal">Báo cáo thông tin cung lao động - xã (Mẫu 03)</a>
                                     </li>
+                                    @endif
+                                    @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
                                     <li><a href="#" data-target="#modify-modal-huyen" data-toggle="modal">Báo cáo thông tin cung lao động - Huyện (Mẫu 03)</a>
                                     </li>
+                                    @endif
+                                    @if (chkPhanQuyen('baocaotinh', 'phanquyen'))
                                     <li><a href="#" data-target="#modify-modal-tinh" data-toggle="modal">Báo cáo thông tin cung lao động - Tỉnh (Mẫu 03)</a>
                                         </li
+                                        @endif
                                     {{-- <li><a href="#" data-target="#doanhnghiep-modal" data-toggle="modal">Mẫu số
                                         01/PLI.
                                         Báo cáo tình hình sử dụng lao động (do người sử dụng lao động lập)</a>

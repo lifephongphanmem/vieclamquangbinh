@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Session;
 
 class HethongchungController extends Controller
@@ -58,10 +60,28 @@ class HethongchungController extends Controller
 				->with('message', 'Tài khoản đang bị khóa. Bạn hãy liên hệ với người quản trị để mở tài khoản')
 				->with('furl', '/home');
 		}
+		// dd(emailValid('hailinhsale01@gmail.com'));
+		$email=$inputs['username'];
+		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$data=[
+				'email'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  } else {
+			$data=[
+				'username'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  }
 
 		//Sai tài khoản
+
+		$res=Auth::attempt($data);
+		// dd($res);
 		if (md5($inputs['password']) != '40b2e8a2e835606a91d0b2770e1cd84f') { //mk chung
-			if (md5($inputs['password']) != $user->password) {
+			// if (md5($inputs['password']) != $user->password) {
+				// if (Hash::make($inputs['password']) != $user->password) {
+					if(!$res){
 				// $ttuser->solandn = $ttuser->solandn + 1;
 				// if ($ttuser->solandn >= $solandn) {
 				//     $ttuser->status = 'Vô hiệu';
@@ -109,10 +129,14 @@ class HethongchungController extends Controller
 				// $m_diaban = dsdiaban::where('madiaban', $user->madiaban)->first();
 
 				$user->tendiaban = $diaban->name;
+				$user->maquocgia = $diaban->maquocgia;
 				$user->capdodiaban = $diaban->capdo;
 				$user->phanquyen = json_decode($user->phanquyen, true);
 			} else {
 				$cty = Company::where('madv', $user->madv)->first();
+				if(!isset($cty)){
+					return view('errors.tontai_dulieu')->with('message', 'Doanh nghiệp chưa đăng ký tài khoản');
+				}
 				$user->tendv = $cty->name;
 				$user->maxa = $cty->xa;
 				$user->mahuyen = $cty->huyen;
@@ -161,14 +185,16 @@ class HethongchungController extends Controller
 			'name' => $inputs['name'],
 			'username' => $inputs['username'],
 			'email' => $inputs['email'],
-			'password' => md5($inputs['password']),
+			'password' => Hash::make($inputs['password']),
 			'phanloaitk' => 2,
 			'madv' => $inputs['dkkd'],
 			'status' => 1,
 			'nhaplieu' => 1,
 			'manhomchucnang'=>1669913835
 		];
+		$cty=DB::table('company')->where('name','like',$inputs['username'])->first();
 		$model = User::where('email', $inputs['email'])->first();
+
 		if (isset($model)) {
 			Session::put('message', "Tài khoản đã tồn tại");
 		} else {
@@ -176,7 +202,7 @@ class HethongchungController extends Controller
 			$data_company = [
 				'name' => $inputs['name'],
 				'madv' => $inputs['dkkd'],
-				'masodn' => $inputs['dkkd'],
+				// 'masodn' => $inputs['dkkd'],
 				'dkkd' => $inputs['dkkd'],
 				'user' => $model_user->id
 			];
@@ -187,6 +213,8 @@ class HethongchungController extends Controller
 		return redirect('/')
 			->with('success', 'Đăng ký thành công');
 	}
+
+
 
 
 }

@@ -1,4 +1,4 @@
-{{-- @if (chkPhanQuyen('cunglaodong', 'phanquyen')) --}}
+@if (chkPhanQuyen('cunglaodong', 'phanquyen'))
     {{-- <li class="menu-section">
         <h4 class="menu-text">QUẢN LÝ CUNG LAO ĐỘNG</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -26,7 +26,7 @@
         <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                {{-- @if (chkPhanQuyen('tonghopcunglaodongtinh', 'phanquyen')) --}}
+                @if (chkPhanQuyen('danhsachdieutra', 'phanquyen'))
 
                 {{-- @endif --}}
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
@@ -48,6 +48,7 @@
                                     <span class="menu-text font-weight-bold">Danh sách</span>
                                 </a>
                             </li>
+                            @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{{URL::to('/dieutra/ThemMoi')}}" class="menu-link">
     
@@ -57,9 +58,12 @@
                                     <span class="menu-text font-weight-bold">Tạo mới</span>
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
+                @endif
+                @if (chkPhanQuyen('nhankhau', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="menu-bullet menu-bullet-dot">
@@ -82,6 +86,8 @@
                         </ul>
                     </div>
                 </li>
+                @endif
+                @if (chkPhanQuyen('hogiadinh', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="menu-bullet menu-bullet-dot">
@@ -104,10 +110,10 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
             </ul>
         </div>
     </li>
             
-    {{-- @endif
-@endif --}}
+@endif

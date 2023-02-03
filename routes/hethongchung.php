@@ -39,7 +39,7 @@ Route::prefix('TaiKhoan')->group(function () {
     Route::get('/DanhSach', [UserController::class, 'chitiet']);
     Route::get('/ThemMoi', [UserController::class, 'create']);
     Route::post('/store', [UserController::class, 'store']);
-    Route::get('/delete/{id}', [UserController::class, 'destroy']);
+    Route::post('/delete/{id}', [UserController::class, 'destroy']);
     Route::get('/edit_tk/{id}', [UserController::class, 'edit_tk']);
     Route::post('/update_tk/{id}', [UserController::class, 'update_tk']);
 
@@ -78,6 +78,7 @@ Route::prefix('nhomchucnang')->group(function(){
     Route::post('/PhanQuyen',[dsnhomtaikhoanController::class,'LuuPhanQuyen']);
 
     Route::get('/danhsach_donvi',[dsnhomtaikhoanController::class,'DanhSachDonVi']);
+    Route::post('/ThietLapLai', [dsnhomtaikhoanController::class, 'ThietLapLai']);
 });
 
 Route::prefix('dmthonxom')->group(function(){
