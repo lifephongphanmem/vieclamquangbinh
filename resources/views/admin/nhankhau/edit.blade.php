@@ -329,16 +329,7 @@
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
-
-                            <div class="row">
-                                
-                            </div>
-
-                        </div>
-=======
                         @endif
->>>>>>> b3e4c87704b1042b390ec0744992c2a286e48328
                     </form>
 
                 </div>
