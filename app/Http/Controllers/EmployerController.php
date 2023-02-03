@@ -118,6 +118,7 @@ class EmployerController extends Controller
 	} 
   public function edit($eid,$action)
 	{
+  
 		$countries_list=$this->getCountries();
 		// get params
 		$dmhc =$this->getdanhmuc();

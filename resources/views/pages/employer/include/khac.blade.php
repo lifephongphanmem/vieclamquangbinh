@@ -58,7 +58,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Loại HĐLĐ </label>
-                <select class="form-control input-sm m-bot15" name="loaihdld[]">
+                <select class="form-control  m-bot15" name="loaihdld[]">
                     <?php foreach ( $list_hdld as $td){ ?>
                     <option value='{{ $td->name }}'>{{ $td->name }}</option>
                     <?php } ?>
@@ -80,7 +80,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Tuyển dụng từ TTDVVL</label>
-                <select class="form-control input-sm m-bot5" name="fromttdvvl[]">
+                <select class="form-control  m-bot5" name="fromttdvvl[]">
                     <option value='1' selected>Đúng</option>
                     <option value='0'>Sai</option>
                 </select>
@@ -107,17 +107,18 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Mức lương đóng BHXH </label>
-                    <input type="text" name="luongbhxh[]" id="luongbhxh" class="form-control">
-                </div>
+
+                <label class="control-label">Mức lương đóng BHXH </label>
+                <input type="text" name="luongbhxh[]" id="luongbhxh" class="form-control">
             </div>
         </div>
-        <div class="row">
+        <div  class=" col-md-5">
             <div class="form-group">
                 <label>Ghi chú</label>
-                <textarea name="ghichu[]" class="form-control"rows='2'> </textarea>
+                <textarea name="ghichu[]" class="form-control "rows='2'> </textarea>
             </div>
         </div>
     </div>
+
+</div>
 </div>

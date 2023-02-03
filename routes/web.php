@@ -73,7 +73,7 @@ Route::get('laodong-fnothing/', [EmployerController::class,'noreport']);
 
 // bao cao
 Route::get('/report-fa', [ReportController::class,'show_all']);
-
+Route::get('/report-fa-delete/{id}', [ReportController::class,'deleteReport']);
 //tuyen dung
 Route::get('/tuyendung-fa', [TuyendungController::class,'show_all']);
 Route::get('/tuyendung-fn', [TuyendungController::class,'new']);
