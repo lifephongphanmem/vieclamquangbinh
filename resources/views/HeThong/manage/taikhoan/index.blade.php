@@ -161,6 +161,7 @@
      ?>
 
      <script>
+
         $('#phanloaitk').on('change', function(){
             phanloaitk=$('#phanloaitk').val();
             url='/TaiKhoan/ThongTin?phanloaitk='+phanloaitk;

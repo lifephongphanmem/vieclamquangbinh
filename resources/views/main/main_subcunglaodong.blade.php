@@ -48,6 +48,7 @@
                                     <span class="menu-text font-weight-bold">Danh sách</span>
                                 </a>
                             </li>
+                            @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
                             <li class="menu-item" aria-haspopup="true">
                                 <a href="{{URL::to('/dieutra/ThemMoi')}}" class="menu-link">
     
@@ -57,6 +58,7 @@
                                     <span class="menu-text font-weight-bold">Tạo mới</span>
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
