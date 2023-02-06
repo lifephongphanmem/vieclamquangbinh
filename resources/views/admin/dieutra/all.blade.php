@@ -148,7 +148,8 @@
                                 <td>{{ $dmhc_names[$td->xa] }}</td>
                                 <td>{{ $dmhc_names[$td->huyen] }}</td>
                                 <td><a href="#">{{ $td->soluong }} </a></td>
-                                <td><a href="#">{{ count($data_loi->where('madv', $td->user_id)) }} </a></td>
+                                {{-- <td><a href="#">{{ count($data_loi->where('madv', $td->user_id)) }} </a></td> --}}
+                                <td><a href="{{'/dieutra/danhsachloi/'.$td->id.'?mahuyen='.$td->huyen.'&kydieutra='.$inputs['kydieutra']}}">{{ $td->loi_cccd +$td->loi_ngaysinh + $td->loi_loai2 + $td->loi_loai3 + $td->loi_loai4}} </a></td>
                                 <td><a href="#">{{ $td->soho }} </a></td>
                                 <td>{{ $td->kydieutra }}</td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
