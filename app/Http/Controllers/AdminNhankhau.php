@@ -20,6 +20,7 @@ use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
 use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
+use App\Models\nhankhauModel;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
 use Illuminate\Support\Facades\Hash;
@@ -320,9 +321,9 @@ class AdminNhankhau extends Controller
     }
 
 
-    public function edit($nkid)
+    public function edit(Request $request,$nkid)
     {
-
+        $inputs=$request->all();
         $countries_list = getCountries();
         // get params
         $dmhc = $this->getdanhmuc();
@@ -346,10 +347,31 @@ class AdminNhankhau extends Controller
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
 
         $model = new Nhankhau();
-
         $ld = $model::find($nkid);
-
-        return view('admin.nhankhau.edit')
+        if($inputs['loailoi']){
+            return view('admin.nhankhau.edit_loi')
+            ->with('ld', $ld)
+            ->with('inputs', $inputs)
+            ->with('loailoi', $inputs['loailoi'])
+            ->with('m_uutien', $m_uutien)
+            ->with('m_tinhtrangvl', $m_tinhtrangvl)
+            ->with('m_vithevl', $m_vithevl)
+            ->with('lydo', $lydo)
+            ->with('m_hopdongld', $m_hopdongld)
+            ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
+            ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
+            ->with('m_loaihinhkt', $m_loaihinhkt)
+            ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
+            ->with('countries_list', $countries_list)
+            ->with('dmhc', $dmhc)
+            ->with('list_cmkt', $list_cmkt)
+            ->with('list_tdgd', $list_tdgd)
+            ->with('list_nghe', $list_nghe)
+            // ->with('list_vithe', $list_vithe)
+            // ->with('list_linhvuc', $list_linhvuc)
+            ->with('list_hdld', $list_hdld);
+        }else{
+            return view('admin.nhankhau.edit')
             ->with('ld', $ld)
             ->with('m_uutien', $m_uutien)
             ->with('m_tinhtrangvl', $m_tinhtrangvl)
@@ -368,11 +390,10 @@ class AdminNhankhau extends Controller
             // ->with('list_vithe', $list_vithe)
             // ->with('list_linhvuc', $list_linhvuc)
             ->with('list_hdld', $list_hdld);
+        }
+ 
     }
 
-    public function update(Request $request)
-    {
-    }
     public function delete($catid)
     {
     }
@@ -477,5 +498,49 @@ class AdminNhankhau extends Controller
             'bhxh'
         ))
             ->with('pageTitle', 'Thông tin chi tiết người lao động');
+    }
+    public function update(Request $request,$id){
+            $inputs=$request->all();
+            $loailoi=$inputs['loailoi'];
+            $sualoi=strtoupper(chuyenkhongdau(str_replace(' ','',$inputs['loailoi'])));
+            // $model=DB::table('nhankhau')->where('id',$id)->first();
+            $model=nhankhauModel::findOrFail($id);
+            unset($inputs['_token']);
+            if($inputs['loailoi']){
+                unset($inputs['loailoi']);
+                $a_maloi=explode(';',$model->maloailoi);
+                $maloi='';
+                foreach($a_maloi as $val){
+                    if($val != $sualoi){
+                        $maloi.=$val.';';
+                    }
+                }
+                $inputs['maloailoi']=$maloi;
+            }
+
+            $model->update($inputs);
+            $m_danhsach=danhsach::where('user_id',$model->madv)->where('kydieutra',$model->kydieutra)->first();
+            switch ($sualoi){
+                case 'LOAI1':
+                    $loi_ngaysinh=$m_danhsach->loi_ngaysinh -1;
+                    $m_danhsach->update(['loi_ngaysinh'=>$loi_ngaysinh]);
+                    break;
+                case 'LOAI2':
+                    $loi_loai2=$m_danhsach->loi_loai2 - 1;
+                    $m_danhsach->update(['loi_loai2'=>$loi_loai2]);
+                    break;
+                case 'LOAI3':
+                    $loi_loai3=$m_danhsach->loi_loai3-1;
+                    $m_danhsach->update(['loi_loai3'=>$loi_loai3]);
+                    break;
+                case 'LOAI4':
+                    $loi_loai4=$m_danhsach->loi_loai4-1;
+                    $m_danhsach->update(['loi_loai4'=>$loi_loai4]);
+                    break;
+            }
+
+            if($sualoi != '' || $sualoi != null){
+                return redirect('dieutra/danhsachloi_chitiet?loailoi='.$sualoi.'&madv='.$model->madv.'&kydieutra='.$model->kydieutra);
+            }
     }
 }

@@ -122,6 +122,7 @@ class AdminDieutra extends Controller
         $data_loi=danhsachloi::where('kydieutra',$inputs['kydieutra'])->get();
 
         $a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
+        // dd($inputs);
         // dd($m_xa);
         // dd($m_donvi);
         return view('admin.dieutra.all')
@@ -240,6 +241,11 @@ class AdminDieutra extends Controller
             $soho = $RetIm['soho'];
             $err = $RetIm['error'];
             $data_loi=$RetIm['data_loi'];
+            $loi_cccd=$RetIm['loi_cccd'];
+            $loi_hoten=$RetIm['loi_hoten'];
+            $loi_ngaysinh=$RetIm['loi_ngaysinh'];
+            $loi_loai2=$RetIm['loi_loai2'];
+            $loi_loai3=$RetIm['loi_loai3'];
         } catch (Exception $e) {
 
             // return redirect('dieutra-bn')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ. ' . $e->getMessage()]);
@@ -255,7 +261,7 @@ class AdminDieutra extends Controller
         if ($ld) {
             DB::table('danhsach')
                 ->where('id', $result)
-                ->update(['soluong' => $ld, 'soho' => $soho]);
+                ->update(['soluong' => $ld, 'soho' => $soho,'loi_cccd'=> $loi_cccd,'loi_hoten'=>$loi_hoten,'loi_ngaysinh'=>$loi_ngaysinh,'loi_loai2'=> $loi_loai2,'loi_loai3'=>$loi_loai3]);
 
             // return redirect('dieutra-ba')->with('message', $ld . " nhân khẩu khai báo thành công");
             return redirect('/dieutra/danhsach?mahuyen='.$inputs['huyen'])->with('message', $ld . " nhân khẩu khai báo thành công");
@@ -518,5 +524,75 @@ class AdminDieutra extends Controller
         $model->delete();
 
         return redirect('/dieutra/danhsach?mahuyen='.$inputs['mahuyen'] .'&kydieutra='.$inputs['kydieutra']);
+    }
+
+    public function danhsachloi(Request $request,$id){
+        $inputs=$request->all();
+        // $m_donvi = getDonVi(session('admin')->sadmin);
+        // $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
+        $model=danhsach::findOrFail($id);
+        $a_loailoi=['CCCD','Loại 1','Loại 2', 'Loại 3', 'Loại 4'];
+        $a_model=array();
+foreach($a_loailoi as $val){
+
+    switch($val){
+        case 'CCCD':
+            $soluongloi=$model->loi_cccd;
+            $mota='Không có CCCD';
+            break;
+        case 'Loại 1':
+            $soluongloi=$model->loi_hoten + $model->loi_ngaysinh;
+            $mota='Trống trường dữ liệu họ và tên hoặc ngày sinh';
+            break;
+        case 'Loại 2':
+            $soluongloi=$model->loi_loai2;
+            $mota='Tình trạng tham gia HĐKT = 3 nhưng một trong số các trường sau có dữ liệu: người có việc làm, công việc cụ thể đang làm, tham gia BHXH, HĐLĐ, nơi làm việc, loại hình nơi làm việc, địa chỉ nơi làm việc, người thất nghiệp, thời gian thất nghiệp'; 
+            break;
+            case 'Loại 3':
+            $soluongloi=$model->loi_loai3;
+            $mota='Tình trạng tham gia HĐKT = 2 nhưng một trong số các trường sau có dữ liệu: người có việc làm, công việc cụ thể đang làm, tham gia BHXH, HĐLĐ, nơi làm việc,loại hình nơi làm việc, địa chỉ nơi làm việc, không tham gia hđkt';
+            break;
+            case 'Loại 4':
+                $soluongloi=$model->loi_loai4;
+                $mota='Tình trạng tham HĐKT trống';
+                break;
+        }
+    $array=[
+        'loailoi'=>$val,
+        'soluong'=>$soluongloi,
+        'mota'=>$mota,
+        'madv'=>$model->user_id,
+        'kydieutra'=>$model->kydieutra
+    ];
+    $a_model[]=$array;
+}
+        
+        return view('admin.dieutra.danhsachloi')
+                ->with('a_model',$a_model)
+                ->with('inputs',$inputs)
+                ->with('id',$id);
+    }
+
+    public function danhsachloi_chitiet(Request $request){
+        $inputs=$request->all();
+        $loailoi=strtoupper(chuyenkhongdau(str_replace(' ','',$inputs['loailoi'])));
+        $model=DB::table('nhankhau')->where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->get();
+        $a_loi=array();
+        foreach($model as $val){
+            if($val->maloailoi != null || $val->maloailoi != '' ){
+                $a_maloi=explode(';',$val->maloailoi);
+                foreach($a_maloi as $ct){
+                    if($ct == $loailoi){
+                        $a_loi[]=$val;
+                    }
+                }
+            }
+        }
+// dd($inputs);
+        return view('admin.dieutra.danhsachloi_chitiet')
+                    ->with('a_loi',$a_loi)
+                    ->with('inputs',$inputs)
+                    ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
+                    ->with('loailoi',$loailoi);
     }
 }
