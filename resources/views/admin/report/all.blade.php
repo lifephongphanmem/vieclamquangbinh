@@ -105,23 +105,25 @@
                         <thead>
                             <tr>
                                 <td width="5%"> # </td>
-
-                                <td width="20%">Công ty</td>
-
+                                <td >Công ty</td>
+                                <td >loại</td>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
-
 		                    foreach ($model_congty as $key=>$rp ){ ?>
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td id="detail"><a href="{{ URL::to('/report-detail?user='.$rp->id.'&tungay='.$tungay.'&denngay='.$denngay.'&type_filter='.$type_filter) }}">{{ $rp->name }}</a></td>
+                                <td>
+                                    @if ($type_filter == 'chuakhaibao')
+                                        Chưa khai báo
+                                    @else
+                                        Đã khai báo
+                                    @endif
+                                </td>
                             </tr>
-
                             <?php } ?>
-
-
                         </tbody>
                     </table>
 

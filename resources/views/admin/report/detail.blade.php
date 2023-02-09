@@ -37,6 +37,10 @@
                         <h3 class="card-label text-uppercase">Danh sách khai báo</h3>
                     </div>
                     <div class="card-toolbar">
+                        <a href="" data-target="#moda-indetail" data-toggle="modal" class="btn btn-xs btn-success">
+                            &ensp;in danh sách</a></i>
+                    </div>
+                    <div class="card-toolbar">
                         <a href="{{ URL::to($url) }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
                                 &ensp;Trở về</a></i>
                     </div>
@@ -53,7 +57,6 @@
                                 <td width="30%"> Mô tả</td>
                                 <td width="20%"> Thời gian</td>
                                 <td width="20%">Công ty</td>
-                             
                             </tr>
                         </thead>
 
@@ -113,5 +116,41 @@
             </div>
         </div>
     </div>
+
+
+    <!-- modal  -->
+    <form method="get" action="{{ '/report-detail-in' }}" accept-charset="UTF-8" id="frm_indetail" target="_blank">
+        @csrf
+        <div id="moda-indetail" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">In khai báo</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <input id="user" name="user" value="{{ $user_id }}">
+                        <input id="tungay" name="tungay" value="{{ $tungay }}">
+                        <input id="denngay" name="denngay" value="{{ $denngay }}">
+                        <div class="col-lg-12">
+                            <label class="control-label">Chọn loại khai báo</label>
+                            <select name="loaikhaibao" id="loaikhaibao" class="form-control">
+                                <option value="baotang">Báo tăng</option>
+                                <option value="baogiam">Báo giảm</option>
+                                <option value="tamdung">Tạm dừng</option>
+                                <option value="kethuctamdung">Kết thúc tạm dừng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
 @endsection
