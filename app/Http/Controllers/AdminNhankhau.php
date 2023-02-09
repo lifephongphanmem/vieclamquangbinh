@@ -417,23 +417,8 @@ class AdminNhankhau extends Controller
 
     public function inchitiet(Request $request)
     {
-        
-        $model = Nhankhau::join('danhsach', 'danhsach.id', 'Nhankhau.danhsach_id')->select('Nhankhau.*', 'danhsach.user_id');
-        // kỳ điều tra
-        // dd($request->all());
-        
-        if ($request->danhsach_id) {
-           
-            $model = $model->where('danhsach_id', $request->danhsach_id);
-         
-        }
-        //đơn vị
-        if ($request->user_id) {
+        $model = Nhankhau::where('madv', $request->madv)->get();
 
-            $model = $model->where('madv', $request->user_id);
-        }
-         $model = $model->get();
-       
         return view('admin.nhankhau.inchitiet', compact('model'))
             ->with('pageTitle', 'Danh sách thông tin chi tiết cung dụng lao động');
     }
@@ -442,12 +427,8 @@ class AdminNhankhau extends Controller
     {
        
         $hgd = Nhankhau::where('id',$request->id)->first();
-        $model = Nhankhau::where('ho', $hgd->ho )->where('madv', $hgd->madv )->join('danhsach', 'danhsach.id', 'Nhankhau.danhsach_id')->select('Nhankhau.*', 'danhsach.user_id')->get();
-
-        // if ( $hgd != null ) {
-        //     $model = $model->where('ho', $hgd->ho )->get();
-        // }
-        //kỳ điều tra
+        $model = Nhankhau::where('ho', $hgd->ho )->where('madv', $hgd->madv )->join('danhsach', 'danhsach.id', 'Nhankhau.danhsach_id')
+        ->select('Nhankhau.*', 'danhsach.user_id')->get();
         return view('admin.nhankhau.inchitiet', compact('model'))
             ->with('pageTitle', 'Danh sách thông tin chi tiết hộ gia đình');
     }

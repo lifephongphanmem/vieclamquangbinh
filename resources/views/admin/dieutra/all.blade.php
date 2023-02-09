@@ -165,7 +165,7 @@
                                     </button>
 
                                     {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%"> --}}
-                                        <a href="{{'/nhankhau-in?user_id='.$td->user_id.'&danhsach_id='.$danhsach_id->id}}" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                        <a href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
                                         </a>
                                     {{-- </div> --}}

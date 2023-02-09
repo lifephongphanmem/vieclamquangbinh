@@ -46,8 +46,8 @@
                         <div class="row ">
                             <div class="col-sm-7 col-sm-offset-1">
                                 <label>Lọc theo kỳ</label>
-                                <select style="margin-bottom: 4%" class=" form-control w-sm inline v-middle" name="time_filter"
-                                    onchange="this.form.submit()">
+                                <select style="margin-bottom: 4%" class=" form-control w-sm inline v-middle"
+                                    name="time_filter" onchange="this.form.submit()">
                                     <option value="1" <?php if ($time_filter == 1) {
                                         echo 'selected';
                                     } ?>>Kì hiện tại</option>
@@ -75,8 +75,9 @@
                             <td width="10%"> Loại</td>
                             <td width="10%"> Đối tượng</td>
                             <td width="5%"> Số lượng</td>
-                            <td width="50%"> Mô tả</td>
-                            <td width="20%"> Thời gian</td>
+                            <td width="45%"> Mô tả</td>
+                            <td width="15%"> Thời gian</td>
+                            <td width="10%"> thao tác</td>
                         </thead>
                         <tbody>
                             <?php 
@@ -120,7 +121,13 @@
                                 <td> {{ $rp->numrow }}</td>
                                 <td> {{ $rp->note }}</td>
                                 <td> {{ $rp->time }}</td>
-
+                                <td>
+                                    <button title="Xóa thông tin" data-toggle="modal" data-target="#delete-modal-confirm"
+                                        type="button" onclick="cfDel('{{ 'report-fa-delete/' . $rp->id }}')"
+                                        class="btn btn-sm btn-clean btn-icon">
+                                        <i class="icon-lg flaticon-delete text-danger"></i>
+                                    </button>
+                                </td>
                             </tr>
                             <?php } ?>
                         </tbody>
@@ -129,5 +136,8 @@
                 </div>
             </div>
         </div>
-	</div>
-    @endsection
+    </div>
+
+
+    @include('includes.delete')
+@endsection
