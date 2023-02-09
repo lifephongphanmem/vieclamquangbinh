@@ -67,6 +67,12 @@ class Nhankhau extends Model
 		}
 
 		$y = 0;
+		$loi_cccd=0;
+		$loi_hoten=0;
+		$loi_ngaysinh=0;
+		$loi_loai2=0;
+		$loi_loai3=0;
+		$loi_loai4=0;
 
 		for ($i = 11; $i < count($arr); $i++) {
 			//  dd($arr[$i]);
@@ -89,20 +95,39 @@ class Nhankhau extends Model
 				$data[$arr_col[$j]] = $arr[$i][$j + 2] ?? '';
 			}
 			// dd($data);
-			// check data
-			if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
+			if(!$data['cccd']){
+				$loi_cccd++;
 				continue;
-			};
-			//Kiển tra trùng
-			$check=check_trung($arr,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
-			$check_insert=check_trung($lds,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
+			}
+
+			// check data
+			// if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
+			// 	continue;
+			// };
+			//Kiểm tra trùng
+			// $check=check_trung($arr,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
+			// $check_insert=check_trung($lds,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
+			
+
 			// if(count($check)> 2 && $check_insert > 0){				
 			// 	continue;
 			// }
-			$data['soluongtrung']=count($check);
+		
 			$data['cccd'] = str_replace('\'', '', $data['cccd']);
 			if (strlen($data['cccd']) > 16) {
 				$data['cccd'] = substr($data['cccd'], 0, 16);
+			}
+			$check=check_trung($arr,['5'=>$data['cccd']]);
+			
+			if(count($check) ==1){
+				$data['soluongtrung']= 0;
+			}else{
+				$data['soluongtrung']=count($check);
+			}
+
+			$check_insert=check_trung($lds,['5'=>$data['cccd']]);
+			if(count($check_insert)>2){
+				continue;
 			}
 
 			$data['danhsach_id'] = $cid;
@@ -132,8 +157,10 @@ class Nhankhau extends Model
 				if (is_numeric($data['gioitinh'])) { 
 					$unix_date = ($data['gioitinh'] - 25569) * 86400;
 					$data['ngaysinh'] = date('Y-m-d', $unix_date);
-				};
-				// $data['ngaysinh']=$data['gioitinh'];
+				}else{
+					$data['ngaysinh']=$data['gioitinh'];
+				}
+				
 
 				$data['gioitinh'] = "Nam";
 			} else {
@@ -145,14 +172,13 @@ class Nhankhau extends Model
 			$data['maloailoi'] = '';
 
 
-
-			$array_loi = array('gioitinh', 'ngaysinh', 'cccd');
+			$array_loi = array('hoten', 'ngaysinh');
 			//Lọc trường lỗi để đẩy vào bảng danh sach loi
 			$loi = false;
 			for ($j = 0; $j < count($array_loi); $j++) {
 				if ($data[$array_loi[$j]] == '' || $data[$array_loi[$j]] == null) {
 					$loi = true;
-
+					$loi_ngaysinh++;
 					break;
 				}
 			}
@@ -168,7 +194,7 @@ class Nhankhau extends Model
 			if ($data['tinhtranghdkt'] == 3) {
 
 				foreach ($a_loi2 as $tentruong) {
-					if ($data[$tentruong] != '') {
+					if ($data[$tentruong] != '' || $data[$tentruong] != null ) {
 						$loi2 = true;
 						break;
 					}
@@ -179,6 +205,7 @@ class Nhankhau extends Model
 				}
 			}
 			if ($loi2 == true) {
+				$loi_loai2++;
 				$data['maloailoi'] .= 'LOAI2;';
 			}
 
@@ -190,7 +217,7 @@ class Nhankhau extends Model
 			);
 			if ($data['tinhtranghdkt'] == 2) {
 				foreach ($a_loi3 as $tentruong) {
-					if ($data[$tentruong] != '') {
+					if ($data[$tentruong] != '' || $data[$tentruong] != null) {
 						$loi3 = true;
 						break;
 					}
@@ -201,15 +228,26 @@ class Nhankhau extends Model
 				}
 			}
 			if ($loi3 == true) {
+				$loi_loai3++;
 				$data['maloailoi'] .= 'LOAI3;';
 			}
+
+			//loi 4
+			$loi4=false;
+			if(!$data['tinhtranghdkt']){
+				$loi4=true;
+				$loi_loai4++;
+				$data['maloailoi'].='LOAI4';
+			}
+			
 			//
-			if ($loi || $loi2 || $loi3) {
+			if ($loi || $loi2 || $loi3 || $loi4) {
 				$data_loi[] = $data['maloi'];
 			}
 			// dd($data);
 			DB::table('nhankhau')->insert($data);
-			 $lds[] = ['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']];
+			//  $lds[] = ['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']];
+			 $lds[] = ['5'=>$data['cccd']];
 			$y++;
 		}
 
@@ -229,8 +267,11 @@ class Nhankhau extends Model
 		$RetArray['error'] = $errs;
 		$RetArray['soho'] = $hoindex;
 		$RetArray['data_loi'] = $data_loi;
-
-
+		$RetArray['loi_cccd'] = $loi_cccd;
+		$RetArray['loi_hoten'] = $loi_hoten;
+		$RetArray['loi_ngaysinh'] = $loi_ngaysinh;
+		$RetArray['loi_loai2'] = $loi_loai2;
+		$RetArray['loi_loai3'] = $loi_loai3;
 		return $RetArray;
 	}
 }

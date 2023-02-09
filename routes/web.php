@@ -168,6 +168,9 @@ Route::prefix('dieutra')->group(function(){
     Route::post('/intonghop',[AdminDieutra::class,'intonghop']);//in tổng hợp cung lao động xã
     Route::post('/inbaocaohuyen',[AdminDieutra::class,'inbaocaohuyen']);//in tổng hợp cung lao động huyện
     Route::post('/inbaocaotinh',[AdminDieutra::class,'inbaocaotinh']);//in tổng hợp cung lao động tỉnh
+    Route::get('/danhsachloi/{id}',[AdminDieutra::class,'danhsachloi']);
+    Route::get('/danhsachloi_chitiet',[AdminDieutra::class,'danhsachloi_chitiet']);
+
 });
 
 
@@ -187,6 +190,7 @@ Route::prefix('nhankhau')->group(function(){
     Route::get('/ChiTietHoGiaDinh/{cid?}',[AdminNhankhau::class,'editho']); // all
     Route::get('/ChiTiet/{nkid}',[AdminNhankhau::class,'edit']); // edit
     Route::get('/get_xa',[AdminNhankhau::class,'ajax_getxa']); // lấy xã
+    Route::post('/update/{id}',[AdminNhankhau::class,'update']);
 });
 // Tham số
 Route::get('/ptype-ba',[AdminParamtype::class,'show_all']);
