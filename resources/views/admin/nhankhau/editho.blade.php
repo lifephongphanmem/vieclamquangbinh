@@ -36,7 +36,9 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3>
                     </div>
-
+                    <div class="card-toolbar">
+                        <a onclick="themmoi('{{$inputs['soho']}}','{{$inputs['madv']}}','{{$inputs['kydieutra']}}','{{$inputs['nkid']}}')" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> &ensp;Thêm thành viên</a>
+                    </div>
                 </div>
                 <div class="card-body">
                   <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
@@ -47,7 +49,8 @@
                                 <th>CMND/CCCD</th>
                                 <th>Ngày sinh</th>
                                 <th>MQH</th>
-                                <th>Nơi làm việc</th>
+                                <th>Tình trạng việc làm</th>
+                                <th>Thao tác</th>
 
                             </tr>
                         </thead>
@@ -59,12 +62,20 @@
                             <tr>
                                 <td>{{ ++$key }} </td>
 
-                                <td><a href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id) }}">{{ $ld->hoten }}</a></td>
+                                <td><a href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id.'?mahuyen='.$inputs['mahuyen'].'&view=ho') }}">{{ $ld->hoten }}</a></td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->mqh }}</td>
 
-                                <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}</td>
+                                <td>
+                                    <button title="Xóa nhân khẩu" type="button"
+                                    onclick="cfDel('{{'/nhankhau/XoaNhanKhau/'.$ld->id.'?mahuyen='.$inputs['mahuyen']}}')"
+                                    class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
+                                    data-toggle="modal">
+                                    <i class="icon-lg flaticon-delete text-danger"></i>
+                                </button>
+                                </td>
                  
                             </tr>
                             <?php } ?>
@@ -76,5 +87,43 @@
             </div>
         </div>
     </div>
+                <!--Model delete-->
+                <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                    <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-primary">
+                                    <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xóa</h4>
+                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                                </div>
+                                {{-- <div class="modal-body">
+                                    <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu của hộ gia đình</b></label>
+                                </div> --}}
+        
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                    <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
+                                        ý</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        <script>
+            function cfDel(url) {
+                $('#frmDelete').attr('action', url);
+            }
+
+            function subDel() {
+                $('#frmDelete').submit();
+            }
+        function themmoi(soho,madv,kydieutra,nkid){
+            huyen=$('#huyen').val();
+            xa=$('#xa').val();
+            url='/dieutra/create?madv='+madv+'&kydieutra='+kydieutra+'&huyen='+huyen+'&xa='+xa+'&soho='+soho+'&nkid='+nkid;
+            window.location.href = url;
+        }
+    </script>
 
 @endsection

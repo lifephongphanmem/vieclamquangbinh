@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dmloaihieuluchdld;
+use App\Models\Danhmuc\dmloaihinhhdkt;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
+use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use Illuminate\Http\Request;
 use DB;
@@ -15,6 +20,7 @@ use App\Models\danhsachloi;
 use App\Models\danhsachnhankhau;
 use App\Models\m_nhankhau;
 use App\Models\Nhankhau;
+use App\Models\nhankhauModel;
 use App\Models\User;
 use App\Models\view\view_bao_cao_tonghop;
 use Carbon\Carbon;
@@ -594,5 +600,96 @@ foreach($a_loailoi as $val){
                     ->with('inputs',$inputs)
                     ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
                     ->with('loailoi',$loailoi);
+    }
+
+    public function create(Request $request){
+        $inputs=$request->all();
+        
+        $list_cmkt = dmtrinhdokythuat::all();
+        $list_tdgd = dmtrinhdogdpt::all();
+        $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
+        $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
+        $m_uutien = dmdoituonguutien::all();
+        $m_tinhtrangvl = dmtinhtrangthamgiahdkt::all();
+        $m_vithevl = dmtinhtrangthamgiahdktct2::all();
+        $a_thamgiabaohiem = array('1' => 'Bắt buộc', '2' => 'Tự nguyện', '3' => 'Không tham gia');
+        $m_hopdongld = dmloaihieuluchdld::all();
+        $m_loaihinhkt = dmloaihinhhdkt::all();
+        $dm_tinhtrangct = dmtinhtrangthamgiahdktct::all();
+        $m_nguoithatnghiep = $dm_tinhtrangct->where('manhom', 20221220175720);
+        $lydo = $dm_tinhtrangct->where('manhom', 20221220175728);
+        $m_thoigianthatnghiep = dmthoigianthatnghiep::all();  
+        return view('admin.dieutra.create')
+                ->with('inputs',$inputs)
+                ->with('m_uutien', $m_uutien)
+            ->with('m_tinhtrangvl', $m_tinhtrangvl)
+            ->with('m_vithevl', $m_vithevl)
+            ->with('lydo', $lydo)
+            ->with('m_hopdongld', $m_hopdongld)
+            ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
+            ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
+            ->with('m_loaihinhkt', $m_loaihinhkt)
+            ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
+            ->with('list_cmkt', $list_cmkt)
+            ->with('list_tdgd', $list_tdgd)
+            ->with('list_nghe', $list_nghe)
+            ->with('list_hdld', $list_hdld);
+    }
+
+    public function store(Request $request){
+        $inputs=$request->all();
+        // nhankhauModel::create($inputs);
+        $check=$inputs['ho']??'';
+        if(!isset($inputs['ho'])){
+            $m_nhankhau=nhankhauModel::where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->get();
+            $soho=$m_nhankhau->max('ho');
+            $inputs['ho']=$soho+1;
+        }
+        // dd($inputs);
+// dd(2);
+        for($i=0;$i<$inputs['quantity'];$i++){
+            $tmp= array();
+            foreach($inputs as $key=>$val){
+				if(isset($val[$i])){
+					$tmp[$key]=$val[$i];
+					};
+            }
+            $tmp['madv']=$inputs['madv'];
+            $tmp['kydieutra']=$inputs['kydieutra'];
+            $tmp['ho']=$inputs['ho'];
+            $cccd=nhankhauModel::where('cccd',$tmp['cccd'])->where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->first();
+            if(isset($cccd)){
+                continue;
+            }
+// dd($tmp);
+            nhankhauModel::create($tmp);
+            // dd($tmp);
+        }
+        $model=danhsach::where('user_id',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->first();
+        // dd($model);
+        if(isset($model)){
+            $soluong=$model->soluong+$inputs['quantity'];
+            $soho=$check == ''?$model->soho +1:$model->soho;
+            $model->update(['soluong'=>$soluong,'soho'=>$soho]);
+        }else{
+            $data=[
+                'tinh'=>$inputs['tinh'],
+                'huyen'=>$inputs['huyen']??'',
+                'xa'=>$inputs['xa']??'',
+                'soluong'=>$inputs['quantity'],
+                'kydieutra'=>$inputs['kydieutra'],
+                'user_id'=>$inputs['madv'],
+                'donvinhap'=>session('admin')->madv
+            ];
+            danhsach::create($data);
+        }
+        if($check == ''){
+            return redirect('/nhankhau/hogiadinh?madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&mahuyen='.$inputs['huyen']);
+        }else{
+            return redirect('/nhankhau/ChiTietHoGiaDinh/'.$inputs['nkid'].'?soho='.$inputs['ho'].'&madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&mahuyen='.$inputs['huyen']);
+        }
+
+       
+
     }
 }
