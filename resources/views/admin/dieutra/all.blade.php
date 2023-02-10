@@ -38,7 +38,7 @@
 
             $('#kydieutra').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val();
+                    '&kydieutra=' + $('#kydieutra').val()+ '&mahuyen=' + $('#mahuyen').val();
             });
         });
     </script>
@@ -131,7 +131,7 @@
                                 <th>Số hộ</th>
                                 <th>Kỳ</th>
                                 <th>Ngày đăng</th>
-                                <th>Người cập nhật</th>
+                                <th>Đơn vị cập nhật</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -157,6 +157,11 @@
                                     </span></td>
                                 {{-- <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td> --}}
                                 <td>
+                                    <button  title="Danh sách" type="button"
+                                    onclick="List('{{$td->user_id}}','{{$td->kydieutra}}')"
+                                    class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
+                                    data-toggle="modal">
+                                    <i class="icon-lg flaticon-list text-success"></i>
                                     <button title="Xóa thông tin" type="button"
                                         onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id . '?mahuyen=' . $inputs['mahuyen'] . '&kydieutra=' . $inputs['kydieutra'] }}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
@@ -202,6 +207,36 @@
                 </div>
             </form>
         </div>
+
+                <!--Model danh sách-->
+                <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                    <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+                        @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-primary">
+                                    <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
+                                        <option value="2">Thất nghiệp</option>
+                                        <option value="3">Không tham gia hoạt động kinh tế</option>
+                                    </select>
+                                    <input type="hidden" name='madv' id='madonvi'>
+                                    <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                                </div>
+        
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                    <button type="submit" id="submit" name="submit" value="submit"
+                                    class="btn btn-primary">Đồng
+                                        ý</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
         <!-- modal in tổng hợp -->
         <form method="POST" action="" accept-charset="UTF-8" id="frm_modify_in" target="_blank">
             @csrf
@@ -260,6 +295,10 @@
 
             function subDel() {
                 $('#frmDelete').submit();
+            }
+            function List(madv,kydieutra){
+                $('#madonvi').val(madv);
+                $('#ky_dieu_tra').val(kydieutra);
             }
         </script>
     @endsection

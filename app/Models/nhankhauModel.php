@@ -13,7 +13,7 @@ class nhankhauModel extends Model
     public $timestamps = false;
     protected $fillable=[
         'danhsach_id',
-        'hoten','gioitinh','ngaysinh','cccd','bhxh','thuongtru','diachi','uutien','dantoc','chuyenmonkythuat','chuyennganh','tinhtranghdkt',
+        'hoten','gioitinh','ngaysinh','cccd','bhxh','thuongtru','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat','chuyennganh','tinhtranghdkt',
         'nguoicovieclam','congvieccuthe','thamgiabhxh','hdld','noilamviec','loaihinhnoilamviec','diachinoilamviec','thatnghiep','thoigianthatnghiep',
         'khongthamgiahdkt','ho','mqh','maloi','maloailoi','madv','kydieutra','soluongtrung'
 

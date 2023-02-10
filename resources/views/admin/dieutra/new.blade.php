@@ -28,6 +28,9 @@
             $('#madv').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val();
             });
+            $('#kydieutra').change(function(){
+                $('#ky_dieu_tra').val($('#kydieutra').val());
+            });
         });
     </script>
 @stop
@@ -100,7 +103,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <label style="font-weight: bold">Tỉnh</label>
-                                        <select name="tinh" id="" class="form-control" aria-readonly="true">
+                                        <select name="tinh" id="tinh" class="form-control" aria-readonly="true">
                                             <option value="44">Quảng Bình</option>
                                         </select>
                                     </div>
@@ -109,7 +112,7 @@
                                     <div class="col-md-12">
                                         <label style="font-weight: bold">Huyện</label>
                                         {{-- {!! Form::select('huyen',$m_huyen->name,null , ['class' => 'form-control', 'id' => 'madv']) !!} --}}
-                                        <select name="huyen" id="" class="form-control" aria-readonly="true">
+                                        <select name="huyen" id="huyen" class="form-control" aria-readonly="true">
                                             @if (isset($m_huyen))
                                             <option value="{{$m_huyen->maquocgia}}">{{$m_huyen->name}}</option> 
                                             @endif
@@ -120,7 +123,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <label style="font-weight: bold">Xã</label>
-                                        <select name="xa" id="" class="form-control" aria-readonly="true">
+                                        <select name="xa" id="xa" class="form-control" aria-readonly="true">
                                         @if (isset($m_xa))
                                         <option value="{{$m_xa->maquocgia}}">{{$m_xa->name}}</option>
                                         @endif
@@ -143,7 +146,7 @@
                                     <label>Kỳ điều tra </label>
                                     {{-- <input type="year" id="kydieutra" name="kydieutra" size='30' style="width:50%;"
                                         class="form-control"> --}}
-                                    {{Form::select('kydieutra',getNam(),date('Y'),['class'=>'form-control select2basic'])}}
+                                    {{Form::select('kydieutra',getNam(),date('Y'),['class'=>'form-control select2basic', 'id' => 'kydieutra'])}}
 
                                 </div>
                                 <div class="form-group">
@@ -153,13 +156,24 @@
 
                                 <input type="hidden" name="isnew" value='1'>
                                 <input type="hidden" name="id" value='0'>
+                               
 
-                                <button type="submit" class="btn btn-info">Upload Danh sách</button>
-
+                                <button type="submit" class="btn btn-info">Upload Excel</button>
+                                <a onclick="themmoi()" class="btn btn-success">Add</a>
                             </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function themmoi(){
+            madv=$('#madv').val();
+            kydieutra=$('#kydieutra').val();
+            huyen=$('#huyen').val();
+            xa=$('#xa').val();
+            url='/dieutra/create?madv='+madv+'&kydieutra='+kydieutra+'&huyen='+huyen+'&xa='+xa;
+            window.location.href = url;
+        }
+    </script>
 @endsection
