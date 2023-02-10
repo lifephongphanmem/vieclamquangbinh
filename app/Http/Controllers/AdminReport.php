@@ -9,6 +9,7 @@ use App\Models\Employer;
 use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Report;
+use App\Models\User;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToArray;
 
@@ -36,8 +37,7 @@ class AdminReport extends Controller
 			$thang = date('m');
 			$tungay = Carbon::create($nam, $thang, 5)->toDateString();
 			$denngay = date('Y-m-d');
-		}
-		else{
+		} else {
 			$tungay = $request->tungay;
 			$denngay = $request->denngay;
 		}
@@ -131,6 +131,7 @@ class AdminReport extends Controller
 				$a = a_unique(array_column($a, 'user'));
 			}
 		}
+		
 		// $a = a_unique(array_column($a->toarray(), 'user'));
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
@@ -158,8 +159,8 @@ class AdminReport extends Controller
 
 	public function detail(Request $request)
 	{
-		
-		$reports = Report::where('user', $request->user)->where('time','>=', $request->tungay)->where('time','<=', $request->denngay)->get();
+
+		$reports = Report::where('user', $request->user)->where('time', '>=', $request->tungay)->where('time', '<=', $request->denngay)->get();
 
 		foreach ($reports as $report) {
 			$ct = DB::table('company')->where('user', $report->user)->get()->first();
@@ -169,10 +170,18 @@ class AdminReport extends Controller
 				$report->ctyname = "";
 			}
 		}
-		$url = '/report-ba?type_filter='.$request->type_filter .'&tungay='.$request->tungay . '&denngay='. $request->denngay;
-		return view('admin.report.detail')->with('reports', $reports)->with('url', $url);
+		$url = '/report-ba?type_filter=' . $request->type_filter . '&tungay=' . $request->tungay . '&denngay=' . $request->denngay;
+		return view('admin.report.detail')->with('reports', $reports)->with('url', $url)->with('user_id', $request->user)->with('tungay', $request->tungay)->with('denngay', $request->denngay);
 	}
+	public function detail_in(Request $request)
+	{
+		$model = Report::where('user', $request->user)->where('time', '>=', $request->tungay)
+		->where('time', '<=', $request->denngay)->where('type',$request->loaikhaibao)->get();
+		$cty = $model->first();
+		$tencty = Company::select('name')->where('user',$cty->user)->first();
 
+		return view('admin.report.indetail')->with('model', $model)->with('loaikhaibao', $request->loaikhaibao)->with('tencty',$tencty)->with('pageTitle','Danh sách khai báo');
+	}
 
 	public function getDmhc()
 	{

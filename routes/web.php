@@ -73,7 +73,7 @@ Route::get('laodong-fnothing/', [EmployerController::class,'noreport']);
 
 // bao cao
 Route::get('/report-fa', [ReportController::class,'show_all']);
-
+Route::get('/report-fa-delete/{id}', [ReportController::class,'deleteReport']);
 //tuyen dung
 Route::get('/tuyendung-fa', [TuyendungController::class,'show_all']);
 Route::get('/tuyendung-fn', [TuyendungController::class,'new']);
@@ -262,6 +262,7 @@ Route::post('/dmhc-bu/',[AdminDanhmuchanhchinh::class,'update']);
 // Lao động Biến động
 Route::get('/report-ba/{cid?}',[AdminReport::class,'show_all']);
 Route::get('/report-detail',[AdminReport::class,'detail']);
+Route::get('/report-detail-in',[AdminReport::class,'detail_in']);
 Route::get('/report-be/{id}',[AdminReport::class,'edit']);
 
 

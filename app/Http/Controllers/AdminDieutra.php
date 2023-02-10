@@ -65,8 +65,7 @@ class AdminDieutra extends Controller
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra=danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
-        $danhsach_id = danhsach::select('id')->where('kydieutra',$inputs['kydieutra'])->first();
-        // dd($inputs['madv']);
+ 
         $inputs['url'] = '/dieutra/danhsach';
         $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
         $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
@@ -131,6 +130,7 @@ class AdminDieutra extends Controller
         // dd($inputs);
         // dd($m_xa);
         // dd($m_donvi);
+        //  dd($dss);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
             ->with('data_loi', $data_loi)
@@ -145,8 +145,8 @@ class AdminDieutra extends Controller
             ->with('search', $search)
             ->with('dmhc_list', $dmhc_list)
             ->with('huyen_list', $huyen_list)
-            ->with('dm_filter', $dm_filter)
-            ->with('danhsach_id', $danhsach_id);
+            ->with('dm_filter', $dm_filter);
+           
     }
 
     public function getDmhc()
