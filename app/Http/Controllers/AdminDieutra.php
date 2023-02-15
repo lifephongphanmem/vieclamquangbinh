@@ -63,40 +63,39 @@ class AdminDieutra extends Controller
         // dd($m_diaban);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
-        $kydieutra=danhsach::orderBy('id', 'desc')->first();
-        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra)?$kydieutra->kydieutra:'');
- 
+        $kydieutra = danhsach::orderBy('id', 'desc')->first();
+        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
+
         $inputs['url'] = '/dieutra/danhsach';
-        $model_dv=dmdonvi::where('madv',$inputs['madv'])->first();
-        $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
-        $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();   
-        $inputs['mahuyen']=$inputs['mahuyen']??$m_huyen->maquocgia;
-        $arr_xa=array_column(getMaXa($inputs['mahuyen'])->toarray(),'madv');
-// dd($a_xa);
+        $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
+        $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
+        $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
+        $inputs['mahuyen'] = $inputs['mahuyen'] ?? $m_huyen->maquocgia;
+        $arr_xa = array_column(getMaXa($inputs['mahuyen'])->toarray(), 'madv');
+        // dd($a_xa);
         $dss = DB::table('danhsach')->where('kydieutra', $inputs['kydieutra']);
 
-        if (in_array(session('admin')->sadmin, ['SSA', 'ssa','ADMIN'])){
-            $a_huyen=array_column(danhmuchanhchinh::where('capdo','H')->get()->toarray(),'name','maquocgia');
-            $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-            ->select('dmdonvi.madv','danhmuchanhchinh.name')
-            ->where('parent',$inputs['mahuyen'])->get();
-        }else{
-           
+        if (in_array(session('admin')->sadmin, ['SSA', 'ssa', 'ADMIN'])) {
+            $a_huyen = array_column(danhmuchanhchinh::where('capdo', 'H')->get()->toarray(), 'name', 'maquocgia');
+            $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
+                ->where('parent', $inputs['mahuyen'])->get();
+        } else {
 
-            if(session('admin')->capdo == 'H'){
-                $a_huyen=[session('admin')->maquocgia => session('admin')->tendiaban];
-                $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
-                ->where('danhmuchanhchinh.parent', session('admin')->maquocgia )->get();
-            }else{
-                $m_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                ->select('dmdonvi.madv','danhmuchanhchinh.name','danhmuchanhchinh.parent')
-                ->where('madv',$inputs['madv'])->get();
-                $a_huyen=array_column(danhmuchanhchinh::where('maquocgia',$m_xa->first()->parent)->get()->toarray(),'name','maquocgia');
+
+            if (session('admin')->capdo == 'H') {
+                $a_huyen = [session('admin')->maquocgia => session('admin')->tendiaban];
+                $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'danhmuchanhchinh.parent')
+                    ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)->get();
+            } else {
+                $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'danhmuchanhchinh.parent')
+                    ->where('madv', $inputs['madv'])->get();
+                $a_huyen = array_column(danhmuchanhchinh::where('maquocgia', $m_xa->first()->parent)->get()->toarray(), 'name', 'maquocgia');
             }
-            
         }
-// dd($a_huyen);
+        // dd($a_huyen);
         // if(session('admin')->sadmin == 'ADMIN'){
         //     $dss=$dss->get();
         // }else{
@@ -106,7 +105,7 @@ class AdminDieutra extends Controller
 
         $donvi = User::where('madv', $inputs['madv'])->first();
         if (in_array($donvi->sadmin, ['SSA', 'ADMIN', 'ssa'])) {
-            $dss = $dss->wherein('user_id',$arr_xa)->get();
+            $dss = $dss->wherein('user_id', $arr_xa)->get();
         } elseif ($donvi->capdo == 'H') {
             $huyen = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
                 ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.*')
@@ -114,7 +113,7 @@ class AdminDieutra extends Controller
                 ->where('dmdonvi.madv', session('admin')->madv)
                 ->first();
             $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-                ->select('dmdonvi.madv', 'dmdonvi.tendv','danhmuchanhchinh.name')
+                ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.name')
                 ->where('danhmuchanhchinh.parent', $huyen->maquocgia)
                 ->get();
             $a_xa = array_column($m_xa->toarray(), 'madv');
@@ -124,9 +123,9 @@ class AdminDieutra extends Controller
             $dss = $dss->where('danhsach.user_id', $inputs['madv'])
                 ->get();
         }
-        $data_loi=danhsachloi::where('kydieutra',$inputs['kydieutra'])->get();
+        $data_loi = danhsachloi::where('kydieutra', $inputs['kydieutra'])->get();
 
-        $a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
+        $a_donvi = array_column(dmdonvi::all()->toarray(), 'tendv', 'madv');
         // dd($inputs);
         // dd($m_xa);
         // dd($m_donvi);
@@ -146,7 +145,6 @@ class AdminDieutra extends Controller
             ->with('dmhc_list', $dmhc_list)
             ->with('huyen_list', $huyen_list)
             ->with('dm_filter', $dm_filter);
-           
     }
 
     public function getDmhc()
@@ -211,16 +209,15 @@ class AdminDieutra extends Controller
         $data['huyen'] = $request->huyen;
         $data['tinh'] = $request->tinh;
         $data['user_id'] = $uid;
-        $data['donvinhap']=session('admin')->madv;
+        $data['donvinhap'] = session('admin')->madv;
         $data['kydieutra'] = $request->kydieutra;
         $data['ghichu'] = $request->ghichu;
 
-        $model=danhsach::where('user_id',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->first();
-        if(isset($model))
-        {
+        $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
+        if (isset($model)) {
             return view('errors.tontai_dulieu')
-            ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
-            ->with('furl', '/dieutra/ThemMoi');
+                ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
+                ->with('furl', '/dieutra/ThemMoi');
         }
 
         $result = DB::table('danhsach')->insertGetId($data);
@@ -240,37 +237,36 @@ class AdminDieutra extends Controller
         ]);
 
         try {
-        
-            $RetIm = $model->import($result,$inputs);
+
+            $RetIm = $model->import($result, $inputs);
 
             $ld = $RetIm['valid'];
             $soho = $RetIm['soho'];
             $err = $RetIm['error'];
-            $data_loi=$RetIm['data_loi'];
-            $loi_cccd=$RetIm['loi_cccd'];
-            $loi_hoten=$RetIm['loi_hoten'];
-            $loi_ngaysinh=$RetIm['loi_ngaysinh'];
-            $loi_loai2=$RetIm['loi_loai2'];
-            $loi_loai3=$RetIm['loi_loai3'];
+            $data_loi = $RetIm['data_loi'];
+            $loi_cccd = $RetIm['loi_cccd'];
+            $loi_hoten = $RetIm['loi_hoten'];
+            $loi_ngaysinh = $RetIm['loi_ngaysinh'];
+            $loi_loai2 = $RetIm['loi_loai2'];
+            $loi_loai3 = $RetIm['loi_loai3'];
         } catch (Exception $e) {
 
             // return redirect('dieutra-bn')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ. ' . $e->getMessage()]);
             return redirect('/dieutra/ThemMoi')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ. ' . $e->getMessage()]);
         }
 
-        if($data_loi){
-            foreach($data_loi as $item)
-            {
-                DB::table('danhsachloi')->insert(['nhankhau_id'=>$item,'madv'=>$inputs['madv'],'kydieutra'=>$inputs['kydieutra']]);
+        if ($data_loi) {
+            foreach ($data_loi as $item) {
+                DB::table('danhsachloi')->insert(['nhankhau_id' => $item, 'madv' => $inputs['madv'], 'kydieutra' => $inputs['kydieutra']]);
             }
         }
         if ($ld) {
             DB::table('danhsach')
                 ->where('id', $result)
-                ->update(['soluong' => $ld, 'soho' => $soho,'loi_cccd'=> $loi_cccd,'loi_hoten'=>$loi_hoten,'loi_ngaysinh'=>$loi_ngaysinh,'loi_loai2'=> $loi_loai2,'loi_loai3'=>$loi_loai3]);
+                ->update(['soluong' => $ld, 'soho' => $soho, 'loi_cccd' => $loi_cccd, 'loi_hoten' => $loi_hoten, 'loi_ngaysinh' => $loi_ngaysinh, 'loi_loai2' => $loi_loai2, 'loi_loai3' => $loi_loai3]);
 
             // return redirect('dieutra-ba')->with('message', $ld . " nhân khẩu khai báo thành công");
-            return redirect('/dieutra/danhsach?mahuyen='.$inputs['huyen'])->with('message', $ld . " nhân khẩu khai báo thành công");
+            return redirect('/dieutra/danhsach?mahuyen=' . $inputs['huyen'])->with('message', $ld . " nhân khẩu khai báo thành công");
         } else {
             // redirect('dieutra-ba')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ']);
             redirect('/dieutra/danhsach')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ']);
@@ -316,8 +312,8 @@ class AdminDieutra extends Controller
         //     ->get();
         // $model =view_bao_cao_tonghop::where('kydieutra', $inputs['kydieutra'])->get();
         // $model=DB::table('nhankhau')->where('kydieutra',$inputs['kydieutra'])->get();
-        $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
-// dd($model);
+        $model = m_nhankhau::where('kydieutra', $inputs['kydieutra'])->get();
+        // dd($model);
         if (isset($inputs['madv'])) {
             $model = $model->where('madv', $inputs['madv']);
         }
@@ -325,10 +321,10 @@ class AdminDieutra extends Controller
         //     $model = $model->where('kydieutra', $inputs['kydieutra']);
         // }
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-        ->select('danhmuchanhchinh.*','dmdonvi.madv')
-        ->get();
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
         //    dd($model); 
-        $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
+        $a_dm = array_column($m_danhmuc->toarray(), 'level', 'madv');
         foreach ($model as $ct) {
             // $danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             //     ->select('danhmuchanhchinh.level', 'danhmuchanhchinh.name', 'danhmuchanhchinh.capdo')
@@ -341,8 +337,8 @@ class AdminDieutra extends Controller
             }
         }
 
-        $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
-        $m_donvi->huyen=$m_danhmuc->where('maquocgia',$m_donvi->parent)->first()->name;
+        $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
+        $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
@@ -364,22 +360,22 @@ class AdminDieutra extends Controller
         }
         $inputs = $request->all();
         // dd($inputs);
-        $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
+        $model = m_nhankhau::where('kydieutra', $inputs['kydieutra'])->get();
 
         // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-        ->select('danhmuchanhchinh.*','dmdonvi.madv')
-        ->get();
-        $m_donvi=$m_danhmuc->where('madv',$inputs['madv'])->first();
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
+        $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
         // $m_donvi->huyen=$m_danhmuc->where('maquocgia',$m_donvi->parent)->first()->name;
 
         if (isset($inputs['madv'])) {
-            $a_donvi=array_column($m_danhmuc->where('parent',$m_donvi->maquocgia)->toarray(),'madv');
+            $a_donvi = array_column($m_danhmuc->where('parent', $m_donvi->maquocgia)->toarray(), 'madv');
             $model = $model->wherein('madv', $a_donvi);
         }
 
         //    dd($model);
-        $a_dm=array_column($m_danhmuc->toarray(),'level','madv'); 
+        $a_dm = array_column($m_danhmuc->toarray(), 'level', 'madv');
         foreach ($model as $ct) {
 
             if ($a_dm[$ct->madv] == 'Xã') {
@@ -388,10 +384,9 @@ class AdminDieutra extends Controller
                 $ct->khuvuc = 'thanhthi';
             }
 
-            if($ct->gioitinh == null){
-                $ct->gioitinh='Nam';
+            if ($ct->gioitinh == null) {
+                $ct->gioitinh = 'Nam';
             }
-
         }
 
 
@@ -417,36 +412,36 @@ class AdminDieutra extends Controller
         }
         $inputs = $request->all();
         // dd($inputs);
-        $a_chuyenmon=dmtrinhdokythuat::select('tentdkt','stt')->get()->toarray();
+        $a_chuyenmon = dmtrinhdokythuat::select('tentdkt', 'stt')->get()->toarray();
         // dd($a_chuyenmon);
-        $model=m_nhankhau::where('kydieutra',$inputs['kydieutra'])->get();
+        $model = m_nhankhau::where('kydieutra', $inputs['kydieutra'])->get();
 
-                // dd($model);
+        // dd($model);
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-        ->select('danhmuchanhchinh.*','dmdonvi.madv')
-        ->get();
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
 
-        $a_dm=array_column($m_danhmuc->toarray(),'level','madv');
-        $m_donvi=$m_danhmuc->where('madv',session('admin')->madv)->first();    
-        $a_cmkt = array_column($a_chuyenmon, 'tentdkt', 'stt');        
+        $a_dm = array_column($m_danhmuc->toarray(), 'level', 'madv');
+        $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
+        $a_cmkt = array_column($a_chuyenmon, 'tentdkt', 'stt');
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
-        
 
 
-        $a_ketqua=['thanhthi'=>0,'nongthon'=>0,'nam'=>0,'nu'=>0];
-        $a_covl=['thanhthi'=>0,'nongthon'=>0];
-        $a_thatnghiep=['thanhthi'=>0,'nongthon'=>0];
+
+        $a_ketqua = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
+        $a_covl = ['thanhthi' => 0, 'nongthon' => 0];
+        $a_thatnghiep = ['thanhthi' => 0, 'nongthon' => 0];
         foreach ($model as $ct) {
             if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
                 $a_ketqua['nongthon']++;
 
                 //có việc làm và thất nghiệp
-                if($ct->tinhtranghdkt == 1){
+                if ($ct->tinhtranghdkt == 1) {
                     $a_covl['nongthon']++;
-                }elseif($ct->tinhtranghdkt == 2){
+                } elseif ($ct->tinhtranghdkt == 2) {
                     $a_thatnghiep['nongthon']++;
                 }
             } else {
@@ -454,18 +449,18 @@ class AdminDieutra extends Controller
                 $a_ketqua['thanhthi']++;
 
                 //có việc làm và thất nghiệp
-                if($ct->tinhtranghdkt == 1){
+                if ($ct->tinhtranghdkt == 1) {
                     $a_covl['thanhthi']++;
-                }elseif($ct->tinhtranghdkt == 2){
+                } elseif ($ct->tinhtranghdkt == 2) {
                     $a_thatnghiep['thanhthi']++;
                 }
             }
 
-            if(in_array($ct->gioitinh,['nam','Nam']) ){
+            if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
                 $a_ketqua['nam']++;
-            }else{
+            } else {
                 $a_ketqua['nu']++;
-            } 
+            }
 
             // if($ct->tinhtranghdkt ==1){
             //    is_numeric($ct->chuyenmonkythuat)?($cmkt_covl[$ct->chuyenmonkythuat]?$cmkt_covl[$ct->chuyenmonkythuat]++:'' ): '';
@@ -479,7 +474,7 @@ class AdminDieutra extends Controller
             //         $_khongthamgia[$khongthamgia]++;
             //     }
             // }
-            
+
         }
 
 
@@ -498,30 +493,30 @@ class AdminDieutra extends Controller
             ->with('pageTitle', 'Tổng hợp cung lao động');
     }
 
-    public function XoaDanhSach(Request $request,$id)
+    public function XoaDanhSach(Request $request, $id)
     {
         if (!chkPhanQuyen('danhsachdieutra', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
         }
-        $inputs=$request->all();
-        $model=danhsach::findOrFail($id);
-        if(isset($model)){
-            
+        $inputs = $request->all();
+        $model = danhsach::findOrFail($id);
+        if (isset($model)) {
+
             // $danhsach=danhsachnhankhau::where('danhsach_id',$model->id)->get();
-            $danhsach=DB::table('nhankhau')->where('danhsach_id',$model->id)->delete();
+            $danhsach = DB::table('nhankhau')->where('danhsach_id', $model->id)->delete();
             // $maloi=array_column($danhsach->toarray(),'maloi');  
             // foreach($danhsach as $val){
             //         $val->delete();
             //     }
-            $dsloi=DB::table('danhsachloi')->where('madv',$model->user_id)->where('kydieutra',$model->kydieutra)->delete();
-  
+            $dsloi = DB::table('danhsachloi')->where('madv', $model->user_id)->where('kydieutra', $model->kydieutra)->delete();
+
             // foreach(array_chunk($maloi,1000) as $loi){
             //     $dsloi=danhsachloi::wherein('nhankhau_id',$loi)->get();
             //     dd($dsloi);
-               
+
             // }
 
-          
+
             // foreach($dsloi as $ct)
             // {
             //     $ct->delete();
@@ -529,82 +524,85 @@ class AdminDieutra extends Controller
         }
         $model->delete();
 
-        return redirect('/dieutra/danhsach?mahuyen='.$inputs['mahuyen'] .'&kydieutra='.$inputs['kydieutra']);
+        return redirect('/dieutra/danhsach?mahuyen=' . $inputs['mahuyen'] . '&kydieutra=' . $inputs['kydieutra']);
     }
 
-    public function danhsachloi(Request $request,$id){
-        $inputs=$request->all();
+    public function danhsachloi(Request $request, $id)
+    {
+        $inputs = $request->all();
         // $m_donvi = getDonVi(session('admin')->sadmin);
         // $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-        $model=danhsach::findOrFail($id);
-        $a_loailoi=['CCCD','Loại 1','Loại 2', 'Loại 3', 'Loại 4'];
-        $a_model=array();
-foreach($a_loailoi as $val){
+        $model = danhsach::findOrFail($id);
+        $a_loailoi = ['CCCD', 'Loại 1', 'Loại 2', 'Loại 3', 'Loại 4'];
+        $a_model = array();
+        foreach ($a_loailoi as $val) {
 
-    switch($val){
-        case 'CCCD':
-            $soluongloi=$model->loi_cccd;
-            $mota='Không có CCCD';
-            break;
-        case 'Loại 1':
-            $soluongloi=$model->loi_hoten + $model->loi_ngaysinh;
-            $mota='Trống trường dữ liệu họ và tên hoặc ngày sinh';
-            break;
-        case 'Loại 2':
-            $soluongloi=$model->loi_loai2;
-            $mota='Tình trạng tham gia HĐKT = 3 nhưng một trong số các trường sau có dữ liệu: người có việc làm, công việc cụ thể đang làm, tham gia BHXH, HĐLĐ, nơi làm việc, loại hình nơi làm việc, địa chỉ nơi làm việc, người thất nghiệp, thời gian thất nghiệp'; 
-            break;
-            case 'Loại 3':
-            $soluongloi=$model->loi_loai3;
-            $mota='Tình trạng tham gia HĐKT = 2 nhưng một trong số các trường sau có dữ liệu: người có việc làm, công việc cụ thể đang làm, tham gia BHXH, HĐLĐ, nơi làm việc,loại hình nơi làm việc, địa chỉ nơi làm việc, không tham gia hđkt';
-            break;
-            case 'Loại 4':
-                $soluongloi=$model->loi_loai4;
-                $mota='Tình trạng tham HĐKT trống';
-                break;
+            switch ($val) {
+                case 'CCCD':
+                    $soluongloi = $model->loi_cccd;
+                    $mota = 'Không có CCCD';
+                    break;
+                case 'Loại 1':
+                    $soluongloi = $model->loi_hoten + $model->loi_ngaysinh;
+                    $mota = 'Trống trường dữ liệu họ và tên hoặc ngày sinh';
+                    break;
+                case 'Loại 2':
+                    $soluongloi = $model->loi_loai2;
+                    $mota = 'Tình trạng tham gia HĐKT = 3 nhưng một trong số các trường sau có dữ liệu: người có việc làm, công việc cụ thể đang làm, tham gia BHXH, HĐLĐ, nơi làm việc, loại hình nơi làm việc, địa chỉ nơi làm việc, người thất nghiệp, thời gian thất nghiệp';
+                    break;
+                case 'Loại 3':
+                    $soluongloi = $model->loi_loai3;
+                    $mota = 'Tình trạng tham gia HĐKT = 2 nhưng một trong số các trường sau có dữ liệu: người có việc làm, công việc cụ thể đang làm, tham gia BHXH, HĐLĐ, nơi làm việc,loại hình nơi làm việc, địa chỉ nơi làm việc, không tham gia hđkt';
+                    break;
+                case 'Loại 4':
+                    $soluongloi = $model->loi_loai4;
+                    $mota = 'Tình trạng tham HĐKT trống';
+                    break;
+            }
+            $array = [
+                'loailoi' => $val,
+                'soluong' => $soluongloi,
+                'mota' => $mota,
+                'madv' => $model->user_id,
+                'kydieutra' => $model->kydieutra
+            ];
+            $a_model[] = $array;
         }
-    $array=[
-        'loailoi'=>$val,
-        'soluong'=>$soluongloi,
-        'mota'=>$mota,
-        'madv'=>$model->user_id,
-        'kydieutra'=>$model->kydieutra
-    ];
-    $a_model[]=$array;
-}
-        
+
         return view('admin.dieutra.danhsachloi')
-                ->with('a_model',$a_model)
-                ->with('inputs',$inputs)
-                ->with('id',$id);
+            ->with('a_model', $a_model)
+            ->with('inputs', $inputs)
+            ->with('id', $id);
     }
 
-    public function danhsachloi_chitiet(Request $request){
-        $inputs=$request->all();
-        $loailoi=strtoupper(chuyenkhongdau(str_replace(' ','',$inputs['loailoi'])));
-        $model=DB::table('nhankhau')->where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->get();
-        $a_loi=array();
-        foreach($model as $val){
-            if($val->maloailoi != null || $val->maloailoi != '' ){
-                $a_maloi=explode(';',$val->maloailoi);
-                foreach($a_maloi as $ct){
-                    if($ct == $loailoi){
-                        $a_loi[]=$val;
+    public function danhsachloi_chitiet(Request $request)
+    {
+        $inputs = $request->all();
+        $loailoi = strtoupper(chuyenkhongdau(str_replace(' ', '', $inputs['loailoi'])));
+        $model = DB::table('nhankhau')->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->get();
+        $a_loi = array();
+        foreach ($model as $val) {
+            if ($val->maloailoi != null || $val->maloailoi != '') {
+                $a_maloi = explode(';', $val->maloailoi);
+                foreach ($a_maloi as $ct) {
+                    if ($ct == $loailoi) {
+                        $a_loi[] = $val;
                     }
                 }
             }
         }
-// dd($inputs);
+        // dd($inputs);
         return view('admin.dieutra.danhsachloi_chitiet')
-                    ->with('a_loi',$a_loi)
-                    ->with('inputs',$inputs)
-                    ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
-                    ->with('loailoi',$loailoi);
+            ->with('a_loi', $a_loi)
+            ->with('inputs', $inputs)
+            ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
+            ->with('loailoi', $loailoi);
     }
 
-    public function create(Request $request){
-        $inputs=$request->all();
-        
+    public function create(Request $request)
+    {
+        $inputs = $request->all();
+
         $list_cmkt = dmtrinhdokythuat::all();
         $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
@@ -618,10 +616,10 @@ foreach($a_loailoi as $val){
         $dm_tinhtrangct = dmtinhtrangthamgiahdktct::all();
         $m_nguoithatnghiep = $dm_tinhtrangct->where('manhom', 20221220175720);
         $lydo = $dm_tinhtrangct->where('manhom', 20221220175728);
-        $m_thoigianthatnghiep = dmthoigianthatnghiep::all();  
+        $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
         return view('admin.dieutra.create')
-                ->with('inputs',$inputs)
-                ->with('m_uutien', $m_uutien)
+            ->with('inputs', $inputs)
+            ->with('m_uutien', $m_uutien)
             ->with('m_tinhtrangvl', $m_tinhtrangvl)
             ->with('m_vithevl', $m_vithevl)
             ->with('lydo', $lydo)
@@ -636,57 +634,58 @@ foreach($a_loailoi as $val){
             ->with('list_hdld', $list_hdld);
     }
 
-    public function store(Request $request){
-        $inputs=$request->all();
+    public function store(Request $request)
+    {
+        $inputs = $request->all();
         // nhankhauModel::create($inputs);
-        $check=$inputs['ho']??'';
-        if(!isset($inputs['ho'])){
-            $m_nhankhau=nhankhauModel::where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->get();
-            $soho=$m_nhankhau->max('ho');
-            $inputs['ho']=$soho+1;
+        $check = $inputs['ho'] ?? '';
+        if (!isset($inputs['ho'])) {
+            $m_nhankhau = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->get();
+            $soho = $m_nhankhau->max('ho');
+            $inputs['ho'] = $soho + 1;
         }
         // dd($inputs);
-// dd(2);
-        for($i=0;$i<$inputs['quantity'];$i++){
-            $tmp= array();
-            foreach($inputs as $key=>$val){
-				if(isset($val[$i])){
-					$tmp[$key]=$val[$i];
-					};
+        // dd(2);
+        for ($i = 0; $i < $inputs['quantity']; $i++) {
+            $tmp = array();
+            foreach ($inputs as $key => $val) {
+                if (isset($val[$i])) {
+                    $tmp[$key] = $val[$i];
+                };
             }
-            $tmp['madv']=$inputs['madv'];
-            $tmp['kydieutra']=$inputs['kydieutra'];
-            $tmp['ho']=$inputs['ho'];
-            $cccd=nhankhauModel::where('cccd',$tmp['cccd'])->where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->first();
-            if(isset($cccd)){
+            $tmp['madv'] = $inputs['madv'];
+            $tmp['kydieutra'] = $inputs['kydieutra'];
+            $tmp['ho'] = $inputs['ho'];
+            $cccd = nhankhauModel::where('cccd', $tmp['cccd'])->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
+            if (isset($cccd)) {
                 continue;
             }
-// dd($tmp);
+            // dd($tmp);
             nhankhauModel::create($tmp);
             // dd($tmp);
         }
-        $model=danhsach::where('user_id',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->first();
+        $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($model);
-        if(isset($model)){
-            $soluong=$model->soluong+$inputs['quantity'];
-            $soho=$check == ''?$model->soho +1:$model->soho;
-            $model->update(['soluong'=>$soluong,'soho'=>$soho]);
-        }else{
-            $data=[
-                'tinh'=>$inputs['tinh'],
-                'huyen'=>$inputs['huyen']??'',
-                'xa'=>$inputs['xa']??'',
-                'soluong'=>$inputs['quantity'],
-                'kydieutra'=>$inputs['kydieutra'],
-                'user_id'=>$inputs['madv'],
-                'donvinhap'=>session('admin')->madv
+        if (isset($model)) {
+            $soluong = $model->soluong + $inputs['quantity'];
+            $soho = $check == '' ? $model->soho + 1 : $model->soho;
+            $model->update(['soluong' => $soluong, 'soho' => $soho]);
+        } else {
+            $data = [
+                'tinh' => $inputs['tinh'],
+                'huyen' => $inputs['huyen'] ?? '',
+                'xa' => $inputs['xa'] ?? '',
+                'soluong' => $inputs['quantity'],
+                'kydieutra' => $inputs['kydieutra'],
+                'user_id' => $inputs['madv'],
+                'donvinhap' => session('admin')->madv
             ];
             danhsach::create($data);
         }
-        if($check == ''){
-            return redirect('/nhankhau/hogiadinh?madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&mahuyen='.$inputs['huyen']);
-        }else{
-            return redirect('/nhankhau/ChiTietHoGiaDinh/'.$inputs['nkid'].'?soho='.$inputs['ho'].'&madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&mahuyen='.$inputs['huyen']);
+        if ($check == '') {
+            return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
+        } else {
+            return redirect('/nhankhau/ChiTietHoGiaDinh/' . $inputs['nkid'] . '?soho=' . $inputs['ho'] . '&madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
         }
     }
 }
