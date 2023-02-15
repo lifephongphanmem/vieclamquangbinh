@@ -39,8 +39,8 @@
                 </div>
                 <div class="card-body">
 
-                    {{-- <form role="form" method="POST" action="{{ URL::to('laodong-fu') }}" enctype='multipart/form-data'>
-                        {{ csrf_field() }} --}}
+                    <form role="form" method="POST"  action="{{'/nguoilaodong/update'}}" enctype='multipart/form-data'>
+                        {{ csrf_field() }}
 
                         <div class="panel-body" id='dynamicTable'>
                             <div class="row" id="1stld">
@@ -160,20 +160,35 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Huyện Thị</label>
-                                                                    <input type="text" name="huyen"
-                                                                        value="{{ $ld->huyen }}" class="form-control">
+                                                                    <label class="control-label">Huyện/Thị xã/Thành phố</label>
+                                                                    <?php $huyen=$dmhanhchinh->wherein('level',['Thành phố','Huyện','Thị xã'])?>
+                                                                    <select name="huyen" class="form-control select2basic" id="">
+                                                                        <option value="">--- Chọn Huyện ----</option>
+                                                                    @foreach ($huyen as $h )
+                                                                        <option value="{{$h->name}}" {{('Huyện '.$ld->huyen) == $h->name || $ld->huyen == $h->name  ? 'selected':''}}>{{$h->name}}</option>
+                                                                    @endforeach
+                                                                </select>
                                                                 </div>
                                                             </div>
+                                
+                                                   
                                                         </div>
                                                         <div class="row">
+                                           
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Phường xã</label>
-                                                                    <input type="text" name="xa"
-                                                                        value="{{ $ld->xa }}" class="form-control">
+                                                                    <label class="control-label">Xã/Phường</label>
+                                                                    <select name="xa" class="form-control select2basic" id="">
+                                                                    <?php $xa=$dmhanhchinh->wherein('level',['Phường','Xã','Thị trấn'])?>
+                                                                    <option value="">--- Chọn xã ---</option>
+                                                                    @foreach ($xa as $x )
+                                                                
+                                                                    <option value="{{$x->name}}"  {{('Xã '.$ld->xa) == $x->name || $ld->xa == $x->name ? 'selected':''}}>{{$x->name}}</option>
+                                                                @endforeach
+                                                            </select>
                                                                 </div>
                                                             </div>
+
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Địa chỉ</label>
@@ -192,7 +207,7 @@
                                                                 <div class="form-group">
                                                                     <label>Chức vụ</label>
                                                                     <input type="text" name="chucvu"
-                                                                        value="{{ $ld->chucvu }}" class="form-control">
+                                                                        value="{{ $ld->chucvu }}" class="form-control">`
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -427,11 +442,20 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <input type="hidden" name="id" value='{{ $ld->id }}'>
                         </div>
-                        <input type="hidden" name="id" value='{{ $ld->id }}'>
 
-                    {{-- </form> --}}
+
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-12 text-center">
+                                    <button  type="submit" class="btn btn-success">Lưu hồ sơ</button>
+                                    <a href="#" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>

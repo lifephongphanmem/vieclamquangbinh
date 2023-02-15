@@ -36,13 +36,13 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách khai báo</h3>
                     </div>
+
                     <div class="card-toolbar">
                         <a href="" data-target="#moda-indetail" data-toggle="modal" class="btn btn-xs btn-success">
                             &ensp;in danh sách</a></i>
-                    </div>
-                    <div class="card-toolbar">
                         <a href="{{ URL::to($url) }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
                                 &ensp;Trở về</a></i>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -130,9 +130,9 @@
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                     </div>
                     <div class="modal-body">
-                        <input id="user" name="user" value="{{ $user_id }}">
-                        <input id="tungay" name="tungay" value="{{ $tungay }}">
-                        <input id="denngay" name="denngay" value="{{ $denngay }}">
+                        <input id="user" name="user" value="{{ $user_id }}" hidden>
+                        <input id="tungay" name="tungay" value="{{ $tungay }}" hidden>
+                        <input id="denngay" name="denngay" value="{{ $denngay }}" hidden>
                         <div class="col-lg-12">
                             <label class="control-label">Chọn loại khai báo</label>
                             <select name="loaikhaibao" id="loaikhaibao" class="form-control">

@@ -173,12 +173,19 @@ class AdminReport extends Controller
 		$url = '/report-ba?type_filter=' . $request->type_filter . '&tungay=' . $request->tungay . '&denngay=' . $request->denngay;
 		return view('admin.report.detail')->with('reports', $reports)->with('url', $url)->with('user_id', $request->user)->with('tungay', $request->tungay)->with('denngay', $request->denngay);
 	}
+
+
 	public function detail_in(Request $request)
 	{
 		$model = Report::where('user', $request->user)->where('time', '>=', $request->tungay)
 		->where('time', '<=', $request->denngay)->where('type',$request->loaikhaibao)->get();
 		$cty = $model->first();
-		$tencty = Company::select('name')->where('user',$cty->user)->first();
+		if ($cty == null) {
+			$tencty = '';
+		}
+		else{
+			$tencty = Company::select('name')->where('user',$cty->user)->first();
+		}
 
 		return view('admin.report.indetail')->with('model', $model)->with('loaikhaibao', $request->loaikhaibao)->with('tencty',$tencty)->with('pageTitle','Danh sách khai báo');
 	}
