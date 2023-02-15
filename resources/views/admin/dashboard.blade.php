@@ -94,9 +94,9 @@
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </div>
                                 <div class="col-md-8 market-update-left">
-                                    <h4>Khai báo </h4>
-                                    <h3>{{ $dinfo['report'] }}</h3>
-                                    <p>Số khai báo của doanh nghiệp </p>
+                                    <h4> Khai báo </h4>
+                                    <h3>{{ $dinfo['dnkhaibao'] }}</h3>
+                                    <p>Số DN khai báo </p>
                                 </div>
                                 <div class="clearfix"> </div>
                             </div>

@@ -341,9 +341,9 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-offset-4 col-md-12 text-center">
-            
+                                        @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
                                         <button type="submit" class="btn btn-success">Đồng ý</button>
-            
+                                        @endif
                                         <a href="{{ URL::previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                                     </div>
                                 </div>

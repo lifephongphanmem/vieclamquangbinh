@@ -49,15 +49,29 @@ class baocaotonghopController extends Controller
         $company = Company::all();
         $danhmuchanhchinh = danhmuchanhchinh::where('capdo','T')->first();
         $dmdonvi = dmdonvi::where('madiaban','!=',$danhmuchanhchinh->id)->get();
+        if(session('admin')->capdo == 'T'){
+            $m_huyen=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name','dmdonvi.madv')
+            ->where('danhmuchanhchinh.capdo','H')
+            ->get();
+        }else{
+            $m_huyen=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name','dmdonvi.madv')
+            ->where('danhmuchanhchinh.maquocgia',session('admin')->maquocgia)
+            ->get();
+        }
+        if(in_array(session('admin')->capdo,['T','H'])){
+            $m_xa=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name','dmdonvi.madv')
+            ->where('danhmuchanhchinh.capdo','X')
+            ->get();
+        }else{
+            $m_xa=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name','dmdonvi.madv')
+            ->where('danhmuchanhchinh.maquocgia',session('admin')->maquocgia)
+            ->get();
+        }
 
-        $m_huyen=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
-                                ->select('danhmuchanhchinh.name','dmdonvi.madv')
-                                ->where('danhmuchanhchinh.capdo','H')
-                                ->get();
-        $m_xa=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
-        ->select('danhmuchanhchinh.name','dmdonvi.madv')
-        ->where('danhmuchanhchinh.capdo','X')
-        ->get();
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         return view('reports.baocaotonghop.index', compact('nguoidung', 'company','dmdonvi'))
                         ->with('m_huyen',$m_huyen)

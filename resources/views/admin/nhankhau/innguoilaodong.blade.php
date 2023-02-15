@@ -1,10 +1,4 @@
 @extends('main_baocao')
-@section('custom-style')
-@stop
-
-@section('custom-script')
-
-@stop
 
 @section('content')
 
@@ -126,7 +120,7 @@
             @endif
         @endforeach
     </p>
-    <table width="96%" cellspacing="0" height cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <table id='data_footer' width="96%" cellspacing="0" height cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
         <tr>
             <td width="40%" style="text-align: left; vertical-align: top;">
             </td>
