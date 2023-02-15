@@ -83,17 +83,22 @@ class AdminCompany extends Controller
 		$a_dm = array_column($dmhanhchinh->toarray(), 'name', 'maquocgia');
 		
 		foreach ($ctys as $val) {
-			try {
-				$tenxa = $a_dm[$val->xa];
-				$tenhuyen = $a_dm[$val->huyen];
-				$tentinh = $a_dm[$val->tinh];
-				$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
-			} catch (Exception $e) {
-				$val->diachi = $val->xa . ' - ' . $val->huyen . ' - ' . $val->tinh;
-			}
+
+			$tenxa=isset($a_dm[$val->xa])?$a_dm[$val->xa]:$val->xa;
+			$tenhuyen=isset($a_dm[$val->huyen])?$a_dm[$val->huyen]:$val->huyen;
+			$tentinh=isset($a_dm[$val->tinh])?$a_dm[$val->tinh]:$val->tinh;
+			$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
+			// try {
+			// 	$tenxa = $a_dm[$val->xa];
+			// 	$tenhuyen = $a_dm[$val->huyen];
+			// 	$tentinh = $a_dm[$val->tinh];
+			// 	$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
+			// } catch (Exception $e) {
+			// 	$val->diachi = $val->xa . ' - ' . $val->huyen . ' - ' . $val->tinh;
+			// }
 		}
 
-
+// dd($ctys->take(10));
 		// dd($ctys->first());
 		return view('admin.company.all')->with('ctys', $ctys)
 			->with('dmhc_list', $dmhc_list)

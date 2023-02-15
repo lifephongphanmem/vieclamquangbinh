@@ -166,6 +166,7 @@
                 </div>
             </div>
         </div>
+        </div>
         <!-- Modal nhận excel -->
         <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
             <form action="{{ '/doanhnghiep/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -194,12 +195,12 @@
                         <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
                     </div>
                 </div>
-                <<<<<<< HEAD <div class="modal-footer">
+                <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                     <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
+                </div>
         </div>
-    </div>
-    </form>
+        </form>
     </div>
     <!--Model danh sách-->
     <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
@@ -239,9 +240,9 @@
             $('#mau01').attr('href', url);
         }
     </script>
-    =======
+
     </form>
     </div>
-    >>>>>>> a604a1ebd66086afc0c85ea9bc5673cc0498c6da
+
 
 @endsection

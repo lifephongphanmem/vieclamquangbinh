@@ -159,7 +159,7 @@
                                
 
                                 <button type="submit" class="btn btn-info">Upload Excel</button>
-                                <a onclick="themmoi()" class="btn btn-success">Add</a>
+                                {{-- <a onclick="themmoi()" class="btn btn-success">Add</a> --}}
                             </div>
                     </form>
                 </div>
