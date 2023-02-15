@@ -115,7 +115,9 @@
                                 <div class="form-group">
                                     <label class="control-label">Tỉnh<span class="require">*</span></label>
                                     {{-- {!!Form::text('tencanbo', null, array('id' => 'tencanbo','class' => 'form-control', 'required'=>'required'))!!} --}}
-                                    <input type="text" name="tinh" class="form-control" value="Quảng Bình" readonly>
+                                    <select class="form-control " name ="tinh" id='tinh' >
+                                        <option  value="44" > Quảng Bình </option>
+                                    </select>
                                 </div>
                             </div>
                 
@@ -126,12 +128,12 @@
                                     <select name="huyen" class="form-control select2basic" id="">
                                         <option value="">--- Chọn Huyện ----</option>
                                     @foreach ($huyen as $h )
-                                        <option value="{{$h->id}}">{{$h->name}}</option>
+                                        <option value="{{$h->maquocgia}}">{{$h->name}}</option>
                                     @endforeach
                                 </select>
                                 </div>
                             </div>
-                
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">Xã/Phường</label>
@@ -139,7 +141,7 @@
                                     <?php $xa=$dmhanhchinh->wherein('level',['Phường','Xã','Thị trấn'])?>
                                     <option value="">--- Chọn xã ---</option>
                                     @foreach ($xa as $x )
-                                    <option value="{{$x->id}}">{{$x->name}}</option>
+                                    <option value="{{$x->maquocgia}}">{{$x->name}}</option>
                                 @endforeach
                             </select>
                                 </div>
