@@ -37,11 +37,11 @@
                         <h3 class="card-label text-uppercase">Danh sách doanh nghiệp</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{'doanh_nghiep/them_moi'}}" class="btn btn-sm btn-success">Thêm mới</a>
+                        <a href="{{ 'doanh_nghiep/them_moi' }}" class="btn btn-sm btn-success">Thêm mới</a>
                         <button class="btn btn-xs btn-success mr-2 ml-2" title="Nhận dữ liệu từ file Excel"
-                        data-target="#modal-nhanexcel" data-toggle="modal">
-                        <i class="fas fa-file-import">Nhận Excel</i>
-                    </button>
+                            data-target="#modal-nhanexcel" data-toggle="modal">
+                            <i class="fas fa-file-import">Nhận Excel</i>
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -100,128 +100,148 @@
 
 
                     </form>
-                <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
-                    <thead>
-                        <tr>
-                            <th> STT </th>
-                            <th>Mã ĐKKD</th>
-                            <th>Tên doanh nghiệp</th>
-                            <th>Địa chỉ</th>
-                            <th style="width:10%">Điện thoại</th>
-                            <th>Quy mô</th>
-                            <th>Tình trạng</th>
-                            <th>Biến động</th>
-                            <th>Tuyển dụng </th>
-                            <th>Thao tác</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
+                    <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
+                        <thead>
+                            <tr>
+                                <th> STT </th>
+                                <th>Mã ĐKKD</th>
+                                <th>Tên doanh nghiệp</th>
+                                <th>Địa chỉ</th>
+                                <th style="width:10%">Điện thoại</th>
+                                <th>Quy mô</th>
+                                <th>Tình trạng</th>
+                                <th>Biến động</th>
+                                <th>Tuyển dụng </th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
 
 		foreach ($ctys as$key=>$cty ){
 
 	?>
-                        <tr>
-                            <td>{{ ++$key }} </td>
-                            <td>{{ $cty->dkkd }}</td>
-                            <td><a href="{{ URL::to('doanhnghiep-be/' . $cty->id) }}">{{ $cty->name }}</a></td>
-                            <td><span class="text-ellipsis"> </span> {{ $cty->adress }} - {{ $cty->xa }} -
-                                {{ $cty->huyen }}</td>
-                            <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
-                            <td><span class="text-ellipsis"> </span>{{ $cty->quymo != null?$cty->quymo:$cty->employers_count}}</td>
-                            <td><span class="text-ellipsis">
-                                    <?php if ($cty->public==1){ 
-				?>
-                                    <i class="fa fa-check text-success text-active"></i>
-                                    <?php }else{ ?>
-                                    <i class="fa fa-close text-success text-active" style="color:red"></i>
+                            <tr>
+                                <td>{{ ++$key }} </td>
+                                <td>{{ $cty->dkkd }}</td>
+                                <td><a href="{{ URL::to('doanhnghiep-be/' . $cty->id) }}">{{ $cty->name }}</a></td>
+                                <td>{{ $cty->diachi }}</td>
 
-                                    <?php }?></span>
-                            </td>
-                            <td><span class="text-ellipsis"> </span>Khai báo</td>
-                            <td><span class="text-ellipsis"> </span><a href="{{ URL::to('tuyendung-ba/' . $cty->id) }}">Tin
-                                    tuyển dụng</a></td>
-                                    <td><button title="In thông tin" type="button" onclick="xuatexel('{{$cty->id}}','{{$cty->user}}')"
+                                <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
+                                <td><span class="text-ellipsis">
+                                    </span>{{ $cty->quymo != null ? $cty->quymo : $cty->employers_count }}</td>
+                                <td><span class="text-ellipsis">
+                                        <?php if ($cty->public==1){ 
+				?>
+                                        <i class="fa fa-check text-success text-active"></i>
+                                        <?php }else{ ?>
+                                        <i class="fa fa-close text-success text-active" style="color:red"></i>
+
+                                        <?php }?></span>
+                                </td>
+                                <td><span class="text-ellipsis"> </span>Khai báo</td>
+                                <td><span class="text-ellipsis"> </span><a
+                                        href="{{ URL::to('tuyendung-ba/' . $cty->id) }}">Tin
+                                        tuyển dụng</a></td>
+                                <td>
+                                    <button title="In thông tin" type="button"
+                                        onclick="xuatexel('{{ $cty->id }}','{{ $cty->user }}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
                                         data-toggle="modal">
                                         <i class="icon-lg flaticon-list text-success"></i>
-                                    </button></td>
-                        </tr>
-                        <?php } ?>
-
-
-                    </tbody>
-                </table>
+                                    </button>
+                                    @if ($cty->user == null)
+                                        <a title="Xóa" type="button" href="{{ '/doanhnghiep-delete?id=' . $cty->id }}"
+                                            onclick="return confirm('Bạn muốn xóa doanh nghiệp?');"
+                                            class="btn btn-sm btn-clean btn-icon"><i
+                                                class="icon-lg flaticon-delete text-danger"></i>
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-<!-- Modal nhận excel -->
-    <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        <form action="{{ '/doanhnghiep/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-            @csrf
-            <div class="modal-dialog modal-content">
-                <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách doanh nghiệp từ file Excel</h4>
-                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <div class="col-lg-12">
-                            <input type="file" name="import_file" class="form-control">
-                        </div>
+        <!-- Modal nhận excel -->
+        <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form action="{{ '/doanhnghiep/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+                @csrf
+                <div class="modal-dialog modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách doanh nghiệp từ file Excel
+                        </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
-                    {{-- <div class="form-group row">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <input type="file" name="import_file" class="form-control">
+                            </div>
+                        </div>
+                        {{-- <div class="form-group row">
                         <div class="col-lg-12">
                             <p class="float-left mr-3">Tải file excel mẫu </p><a href="{{asset('excel/maunhapnguoilaodong.xlsx')}}">tại đây</a>
                         </div>
                     </div> --}}
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
+                <<<<<<< HEAD <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                     <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-                    <!--Model danh sách-->
-                    <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-                        {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
-                            @csrf
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header modal-header-primary">
-                                        <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
-                                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
+    </form>
+    </div>
+    <!--Model danh sách-->
+    <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
+        @csrf
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
                                             <option value="1">Mẫu 01/PLI (NĐ 145/2020)</option>
                                             <option value="2">Mẫu 02 (TT 01/2022)</option>
                                         </select> --}}
-                                        <a href="" id='mau01' target="_blank">1. Mẫu 01/PLI (NĐ 145/2020)</a></br>
-                                        <a href="">2. Mẫu 02 (TT 01/2022)</a>
-                                        <input type="hidden" name='madv' id='madonvi'>
-                                        <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
-                                    </div>
-            
-                                    {{-- <div class="modal-footer">
+                    <a href="" id='mau01' target="_blank">1. Mẫu 01/PLI (NĐ 145/2020)</a></br>
+                    <a href="">2. Mẫu 02 (TT 01/2022)</a>
+                    <input type="hidden" name='madv' id='madonvi'>
+                    <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                </div>
+
+                {{-- <div class="modal-footer">
                                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                                         <button type="submit" id="submit" name="submit" value="submit"
                                         class="btn btn-primary">Đồng
                                             ý</button>
                                     </div> --}}
-                                </div>
-                            </div>
-                        {{-- </form> --}}
-                    </div>
+            </div>
+        </div>
+        {{-- </form> --}}
+    </div>
 
-                    <script>
-                        function xuatexel(id,user){
-                            var url= '/doanhnghiep/mau01pli/'+id+'?user='+user;
-                            $('#mau01').attr('href',url);
-                        }
-                    </script>
+    <script>
+        function xuatexel(id, user) {
+            var url = '/doanhnghiep/mau01pli/' + id + '?user=' + user;
+            $('#mau01').attr('href', url);
+        }
+    </script>
+    =======
+    </form>
+    </div>
+    >>>>>>> a604a1ebd66086afc0c85ea9bc5673cc0498c6da
 
 @endsection

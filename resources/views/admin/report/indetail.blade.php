@@ -1,14 +1,7 @@
 @extends('main_baocao')
-@section('custom-style')
-@stop
-
-
-@section('custom-script')
-
-@stop
 
 @section('content')
-    <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">
+    <p id="data_header"  style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">
         DANH SÁCH 
         @if ($loaikhaibao == 'baotang')
             BÁO TĂNG
@@ -23,12 +16,10 @@
             KẾT THÚC TẠM DỪNG
         @endif
         <br>
+        {{$tencty != '' ? $tencty->name : ''}}
     </p>
-    <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;"> {{$tencty->name}} <br>
-    </p>
-
-    <table border="1" cellspacing="0" cellpadding="0">
-
+  
+    <table id="data_body1" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
                 <td width="5%"> Stt </td>

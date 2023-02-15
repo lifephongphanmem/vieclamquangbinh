@@ -113,6 +113,8 @@ Route::get('/dashboard', [AdminController::class, 'dashboard' ]);
 // Doanh nghiep
 
 Route::get('/doanhnghiep-ba',[AdminCompany::class,'show_all']);
+Route::get('/doanhnghiep-delete',[AdminCompany::class,'delete_company']);
+Route::post('/doanhnghiep-up',[AdminCompany::class,'up_company']);
 Route::get('/doanhnghiep-bs',[AdminCompany::class,'save']);
 Route::get('/ doanhnghiep-bn',[AdminCompany::class,'new']);
 Route::get('/doanhnghiep-be/{cid}',[AdminCompany::class,'edit']);
@@ -138,7 +140,8 @@ Route::post('/employer-bu/{cid}',[AdminEmployer::class,'update']);
 Route::prefix('nguoilaodong')->group(function(){
     Route::get('/danhsach',[AdminEmployer::class,'show_all']);
     Route::get('/ChiTiet/{id}',[AdminEmployer::class,'edit']);
-    Route::post('/update/{id}',[AdminEmployer::class,'update']);
+    Route::post('/update',[AdminEmployer::class,'update']);
+ 
 });
 
 Route::prefix('laodongnuocngoai')->group(function(){

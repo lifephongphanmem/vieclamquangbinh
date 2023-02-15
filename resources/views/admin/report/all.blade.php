@@ -106,7 +106,7 @@
                             <tr>
                                 <td width="5%"> # </td>
                                 <td >Công ty</td>
-                                <td >loại</td>
+                                <td >Loại</td>
                             </tr>
                         </thead>
                         <tbody>

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Employer;
+use App\Models\nguoilaodong;
 use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\AdminEmployersExport;
+use App\Models\Danhmuc\danhmuchanhchinh;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminEmployer extends Controller
@@ -35,7 +37,7 @@ class AdminEmployer extends Controller
 		
 		$export= $request->export;
 		if($export){
-			
+
 			return Excel::download(new AdminEmployersExport, 'danhsachlaodong.xlsx');
 		
 			}
@@ -144,6 +146,7 @@ class AdminEmployer extends Controller
 		//// Thông tin lịch sữ làm việc
 		$hosos=$model->getHosos($ld->cmnd);
 		// dd($ld);
+		$dmhanhchinh = danhmuchanhchinh::all();
 		return view ('admin.employer.chitiet')
 			->with('ld', $ld)
 			->with('countries_list', $countries_list)
@@ -155,17 +158,23 @@ class AdminEmployer extends Controller
 			->with('list_linhvuc',$list_linhvuc)
 			->with('list_hdld',$list_hdld)
 			->with('hosos',$hosos)
-			
+			->with('dmhanhchinh',$dmhanhchinh)
 		;
-		
 		
 	}  	
 	
-	public function update( Request $request)
+	public function update(Request $request)
 	{
+		$input = $request->all();
+		unset($input['_token']);
+		unset($input['id']);
 		
+		DB::table('nguoilaodong')->where('id',$request->id)->update($input);
+		
+		return redirect('/nguoilaodong/danhsach')->with('message'," thành công ");
 		
 	}
+	
 	public function delete($catid)
 	{
 		

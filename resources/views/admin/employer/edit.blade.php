@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form role="form" method="POST" action="#" enctype='multipart/form-data'>
+                    <form role="form" method="POST" action="{{'/nguoilaodong/update?id='.$ld->id}}" enctype='multipart/form-data'>
                         {{ csrf_field() }}
                         <div class="panel-body" id='dynamicTable'>
 
