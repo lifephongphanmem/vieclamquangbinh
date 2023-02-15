@@ -111,7 +111,39 @@
                     </div>
                 </li>
                 @endif
+                @if (chkPhanQuyen('hopthuttdvvl', 'phanquyen'))
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/hopthu'}}" class="menu-link">
 
+                        <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                        </i>
+                        <span class="menu-text font-weight-bold">Hộp thư</span>
+                    </a>
+                </li>
+                @endif
+                @if (chkPhanQuyen('hopthuhuyen', 'phanquyen'))
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/hopthu/huyen'}}" class="menu-link">
+
+                        <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                        </i>
+                        <span class="menu-text font-weight-bold">Hộp thư</span>
+                    </a>
+                </li>
+                @endif
+                @if (chkPhanQuyen('hopthuxa', 'phanquyen'))
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/hopthu/xa'}}" class="menu-link">
+
+                        <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                        </i>
+                        <span class="menu-text font-weight-bold">Hộp thư</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </li>

@@ -61,8 +61,7 @@ class AdminTuyendung extends Controller
 					})
 				 ->select('tuyendung.*', 'company.name')
 				 ->orderBy('tuyendung.id','desc')
-				->paginate(20);
-	
+				->get();
 		$vtmodel = new Vitrituyendung;
 		foreach($tds as $td){
 			$vitris= $vtmodel->getVitris($td->id);

@@ -35,7 +35,8 @@ use App\Http\Controllers\AdminEmployer;
 use App\Http\Controllers\AdminDieutra; 
 use App\Http\Controllers\AdminNhankhau;
 use App\Http\Controllers\Baocao\baocaotonghopController;
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\HopThuController;
 
 // Frontend SECTION
 
@@ -125,6 +126,7 @@ Route::prefix('doanhnghiep')->group(function(){
     Route::get('/baocao',[baocaotonghopController::class,'BC_doanhnghiep']);
     Route::post('/import',[AdminCompany::class,'import']);
     Route::post('/store',[AdminCompany::class,'store']);
+    Route::get('/mau01pli/{id}',[AdminCompany::class,'Mau01PLI']);
 });
 
 // Người lao động
@@ -290,4 +292,19 @@ Route::get('/dichvu-bn/',[AdminDichvu::class,'new']);
 Route::post('/dichvu-bs/',[AdminDichvu::class,'save']);
 
 Route::post('/dichvu-bu/',[AdminDichvu::class,'update']);
+
+Route::prefix('hopthu')->group(function(){
+    Route::get('/',[HopThuController::class,'index']);
+    Route::get('/create',[HopThuController::class,'create']);
+    Route::post('/store',[HopThuController::class,'store']);
+    Route::get('/delete/{id}',[HopThuController::class,'destroy']);
+
+Route::prefix('/huyen')->group(function(){
+    Route::get('/',[HopThuController::class,'hopthu_huyen']);
+}); 
+
+Route::prefix('/xa')->group(function(){
+    Route::get('/',[HopThuController::class,'hopthu_xa']);
+});
+});
 

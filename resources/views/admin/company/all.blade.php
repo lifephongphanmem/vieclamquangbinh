@@ -100,6 +100,7 @@
 
 
                     </form>
+
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
@@ -125,8 +126,8 @@
                                 <td>{{ ++$key }} </td>
                                 <td>{{ $cty->dkkd }}</td>
                                 <td><a href="{{ URL::to('doanhnghiep-be/' . $cty->id) }}">{{ $cty->name }}</a></td>
-                                <td>{{$cty->diachi}}</td>
-                         
+                                <td>{{ $cty->diachi }}</td>
+
                                 <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
                                 <td><span class="text-ellipsis">
                                     </span>{{ $cty->quymo != null ? $cty->quymo : $cty->employers_count }}</td>
@@ -144,6 +145,12 @@
                                         href="{{ URL::to('tuyendung-ba/' . $cty->id) }}">Tin
                                         tuyển dụng</a></td>
                                 <td>
+                                    <button title="In thông tin" type="button"
+                                        onclick="xuatexel('{{ $cty->id }}','{{ $cty->user }}')"
+                                        class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
+                                        data-toggle="modal">
+                                        <i class="icon-lg flaticon-list text-success"></i>
+                                    </button>
                                     @if ($cty->user == null)
                                         <a title="Xóa" type="button" href="{{ '/doanhnghiep-delete?id=' . $cty->id }}"
                                             onclick="return confirm('Bạn muốn xóa doanh nghiệp?');"
@@ -151,16 +158,14 @@
                                                 class="icon-lg flaticon-delete text-danger"></i>
                                         </a>
                                     @endif
-
                                 </td>
                             </tr>
                             <?php } ?>
-
-
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
         </div>
         <!-- Modal nhận excel -->
         <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
@@ -190,7 +195,54 @@
                         <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
                     </div>
                 </div>
-            </form>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
+                </div>
         </div>
+        </form>
+    </div>
+    <!--Model danh sách-->
+    <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
+        @csrf
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
+                                            <option value="1">Mẫu 01/PLI (NĐ 145/2020)</option>
+                                            <option value="2">Mẫu 02 (TT 01/2022)</option>
+                                        </select> --}}
+                    <a href="" id='mau01' target="_blank">1. Mẫu 01/PLI (NĐ 145/2020)</a></br>
+                    <a href="">2. Mẫu 02 (TT 01/2022)</a>
+                    <input type="hidden" name='madv' id='madonvi'>
+                    <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                </div>
 
-    @endsection
+                {{-- <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                        <button type="submit" id="submit" name="submit" value="submit"
+                                        class="btn btn-primary">Đồng
+                                            ý</button>
+                                    </div> --}}
+            </div>
+        </div>
+        {{-- </form> --}}
+    </div>
+
+    <script>
+        function xuatexel(id, user) {
+            var url = '/doanhnghiep/mau01pli/' + id + '?user=' + user;
+            $('#mau01').attr('href', url);
+        }
+    </script>
+
+    </form>
+    </div>
+
+
+@endsection

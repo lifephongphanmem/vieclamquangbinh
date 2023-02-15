@@ -157,23 +157,29 @@
                                     </span></td>
                                 {{-- <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td> --}}
                                 <td>
+                                    @if (chkPhanQuyen('danhsachdieutra', 'danhsach'))
                                     <button  title="Danh sách" type="button"
                                     onclick="List('{{$td->user_id}}','{{$td->kydieutra}}')"
                                     class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
                                     data-toggle="modal">
                                     <i class="icon-lg flaticon-list text-success"></i>
+                                    </button>
+                                    @endif
+                                    @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
                                     <button title="Xóa thông tin" type="button"
                                         onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id . '?mahuyen=' . $inputs['mahuyen'] . '&kydieutra=' . $inputs['kydieutra'] }}')"
-                                        class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
+                                        class="btn btn-sm btn-clean btn-icon ml-3" data-target="#delete-modal-confirm"
                                         data-toggle="modal">
                                         <i class="icon-lg flaticon-delete text-danger"></i>
                                     </button>
-
+                                    @endif
+                                    @if (chkPhanQuyen('danhsachdieutra', 'hoanthanh'))
                                     {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%"> --}}
-                                        <a href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                        <a href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon ml-3" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
                                         </a>
                                     {{-- </div> --}}
+                                    @endif
                                 </td>
 
                             </tr>
@@ -222,6 +228,7 @@
                                     <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
                                         <option value="2">Thất nghiệp</option>
                                         <option value="3">Không tham gia hoạt động kinh tế</option>
+                                        <option value="4">Sắp tốt nghiệp PTTH</option>
                                     </select>
                                     <input type="hidden" name='madv' id='madonvi'>
                                     <input type="hidden" name='kydieutra' id='ky_dieu_tra'>

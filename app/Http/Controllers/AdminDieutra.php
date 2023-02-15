@@ -688,8 +688,5 @@ foreach($a_loailoi as $val){
         }else{
             return redirect('/nhankhau/ChiTietHoGiaDinh/'.$inputs['nkid'].'?soho='.$inputs['ho'].'&madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&mahuyen='.$inputs['huyen']);
         }
-
-       
-
     }
 }

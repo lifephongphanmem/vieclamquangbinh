@@ -128,13 +128,17 @@
 
                                     <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? ''  }}</td>
                                     <td >
+                                        @if (chkPhanQuyen('danhsachhogiadinh', 'thaydoi'))
                                         <a onclick="chitiet('{{$ld->id}}','{{$ld->ho}}')" class="btn btn-sm btn-clean btn-icon" title="Danh sách nhân khẩu"><i class="icon-lg flaticon-list text-success"></i></a>
+                                        @endif
+                                        @if (chkPhanQuyen('danhsachhogiadinh', 'thaydoi'))
                                         <button title="Xóa hộ gia đình" type="button"
                                         onclick="cfDel('{{'/nhankhau/delete?madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&mahuyen='.$inputs['mahuyen'].'&ho='.$ld->ho}}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                         data-toggle="modal">
                                         <i class="icon-lg flaticon-delete text-danger"></i>
                                     </button>
+                                    @endif
                                         {{-- <a href="{{ '/nhankhau-inhgd?id='.$ld->id }}" class="btn btn-sm mr-2"
                                             title="In danh sách" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-dark"></i></a> --}}
