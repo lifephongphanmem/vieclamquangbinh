@@ -36,12 +36,12 @@
                         <h3 class="card-label text-uppercase">Chi tiết nhân khẩu</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{ URL::to('/nhankhau/danhsach') }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
-                                &ensp;Trở về</a></i>
+                        {{-- <a href="{{ URL::to('/nhankhau/danhsach') }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
+                                &ensp;Trở về</a></i> --}}
                     </div>
                 </div>
                 <div class="card-body">
-                    <form role="form" method="POST" action="#" enctype='multipart/form-data'>
+                    <form role="form" method="POST" action="{{'/nhankhau/update/'.$ld->id.'?mahuyen='.$inputs['mahuyen']}}" enctype='multipart/form-data'>
                         {{ csrf_field() }}
                         <div class="card-body" id='dynamicTable'>
 
@@ -93,15 +93,15 @@
                                             } else {
                                                 echo $ld->dantoc;
                                             } ?>"
-                                                class="form-control" required>
+                                                class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
 
                                         <div class="form-group">
-                                            <label>Địa chỉ</label>
-                                            <input type="text" name="diachi" value="{{ $ld->diachi }}"
-                                                class="form-control">
+                                            <label>Nơi đăng ký thường trú</label></label>
+                                            <input type="text" name="diachi" value="{{ $ld->thuongtru }}"
+                                                class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -211,7 +211,6 @@
                                 {{-- </fieldset> --}}
                             </div>
                             
-                            @if ($ld->tinhtranghdkt == 1)
                             <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3">
@@ -283,9 +282,6 @@
                                 </div>
                             </div>
                         </div>
-                            @endif
-
-                            @if ($ld->tinhtranghdkt == 2)
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="col-md-3">
@@ -310,26 +306,48 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Lý do không tham gia hoạt động kinh tế</label>
+                                                    <select class="form-control" name="khongthamgiahdkt">
+                                                        <option value="">--- Chọn loại hình ----</option>
+                                                        @foreach ($lydo as $k=>$ct )
+                                                            <option value="{{$ct->stt}}" {{$ld->khongthamgiahdkt == $ct->stt?'selected':''}}>{{$ct->tentgktct}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            @endif
-                            @if ($ld->tinhtranghdkt == 3)
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Lý do không tham gia hoạt động kinh tế</label>
-                                            <select class="form-control" name="khongthamgiahdkt">
-                                                <option value="">--- Chọn loại hình ----</option>
-                                                @foreach ($lydo as $k=>$ct )
-                                                    <option value="{{$ct->stt}}" {{$ld->khongthamgiahdkt == $ct->stt?'selected':''}}>{{$ct->tentgktct}}</option>
-                                                @endforeach
+                                            <label>Mối quan hệ</label>
+                                            <select name="mqh" class="form-control selec2basic">
+                                                <option value="">-- Chọn mối quan hệ --</option>
+                                                <option value="CH" {{$ld->mqh == 'CH'?'selected':''}}>Chủ hộ</option>
+                                                <option value="Vợ"  {{$ld->mqh == 'Vợ'?'selected':''}}>Vợ</option>
+                                                <option value="Chồng"  {{$ld->mqh == 'Chồng'?'selected':''}}>Chồng</option>
+                                                <option value="Con"  {{$ld->mqh == 'Con'?'selected':''}}>Con</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endif
+                            <input type="hidden" name=view value="{{$inputs['view']}}">
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-12 text-center">
+            
+                                        <button type="submit" class="btn btn-success">Đồng ý</button>
+            
+                                        <a href="{{ URL::previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                                    </div>
+                                </div>
+                            </div>
                     </form>
 
                 </div>

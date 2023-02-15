@@ -167,6 +167,8 @@ Route::get('/dieutra-be/{dtid}',[AdminDieutra::class,'edit']); // edit
 Route::prefix('dieutra')->group(function(){
     Route::get('/danhsach',[AdminDieutra::class,'show_all']); // all
     Route::get('/ThemMoi',[AdminDieutra::class,'new']); // 
+    Route::get('/create',[AdminDieutra::class,'create']);
+    Route::post('/store',[AdminDieutra::class,'store']);
     Route::post('/XoaDanhSach/{id}',[AdminDieutra::class,'XoaDanhSach']);
     Route::post('/intonghop',[AdminDieutra::class,'intonghop']);//in tổng hợp cung lao động xã
     Route::post('/inbaocaohuyen',[AdminDieutra::class,'inbaocaohuyen']);//in tổng hợp cung lao động huyện
@@ -194,6 +196,9 @@ Route::prefix('nhankhau')->group(function(){
     Route::get('/ChiTiet/{nkid}',[AdminNhankhau::class,'edit']); // edit
     Route::get('/get_xa',[AdminNhankhau::class,'ajax_getxa']); // lấy xã
     Route::post('/update/{id}',[AdminNhankhau::class,'update']);
+    Route::post('/danhsach_tinhtrang',[AdminNhankhau::class,'danhsach']);
+    Route::post('/delete',[AdminNhankhau::class,'XoaHoGD']);
+    Route::post('/XoaNhanKhau/{id}',[AdminNhankhau::class,'XoaNhanKhau']);
 });
 // Tham số
 Route::get('/ptype-ba',[AdminParamtype::class,'show_all']);
