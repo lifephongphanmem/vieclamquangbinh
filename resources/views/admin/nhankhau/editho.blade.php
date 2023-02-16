@@ -36,9 +36,11 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3>
                     </div>
+                    @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
                     <div class="card-toolbar">
                         <a onclick="themmoi('{{$inputs['soho']}}','{{$inputs['madv']}}','{{$inputs['kydieutra']}}','{{$inputs['nkid']}}')" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> &ensp;Thêm thành viên</a>
                     </div>
+                    @endif
                 </div>
                 <div class="card-body">
                   <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
@@ -69,12 +71,14 @@
 
                                 <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}</td>
                                 <td>
+                                    @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
                                     <button title="Xóa nhân khẩu" type="button"
                                     onclick="cfDel('{{'/nhankhau/XoaNhanKhau/'.$ld->id.'?mahuyen='.$inputs['mahuyen']}}')"
                                     class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                     data-toggle="modal">
                                     <i class="icon-lg flaticon-delete text-danger"></i>
                                 </button>
+                                @endif
                                 </td>
                  
                             </tr>

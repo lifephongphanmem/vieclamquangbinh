@@ -11,9 +11,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CompaniesExport;
 use App\Imports\ColectionImport;
+
+use App\Models\Danhmuc\dmchucvu;
+use App\Models\Danhmuc\dmloaihieuluchdld;
+use App\Models\modelcompany;
+use App\Models\nguoilaodong;
+use App\Models\User;
+
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmloaihinhhdkt;
-use App\Models\modelcompany;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -77,17 +83,22 @@ class AdminCompany extends Controller
 		$a_dm = array_column($dmhanhchinh->toarray(), 'name', 'maquocgia');
 		
 		foreach ($ctys as $val) {
-			try {
-				$tenxa = $a_dm[$val->xa];
-				$tenhuyen = $a_dm[$val->huyen];
-				$tentinh = $a_dm[$val->tinh];
-				$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
-			} catch (Exception $e) {
-				$val->diachi = $val->xa . ' - ' . $val->huyen . ' - ' . $val->tinh;
-			}
+
+			$tenxa=isset($a_dm[$val->xa])?$a_dm[$val->xa]:$val->xa;
+			$tenhuyen=isset($a_dm[$val->huyen])?$a_dm[$val->huyen]:$val->huyen;
+			$tentinh=isset($a_dm[$val->tinh])?$a_dm[$val->tinh]:$val->tinh;
+			$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
+			// try {
+			// 	$tenxa = $a_dm[$val->xa];
+			// 	$tenhuyen = $a_dm[$val->huyen];
+			// 	$tentinh = $a_dm[$val->tinh];
+			// 	$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
+			// } catch (Exception $e) {
+			// 	$val->diachi = $val->xa . ' - ' . $val->huyen . ' - ' . $val->tinh;
+			// }
 		}
 
-
+// dd($ctys->take(10));
 		// dd($ctys->first());
 		return view('admin.company.all')->with('ctys', $ctys)
 			->with('dmhc_list', $dmhc_list)
@@ -348,5 +359,55 @@ class AdminCompany extends Controller
 		DB::table('company')->insert($inputs);
 
 		return redirect('/doanhnghiep-ba');
+	}
+
+
+	public function Mau01PLI(Request $request,$id){
+		$inputs = $request->all();
+		$model=nguoilaodong::where('company',$id)->where('state',1)->get();
+		// dd($model->take(10));
+        $m_dv = User::findOrFail($inputs['user']);
+		$company=Company::findOrFail($id);
+		$nganhnghe_dn=getParamsByNametype('Ngành nghề doanh nghiệp');
+		$a_nganhnghe=array_column($nganhnghe_dn->toarray(),'name','id');
+		$m_dv->dkkd=$company->dkkd;
+		$m_dv->tendn=$company->name;
+		$m_dv->diachi=$company->adress;
+		$m_dv->fax=$company->fax;
+		$m_dv->email=$company->email;
+		$m_dv->phone=$company->phone;
+		$m_dv->loaihinh=$company->loaihinh;
+		$m_dv->nganhnghe=$a_nganhnghe[$company->nganhnghe];
+		// dd($m_dv);
+        $list_nghe = getParamsByNametype('Nghề nghiệp người lao động');
+        $a_vitri = array();
+        $a_vitrikhac = array();
+        foreach ($list_nghe as $key => $ct) {
+            if (in_array($ct->id, [37, 38, 39])) {
+                $a_vitri[$ct->id] = $ct->name;
+            } else {
+                $a_vitrikhac[$key] = $ct->id;
+            }
+        }
+
+        // dd($a_vitrikhac);
+        // $a_vitri=array_column($list_nghe->toarray(),'name','id');
+        $a_chucvu = array_column(dmchucvu::all()->toarray(), 'tencv', 'id');
+        $a_loaihdld = array_column(dmloaihieuluchdld::all()->toarray(), 'tenlhl', 'madmlhl');
+
+
+        return view('admin.company.export.mau01PLI')
+            ->with('model', $model)
+            ->with('m_dv', $m_dv)
+            ->with('a_vitri', $a_vitri)
+            ->with('a_vitrikhac', $a_vitrikhac)
+            ->with('a_chucvu', $a_chucvu)
+            ->with('a_loaihdld', $a_loaihdld)
+            ->with('pageTitle', 'Tổng hợp dữ liệu');
+	}
+
+	public function Mau01TT01(Request $request,$id){
+		$inputs=$request->all();
+		// $tuyendung=DB::table('tuyendung')->where('user',$id)->where('thoihan')
 	}
 }

@@ -146,7 +146,8 @@ class AdminController extends Controller
 			->whereBetween("time",[$timeS,$timeE] )
 			->whereIn('datatable',['nguoilaodong','company','notable'])
 			->count();
-		 
+		 $info['dnkhaibao']=DB::table('report')->whereBetween("time",[$timeS,$timeE] )->where('datatable','!=','nhankhau')->get();
+		 $info['dnkhaibao']=$info['dnkhaibao']->unique('user')->count();
 		 return $info;
 	 }
 	 public function auth(Request $request)

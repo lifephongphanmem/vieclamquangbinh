@@ -174,7 +174,6 @@
                                         @foreach ($kcn as $cn )
                                             <option value="{{$cn->id}}">{{$cn->name}}</option>
                                         @endforeach
-
                                     </select>
                                 </div>
                             </div>
@@ -187,7 +186,6 @@
                                         @foreach ($loaihinh as $dn )
                                             <option value="{{$dn->madmlhkt}}">{{$dn->tenlhkt}}</option>
                                         @endforeach
-
                                     </select>
                                 </div>
                             </div>

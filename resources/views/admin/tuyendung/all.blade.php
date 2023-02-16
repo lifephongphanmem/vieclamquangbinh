@@ -86,12 +86,12 @@
                     </thead>
                     <tbody>
                         <?php 
-		$i=($tds->currentPage()-1)*$tds->perPage();
-		foreach ($tds as $td ){
-			$i++;
+
+		foreach ($tds as $key=>$td ){
+			
 	?>
                         <tr>
-                            <td>{{ $i }}</td>
+                            <td>{{ ++$key }}</td>
                             <td>{{ $td->name }}</td>
                             <td><a href="{{ URL::to('tuyendung-be') . '/' . $td->id }}">{{ $td->noidung }} </a></td>
                             <td>{{ $td->desc }}</td>

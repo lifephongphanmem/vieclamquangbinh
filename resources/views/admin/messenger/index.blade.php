@@ -39,7 +39,7 @@
                 </div>
                 <div class="card-body">
                     <div class="col-sm-3" style="margin-left: 84% ">
-                        <button class="btn btn-sm btn-success"><i class="fa fa-plus"> &nbsp;<a href="{{ URL::to('admessages') }}/create"> Gửi văn bản mới </a></i></button>
+                        <a class="btn btn-sm btn-success" href="{{ URL::to('admessages') }}/create"><i class="fa fa-plus"> &nbsp; Gửi văn bản mới </i></a>
                     </div>
 
                     <div  style="margin-bottom: 0.5% ">

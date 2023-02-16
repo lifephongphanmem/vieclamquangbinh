@@ -394,9 +394,9 @@ function romanNumerals($num)
 
 function getAge($birthdate = '0000-00-00') {
     if ($birthdate == '0000-00-00') return 'Unknown';
-  
+
     $bits = explode('-', $birthdate);
-    // dd($bits);
+
     $age = date('Y') - $bits[0];
   
     $arr[1] = 'm';
