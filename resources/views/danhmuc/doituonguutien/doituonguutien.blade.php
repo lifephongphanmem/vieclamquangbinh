@@ -182,7 +182,7 @@
         }
 
         function create() {
-            console.log(1);
+        
             var form = $('#frm_create_edit');
             form.find("[name='id']").val(null);
             form.find("[name='tendoituong']").val('');
