@@ -99,10 +99,10 @@ class AdminCompany extends Controller
 			->with('dmhanhchinh', $dmhanhchinh);
 	}
 
-	public function delete_company(Request $request)
-
+	public function delete_company($id)
 	{
-		Company::find($request->id)->delete();
+
+		Company::find($id)->delete();
 		Session::put('message', "Xóa thành công");
 		return redirect('/doanhnghiep-ba');
 	}

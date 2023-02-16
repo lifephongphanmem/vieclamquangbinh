@@ -215,75 +215,43 @@
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Trình độ Giáo dục</label>
-                                                                    {{-- <select class="form-control"
-                                                                        name="trinhdogiaoduc">
+                                                                    <select class="form-control input-sm m-bot15 select2basic" name="trinhdogiaoduc">
                                                                         <?php foreach ( $list_tdgd as $td){ ?>
-                                                                        <option value='{{ $td->name }}'
-                                                                            <?php if ($td->id == $ld->trinhdogiaoduc || $td->name == $ld->trinhdogiaoduc) {
-                                                                                echo 'selected';
-                                                                            } ?>>
-                                                                            {{ $td->name }}</option>
-                                                                        <?php } ?>
-
-
-                                                                    </select> --}}
-                                                                    <input type="text" name="trinhdogiaoduc"
-                                                                    value="{{ $ld->trinhdogiaoduc }}" class="form-control">
+                                                                            <option value='{{ $td->name }}' {{$ld->trinhdogiaoduc == $td->name ? 'selected' : ''}}>{{ $td->name }}</option>
+                                                                            <?php } ?>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Trình độ CMKT</label>
-                                                                    {{-- <select class="form-control"
-                                                                        name="trinhdocmkt">
-
+                                                                    <select class="form-control input-sm m-bot15 select2basic" name="trinhdocmkt">
                                                                         <?php foreach ( $list_cmkt as $td){ ?>
-                                                                        <option value='{{ $td->name }}'
-                                                                            <?php if ($td->id == $ld->trinhdocmkt || $td->name == $ld->trinhdocmkt) {
-                                                                                echo 'selected';
-                                                                            } ?>>
-                                                                            {{ $td->name }}</option>
-                                                                        <?php } ?>
-
-                                                                    </select> --}}
-                                                                    <input type="text" name="trinhdocmkt"
-                                                                    value="{{ $ld->trinhdocmkt }}" class="form-control">
+                                                                            <option value='{{ $td->name }}' {{$ld->trinhdocmkt == $td->name ? 'selected' : ''}}>{{ $td->name }}</option>
+                                                                            <?php } ?>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Ngành nghề </label>
-                                                                    {{-- <select class="form-control"
-                                                                        name="nghenghiep">
-
+                                                                    <select class="form-control input-sm m-bot15 select2basic" name="nghenghiep">
+                                                                        <option value=''>--Chọn nghề nghiệp--</option>
                                                                         <?php foreach ( $list_nghe as $td){ ?>
-                                                                        <option value='{{ $td->name }}'
-                                                                            <?php if ($td->id == $ld->nghenghiep || $td->name == $ld->nghenghiep) {
-                                                                                echo 'selected';
-                                                                            } ?>>
-                                                                            {{ $td->name }}</option>
-                                                                        <?php } ?>
-                                                                    </select> --}}
-                                                                    <input type="text" name="nghenghiep"
-                                                                    value="{{ $ld->nghenghiep }}" class="form-control">
+                                                                            <option value='{{ $td->name }}' {{$ld->nghenghiep == $td->name ? 'selected' : ''}}>{{ $td->name }}</option>
+                                                                            <?php } ?>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Lĩnh vực đào tạo </label>
-                                                                    {{-- <select class="form-control"
-                                                                        name="linhvucdaotao">
-
+                                                                    <select class="form-control input-sm m-bot15 select2basic" name="linhvucdaotao">
+                                                                        <option value=''>-- Chọn lĩnh vực --</option>
                                                                         <?php foreach ( $list_linhvuc as $td){ ?>
-                                                                        <option value='{{ $td->name }}'
-                                                                            <?php if ($td->id == $ld->linhvucdaotao || $td->name == $ld->linhvucdaotao) {
-                                                                                echo 'selected';
-                                                                            } ?>>
-                                                                            {{ $td->name }}</option>
-                                                                        <?php } ?>
-                                                                    </select> --}}
-                                                                    <input type="text" name="linhvucdaotao"
-                                                                    value="{{ $ld->linhvucdaotao }}" class="form-control">
+                                                                            <option value='{{ $td->name }}' {{$ld->linhvucdaotao == $td->name ? 'selected' : ''}}>{{ $td->name }}</option>
+                                                                            <?php } ?>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -445,12 +413,11 @@
                             <input type="hidden" name="id" value='{{ $ld->id }}'>
                         </div>
 
-
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-12 text-center">
                                     <button  type="submit" class="btn btn-success">Lưu hồ sơ</button>
-                                    <a href="#" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                                    <a href="{{'/nguoilaodong/danhsach'}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                                 </div>
                             </div>
                         </div>

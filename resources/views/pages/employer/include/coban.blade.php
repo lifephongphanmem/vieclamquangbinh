@@ -109,7 +109,7 @@
             <div class="form-group">
                 <label class="control-label">Nghề nghiệp</label>
                 <select class="form-control input-sm m-bot15 select2basic" name="nghenghiep[]">
-                    <option value=''>Chọn nghề nghiệp</option>
+                    <option value=''>----Chọn nghề nghiệp----</option>
                     <?php foreach ( $list_nghe as $td){ ?>
                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
                         <?php } ?>

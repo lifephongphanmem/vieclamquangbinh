@@ -1,8 +1,8 @@
 @extends('main_baocao')
 
 @section('content')
-    <p id="data_header"  style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">
-        DANH SÁCH 
+    <p id="data_header" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">
+        DANH SÁCH
         @if ($loaikhaibao == 'baotang')
             BÁO TĂNG
         @endif
@@ -15,10 +15,13 @@
         @if ($loaikhaibao == 'ketthuctamdung')
             KẾT THÚC TẠM DỪNG
         @endif
+        @if ($loaikhaibao == 'khaibao')
+            KHAI BÁO
+        @endif
         <br>
-        {{$tencty != '' ? $tencty->name : ''}}
+        {{ $tencty != '' ? $tencty->name : '' }}
     </p>
-  
+
     <table id="data_body1" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>

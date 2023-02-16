@@ -145,11 +145,13 @@
                                         tuyển dụng</a></td>
                                 <td>
                                     @if ($cty->user == null)
-                                        <a title="Xóa" type="button" href="{{ '/doanhnghiep-delete?id=' . $cty->id }}"
-                                            onclick="return confirm('Bạn muốn xóa doanh nghiệp?');"
-                                            class="btn btn-sm btn-clean btn-icon"><i
-                                                class="icon-lg flaticon-delete text-danger"></i>
-                                        </a>
+                                    <button title="Xóa thông tin" data-toggle="modal"
+                                            data-target="#delete-modal-confirm" type="button"
+                                            onclick="cfDel('{{ 'doanhnghiep-delete/' . $cty->id }}')"
+                                            class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg flaticon-delete text-danger"></i>
+                                        </button>
+                                        
                                     @endif
 
                                 </td>
@@ -192,5 +194,5 @@
                 </div>
             </form>
         </div>
-
+        @include('includes.delete')
     @endsection
