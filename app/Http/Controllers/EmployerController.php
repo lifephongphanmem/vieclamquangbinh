@@ -95,8 +95,10 @@ class EmployerController extends Controller
 	  public function new()
 	{
 		$countries_list=$this->getCountries();
+    
 		// get params
 		$dmhc =$this->getdanhmuc();
+
 		$list_cmkt=$this->getParamsByNametype('Trình độ CMKT');
 		$list_tdgd=$this->getParamsByNametype('Trình độ học vấn');
 		$list_nghe=$this->getParamsByNametype('Nghề nghiệp người lao động');

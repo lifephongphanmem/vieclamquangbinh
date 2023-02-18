@@ -234,7 +234,6 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label>Lĩnh vực đào tạo </label>
@@ -250,6 +249,7 @@
                                                                 </select>
                                                                 {{-- <input type="text" name="linhvucdaotao"
                                                                     value="{{ $ld->linhvucdaotao }}" class="form-control"> --}}
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -592,7 +592,6 @@
                             <input type="hidden" name="id" value='{{ $ld->id }}'>
                         </div>
 
-
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-12 text-center">
@@ -600,6 +599,7 @@
                                     <a onclick="history.back()" class="btn btn-danger"><i
                                             class="fa fa-reply"></i>&nbsp;Quay
                                         lại</a>
+
                                 </div>
                             </div>
                         </div>

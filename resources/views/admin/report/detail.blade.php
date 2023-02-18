@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="card-toolbar">
-                        <a href="" data-target="#moda-indetail" data-toggle="modal" class="btn btn-xs btn-success">
+                        <a href="" data-target="#moda-indetail" data-toggle="modal" class="btn btn-xs btn-success" style="margin-right: 5px">
                             &ensp;in danh sách</a></i>
                         <a href="{{ URL::to($url) }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
                                 &ensp;Trở về</a></i>

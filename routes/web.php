@@ -113,7 +113,7 @@ Route::get('/dashboard', [AdminController::class, 'dashboard' ]);
 // Doanh nghiep
 
 Route::get('/doanhnghiep-ba',[AdminCompany::class,'show_all']);
-Route::get('/doanhnghiep-delete',[AdminCompany::class,'delete_company']);
+Route::get('/doanhnghiep-delete/{id}',[AdminCompany::class,'delete_company']);
 Route::post('/doanhnghiep-up',[AdminCompany::class,'up_company']);
 Route::get('/doanhnghiep-bs',[AdminCompany::class,'save']);
 Route::get('/ doanhnghiep-bn',[AdminCompany::class,'new']);
@@ -270,6 +270,8 @@ Route::get('/report-ba/{cid?}',[AdminReport::class,'show_all']);
 Route::get('/report-detail',[AdminReport::class,'detail']);
 Route::get('/report-detail-in',[AdminReport::class,'detail_in']);
 Route::get('/report-be/{id}',[AdminReport::class,'edit']);
+Route::get('/report-in-tonghop',[AdminReport::class,'tonghop_in']);
+Route::get('/report-in-doanhnghiep',[AdminReport::class,'doanhnghiep_in']);
 
 
 Route::group(['prefix' => 'admessages'], function () {

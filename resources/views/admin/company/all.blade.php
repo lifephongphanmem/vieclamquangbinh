@@ -38,10 +38,10 @@
                     </div>
                     <div class="card-toolbar">
                         <a href="{{ 'doanh_nghiep/them_moi' }}" class="btn btn-sm btn-success">Thêm mới</a>
-                        <button class="btn btn-xs btn-success mr-2 ml-2" title="Nhận dữ liệu từ file Excel"
+                        {{-- <button class="btn btn-xs btn-success mr-2 ml-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import">Nhận Excel</i>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -152,11 +152,13 @@
                                         <i class="icon-lg flaticon-list text-success"></i>
                                     </button>
                                     @if ($cty->user == null)
-                                        <a title="Xóa" type="button" href="{{ '/doanhnghiep-delete?id=' . $cty->id }}"
-                                            onclick="return confirm('Bạn muốn xóa doanh nghiệp?');"
-                                            class="btn btn-sm btn-clean btn-icon"><i
-                                                class="icon-lg flaticon-delete text-danger"></i>
-                                        </a>
+                                    <button title="Xóa thông tin" data-toggle="modal"
+                                            data-target="#delete-modal-confirm" type="button"
+                                            onclick="cfDel('{{ 'doanhnghiep-delete/' . $cty->id }}')"
+                                            class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg flaticon-delete text-danger"></i>
+                                        </button>
+                                        
                                     @endif
                                 </td>
                             </tr>
@@ -200,6 +202,9 @@
                     <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
                 </div>
         </div>
+
+        @include('includes.delete')
+
         </form>
     </div>
     <!--Model danh sách-->
@@ -246,3 +251,4 @@
 
 
 @endsection
+

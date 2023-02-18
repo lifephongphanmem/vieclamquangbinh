@@ -79,7 +79,6 @@ class AdminReport extends Controller
 			}
 		} else {
 			if ($tungay != null) {
-
 				foreach ($reports as $item) {
 					$dt = Carbon::parse($item->time);
 					// dd($dt->toDateString() >= $tungay);
@@ -88,9 +87,7 @@ class AdminReport extends Controller
 					}
 				}
 			}
-
 			if ($denngay != null) {
-
 				foreach ($reports as $item) {
 					$dt = Carbon::parse($item->time);
 					if ($dt->toDateString() <= $denngay) {
@@ -131,7 +128,7 @@ class AdminReport extends Controller
 				$a = a_unique(array_column($a, 'user'));
 			}
 		}
-		
+	
 		// $a = a_unique(array_column($a->toarray(), 'user'));
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
@@ -184,16 +181,10 @@ class AdminReport extends Controller
 	public function detail_in(Request $request)
 	{
 		$model = Report::where('user', $request->user)->where('time', '>=', $request->tungay)
-		->where('time', '<=', $request->denngay)->where('type',$request->loaikhaibao)->get();
-		$cty = $model->first();
-		if ($cty == null) {
-			$tencty = '';
-		}
-		else{
-			$tencty = Company::select('name')->where('user',$cty->user)->first();
-		}
+			->where('time', '<=', $request->denngay)->where('type', $request->loaikhaibao)->get();
 
-		return view('admin.report.indetail')->with('model', $model)->with('loaikhaibao', $request->loaikhaibao)->with('tencty',$tencty)->with('pageTitle','Danh sách khai báo');
+		$tencty = Company::select('name')->where('user', $request->user)->first();
+		return view('admin.report.indetail')->with('model', $model)->with('loaikhaibao', $request->loaikhaibao)->with('tencty', $tencty)->with('pageTitle', 'Danh sách khai báo');
 	}
 
 	public function getDmhc()
@@ -342,5 +333,74 @@ class AdminReport extends Controller
 			$cats = DB::table('param')->where('type', $type->id)->get();
 		}
 		return $cats;
+	}
+
+
+	public function tonghop_in(Request $request)
+	{
+		$model = Report::where('user', $request->id);
+		if ($request->time == 'thang') {
+			$tungay = Carbon::create($request->nam, $request->thang, 5)->toDateString();
+			$denngay = Carbon::create($request->nam, $request->thang + 1, 4)->toDateString();
+		} elseif ($request->time == 'quy') {
+			if ($request->quy == '1') {
+				$tungay = Carbon::create($request->nam, 1, 1)->toDateString();
+				$denngay = Carbon::create($request->nam, 3, 31)->toDateString();
+			}
+			if ($request->quy == '2') {
+				$tungay = Carbon::create($request->nam, 4, 1)->toDateString();
+				$denngay = Carbon::create($request->nam, 6, 30)->toDateString();
+			}
+			if ($request->quy == '3') {
+				$tungay = Carbon::create($request->nam, 7, 1)->toDateString();
+				$denngay = Carbon::create($request->nam, 9, 30)->toDateString();
+			}
+			if ($request->quy == '4') {
+				$tungay = Carbon::create($request->nam, 10, 1)->toDateString();
+				$denngay = Carbon::create($request->nam, 12, 31)->toDateString();
+			}
+		} else {
+			$tungay = Carbon::create($request->nam, 1, 1)->toDateString();
+			$denngay = Carbon::create($request->nam, 12, 31)->toDateString();
+		}
+
+		$model = $model->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
+
+		$tencty = Company::select('name')->where('user', $request->id)->first();
+
+
+		return view('admin.report.indetail')->with('model', $model)->with('tencty', $tencty)->with('pageTitle', 'Danh sách khai báo')
+		->with('loaikhaibao', 'khaibao');
+	}
+
+
+	public function doanhnghiep_in(Request $request)
+	{
+	
+		$reports = DB::table('report')->where('time','>=',$request->tungay_dn )->where('time','<=',$request->denngay_dn )->get();
+		
+		$a = [];
+		foreach($reports as $rp)
+		{
+			array_push($a, $rp->user);
+		}
+		
+		$a = a_unique($a);
+		
+		if ($request->loai == 'kkb') {
+		
+			$model = Company::join('users', 'users.id', 'company.user')
+				->select('company.name', 'users.id')
+				->whereNotIn('users.id', $a)
+				->get();
+		} else {
+		
+			$model = Company::join('users', 'users.id', 'company.user')
+				->select('company.name', 'users.id')
+				->wherein('users.id', $a)
+				->get();
+		}
+
+		return view('/admin.report.indoanhnghiep')->with('model',$model)->with('loai',$request->loai)->with('pageTitle','Danh sách phân loại doanh nghiệp');
 	}
 }
