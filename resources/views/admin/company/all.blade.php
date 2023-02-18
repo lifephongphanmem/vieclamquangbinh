@@ -38,10 +38,10 @@
                     </div>
                     <div class="card-toolbar">
                         <a href="{{ 'doanh_nghiep/them_moi' }}" class="btn btn-sm btn-success">Thêm mới</a>
-                        <button class="btn btn-xs btn-success mr-2 ml-2" title="Nhận dữ liệu từ file Excel"
+                        {{-- <button class="btn btn-xs btn-success mr-2 ml-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import">Nhận Excel</i>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -203,11 +203,17 @@
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                     <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                 <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
             </div>
+
+        </div>
+
+        @include('includes.delete')
+
 
         </form>
     </div>
@@ -254,3 +260,4 @@
 
     @include('includes.delete')
 @endsection
+

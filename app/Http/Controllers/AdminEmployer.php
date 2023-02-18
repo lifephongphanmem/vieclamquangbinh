@@ -42,26 +42,26 @@ class AdminEmployer extends Controller
 		
 			}
 			
-		// $lds= DB::table('nguoilaodong')
-		// 		->when($search, function ($query, $search) {
-        //             return $query->whereRaw("(hoten like  '%".$search."%' OR cmnd like '%".$search."%')");
-		// 			})
-		// 		->when($cid, function ($query, $cid) {
-        //             return $query->where('nguoilaodong.company', $cid);
-		// 			})
-		// 		->when($state_filter, function ($query, $state_filter) {
-        //             return $query->where('nguoilaodong.state', $state_filter);
-		// 			})
-		// 		->when($gioitinh_filter, function ($query, $gioitinh_filter) {
-        //             return $query->where('nguoilaodong.gioitinh','like', '%'.$gioitinh_filter.'%');
-		// 			})
-		// 		->when($age_filter, function ($query, $age_filter) {
-        //             return $query->whereRaw("YEAR(GETDATE())-YEAR(`ngaysinh`) > ".$age_filter);
-		// 			})
-		// 		->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+		$lds= DB::table('nguoilaodong')
+				->when($search, function ($query, $search) {
+                    return $query->whereRaw("(hoten like  '%".$search."%' OR cmnd like '%".$search."%')");
+					})
+				->when($cid, function ($query, $cid) {
+                    return $query->where('nguoilaodong.company', $cid);
+					})
+				->when($state_filter, function ($query, $state_filter) {
+                    return $query->where('nguoilaodong.state', $state_filter);
+					})
+				->when($gioitinh_filter, function ($query, $gioitinh_filter) {
+                    return $query->where('nguoilaodong.gioitinh','like', '%'.$gioitinh_filter.'%');
+					})
+				->when($age_filter, function ($query, $age_filter) {
+                    return $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > ".$age_filter);
+					})
+				->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 							
-		// 		->get();
-		$lds=DB::table('nguoilaodong')->select('id','hoten','cmnd','ngaysinh','company','tinh')->get();
+				->get();
+		// $lds=DB::table('nguoilaodong')->select('id','hoten','cmnd','ngaysinh','company','tinh')->get();
 		
 		$a_congty=array_column(DB::table('company')->get()->toarray(),'name','id');
 		// foreach($lds as $ld){
@@ -147,6 +147,7 @@ class AdminEmployer extends Controller
 		$hosos=$model->getHosos($ld->cmnd);
 		// dd($ld);
 		$dmhanhchinh = danhmuchanhchinh::all();
+		// dd($hosos);
 		return view ('admin.employer.chitiet')
 			->with('ld', $ld)
 			->with('countries_list', $countries_list)
