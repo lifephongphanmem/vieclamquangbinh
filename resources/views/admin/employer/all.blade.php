@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <form class="form-inline" method="GET">
                         <div class="row w3-res-tb" style="margin-bottom: 0.8%">
-                            <div class="col-sm-2 m-b-xs">
+                            <div class="col-sm-2 m-b-xs" style="margin-right:10%">
                                 <select name="gioitinh_filter" class=" form-control w-sm inline v-middle"
                                     onchange="this.form.submit()">
                                     <option value="0"> Chọn giới tính </option>
@@ -54,7 +54,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-sm-2 m-b-xs" style="margin-left: 7%">
+                            <div class="col-sm-2 m-b-xs mr-5" style="margin-right: 7%">
                                 <select name="state_filter" class=" form-control w-sm inline v-middle"
                                     onchange="this.form.submit()">
                                     <option value="0" <?php if ($state_filter == '0') {
@@ -72,7 +72,7 @@
 
                                 </select>
                             </div>
-                            <div class="col-sm-2 m-b-xs"  style="margin-left: 10%">
+                            <div class="col-sm-2 m-b-xs"  style="margin-left: 11%">
                                 <select name="age_filter" class=" form-control w-sm inline v-middle"
                                     onchange="this.form.submit()">
                                     <option value="0"> Lọc theo độ tuổi </option>

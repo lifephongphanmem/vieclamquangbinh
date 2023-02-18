@@ -52,10 +52,10 @@
                         <h3 class="card-label text-uppercase">Danh sách điều tra</h3>
                     </div>
                     <div class="card-toolbar">
-                        {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
-                            class="btn btn-sm btn-success" onclick="intonghop()">
-                            <i class="icon-lg la flaticon2-print"></i> In tổng hợp
-                        </button> --}}
+                        <a title="In tổng hợp" 
+                            class="btn btn-sm btn-success" onclick="indanhsachloi()">
+                            <i class="icon-lg la flaticon2-print"></i> Danh sách lỗi
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -175,9 +175,14 @@
                                     @endif
                                     @if (chkPhanQuyen('danhsachdieutra', 'hoanthanh'))
                                     {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%"> --}}
-                                        <a href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon ml-3" target="_blank">
+                                        {{-- <a href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" title="In"  class="btn btn-sm btn-clean btn-icon ml-3" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
-                                        </a>
+                                        </a> --}}
+
+                                        <button href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" onclick="Inchitiet('{{$td->user_id}}','{{$td->kydieutra}}')"  data-target="#in-modal-confirm"
+                                            data-toggle="modal" title="In"  class="btn btn-sm btn-clean btn-icon ml-3">
+                                            <i class="icon-lg la flaticon2-print text-primary"></i>
+                                        </button>
                                     {{-- </div> --}}
                                     @endif
                                 </td>
@@ -290,6 +295,37 @@
             </div>
         </form>
 
+            <!--Model in-->
+    <div id="in-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
+        @csrf
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
+                                            <option value="1">Mẫu 01/PLI (NĐ 145/2020)</option>
+                                            <option value="2">Mẫu 02 (TT 01/2022)</option>
+                                        </select> --}}
+                    <a href="" id='mau01' target="_blank">1. Danh sách điều tra</a></br>
+                    <a href="" id="dsloi" target="_blank">2. Danh sách lỗi</a>
+                    <input type="hidden" name='madv' id='madonvi'>
+                    <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                </div>
+
+                {{-- <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                        <button type="submit" id="submit" name="submit" value="submit"
+                                        class="btn btn-primary">Đồng
+                                            ý</button>
+                                    </div> --}}
+            </div>
+        </div>
+        {{-- </form> --}}
+    </div>
         <script>
             function intonghop() {
                 var url = '/dieutra/intonghop'
@@ -306,6 +342,21 @@
             function List(madv,kydieutra){
                 $('#madonvi').val(madv);
                 $('#ky_dieu_tra').val(kydieutra);
+            }
+
+            function Inchitiet(madv, kydieutra){
+                var url1='/nhankhau-in?madv='+madv+'&kydieutra='+kydieutra;
+                $('#mau01').attr('href', url1);
+
+                var url2='/dieutra/indanhsachloi?madv='+madv+'&kydieutra='+kydieutra;
+                $('#dsloi').attr('href', url2);
+            }
+
+            function indanhsachloi(){
+                var mahuyen=$('#mahuyen').val();
+                var kydieutra=$('#kydieutra').val();
+                var url='/dieutra/indanhsachloi?mahuyen='+mahuyen+'&kydieutra='+kydieutra;
+                window.location.href=url;
             }
         </script>
     @endsection

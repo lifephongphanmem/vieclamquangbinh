@@ -29,12 +29,12 @@
 @stop
 @section('content')
 
-
-    {{-- <section class="panel">
+{{-- 
+    <section class="panel">
 	<header class="panel-heading">
 	  {{$info->name}}
-	</header>
-	<div class="panel-body">
+	</header> --}}
+	{{-- <div class="panel-body">
 	<div class="row ">	
 	<div class="col-sm-10 col-sm-offset-1">
 		<div class="top-menu">
@@ -46,12 +46,22 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card card-custom">
-                <div class="card-header card-header-tabs-line">
+                <div class="card-header card-header-tabs-line" style="display: block">
                     <div class="card-title">
                         <h3 class="card-label text-uppercase"> {{ $info->name }}</h3>
+
                     </div>
+
                 </div>
                 <div class="card-body">
+                    <div class="row ">
+                    <div class="col-md-12 mb-5">
+                        {{-- <div class="top-menu"> --}}
+                        @include('admin.dnmenu')
+                        @yield('top-menu')
+                    {{-- </div> --}}
+                </div>
+                </div>
                     <form role="form" method="POST" action="{{ url('/doanhnghiep-up?id=' . $info->id) }}"
                         enctype='multipart/form-data'>
                         {{ csrf_field() }}
@@ -271,4 +281,5 @@
             </div>
 
         </div>
+    </section>
     @endsection

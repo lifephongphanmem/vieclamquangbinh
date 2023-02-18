@@ -602,7 +602,6 @@ class AdminDieutra extends Controller
     public function create(Request $request)
     {
         $inputs = $request->all();
-
         $list_cmkt = dmtrinhdokythuat::all();
         $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
@@ -687,5 +686,51 @@ class AdminDieutra extends Controller
         } else {
             return redirect('/nhankhau/ChiTietHoGiaDinh/' . $inputs['nkid'] . '?soho=' . $inputs['ho'] . '&madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
         }
+    }
+
+    public function indanhsachloi(Request $request){
+        $inputs=$request->all();
+        if(isset($inputs['mahuyen'])){
+            $maxa=array_column(getMaXa($inputs['mahuyen'])->toarray(),'madv');
+        }else{
+            $maxa=[];
+        }
+        // $model = DB::table('nhankhau')->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('maloailoi','!=','')->get();
+        $model = DB::table('nhankhau')->where('kydieutra', $inputs['kydieutra'])->where('maloailoi','!=','')
+            ->where(function($q) use ($maxa,$inputs){
+                if(count($maxa)>0){
+                    $q->wherein('madv',$maxa);
+                }else{
+                    $q->where('madv',$inputs['madv']);
+                }
+            })
+        ->get();
+        // dd($model);
+        $a_loi=array(
+            'LOAI1'=>'Trống trường dữ liệu họ và tên hoặc ngày sinh',
+            'LOAI2'=>'Lỗi các cột dữ liệu liên quan đến nhân khẩu không tham gia HĐKT',
+            'LOAI3'=>'Lỗi các cột dữ liệu liên quan đến nhân khẩu thất nghiệp',
+            'LOAI4'=>'Tình trạng tham HĐKT trống'
+        );
+        foreach($model as $key=>$ct){
+            $a_maloi = explode(';', $ct->maloailoi);
+            // dd($a_maloi);
+            $ct->loailoi='';
+            foreach($a_maloi as $val){
+                // dd($a_loi[$val]);
+                if($val != ''){
+                    $ct->loailoi .= $a_loi[$val].'; ';
+                }
+               
+            }
+            if($ct->loailoi == ''){
+                unset($model[$key]);
+            }
+        }
+        // dd($model);
+        return view('admin.dieutra.indanhsachloi')
+                ->with('model',$model)
+                ->with('pageTitle','Danh sách nhân khẩu lỗi');
+
     }
 }

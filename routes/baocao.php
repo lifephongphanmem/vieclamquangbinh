@@ -14,7 +14,7 @@ Route::prefix('bao_cao_tong_hop')->group(function () {
     Route::get('ds_thong_tin_cung_ld', [baocaotonghopController::class, 'dsttcungld']);
 
     Route::get('tong_hop_cung_ld_cap_xa_huyen', [baocaotonghopController::class, 'cungldcapxahuyen']);
-    Route::get('thonh_tin_thi_truong_ld', [baocaotonghopController::class, 'thongtinthitruongld']);
+    Route::get('/thong_tin_thi_truong_ld', [baocaotonghopController::class, 'thongtinthitruongld']);
 });
 
 Route::prefix('vanban')->group(function(){

@@ -2,12 +2,23 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ url('assets/global/plugins/select2/select2.css') }}" />
+    <style>
+        .col-md-3 {
+            float: left;
+        }
+
+        .wrapper {
+            margin-top: 0px;
+            padding: 0px 15px;
+        }
+    </style>
 @stop
 
 @section('custom-script')
-    <script type="text/javascript" src="{{ url('assets/global/plugins/select2/select2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
+    </script>
+    <script type="text/javascript"
+        src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
 
     <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
     <script>
@@ -35,7 +46,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
                         <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                             <thead>
                                 <tr class="text-center">
@@ -81,8 +91,6 @@
                                 <?php } ?>
                             </tbody>
                         </table>
-                    </div>
-
                 </div>
             </div>
             <!--end::Card-->
@@ -118,25 +126,25 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Mã nghề*</b></label>
+                            <label><b>Mã nghề</b></label>
                             <input type="text" id="manghe" name="manghe" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Tên mã nghề, trình độ*</b></label>
+                            <label><b>Tên mã nghề, trình độ</b></label>
                             <input type="text" id="tenmntd" name="tenmntd" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Mô tả*</b></label>
+                            <label><b>Mô tả</b></label>
                             <textarea type="text" id="mota" name="mota" class="form-control" ></textarea>
                         </div>
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label><b>Trạng thái*</b></label>
+                            <label><b>Trạng thái</b></label>
                            <select type="text" id="trangthai" name="trangthai" class="form-control">
                             <option value="kh">Kích hoạt</option>
                             <option value="kkh">Không kích hoạt</option>
