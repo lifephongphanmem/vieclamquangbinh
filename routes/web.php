@@ -117,7 +117,7 @@ Route::get('/doanhnghiep-delete/{id}',[AdminCompany::class,'delete_company']);
 Route::post('/doanhnghiep-up',[AdminCompany::class,'up_company']);
 Route::get('/doanhnghiep-bs',[AdminCompany::class,'save']);
 Route::get('/ doanhnghiep-bn',[AdminCompany::class,'new']);
-Route::get('/doanhnghiep-be/{cid}',[AdminCompany::class,'edit']);
+Route::get('/doanhnghiep-be',[AdminCompany::class,'edit']);
 Route::post('/doanhnghiep-bu/{cid}',[AdminCompany::class,'update']);
 Route::get('/doanhnghiep-br/{cid}',[AdminCompany::class,'baocao145']);
 Route::get('/doanh_nghiep/them_moi', [CompanyController::class, 'create']);

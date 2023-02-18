@@ -20,6 +20,7 @@ use App\Models\User;
 
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Report;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -41,12 +42,12 @@ class AdminCompany extends Controller
 	public function show_all(Request $request)
 	{
 		//makelist
-
 		$dmhc_list = $this->getDmhc();
 		//filter
 		$search = $request->search;
 		$public_filter = $request->public_filter;
 		$dm_filter = $request->dm_filter;
+		$khaibao = $request->khaibao;
 
 		$quymo_min_filter = $request->quymo_min_filter;
 		$quymo_max_filter = $request->quymo_max_filter;
@@ -77,8 +78,53 @@ class AdminCompany extends Controller
 				return $query->having('employers_count', '=', 0);
 			})
 			->orderBy('employers_count', 'desc')
-			->get();
-
+			;
+		
+			if ($khaibao == 'kb' || $khaibao == 'ckb') {
+				$cid = [];
+				$report = Report::where('datatable','nguoilaodong')->get();
+				foreach ($report as $rp){
+					array_push($cid, $rp);
+				}
+				$cid = a_unique(array_column($cid, 'user'));
+				
+				if ($khaibao == 'kb') {
+					$ctys = $ctys->wherein('user', $cid)->get();
+				}
+				if ($khaibao == 'ckb') {
+					$ctys = $ctys->whereNotIn('user', $cid)->get();
+				}
+			}
+			elseif ($khaibao == 'ckt') {
+				$ctys = $ctys->where('user','!=',null)->get();
+				foreach($ctys as $ct){
+					if ($ct->xa == null) {
+						$ct->chuakhaitrinh = 'yes';
+						continue;
+					}
+					if ($ct->huyen == null) {
+						$ct->chuakhaitrinh = 'yes';
+						continue;
+					}
+					if ($ct->tinh == null) {
+						$ct->chuakhaitrinh = 'yes';
+						continue;
+					}
+					if ($ct->nganhnghe == null) {
+						$ct->chuakhaitrinh = 'yes';
+						continue;
+					}
+					if ($ct->loaihinh == null) {
+						$ct->chuakhaitrinh = 'yes';
+						continue;
+					}
+				}
+				 $ctys = $ctys->where('chuakhaitrinh','yes');
+			}else{
+				$ctys = $ctys->get();
+			}
+			
+		
 		$dmhanhchinh = danhmuchanhchinh::all();
 		$a_dm = array_column($dmhanhchinh->toarray(), 'name', 'maquocgia');
 		
@@ -107,7 +153,8 @@ class AdminCompany extends Controller
 			->with('public_filter', $public_filter)
 			->with('quymo_max_filter', $quymo_max_filter)
 			->with('quymo_min_filter', $quymo_min_filter)
-			->with('dmhanhchinh', $dmhanhchinh);
+			->with('dmhanhchinh', $dmhanhchinh)
+			->with('khaibao', $khaibao);
 	}
 
 	public function delete_company($id)
@@ -209,14 +256,21 @@ class AdminCompany extends Controller
 	}
 
 
-	public function edit($cid)
+	public function edit(Request $request)
 	{
+		
+		$dm_filter = $request->dm_filter;
+		$public_filter=$request->public_filter;
+		$khaibao=$request->khaibao;
+		$quymo_min_filter=$request->quymo_min_filter;
+		$quymo_max_filter=$request->quymo_max_filter;
+
 		$dmhc = $this->getdanhmuc();
 		$kcn = $this->getParamsByNametype("Khu công nghiệp"); // lấy danh mục khu công nghiệp
 		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
 		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp"); // lấy ngành nghề doanh nghiệp
 		$ctype2=dmloaihinhhdkt::all();
-		$company = DB::table('company')->where('id', $cid)->first();
+		$company = DB::table('company')->where('id', $request->cid)->first();
 
 		//print_r($cat);
 		return view('admin.company.edit')
@@ -225,7 +279,13 @@ class AdminCompany extends Controller
 			->with('ctype', $ctype)
 			->with('ctype2', $ctype2)
 			->with('kcn', $kcn)
-			->with('cfield', $cfield);
+			->with('cfield', $cfield)
+			->with('dm_filter', $dm_filter)
+			->with('public_filter', $public_filter)
+			->with('khaibao', $khaibao)
+			->with('quymo_min_filter', $quymo_min_filter)
+			->with('quymo_max_filter', $quymo_max_filter)
+			;
 	}
 
 

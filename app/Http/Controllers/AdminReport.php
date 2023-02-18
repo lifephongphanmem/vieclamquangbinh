@@ -378,23 +378,22 @@ class AdminReport extends Controller
 		{
 			array_push($a, $rp->user);
 		}
-		
 		$a = a_unique($a);
-		
 		if ($request->loai == 'kkb') {
-		
 			$model = Company::join('users', 'users.id', 'company.user')
-				->select('company.name', 'users.id')
+				->select('company.*', 'users.id')
 				->whereNotIn('users.id', $a)
 				->get();
 		} else {
-		
 			$model = Company::join('users', 'users.id', 'company.user')
-				->select('company.name', 'users.id')
+				->select('company.*', 'users.id')
 				->wherein('users.id', $a)
 				->get();
 		}
-
-		return view('/admin.report.indoanhnghiep')->with('model',$model)->with('loai',$request->loai)->with('pageTitle','Danh sách phân loại doanh nghiệp');
+		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
+		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp"); // lấy ngành nghề doanh nghiệp
+	
+		return view('/admin.report.indoanhnghiep')->with('model',$model)->with('ctype',$ctype)->with('cfield',$cfield)
+		->with('loai',$request->loai)->with('pageTitle','Danh sách phân loại doanh nghiệp');
 	}
 }
