@@ -47,6 +47,14 @@
             </li>
             @endif
             {{-- <li class="menu-item" aria-haspopup="true">
+                <a href="{{ url('/bao_cao_tong_hop') }}" class="menu-link">
+                    <i class="menu-bullet menu-bullet-dot">
+                        <span></span>
+                    </i>
+                    <span class="menu-text"></span>
+                </a>
+            </li> --}}
+            {{-- <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/vanban/danhsach') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>

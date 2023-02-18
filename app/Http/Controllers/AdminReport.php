@@ -159,8 +159,14 @@ class AdminReport extends Controller
 
 	public function detail(Request $request)
 	{
-
-		$reports = Report::where('user', $request->user)->where('time', '>=', $request->tungay)->where('time', '<=', $request->denngay)->get();
+		// dd(1);
+	$inputs=$request->all();
+		// $reports = Report::where('user', $request->user)->where('time', '>=', $request->tungay)->where('time', '<=', $request->denngay)->get();
+		$reports = Report::where('user', $request->user)->where(function($q) use ($inputs){
+			if(isset($inputs['tungay'])){
+				$q->where('time', '>=', $inputs['tungay'])->where('time', '<=', $inputs['denngay']);
+			}
+		})->get();
 
 		foreach ($reports as $report) {
 			$ct = DB::table('company')->where('user', $report->user)->get()->first();

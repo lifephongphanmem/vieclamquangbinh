@@ -217,7 +217,7 @@ class AdminCompany extends Controller
 		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp"); // lấy ngành nghề doanh nghiệp
 		$ctype2=dmloaihinhhdkt::all();
 		$company = DB::table('company')->where('id', $cid)->first();
-
+// dd(1);
 		//print_r($cat);
 		return view('admin.company.edit')
 			->with('dmhc', $dmhc)
