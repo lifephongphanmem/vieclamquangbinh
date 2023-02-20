@@ -322,7 +322,7 @@
                                                                 <label>Mức lương</label>
                                                                 <input type="text" name="luong"
                                                                     value="{{ $ld->luong }}" class="form-control"
-                                                                    <?php if($action!="delete"){ ?> required <?php } ?>>
+                                                                    <?php if($action!="delete"){ ?>  <?php } ?>>
                                                             </div>
 															</div>
 															<div class="col-md-3">
