@@ -81,12 +81,12 @@
                         </thead>
                         <tbody>
                             <?php 
-		$i=($reports->currentPage()-1)*$reports->perPage();
-		foreach ($reports as $rp ){
-			$i++;
+		// $i=($reports->currentPage()-1)*$reports->perPage();
+		foreach ($reports as $key=>$rp ){
+			// $i++;
 	?>
                             <tr>
-                                <td>{{ $i }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td>
                                     <?php
                                     switch ($rp->type) {

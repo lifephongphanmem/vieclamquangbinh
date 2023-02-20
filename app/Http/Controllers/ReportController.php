@@ -43,9 +43,10 @@ class ReportController extends Controller
 
 		$time_filter = $request->input('time_filter', 1);
 		$uid = session('admin')->id;
+		// dd(session('admin'));
 		$rmodel = new Report;
 		$reports = $rmodel->getReports($uid, $time_filter);
-
+// dd($reports);
 		return view('pages.report.all')
 			->with('reports', $reports)
 			->with('time_filter', $time_filter);
