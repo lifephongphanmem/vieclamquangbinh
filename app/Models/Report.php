@@ -127,7 +127,7 @@ class Report extends Model
 			
 			case '1': 
 				$dateS = Carbon::now()->startOfMonth();
-				$dateE = Carbon::now()->addHour(7); 
+				$dateE = Carbon::now()->addHour(8); 
 				break;
 			case '2': 
 				$dateS = Carbon::now()->startOfMonth()->subMonth(1);
@@ -140,13 +140,13 @@ class Report extends Model
 			
 		}
 		$request = request();
-		
+// dd($dateE);
 		$reports = Report::whereBetween("time",[$dateS,$dateE] )
 			->where('user',$uid)
 			->whereNotIn('type', ['tuyendung','dangkydichvu','login'])
 			->orderBy('time','desc')
-			->paginate(20);
-
+			->get();
+// dd($reports);
 		return $reports;
 	}
 	

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Hethong\dstaikhoan_phanquyen;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Session;
 
@@ -26,9 +27,12 @@ class HethongchungController extends Controller
 			return redirect('/');
 		}
 	}
-	public function show_login()
+	public function show_login(Request $request)
 	{
-		return view('HeThong.dangnhap');
+		$inputs=$request->all();
+		$username=$inputs['user']??null;
+		return view('HeThong.dangnhap')
+		->with('username',$username);
 	}
 	public function dashboard()
 	{
@@ -175,11 +179,12 @@ class HethongchungController extends Controller
 	public function DangKy(Request $request)
 	{
 		$validate = $request->validate([
-			'username' => 'required|max:255',
+			// 'username' => 'required|max:255',
 			'email' => 'required|email|max:255|unique:users',
 			'dkkd' => 'required|max:20|unique:company',
 			'password' => 'required|min:8|confirmed',
 		]);
+		
 		$inputs = $request->all();
 		$data_user = [
 			'name' => $inputs['name'],
@@ -192,7 +197,7 @@ class HethongchungController extends Controller
 			'nhaplieu' => 1,
 			'manhomchucnang'=>1669913835
 		];
-		$cty=DB::table('company')->where('name','like',$inputs['username'])->first();
+		// $cty=DB::table('company')->where('name','like',$inputs['username'])->first();
 		$model = User::where('email', $inputs['email'])->first();
 
 		if (isset($model)) {

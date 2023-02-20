@@ -102,7 +102,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                                 <input class="form-control border-1 px-5 placeholder-dark-75" title="Tên tài khoản"
                                     type="text" placeholder="Tên tài khoản truy cập" id="username" name="username"
-                                    value="{{ $input['username'] ?? '' }}" required autocomplete="off" />
+                                    value="{{ $username ?? '' }}" required autocomplete="off" />
                             </div>
 
                             <div class="input-group form-group py-2 m-0">
@@ -127,6 +127,8 @@ License: You must have a valid license purchased only from themeforest(the above
                             <div class="text-center mt-15">
                                 <button id="kt_login_signin_submit" type="submit"
                                     class="btn btn-primary btn-pill shadow-sm py-4 px-9 font-weight-bold">ĐĂNG NHẬP</button>
+                                    <a href="{{'/danh_sach_tai_khoan?mahuyen=ALL'}}"
+                                    class="btn btn-primary btn-pill shadow-sm py-4 px-9 font-weight-bold">DANH SÁCH TÀI KHOẢN</a>
                             </div>
                             </form>
                         </div>

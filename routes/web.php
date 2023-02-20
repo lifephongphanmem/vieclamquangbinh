@@ -36,6 +36,7 @@ use App\Http\Controllers\AdminDieutra;
 use App\Http\Controllers\AdminNhankhau;
 use App\Http\Controllers\Baocao\baocaotonghopController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HopThuController;
 
 // Frontend SECTION
@@ -310,4 +311,6 @@ Route::prefix('/xa')->group(function(){
     Route::get('/',[HopThuController::class,'hopthu_xa']);
 });
 });
+
+Route::get('/danh_sach_tai_khoan',[HomeController::class,'listusser']);
 
