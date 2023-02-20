@@ -75,8 +75,8 @@
                             <div class="col-sm-2 m-b-xs">
                                 <select id="khaibao" name="khaibao" class="form-control select2basic"
                                     onchange="this.form.submit()">
-                                    <option value="0">Khai báo biến động</option>
-                                    <option value="kb" <?php if ($khaibao == 'kb') {
+                                    <option value="0">Khai báo</option>
+                                    <option value="dkb" <?php if ($khaibao == 'dkb') {
                                         echo 'selected';
                                     } ?>>Đã khai báo</option>
                                     <option value="ckb" <?php if ($khaibao == 'ckb') {
@@ -85,6 +85,12 @@
                                     <option value="ckt" <?php if ($khaibao == 'ckt') {
                                         echo 'selected';
                                     } ?>>Chưa khai trình</option>
+                                       <option value="ddk" <?php if ($khaibao == 'ddk') {
+                                        echo 'selected';
+                                    } ?>>Đã đăng ký</option>
+                                       <option value="kbld" <?php if ($khaibao == 'kbld') {
+                                        echo 'selected';
+                                    } ?>>Khai báo lần đầu</option>
                                 </select>
                             </div>
                             <div style=" margin-left:5%">
@@ -209,12 +215,6 @@
                 <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                 <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
             </div>
-
-        </div>
-
-        @include('includes.delete')
-
-
         </form>
     </div>
     <!--Model danh sách-->

@@ -32,6 +32,7 @@ class AdminReport extends Controller
 		$request = request();
 		$search = $request->search;
 		$time_filter = $request->time_filter;
+		$type_filter = $request->type_filter;
 		if ($request->tungay == null && $request->denngay == null) {
 			$nam = date('Y');
 			$thang = date('m');
@@ -41,11 +42,8 @@ class AdminReport extends Controller
 			$tungay = $request->tungay;
 			$denngay = $request->denngay;
 		}
-		if ($request->type_filter == 'chuakhaibao') {
-			$type_filter = null;
-		} else {
-			$type_filter = $request->type_filter;
-		}
+
+
 		$reports = DB::table('report')
 			->when($type_filter, function ($query, $type_filter) {
 
@@ -67,74 +65,19 @@ class AdminReport extends Controller
 			// 	return $query->where('user', $uid);
 			// })
 			->where('datatable', '!=', 'nhankhau')
-			->orderBy('id', 'desc')
-			->get();
+			->orderBy('id', 'desc');
+
 		$a = [];
-		if ($tungay != null && $denngay != null) {
-			foreach ($reports as $item) {
-				$dt = Carbon::parse($item->time);
-				if ($dt->toDateString() <= $denngay && $tungay <= $dt->toDateString()) {
-					array_push($a, $item);
-				}
-			}
-		} else {
-			if ($tungay != null) {
-				foreach ($reports as $item) {
-					$dt = Carbon::parse($item->time);
-					// dd($dt->toDateString() >= $tungay);
-					if ($dt->toDateString() >= $tungay) {
-						array_push($a, $item);
-					}
-				}
-			}
-			if ($denngay != null) {
-				foreach ($reports as $item) {
-					$dt = Carbon::parse($item->time);
-					if ($dt->toDateString() <= $denngay) {
-						array_push($a, $item);
-					}
-				}
-			}
-		}
-		// foreach ($reports as $report) {
-		// 	$ct = DB::table('company')->where('user', $report->user)->get()->first();
-		// 	if ($ct) {
-		// 		$report->ctyname = $ct->name;
-		// 	} else {
-		// 		$report->ctyname = "";
-		// 	}
-		// }
-		$b = [];
-		if ($tungay == null && $denngay == null) {
-			if ($request->type_filter == 'chuakhaibao') {
-				foreach ($reports as $item) {
-					if ($item->datatable == 'nguoilaodong' || $item->datatable == 'notable') {
-						array_push($b, $item);
-					}
-				}
-				$a = a_unique(array_column($b, 'user'));
-			} else {
-				$a = a_unique(array_column($reports->toarray(), 'user'));
-			}
-		} else {
-			if ($request->type_filter == 'chuakhaibao') {
-				foreach ($a as $item) {
-					if ($item->datatable == 'nguoilaodong' || $item->datatable == 'notable') {
-						array_push($b, $item);
-					}
-				}
-				$a = a_unique(array_column($b, 'user'));
-			} else {
-				$a = a_unique(array_column($a, 'user'));
-			}
-		}
-	
-		// $a = a_unique(array_column($a->toarray(), 'user'));
+
+		$reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
+		$a = a_unique(array_column($reports->toarray(), 'user'));
+
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
 				->select('company.name', 'users.id')
 				->whereNotIn('users.id', $a)
 				->get();
+				
 		} else {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
 				->select('company.name', 'users.id')
@@ -142,9 +85,9 @@ class AdminReport extends Controller
 				->get();
 		}
 		$inputs['url'] = '/report-ba';
-		$type_filter = $request->type_filter;
 
 		return view('admin.report.all')->with('model_congty', $model_congty)
+			->with('reports', $reports)
 			->with('search', $search)
 			->with('time_filter', $time_filter)
 			->with('type_filter', $type_filter)
@@ -157,10 +100,10 @@ class AdminReport extends Controller
 	public function detail(Request $request)
 	{
 		// dd(1);
-	$inputs=$request->all();
+		$inputs = $request->all();
 		// $reports = Report::where('user', $request->user)->where('time', '>=', $request->tungay)->where('time', '<=', $request->denngay)->get();
-		$reports = Report::where('user', $request->user)->where(function($q) use ($inputs){
-			if(isset($inputs['tungay'])){
+		$reports = Report::where('user', $request->user)->where(function ($q) use ($inputs) {
+			if (isset($inputs['tungay'])) {
 				$q->where('time', '>=', $inputs['tungay'])->where('time', '<=', $inputs['denngay']);
 			}
 		})->get();
@@ -370,18 +313,17 @@ class AdminReport extends Controller
 
 
 		return view('admin.report.indetail')->with('model', $model)->with('tencty', $tencty)->with('pageTitle', 'Danh sách khai báo')
-		->with('loaikhaibao', 'khaibao');
+			->with('loaikhaibao', 'khaibao');
 	}
 
 
 	public function doanhnghiep_in(Request $request)
 	{
-	
-		$reports = DB::table('report')->where('time','>=',$request->tungay_dn )->where('time','<=',$request->denngay_dn )->get();
-		
+
+		$reports = DB::table('report')->where('time', '>=', $request->tungay_dn)->where('time', '<=', $request->denngay_dn)->get();
+
 		$a = [];
-		foreach($reports as $rp)
-		{
+		foreach ($reports as $rp) {
 			array_push($a, $rp->user);
 		}
 		$a = a_unique($a);
@@ -398,8 +340,8 @@ class AdminReport extends Controller
 		}
 		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
 		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp"); // lấy ngành nghề doanh nghiệp
-	
-		return view('/admin.report.indoanhnghiep')->with('model',$model)->with('ctype',$ctype)->with('cfield',$cfield)
-		->with('loai',$request->loai)->with('pageTitle','Danh sách phân loại doanh nghiệp');
+
+		return view('/admin.report.indoanhnghiep')->with('model', $model)->with('ctype', $ctype)->with('cfield', $cfield)
+			->with('loai', $request->loai)->with('pageTitle', 'Danh sách phân loại doanh nghiệp');
 	}
 }
