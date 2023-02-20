@@ -690,6 +690,7 @@ class AdminDieutra extends Controller
 
     public function indanhsachloi(Request $request){
         $inputs=$request->all();
+        // $inputs['madv']=$inputs['madv']??'';
         if(isset($inputs['mahuyen'])){
             $maxa=array_column(getMaXa($inputs['mahuyen'])->toarray(),'madv');
         }else{

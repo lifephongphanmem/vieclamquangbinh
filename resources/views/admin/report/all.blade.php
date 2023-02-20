@@ -58,8 +58,8 @@
                     </div>
                     <div class="card-toolbar">
                         <a onclick="indoanhnghiep()" data-target="#Report_in_doanhnghiep" data-toggle="modal"
-                            class="btn btn-xs btn-success">
-                            &ensp;in phân loại DN</a></i>
+                            class="btn btn-xs btn-success"><i class="icon-lg la flaticon2-print text-primary"></i>
+                            &ensp;In danh sách</a>
                     </div>
                 </div>
 
