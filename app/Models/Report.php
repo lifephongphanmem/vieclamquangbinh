@@ -129,14 +129,14 @@ class Report extends Model
 				$dateS = Carbon::now()->startOfMonth();
 				$dateE = Carbon::now()->addHour(8); 
 				break;
-			// case '2': 
-			// 	$dateS = Carbon::now()->startOfMonth()->subMonth(1);
-			// 	$dateE = Carbon::now()->startOfMonth(); 
-			// 	break;
-			// default:  
-			// 	$dateS = Carbon::now()->startOfYear();
-			// 	$dateE = Carbon::now() ->addHour(7); 
-			// 	break;
+			case '2': 
+				$dateS = Carbon::now()->startOfMonth()->subMonth(1);
+				$dateE = Carbon::now()->startOfMonth(); 
+				break;
+			default:  
+				$dateS = Carbon::now()->startOfYear();
+				$dateE = Carbon::now() ->addHour(7); 
+				break;
 			
 		}
 		$request = request();
