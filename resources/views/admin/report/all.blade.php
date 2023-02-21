@@ -92,7 +92,7 @@
                                 <option value="tamdung"<?php if ($type_filter == 'tamdung') {
                                     echo 'selected';
                                 } ?>>Tạm dừng</option>
-                                <option value="ketthuctamdung"<?php if ($type_filter == 'kethuctamdung') {
+                                <option value="kethuctamdung"<?php if ($type_filter == 'kethuctamdung') {
                                     echo 'selected';
                                 } ?>>Kết thúc tạm dừng</option>
                                 <option value="updateinfo"<?php if ($type_filter == 'updateinfo') {
@@ -110,27 +110,32 @@
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
-                                <td width="5%"> # </td>
-                                <td>Công ty</td>
-                                <td>Phân loại</td>
-                                <td width="5%">Thao tác</td>
+                                <th rowspan="2" width="5%"> # </th>
+                                <th rowspan="2">Công ty</th>
+                                <th colspan="4" style="text-align: center">Khai báo</th>
+                                <th rowspan="2" width="5%">Thao tác</th>
+                            </tr>
+                            <tr>
+                                <th>Báo tăng</th>
+                                <th>Báo giảm</th>
+                                <th>Tạm dừng</th>
+                                <th>Kết thúc tạm dừng</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
 		                    foreach ($model_congty as $key=>$rp ){ ?>
                             <tr>
+                                <?php $report = $reports->where('user',$rp->id); ?>
                                 <td>{{ ++$key }}</td>
                                 <td id="detail"><a
                                         href="{{ URL::to('/report-detail?user=' . $rp->id . '&tungay=' . $tungay . '&denngay=' . $denngay . '&type_filter=' . $type_filter) }}">{{ $rp->name }}</a>
                                 </td>
-                                <td>
-                                    @if ($type_filter == 'chuakhaibao')
-                                        Chưa khai báo
-                                    @else
-                                        Đã khai báo
-                                    @endif
-                                </td>
+                                <td>{{ $report->where('type','baotang')->Count() }}</td>
+                                <td>{{ $report->where('type','baogiam')->Count() }}</td>
+                                <td>{{ $report->where('type','tamdung')->Count() }}</td>
+                                <td>{{ $report->where('type','kethuctamdung')->Count() }}</td>
+
                                 <td><a onclick="intonghop('{{ $rp->id }}')" title="In báo cáo chi tiết"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#Report_in_tonghop"
                                         data-toggle="modal">

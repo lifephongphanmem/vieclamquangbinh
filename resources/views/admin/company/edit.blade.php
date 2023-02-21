@@ -269,7 +269,8 @@
 
                                     <button type="submit" class="btn btn-success">Lưu hồ sơ</button>
 
-                                    <a href="{{ url('/doanhnghiep-ba') }}" class="btn btn-danger"><i
+                                    <a href="{{ url('/doanhnghiep-ba?dm_filter=' . $dm_filter . '&public_filter=' . $public_filter . '&khaibao=' . $khaibao
+                                     . '&quymo_min_filter=' . $quymo_min_filter . '&quymo_max_filter=' . $quymo_max_filter) }}" class="btn btn-danger"><i
                                             class="fa fa-reply"></i>&nbsp;Quay lại</a>
                                 </div>
                             </div>

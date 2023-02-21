@@ -73,11 +73,24 @@
                                 </select>
                             </div>
                             <div class="col-sm-2 m-b-xs">
-                                <select class="form-control select2basic">
-                                    <option value="0">Khai báo biến động</option>
-                                    <option value="1">Đã khai báo</option>
-                                    <option value="2">Chưa khai báo</option>
-
+                                <select id="khaibao" name="khaibao" class="form-control select2basic"
+                                    onchange="this.form.submit()">
+                                    <option value="0">Khai báo</option>
+                                    <option value="dkb" <?php if ($khaibao == 'dkb') {
+                                        echo 'selected';
+                                    } ?>>Đã khai báo</option>
+                                    <option value="ckb" <?php if ($khaibao == 'ckb') {
+                                        echo 'selected';
+                                    } ?>>Chưa khai báo</option>
+                                    <option value="ckt" <?php if ($khaibao == 'ckt') {
+                                        echo 'selected';
+                                    } ?>>Chưa khai trình</option>
+                                       <option value="ddk" <?php if ($khaibao == 'ddk') {
+                                        echo 'selected';
+                                    } ?>>Đã đăng ký</option>
+                                       <option value="kbld" <?php if ($khaibao == 'kbld') {
+                                        echo 'selected';
+                                    } ?>>Khai báo lần đầu</option>
                                 </select>
                             </div>
                             <div style=" margin-left:5%">
@@ -125,19 +138,20 @@
                             <tr>
                                 <td>{{ ++$key }} </td>
                                 <td>{{ $cty->dkkd }}</td>
-                                <td><a href="{{ URL::to('doanhnghiep-be/' . $cty->id) }}">{{ $cty->name }}</a></td>
+                                <td><a
+                                        href="{{ URL::to('doanhnghiep-be?cid=' . $cty->id . '&dm_filter=' . $dm_filter . '&public_filter=' . $public_filter 
+                                        . '&khaibao=' . $khaibao . '&quymo_min_filter=' . $quymo_min_filter . '&quymo_max_filter=' . $quymo_max_filter) }}">{{ $cty->name }}</a>
+                                </td>
                                 <td>{{ $cty->diachi }}</td>
 
                                 <td><span class="text-ellipsis"> </span>{{ $cty->phone }}</td>
                                 <td><span class="text-ellipsis">
                                     </span>{{ $cty->quymo != null ? $cty->quymo : $cty->employers_count }}</td>
                                 <td><span class="text-ellipsis">
-                                        <?php if ($cty->public==1){ 
-				?>
+                                        <?php if ($cty->public==1){ ?>
                                         <i class="fa fa-check text-success text-active"></i>
                                         <?php }else{ ?>
                                         <i class="fa fa-close text-success text-active" style="color:red"></i>
-
                                         <?php }?></span>
                                 </td>
                                 <td><span class="text-ellipsis"> </span>Khai báo</td>
@@ -152,13 +166,12 @@
                                         <i class="icon-lg flaticon-list text-success"></i>
                                     </button>
                                     @if ($cty->user == null)
-                                    <button title="Xóa thông tin" data-toggle="modal"
+                                        <button title="Xóa thông tin" data-toggle="modal"
                                             data-target="#delete-modal-confirm" type="button"
                                             onclick="cfDel('{{ 'doanhnghiep-delete/' . $cty->id }}')"
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg flaticon-delete text-danger"></i>
                                         </button>
-                                        
                                     @endif
                                 </td>
                             </tr>
@@ -168,43 +181,40 @@
                 </div>
             </div>
         </div>
-        </div>
-        <!-- Modal nhận excel -->
-        <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-            <form action="{{ '/doanhnghiep/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-                @csrf
-                <div class="modal-dialog modal-content">
-                    <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách doanh nghiệp từ file Excel
-                        </h4>
-                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <input type="file" name="import_file" class="form-control">
-                            </div>
+    </div>
+    <!-- Modal nhận excel -->
+    <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form action="{{ '/doanhnghiep/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+            @csrf
+            <div class="modal-dialog modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Nhận danh sách doanh nghiệp từ file Excel
+                    </h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <input type="file" name="import_file" class="form-control">
                         </div>
-                        {{-- <div class="form-group row">
+                    </div>
+                    {{-- <div class="form-group row">
                         <div class="col-lg-12">
                             <p class="float-left mr-3">Tải file excel mẫu </p><a href="{{asset('excel/maunhapnguoilaodong.xlsx')}}">tại đây</a>
                         </div>
                     </div> --}}
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                     <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
                 </div>
-        </div>
 
-        @include('includes.delete')
-
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng ý</button>
+            </div>
         </form>
     </div>
     <!--Model danh sách-->
@@ -246,9 +256,8 @@
         }
     </script>
 
-    </form>
-    </div>
 
 
+    @include('includes.delete')
 @endsection
 

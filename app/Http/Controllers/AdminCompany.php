@@ -20,6 +20,7 @@ use App\Models\User;
 
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Report;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -41,12 +42,12 @@ class AdminCompany extends Controller
 	public function show_all(Request $request)
 	{
 		//makelist
-
 		$dmhc_list = $this->getDmhc();
 		//filter
 		$search = $request->search;
 		$public_filter = $request->public_filter;
 		$dm_filter = $request->dm_filter;
+		$khaibao = $request->khaibao;
 
 		$quymo_min_filter = $request->quymo_min_filter;
 		$quymo_max_filter = $request->quymo_max_filter;
@@ -57,6 +58,7 @@ class AdminCompany extends Controller
 
 			return Excel::download(new CompaniesExport, 'doanhnghiep.xlsx');
 		}
+
 		$ctys = Company::withCount(['employers'])
 			->when($search, function ($query, $search) {
 				return $query->where('company.name', 'like', '%' . $search . '%');
@@ -76,17 +78,92 @@ class AdminCompany extends Controller
 			->when($quymo_max_filter == 0 && !is_null($quymo_max_filter), function ($query, $quymo_max_filter) {
 				return $query->having('employers_count', '=', 0);
 			})
-			->orderBy('employers_count', 'desc')
-			->get();
+			->orderBy('employers_count', 'desc');
+		//đã khai báo và chưa khai báo
+		if ($khaibao == 'dkb' || $khaibao == 'ckb') {
+			$cid = [];
+			$report = Report::where('datatable', 'nguoilaodong')->get();
+			foreach ($report as $rp) {
+				array_push($cid, $rp);
+			}
+			$cid = a_unique(array_column($cid, 'user'));
+
+			if ($khaibao == 'dkb') {
+				$ctys = $ctys->wherein('user', $cid)->get();
+			}
+			if ($khaibao == 'ckb') {
+				$ctys = $ctys->whereNotIn('user', $cid)->get();
+			}
+		}
+		//chưa kahi trình
+		elseif ($khaibao == 'ckt') {
+			$cty = $ctys->where('user', '!=', null)->get();
+			foreach ($cty as $ct) {
+				if ($ct->xa == null) {
+					$ct->chuakhaitrinh = 'yes';
+					continue;
+				}
+				if ($ct->huyen == null) {
+					$ct->chuakhaitrinh = 'yes';
+					continue;
+				}
+				if ($ct->tinh == null) {
+					$ct->chuakhaitrinh = 'yes';
+					continue;
+				}
+				if ($ct->nganhnghe == null) {
+					$ct->chuakhaitrinh = 'yes';
+					continue;
+				}
+				if ($ct->loaihinh == null) {
+					$ct->chuakhaitrinh = 'yes';
+					continue;
+				}
+			}
+			$ctys = [];
+			foreach($cty as $item){
+				if($item->chuakhaitrinh == 'yes' ){
+					array_push($ctys,$item);
+				}
+			}
+			
+		}
+		//đã đăng ký
+		elseif ($khaibao == 'ddk') {
+			$user = User::all();
+			$user_id = array_column($user->toArray(),'id');
+			$ctys = $ctys->wherein('user',$user_id)->get();
+			
+		}
+		//khai báo lần đầu
+		elseif($khaibao == 'kbld'){
+			$r_user = [];
+			 $user = [];
+			$report = Report::where('datatable', 'nguoilaodong')->get();
+			foreach ($report as $rp) {
+				array_push($r_user, $rp);
+			}
+			$r_user = a_unique(array_column($r_user, 'user'));
+
+			foreach($r_user as $item){
+				if($report->where('user',$item)->count() == 1){
+					array_push($user, $item);
+				}
+			}
+			$ctys = $ctys->whereIn('user',$user)->get();
+		}
+		else {
+			$ctys = $ctys->get();
+		}
 
 		$dmhanhchinh = danhmuchanhchinh::all();
 		$a_dm = array_column($dmhanhchinh->toarray(), 'name', 'maquocgia');
-		
+
 		foreach ($ctys as $val) {
 
-			$tenxa=isset($a_dm[$val->xa])?$a_dm[$val->xa]:$val->xa;
-			$tenhuyen=isset($a_dm[$val->huyen])?$a_dm[$val->huyen]:$val->huyen;
-			$tentinh=isset($a_dm[$val->tinh])?$a_dm[$val->tinh]:$val->tinh;
+			$tenxa = isset($a_dm[$val->xa]) ? $a_dm[$val->xa] : $val->xa;
+			$tenhuyen = isset($a_dm[$val->huyen]) ? $a_dm[$val->huyen] : $val->huyen;
+			$tentinh = isset($a_dm[$val->tinh]) ? $a_dm[$val->tinh] : $val->tinh;
 			$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
 			// try {
 			// 	$tenxa = $a_dm[$val->xa];
@@ -98,7 +175,7 @@ class AdminCompany extends Controller
 			// }
 		}
 
-// dd($ctys->take(10));
+		// dd($ctys->take(10));
 		// dd($ctys->first());
 		return view('admin.company.all')->with('ctys', $ctys)
 			->with('dmhc_list', $dmhc_list)
@@ -107,7 +184,8 @@ class AdminCompany extends Controller
 			->with('public_filter', $public_filter)
 			->with('quymo_max_filter', $quymo_max_filter)
 			->with('quymo_min_filter', $quymo_min_filter)
-			->with('dmhanhchinh', $dmhanhchinh);
+			->with('dmhanhchinh', $dmhanhchinh)
+			->with('khaibao', $khaibao);
 	}
 
 	public function delete_company($id)
@@ -209,15 +287,24 @@ class AdminCompany extends Controller
 	}
 
 
-	public function edit($cid)
+	public function edit(Request $request)
 	{
+
+		$dm_filter = $request->dm_filter;
+		$public_filter = $request->public_filter;
+		$khaibao = $request->khaibao;
+		$quymo_min_filter = $request->quymo_min_filter;
+		$quymo_max_filter = $request->quymo_max_filter;
+
 		$dmhc = $this->getdanhmuc();
 		$kcn = $this->getParamsByNametype("Khu công nghiệp"); // lấy danh mục khu công nghiệp
 		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
 		$cfield = $this->getParamsByNametype("Ngành nghề doanh nghiệp"); // lấy ngành nghề doanh nghiệp
-		$ctype2=dmloaihinhhdkt::all();
-		$company = DB::table('company')->where('id', $cid)->first();
-// dd(1);
+		$ctype2 = dmloaihinhhdkt::all();
+
+		$company = DB::table('company')->where('id', $request->cid)->first();
+
+
 		//print_r($cat);
 		return view('admin.company.edit')
 			->with('dmhc', $dmhc)
@@ -225,7 +312,12 @@ class AdminCompany extends Controller
 			->with('ctype', $ctype)
 			->with('ctype2', $ctype2)
 			->with('kcn', $kcn)
-			->with('cfield', $cfield);
+			->with('cfield', $cfield)
+			->with('dm_filter', $dm_filter)
+			->with('public_filter', $public_filter)
+			->with('khaibao', $khaibao)
+			->with('quymo_min_filter', $quymo_min_filter)
+			->with('quymo_max_filter', $quymo_max_filter);
 	}
 
 
@@ -362,52 +454,54 @@ class AdminCompany extends Controller
 	}
 
 
-	public function Mau01PLI(Request $request,$id){
+	public function Mau01PLI(Request $request, $id)
+	{
 		$inputs = $request->all();
-		$model=nguoilaodong::where('company',$id)->where('state',1)->get();
+		$model = nguoilaodong::where('company', $id)->where('state', 1)->get();
 		// dd($model->take(10));
-        $m_dv = User::findOrFail($inputs['user']);
-		$company=Company::findOrFail($id);
-		$nganhnghe_dn=getParamsByNametype('Ngành nghề doanh nghiệp');
-		$a_nganhnghe=array_column($nganhnghe_dn->toarray(),'name','id');
-		$m_dv->dkkd=$company->dkkd;
-		$m_dv->tendn=$company->name;
-		$m_dv->diachi=$company->adress;
-		$m_dv->fax=$company->fax;
-		$m_dv->email=$company->email;
-		$m_dv->phone=$company->phone;
-		$m_dv->loaihinh=$company->loaihinh;
-		$m_dv->nganhnghe=$a_nganhnghe[$company->nganhnghe];
+		$m_dv = User::findOrFail($inputs['user']);
+		$company = Company::findOrFail($id);
+		$nganhnghe_dn = getParamsByNametype('Ngành nghề doanh nghiệp');
+		$a_nganhnghe = array_column($nganhnghe_dn->toarray(), 'name', 'id');
+		$m_dv->dkkd = $company->dkkd;
+		$m_dv->tendn = $company->name;
+		$m_dv->diachi = $company->adress;
+		$m_dv->fax = $company->fax;
+		$m_dv->email = $company->email;
+		$m_dv->phone = $company->phone;
+		$m_dv->loaihinh = $company->loaihinh;
+		$m_dv->nganhnghe = $a_nganhnghe[$company->nganhnghe];
 		// dd($m_dv);
-        $list_nghe = getParamsByNametype('Nghề nghiệp người lao động');
-        $a_vitri = array();
-        $a_vitrikhac = array();
-        foreach ($list_nghe as $key => $ct) {
-            if (in_array($ct->id, [37, 38, 39])) {
-                $a_vitri[$ct->id] = $ct->name;
-            } else {
-                $a_vitrikhac[$key] = $ct->id;
-            }
-        }
+		$list_nghe = getParamsByNametype('Nghề nghiệp người lao động');
+		$a_vitri = array();
+		$a_vitrikhac = array();
+		foreach ($list_nghe as $key => $ct) {
+			if (in_array($ct->id, [37, 38, 39])) {
+				$a_vitri[$ct->id] = $ct->name;
+			} else {
+				$a_vitrikhac[$key] = $ct->id;
+			}
+		}
 
-        // dd($a_vitrikhac);
-        // $a_vitri=array_column($list_nghe->toarray(),'name','id');
-        $a_chucvu = array_column(dmchucvu::all()->toarray(), 'tencv', 'id');
-        $a_loaihdld = array_column(dmloaihieuluchdld::all()->toarray(), 'tenlhl', 'madmlhl');
+		// dd($a_vitrikhac);
+		// $a_vitri=array_column($list_nghe->toarray(),'name','id');
+		$a_chucvu = array_column(dmchucvu::all()->toarray(), 'tencv', 'id');
+		$a_loaihdld = array_column(dmloaihieuluchdld::all()->toarray(), 'tenlhl', 'madmlhl');
 
 
-        return view('admin.company.export.mau01PLI')
-            ->with('model', $model)
-            ->with('m_dv', $m_dv)
-            ->with('a_vitri', $a_vitri)
-            ->with('a_vitrikhac', $a_vitrikhac)
-            ->with('a_chucvu', $a_chucvu)
-            ->with('a_loaihdld', $a_loaihdld)
-            ->with('pageTitle', 'Tổng hợp dữ liệu');
+		return view('admin.company.export.mau01PLI')
+			->with('model', $model)
+			->with('m_dv', $m_dv)
+			->with('a_vitri', $a_vitri)
+			->with('a_vitrikhac', $a_vitrikhac)
+			->with('a_chucvu', $a_chucvu)
+			->with('a_loaihdld', $a_loaihdld)
+			->with('pageTitle', 'Tổng hợp dữ liệu');
 	}
 
-	public function Mau01TT01(Request $request,$id){
-		$inputs=$request->all();
+	public function Mau01TT01(Request $request, $id)
+	{
+		$inputs = $request->all();
 		// $tuyendung=DB::table('tuyendung')->where('user',$id)->where('thoihan')
 	}
 }
