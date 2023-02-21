@@ -184,7 +184,7 @@ class Report extends Model
 	}
 	
 	
-	public function report($type,$result,$tbl,$rowid,$num,$note=null ){
+	public function report($type,$result,$tbl,$rowid,$num,$note=null,$user=null ){
 		// write report 
 		$r = array();
 		$r['type']= $type;
@@ -197,7 +197,12 @@ class Report extends Model
 		$r['iprequest']= $request->ip(); 
 		
 		if ( Session::has('admin')) {
-			$r['user']= session('admin')->id;	
+			if($user == null){
+				$r['user']= session('admin')->id;
+			}else{
+				$r['user']=$user;
+			}
+				
 		}else{
 		
 			$r['user']= 0;	

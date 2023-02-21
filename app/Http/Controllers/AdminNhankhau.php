@@ -21,6 +21,7 @@ use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\nhankhauModel;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
 use Carbon\Carbon;
@@ -496,9 +497,30 @@ class AdminNhankhau extends Controller
                     break;
             }
         }
-
-        $model->update($inputs);
-        $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
+        $note='';
+        $model->fill($inputs);
+        $dirty=$model->getDirty();
+		$sqty=count($dirty);
+		
+		$danhsach= array();
+		
+		foreach ($dirty as $field => $newdata)
+        {
+          $olddata = $model->getOriginal($field);
+          if ($olddata != $newdata)
+          {
+           $danhsach[]=$field. " thay đổi từ ".$olddata." sang ".$newdata;
+          }
+        }
+        // dd($danhsach);
+        $user=User::where('madv',$model->madv)->first()->id;
+        if($sqty > 0){
+            $model->update($inputs);
+            $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
+            $rm = new Report();
+            $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
+            $rm->report('updateinfo', "1", 'nhankhau', DB::getPdo()->lastInsertId(), 1, $note,$user);
+        }
 
         if (isset($sualoi)) {
             return redirect('/dieutra/danhsachloi_chitiet?loailoi=' . $sualoi . '&madv=' . $model->madv . '&kydieutra=' . $model->kydieutra);

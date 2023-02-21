@@ -69,8 +69,8 @@
 
                                             <select class="form-control" name="gioitinh">
 
-                                                <option value='nu'>Nữ</option>
-                                                <option value='nam' <?php if ($ld->gioitinh == 'nam' || $ld->gioitinh == 'Nam') {
+                                                <option value='Nữ'>Nữ</option>
+                                                <option value='Nam' <?php if ($ld->gioitinh == 'nam' || $ld->gioitinh == 'Nam') {
                                                     echo 'selected';
                                                 } ?>>Nam</option>
                                             </select>

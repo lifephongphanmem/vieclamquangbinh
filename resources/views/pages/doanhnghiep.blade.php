@@ -217,6 +217,11 @@
 
                                         </select> </td>
                                 </tr>
+                                <tr>
+                                    <td>Ảnh giấy DKKD</td>
+                                    <td><input type="file" name="image" value="{{ $info->email }}"
+                                            class="form-control"> </td>
+                                </tr>
 
                             </table>
 
@@ -242,120 +247,123 @@
                                 Thông tin khác </a></h3>
                     </div>
                 </div>
-                    <div class="panel-group" id="accordion">
-                        <div class="panel panel-info">
-                            {{-- <div class="panel-heading">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-info">
+                        {{-- <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                                         Thông tin khác </a>
                                 </h4>
                             </div> --}}
-                            <div id="collapse1" class="panel-collapse collapse in">
-                                <div class="panel-body" style="margin-left:16px;">
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body" style="margin-left:16px;">
 
-                                    <div >Tổng số lao động: {{ $info->tonghop['slld'] }}</div>
-                                    <div>Số lao động ngoại tỉnh:
-                                        {{ $info->tonghop['slld'] - $info->tonghop['trongtinh'] }}</div>
-                                    <div>Số lao động nữ :{{ $info->tonghop['nu'] }}</div>
-                                    <div>Số lao động đã ký HĐLĐ (tổng/nữ): {{ $info->tonghop['dakyhd'] }}/
-                                        {{ $info->tonghop['nudakyhd'] }} </div>
-                                    <div>Số lao động nước ngoài (tổng/nữ): {{ $info->tonghop['nuocngoai'] }}/
-                                        {{ $info->tonghop['nunuocngoai'] }} </div>
-                                    <div>Số lao động đã tốt nghiệp phổ thông :{{ $info->tonghop['tnpt'] }}</div>
+                                <div>Tổng số lao động: {{ $info->tonghop['slld'] }}</div>
+                                <div>Số lao động ngoại tỉnh:
+                                    {{ $info->tonghop['slld'] - $info->tonghop['trongtinh'] }}</div>
+                                <div>Số lao động nữ :{{ $info->tonghop['nu'] }}</div>
+                                <div>Số lao động đã ký HĐLĐ (tổng/nữ): {{ $info->tonghop['dakyhd'] }}/
+                                    {{ $info->tonghop['nudakyhd'] }} </div>
+                                <div>Số lao động nước ngoài (tổng/nữ): {{ $info->tonghop['nuocngoai'] }}/
+                                    {{ $info->tonghop['nunuocngoai'] }} </div>
+                                <div>Số lao động đã tốt nghiệp phổ thông :{{ $info->tonghop['tnpt'] }}</div>
 
-                                    <h3>Tiền lương</h3>
-                                    <div>Lương bình quân :{{ $info->tonghop['avgluong'] }}</div>
-                                    <div>Lương thấp nhất :{{ $info->tonghop['minluong'] }}</div>
-                                    <div>Lương cao nhất :{{ $info->tonghop['maxluong'] }}</div>
-                                </div>
+                                <h3>Tiền lương</h3>
+                                <div>Lương bình quân :{{ $info->tonghop['avgluong'] }}</div>
+                                <div>Lương thấp nhất :{{ $info->tonghop['minluong'] }}</div>
+                                <div>Lương cao nhất :{{ $info->tonghop['maxluong'] }}</div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
             <div class="card card-custom mb-2">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-							Phân bố LD theo trình độ CMKT</a></h3>
+                        <h3 class="card-label text-uppercase"><a data-toggle="collapse" data-parent="#accordion"
+                                href="#collapse2">
+                                Phân bố LD theo trình độ CMKT</a></h3>
                     </div>
                 </div>
-                    <div class="panel panel-info">
-                        {{-- <div class="panel-heading">
+                <div class="panel panel-info">
+                    {{-- <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                                         Phân bố LD theo trình độ CMKT</a>
                                 </h4>
                             </div> --}}
-                        <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body" style="margin-left:16px;">
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-left:16px;">
 
-                                <?php
+                            <?php
 								foreach($info->pbcmkt as $key =>$val) 
 								{ ?>
-                                <div>{{ $key }} : {{ $val }}</div>
-                                <?php } ?>
+                            <div>{{ $key }} : {{ $val }}</div>
+                            <?php } ?>
 
 
 
-                            </div>
                         </div>
                     </div>
+                </div>
             </div>
             <div class="card card-custom mb-2">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-							Phân bố LD theo lĩnh vực GDĐT </a></h3>
+                        <h3 class="card-label text-uppercase"><a data-toggle="collapse" data-parent="#accordion"
+                                href="#collapse3">
+                                Phân bố LD theo lĩnh vực GDĐT </a></h3>
                     </div>
                     <div class="card-toolbar">
                     </div>
 
                 </div>
-                    <div class="panel panel-info">
-                        {{-- <div class="panel-heading">
+                <div class="panel panel-info">
+                    {{-- <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
                                         Phân bố LD theo lĩnh vực GDĐT </a>
                                 </h4>
                             </div> --}}
-                        <div id="collapse3" class="panel-collapse collapse">
-                            <div class="panel-body" style="margin-left:16px;">
-                                <?php
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-left:16px;">
+                            <?php
 									foreach($info->pblvdt as $key =>$val) 
 									{ ?>
-                                <div>{{ $key }} : {{ $val }}</div>
-                                <?php } ?>
-                            </div>
+                            <div>{{ $key }} : {{ $val }}</div>
+                            <?php } ?>
                         </div>
+                    </div>
                 </div>
             </div>
             <div class="card card-custom mb-2">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-							Phân bố LD theo nhóm ngành nghề chính </a></h3>
+                        <h3 class="card-label text-uppercase"><a data-toggle="collapse" data-parent="#accordion"
+                                href="#collapse4">
+                                Phân bố LD theo nhóm ngành nghề chính </a></h3>
                     </div>
                     <div class="card-toolbar">
                     </div>
 
                 </div>
-                    <div class="panel panel-info" style="margin-left:16px;">
-                        {{-- <div class="panel-heading">
+                <div class="panel panel-info" style="margin-left:16px;">
+                    {{-- <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
                                         Phân bố LD theo nhóm ngành nghề chính </a>
                                 </h4>
                             </div> --}}
-                        <div id="collapse4" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <h3>Phân bố LD theo nhóm ngành nghề chính</h3>
-                                <?php
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h3>Phân bố LD theo nhóm ngành nghề chính</h3>
+                            <?php
 									foreach($info->pbnghenghiep as $key =>$val) 
 									{ ?>
-                                <div class="mt-3">{{ $key }} : {{ $val }}</div>
-                                <?php } ?>
-                            </div>
+                            <div class="mt-3">{{ $key }} : {{ $val }}</div>
+                            <?php } ?>
                         </div>
+                    </div>
                 </div>
 
             </div>
@@ -542,4 +550,4 @@
                 </div>
             </div>
         </div>
-@endsection
+    @endsection

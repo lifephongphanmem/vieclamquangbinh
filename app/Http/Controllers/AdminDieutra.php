@@ -21,6 +21,7 @@ use App\Models\danhsachnhankhau;
 use App\Models\m_nhankhau;
 use App\Models\Nhankhau;
 use App\Models\nhankhauModel;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\view\view_bao_cao_tonghop;
 use Carbon\Carbon;
@@ -602,6 +603,7 @@ class AdminDieutra extends Controller
     public function create(Request $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
         $list_cmkt = dmtrinhdokythuat::all();
         $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
@@ -616,6 +618,10 @@ class AdminDieutra extends Controller
         $m_nguoithatnghiep = $dm_tinhtrangct->where('manhom', 20221220175720);
         $lydo = $dm_tinhtrangct->where('manhom', 20221220175728);
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
+        $inputs['xa']=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                                ->select('danhmuchanhchinh.maquocgia')
+                                ->where('dmdonvi.madv',$inputs['madv'])
+                                ->first()->maquocgia;
         return view('admin.dieutra.create')
             ->with('inputs', $inputs)
             ->with('m_uutien', $m_uutien)
@@ -636,15 +642,20 @@ class AdminDieutra extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
         // nhankhauModel::create($inputs);
+        $note='';
         $check = $inputs['ho'] ?? '';
         if (!isset($inputs['ho'])) {
             $m_nhankhau = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->get();
             $soho = $m_nhankhau->max('ho');
             $inputs['ho'] = $soho + 1;
+            $note .="Thêm 1 hộ. ";
+            // dd(1);
         }
         // dd($inputs);
         // dd(2);
+        $note .= "Danh sách:";
         for ($i = 0; $i < $inputs['quantity']; $i++) {
             $tmp = array();
             foreach ($inputs as $key => $val) {
@@ -659,6 +670,7 @@ class AdminDieutra extends Controller
             if (isset($cccd)) {
                 continue;
             }
+            $note .= $tmp['hoten'].' ,';
             // dd($tmp);
             nhankhauModel::create($tmp);
             // dd($tmp);
@@ -681,6 +693,10 @@ class AdminDieutra extends Controller
             ];
             danhsach::create($data);
         }
+        $user=User::where('madv',$inputs['madv'])->first()->id;
+        // add to log system`
+        $rm = new Report();
+        $rm->report('baotang', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $inputs['quantity'], $note,$user);
         if ($check == '') {
             return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
         } else {
