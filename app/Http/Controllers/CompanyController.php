@@ -171,9 +171,11 @@ class CompanyController extends Controller
 		
 		$image =$request->File('image');
 		if($image){
-			$data['image']= $image->store('DNDKKD');
+			// $data['image']= $image->store('DNDKKD');
+			$name = time() . $image->getClientOriginalName();
+            $image->move('uploads/DKKD/', $name);
+            $data['image'] = 'uploads/DKKD/' . $name;
 		}
-		
 		
 		$result= DB::table('company')->where('id',$cid)->update($data);
 		

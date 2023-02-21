@@ -38,7 +38,7 @@
 
             $('#kydieutra').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val()+ '&mahuyen=' + $('#mahuyen').val();
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
             });
         });
     </script>
@@ -52,10 +52,10 @@
                         <h3 class="card-label text-uppercase">Danh sách điều tra</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a title="In tổng hợp" 
-                            class="btn btn-sm btn-success" onclick="indanhsachloi()">
+                        <button title="In danh sách lỗi" class="btn btn-sm btn-success" onclick="indanhsachloi()"
+                            data-target="#modify-modal-dsloi" data-toggle="modal">
                             <i class="icon-lg la flaticon2-print"></i> Danh sách lỗi
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -98,7 +98,8 @@
                             <select name="madv" id="madv" class="form-control select2basic">
                                 <option value="">----Chọn xã ---</option>
                                 @foreach ($a_xa as $key => $ct)
-                                    <option value="{{ $ct->madv }}" {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}>
+                                    <option value="{{ $ct->madv }}"
+                                        {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}>
                                         {{ $ct->name }}</option>
                                 @endforeach
                             </select>
@@ -109,7 +110,8 @@
                             <select name="kydieutra" id="kydieutra" onchange="kydieutra()"
                                 class="form-control select2basic">
                                 @foreach ($a_kydieutra as $key => $ct)
-                                    <option value="{{ $key }}" {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
+                                    <option value="{{ $key }}"
+                                        {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
                                         {{ $ct }}</option>
                                 @endforeach
                             </select>
@@ -149,41 +151,46 @@
                                 <td>{{ $dmhc_names[$td->huyen] }}</td>
                                 <td><a href="#">{{ $td->soluong }} </a></td>
                                 {{-- <td><a href="#">{{ count($data_loi->where('madv', $td->user_id)) }} </a></td> --}}
-                                <td><a href="{{'/dieutra/danhsachloi/'.$td->id.'?mahuyen='.$td->huyen.'&kydieutra='.$inputs['kydieutra']}}">{{ $td->loi_cccd +$td->loi_ngaysinh + $td->loi_loai2 + $td->loi_loai3 + $td->loi_loai4}} </a></td>
+                                <td><a
+                                        href="{{ '/dieutra/danhsachloi/' . $td->id . '?mahuyen=' . $td->huyen . '&kydieutra=' . $inputs['kydieutra'] }}">{{ $td->loi_cccd + $td->loi_ngaysinh + $td->loi_loai2 + $td->loi_loai3 + $td->loi_loai4 }}
+                                    </a></td>
                                 <td><a href="#">{{ $td->soho }} </a></td>
                                 <td>{{ $td->kydieutra }}</td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
-                                <td><span class="text-ellipsis">{{ $td->donvinhap != null ? $a_donvi[$td->donvinhap] : '' }}
+                                <td><span
+                                        class="text-ellipsis">{{ $td->donvinhap != null ? $a_donvi[$td->donvinhap] : '' }}
                                     </span></td>
                                 {{-- <td><span class="text-ellipsis">Trung tâm dịch vụ việc làm Quảng Bình </span></td> --}}
                                 <td>
                                     @if (chkPhanQuyen('danhsachdieutra', 'danhsach'))
-                                    <button  title="Danh sách" type="button"
-                                    onclick="List('{{$td->user_id}}','{{$td->kydieutra}}')"
-                                    class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
-                                    data-toggle="modal">
-                                    <i class="icon-lg flaticon-list text-success"></i>
-                                    </button>
+                                        <button title="Danh sách" type="button"
+                                            onclick="List('{{ $td->user_id }}','{{ $td->kydieutra }}')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
+                                            data-toggle="modal">
+                                            <i class="icon-lg flaticon-list text-success"></i>
+                                        </button>
                                     @endif
                                     @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
-                                    <button title="Xóa thông tin" type="button"
-                                        onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id . '?mahuyen=' . $inputs['mahuyen'] . '&kydieutra=' . $inputs['kydieutra'] }}')"
-                                        class="btn btn-sm btn-clean btn-icon ml-3" data-target="#delete-modal-confirm"
-                                        data-toggle="modal">
-                                        <i class="icon-lg flaticon-delete text-danger"></i>
-                                    </button>
+                                        <button title="Xóa thông tin" type="button"
+                                            onclick="cfDel('{{ '/dieutra/XoaDanhSach/' . $td->id . '?mahuyen=' . $inputs['mahuyen'] . '&kydieutra=' . $inputs['kydieutra'] }}')"
+                                            class="btn btn-sm btn-clean btn-icon ml-3" data-target="#delete-modal-confirm"
+                                            data-toggle="modal">
+                                            <i class="icon-lg flaticon-delete text-danger"></i>
+                                        </button>
                                     @endif
                                     @if (chkPhanQuyen('danhsachdieutra', 'hoanthanh'))
-                                    {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%"> --}}
+                                        {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%"> --}}
                                         {{-- <a href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" title="In"  class="btn btn-sm btn-clean btn-icon ml-3" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
                                         </a> --}}
 
-                                        <button href="{{'/nhankhau-in?madv='.$td->user_id.'&kydieutra='.$td->kydieutra}}" onclick="Inchitiet('{{$td->user_id}}','{{$td->kydieutra}}')"  data-target="#in-modal-confirm"
-                                            data-toggle="modal" title="In"  class="btn btn-sm btn-clean btn-icon ml-3">
+                                        <button href="{{ '/nhankhau-in?madv=' . $td->user_id . '&kydieutra=' . $td->kydieutra }}"
+                                            onclick="Inchitiet('{{ $td->user_id }}','{{ $td->kydieutra }}')"
+                                            data-target="#in-modal-confirm" data-toggle="modal" title="In"
+                                            class="btn btn-sm btn-clean btn-icon ml-3">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
                                         </button>
-                                    {{-- </div> --}}
+                                        {{-- </div> --}}
                                     @endif
                                 </td>
 
@@ -219,36 +226,39 @@
             </form>
         </div>
 
-                <!--Model danh sách-->
-                <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-                    <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
-                        @csrf
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header modal-header-primary">
-                                    <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
-                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
-                                        <option value="2">Thất nghiệp</option>
-                                        <option value="3">Không tham gia hoạt động kinh tế</option>
-                                        <option value="4">Sắp tốt nghiệp PTTH</option>
-                                    </select>
-                                    <input type="hidden" name='madv' id='madonvi'>
-                                    <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
-                                </div>
-        
-                                <div class="modal-footer">
-                                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                                    <button type="submit" id="submit" name="submit" value="submit"
-                                    class="btn btn-primary">Đồng
-                                        ý</button>
-                                </div>
-                            </div>
+        <!--Model danh sách-->
+        <div id="danhsach-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="frmDanhsach" method="POST" action="{{ '/nhankhau/danhsach_tinhtrang' }}" accept-charset="UTF-8"
+                enctype="multipart/form-data" target='_blank'>
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true"
+                                class="close">&times;</button>
                         </div>
-                    </form>
+                        <div class="modal-body">
+                            <select name="tinhtrang" id="" class="form-control select2basic"
+                                style="width:100%">
+                                <option value="2">Thất nghiệp</option>
+                                <option value="3">Không tham gia hoạt động kinh tế</option>
+                                <option value="4">Sắp tốt nghiệp PTTH</option>
+                            </select>
+                            <input type="hidden" name='madv' id='madonvi'>
+                            <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" id="submit" name="submit" value="submit"
+                                class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
+                    </div>
                 </div>
+            </form>
+        </div>
         <!-- modal in tổng hợp -->
         <form method="POST" action="" accept-charset="UTF-8" id="frm_modify_in" target="_blank">
             @csrf
@@ -295,37 +305,74 @@
             </div>
         </form>
 
-            <!--Model in-->
-    <div id="in-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
-        @csrf
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
-                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
+        <!--Model in-->
+        <div id="in-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
                                             <option value="1">Mẫu 01/PLI (NĐ 145/2020)</option>
                                             <option value="2">Mẫu 02 (TT 01/2022)</option>
                                         </select> --}}
-                    <a href="" id='mau01' target="_blank">1. Danh sách điều tra</a></br>
-                    <a href="" id="dsloi" target="_blank">2. Danh sách lỗi</a>
-                    <input type="hidden" name='madv' id='madonvi'>
-                    <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
-                </div>
+                        <a href="" id='mau01' target="_blank">1. Danh sách điều tra</a></br>
+                        <form id="dsloi" method="POST" action="" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+                            @csrf
+                        <button  type="submit" style="border: none;background-color:transparent;color:#6993FF;margin-left: -8px" >2. Danh sách lỗi</button>
+                        </form>
+                        <input type="hidden" name='madv' id='madonvi'>
+                        <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                    </div>
 
-                {{-- <div class="modal-footer">
+                    {{-- <div class="modal-footer">
                                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                                         <button type="submit" id="submit" name="submit" value="submit"
                                         class="btn btn-primary">Đồng
                                             ý</button>
                                     </div> --}}
+                </div>
             </div>
+            {{-- </form> --}}
         </div>
-        {{-- </form> --}}
-    </div>
+            <!-- modal in danh sách lỗi huyện -->
+            <div id="modify-modal-dsloi" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+                aria-hidden="true">
+                <form method="POST" action="" accept-charset="UTF-8" id="frm_modify_dsloi" target="_blank">
+                    @csrf
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <h4 id="modal-header-primary-label" class="modal-title">In danh sách lỗi huyện</h4>
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-lg-12">
+                                    <label class="control-label">Kỳ điều tra</label>
+                                    <select name="kydieutra" id="kydieutra_dsloi" class="form-control"
+                                        style="width:100%">
+                                        <option value="">Tất cả</option>
+                                        @foreach ($a_kydieutra as $key => $ct)
+                                            <option value="{{ $key }}">{{ $ct }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                <button type="submit" id="submit" name="submit" value="submit"
+                                    class="btn btn-primary">Đồng
+                                    ý</button>
+                            </div>
+                        </div>
+                    </div>
+
+            </form>
+        </div>
         <script>
             function intonghop() {
                 var url = '/dieutra/intonghop'
@@ -339,24 +386,29 @@
             function subDel() {
                 $('#frmDelete').submit();
             }
-            function List(madv,kydieutra){
+
+            function List(madv, kydieutra) {
                 $('#madonvi').val(madv);
                 $('#ky_dieu_tra').val(kydieutra);
             }
 
-            function Inchitiet(madv, kydieutra){
-                var url1='/nhankhau-in?madv='+madv+'&kydieutra='+kydieutra;
+            function Inchitiet(madv, kydieutra) {
+                var url1 = '/nhankhau-in?madv=' + madv + '&kydieutra=' + kydieutra;
                 $('#mau01').attr('href', url1);
 
-                var url2='/dieutra/indanhsachloi?madv='+madv+'&kydieutra='+kydieutra;
-                $('#dsloi').attr('href', url2);
+                var url2 = '/dieutra/indanhsachloi?madv=' + madv + '&kydieutra=' + kydieutra;
+                $('#dsloi').attr('action', url2);
             }
 
-            function indanhsachloi(){
-                var mahuyen=$('#mahuyen').val();
-                var kydieutra=$('#kydieutra').val();
-                var url='/dieutra/indanhsachloi?mahuyen='+mahuyen+'&kydieutra='+kydieutra;
-                window.location.href=url;
+            function indanhsachloi() {
+                var mahuyen = $('#mahuyen').val();
+                var kydieutra = $('#kydieutra').val();
+
+                $('#kydieutra_dsloi option[value=' + kydieutra + ' ]').attr('selected', 'selected');
+                var kydieutra_dsloi = $('#kydieutra_dsloi').val();
+                var url = '/dieutra/indanhsachloi?mahuyen=' + mahuyen + '&kydieutra=' + kydieutra_dsloi;
+                $('#frm_modify_dsloi').attr('action', url);
+
             }
         </script>
     @endsection

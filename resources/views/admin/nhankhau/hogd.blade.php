@@ -194,8 +194,9 @@
 
             function themmoi(){
                 var madv=$('#madv').val();
+                var mahuyen=$('#mahuyen').val();
                 var kydieutra=$('#kydieutra').val();
-                url='/dieutra/create?madv='+madv+'&kydieutra='+kydieutra;
+                url='/dieutra/create?madv='+madv+'&kydieutra='+kydieutra+'&mahuyen='+mahuyen;
                 window.location.href = url;
             }
         </script>
