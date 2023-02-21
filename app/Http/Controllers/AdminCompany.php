@@ -21,6 +21,7 @@ use App\Models\User;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmloaihinhhdkt;
 use App\Models\Report;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -82,7 +83,7 @@ class AdminCompany extends Controller
 		//đã khai báo và chưa khai báo
 		if ($khaibao == 'dkb' || $khaibao == 'ckb') {
 			$cid = [];
-			$report = Report::where('datatable', 'nguoilaodong')->get();
+			$report = Report::whereIn('datatable', ['nguoilaodong','notable'])->get();
 			foreach ($report as $rp) {
 				array_push($cid, $rp);
 			}
@@ -95,7 +96,7 @@ class AdminCompany extends Controller
 				$ctys = $ctys->whereNotIn('user', $cid)->get();
 			}
 		}
-		//chưa kahi trình
+		//chưa khai trình
 		elseif ($khaibao == 'ckt') {
 			$cty = $ctys->where('user', '!=', null)->get();
 			foreach ($cty as $ct) {
@@ -119,6 +120,10 @@ class AdminCompany extends Controller
 					$ct->chuakhaitrinh = 'yes';
 					continue;
 				}
+				if ($ct->email == null) {
+					$ct->chuakhaitrinh = 'yes';
+					continue;
+				}
 			}
 			$ctys = [];
 			foreach($cty as $item){
@@ -139,15 +144,31 @@ class AdminCompany extends Controller
 		elseif($khaibao == 'kbld'){
 			$r_user = [];
 			 $user = [];
-			$report = Report::where('datatable', 'nguoilaodong')->get();
+			$report = Report::whereIn('datatable', ['nguoilaodong','notable'])->get();
 			foreach ($report as $rp) {
 				array_push($r_user, $rp);
 			}
 			$r_user = a_unique(array_column($r_user, 'user'));
 
 			foreach($r_user as $item){
+				$a = $report->where('user',$item);
+				
 				if($report->where('user',$item)->count() == 1){
 					array_push($user, $item);
+				}
+				if($report->where('user',$item)->count() > 1){
+					$b = $a->first();
+					$c = [];
+					$time=Carbon::parse($b->time)->toDateString();
+					foreach($a as $a1){
+						$a2=Carbon::parse($a1->time)->toDateString();
+						if ($a2 != $time) {
+							array_push($c, $a1);
+						}
+					}
+					if (count($c) == 0) {
+						array_push($user, $item);
+					}
 				}
 			}
 			$ctys = $ctys->whereIn('user',$user)->get();
