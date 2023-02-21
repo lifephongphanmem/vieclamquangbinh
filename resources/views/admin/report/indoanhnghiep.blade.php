@@ -15,7 +15,11 @@
         <thead>
             <tr>
                 <td width="5%"> Stt </td>
+                <td >Mã số DKKD</td>
                 <td >Công ty</td>
+                <td >Loại hình </td>
+                <td >Ngành nghề</td>
+                <td >Địa chỉ</td>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +30,23 @@ foreach ($model as $key=>$rp ){
 ?>
             <tr>
                 <td>{{ ++$key }}</td>
+                <td> {{ $rp->dkkd }}</td>
                 <td> {{ $rp->name }}</td>
-
+                <td>
+                    @foreach ($ctype as $item)
+                        @if ($item->id ==  $rp->loaihinh )
+                            {{$item->name}}
+                        @endif
+                    @endforeach
+                </td>
+                <td>
+                    @foreach ($cfield as $item)
+                        @if ($item->id ==  $rp->nganhnghe )
+                            {{$item->name}} 
+                        @endif
+                    @endforeach
+                </td>
+                <td> {{ $rp->adress }}</td>
             </tr>
             <?php } ?>
         </tbody>
