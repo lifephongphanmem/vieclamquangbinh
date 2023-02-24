@@ -68,8 +68,9 @@ class AdminReport extends Controller
 			->orderBy('id', 'desc');
 
 		$a = [];
-
-		$reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
+		// $reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
+		$reports = $reports->whereBetween('time',[$tungay,$denngay])->get();
+		// dd($reports);
 		$a = a_unique(array_column($reports->toarray(), 'user'));
 
 		if ($request->type_filter == 'chuakhaibao') {

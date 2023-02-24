@@ -46,7 +46,7 @@ class Nhankhau extends Model
 
 		$request = request();
 		// Get the csv rows as an array
-
+		
 		$file = $request->file('import_file');
 
 		$dataObj = new ColectionImport();
@@ -260,7 +260,8 @@ class Nhankhau extends Model
 			$note = "Đã lưu thành công " . $num_valid_ld . " nhân khẩu.";
 			// add to log system`
 			$rm = new Report();
-			$rm->report('import', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $num_valid_ld, $note);
+			$user=User::where('madv',$inputs['madv'])->first()->id;
+			$rm->report('import', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $num_valid_ld, $note,$user,$inputs['kydieutra']);
 		}
 		$RetArray = array();
 		$RetArray['valid'] = $num_valid_ld;

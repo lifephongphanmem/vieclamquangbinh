@@ -20,7 +20,7 @@ class Report extends Model
      * @var array
      */
     protected $fillable = [
-        'type', 'result', 'datatable','lastid','numrow','user','note','iprequest'
+        'type', 'result', 'datatable','lastid','numrow','user','note','iprequest','kydieutra'
     ];
 
     /**
@@ -184,7 +184,7 @@ class Report extends Model
 	}
 	
 	
-	public function report($type,$result,$tbl,$rowid,$num,$note=null,$user=null ){
+	public function report($type,$result,$tbl,$rowid,$num,$note=null,$user=null,$kydieutra=null ){
 		// write report 
 		$r = array();
 		$r['type']= $type;
@@ -195,7 +195,7 @@ class Report extends Model
 		$r['note']= $note;	
 		$request = request();
 		$r['iprequest']= $request->ip(); 
-		
+		$r['kydieutra']=$kydieutra;
 		if ( Session::has('admin')) {
 			if($user == null){
 				$r['user']= session('admin')->id;

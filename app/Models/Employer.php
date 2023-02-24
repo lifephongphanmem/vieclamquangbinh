@@ -456,6 +456,7 @@ class Employer extends Model
 	// thông tin tổng hợp 1 công ty
 	public function getTonghop($cid){
 		$info= array();
+		// dd($cid);
 		$info['slld']= Employer::where('company', $cid)
 							->where('state', '<', 3)
 							->count();
@@ -467,17 +468,23 @@ class Employer extends Model
 		
 		$info['nu']=  Employer::where('company', $cid)
 							->where('state', '<', 3)
-							->where('gioitinh','like','%nu%')
+							->where(function($q){
+								$q->where('gioitinh','like','%nu%')
+								->orwhere('gioitinh','like','%nữ%');
+							})
 							->count();	
-		
 		$info['nudakyhd']=  Employer::where('company', $cid)
 							->where('state', '<', 3)
-							->where('gioitinh','like', 'nu')
-							->whereNotIn('bdhopdong', [null])
+							->where(function($q){
+								$q->where('gioitinh','like','%nu%')
+								->orwhere('gioitinh','like','%nữ%');
+							})
+							// ->whereNotIn('bdhopdong', [null])
+							->where('bdhopdong','!=',null)
 							->count();	
 		$info['dakyhd']=  Employer::where('company', $cid)
 							->where('state', '<', 3)
-							->whereNotIn('bdhopdong', [null])
+							->where('bdhopdong','!=',null)
 							->count();	
 		$info['nuocngoai']=  Employer::where('company', $cid)
 							->where('state', '<', 3)
@@ -485,12 +492,15 @@ class Employer extends Model
 							->count();	
 		$info['nunuocngoai']=  Employer::where('company', $cid)
 							->where('state', '<', 3)
-							->where('gioitinh','like', 'nu')
+							->where(function($q){
+								$q->where('gioitinh','like','%nu%')
+								->orwhere('gioitinh','like','%nữ%');
+							})
 							->whereNotIn('nation', ['VN','vn','Việt Nam'])
 							->count();	
 		$info['tnpt']=  Employer::where('company', $cid)
 							->where('state', '<', 3)
-							->where('trinhdogiaoduc', "Tốt nghiệp PTTH trở lên") // 65 Tot nghiep THPT
+							->wherein('trinhdogiaoduc', ['Tốt nghiệp PTTH trở lên','Tốt nghiệp THPT trở lên','Tốt nghiệp trung học phổ thông','Tốt nghiệp PTTD trở lên']) // 65 Tot nghiep THPT
 							->count();	
 		
 		$info['maxluong']=	Employer::where('company', $cid)
@@ -511,7 +521,7 @@ class Employer extends Model
 										->orWhere('nguoilaodong.chucvu','like','%Phó%');
 						})
 						->count()	;				
-		Return $info;
+		return $info;
 		
 	}
 	
@@ -528,6 +538,7 @@ class Employer extends Model
 			case 11 : $colname="linhvucdaotao"; break;
 			
 		}
+		
 		foreach( $params as $p) {
 			$pb[$p->name]= Employer::where('company', $cid)
 							->where('state', '<', 3)

@@ -111,10 +111,13 @@
                     <td>{{ $ct->gioitinh }}</td>
                     <td>{{ $ct->cmnd }}</td>
                     <td>{{ $ct->chucvu}}</td>
+                    <td>
+                        {{$ct->nhaquanly==true?'X':''}}
+                    </td>
                     @foreach ($a_vitri as $key => $val)
-                        <td>{{ $key == $ct->vitrivl ? 'X' : '' }}</td>
+                        <td>{{ $key == $ct->vitri ? 'X' : '' }}</td>
                     @endforeach
-                    <td>{{ in_array($ct->vitrivl, $a_vitrikhac) ? 'X' : '' }}</td>
+                    <td>{{ in_array($ct->vitri, $a_vitrikhac) ? 'X' : '' }}</td>
                     <td></td>
                     <td>{{ $ct->pcchucvu }}</td>
                     <td>{{ $ct->pcthamnien }}</td>

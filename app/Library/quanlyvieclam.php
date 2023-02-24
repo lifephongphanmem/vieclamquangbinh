@@ -94,3 +94,13 @@ function getMaXa($mahuyen)
                                 ->get();
     return $m_donvi;
 }
+
+function getiDxa($mahuyen){
+    $id_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                                    ->join('users','users.madv','dmdonvi.madv')
+                                    ->select('users.id','danhmuchanhchinh.name','dmdonvi.madv','danhmuchanhchinh.parent')
+                                    ->where('danhmuchanhchinh.parent',$mahuyen)
+                                    ->get();
+
+                                    return $id_xa;
+}

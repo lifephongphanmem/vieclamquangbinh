@@ -41,8 +41,7 @@
                 </div>
                 <div class="card-body">
                     <form role="form" method="POST" action="{{ URL::to('laodong-fs') }}" enctype='multipart/form-data'>
-                        {{ csrf_field() }}
-
+                        @csrf
                         <div class="row ">
                             <div class="col-sm-6 col-sm-offset-2">
                                 <div class="form-group">

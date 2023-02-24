@@ -519,7 +519,7 @@ class AdminNhankhau extends Controller
             $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
             $rm = new Report();
             $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
-            $rm->report('updateinfo', "1", 'nhankhau', DB::getPdo()->lastInsertId(), 1, $note,$user);
+            $rm->report('updateinfo', "1", 'nhankhau', DB::getPdo()->lastInsertId(), 1, $note,$user,$model->kydieutra);
         }
 
         if (isset($sualoi)) {
