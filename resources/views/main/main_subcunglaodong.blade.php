@@ -111,6 +111,15 @@
                     </div>
                 </li>
                 @endif
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/biendong?madv='.'&kydieutra='.(date('Y') - 1).'&mahuyen=450'}}" class="menu-link">
+
+                        <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                        </i>
+                        <span class="menu-text font-weight-bold">Biến động</span>
+                    </a>
+                </li>
                 @if (chkPhanQuyen('hopthuttdvvl', 'phanquyen'))
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{'/hopthu'}}" class="menu-link">

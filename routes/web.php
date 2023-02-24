@@ -313,4 +313,15 @@ Route::prefix('/xa')->group(function(){
 });
 
 Route::get('/danh_sach_tai_khoan',[HomeController::class,'listusser']);
+Route::prefix('/biendong')->group(function(){
+    Route::get('/',[AdminDieutra::class,'biendong']);
+    Route::get('/ChiTiet',[AdminDieutra::class,'biendong_ct']);
+    Route::get('/inbiendong',[AdminDieutra::class,'inbiendong']);
+    Route::post('/tonghopbiendong',[AdminDieutra::class,'tonghopbiendong']);
+});
+
+Route::prefix('BaoCaoDN')->group(function(){
+    Route::get('/',[baocaotonghopController::class,'BaoCaoDN']);
+});
+
 

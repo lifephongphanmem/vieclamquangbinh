@@ -184,7 +184,7 @@
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
                                         </a> --}}
 
-                                        <button href="{{ '/nhankhau-in?madv=' . $td->user_id . '&kydieutra=' . $td->kydieutra }}"
+                                        <button 
                                             onclick="Inchitiet('{{ $td->user_id }}','{{ $td->kydieutra }}')"
                                             data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                             class="btn btn-sm btn-clean btn-icon ml-3">
