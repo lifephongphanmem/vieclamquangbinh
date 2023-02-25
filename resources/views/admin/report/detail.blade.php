@@ -40,8 +40,8 @@
                     <div class="card-toolbar">
                         <a href="" data-target="#moda-indetail" data-toggle="modal" class="btn btn-xs btn-success" style="margin-right: 5px">
                             &ensp;In danh sách</a></i>
-                        <a href="{{ URL::to($url) }}" class="btn btn-xs btn-success"><i class="fa fa-undo">
-                                &ensp;Trở về</a></i>
+                        <a onclick="history.back()" class="btn btn-xs btn-success"><i class="fa fa-reply"></i>
+                                &ensp;Quay lại</a>
 
                     </div>
                 </div>

@@ -344,7 +344,7 @@
                                         @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
                                         <button type="submit" class="btn btn-success">Đồng ý</button>
                                         @endif
-                                        <a href="{{ URL::previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                                        <a onclick="history.back()" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                                     </div>
                                 </div>
                             </div>

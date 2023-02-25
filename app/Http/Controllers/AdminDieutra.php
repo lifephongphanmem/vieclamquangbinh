@@ -753,7 +753,19 @@ class AdminDieutra extends Controller
     }
 
     public function biendong(Request $request){
+        if (!chkPhanQuyen('biendong', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'biendong');
+        }
+        // dd(session('admin'));
         $inputs=$request->all();
+        if(in_array(session('admin')->sadmin,['SSA','ADMIN'])){
+            $inputs['mahuyen']=450;
+        }elseif(session('admin')->capdo == 'H'){
+            $inputs['mahuyen']=session('admin')->maquocgia;
+        }else{
+            $inputs['mahuyen']=session('admin')->huyen;
+        }
+        // $inputs['mahuyen']=$inputs['mahuyen']??session('admin')->huyen;
         $huyen_list = $this->getDmhc();
         $dmhc_list = $this->getdanhmuc();
         $check=$inputs['madv'];
@@ -810,6 +822,9 @@ class AdminDieutra extends Controller
     }
 
     public function biendong_ct(Request $request){
+        if (!chkPhanQuyen('biendong', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'biendong');
+        }
         $inputs=$request->all();
         $donvi=User::where('madv',$inputs['madv'])->first();
         $model=DB::table('report')->where('user',$donvi->id)->where('kydieutra',$inputs['kydieutra'])->get();
@@ -830,6 +845,9 @@ class AdminDieutra extends Controller
     }
 
     public function tonghopbiendong(Request $request){
+        if (!chkPhanQuyen('biendong', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'biendong');
+        }
         $inputs=$request->all();
        
         if(isset($inputs['mahuyen'])){
