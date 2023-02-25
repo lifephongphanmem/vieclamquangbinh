@@ -113,7 +113,11 @@
                                 <th rowspan="2" width="5%"> STT </th>
                                 <th rowspan="2">Công ty</th>
                                 <th colspan="4" style="text-align: center">Khai báo</th>
+<<<<<<< HEAD
+                                <th rowspan="3" width="5%">Thao tác</th>
+=======
                                 <th rowspan="2" width="8%" class="text-center">Thao tác</th>
+>>>>>>> a23fc48efd95b8d9839115670adc7ddc6f0b1e82
                             </tr>
                             <tr class="text-center">
                                 <th width="10%">Báo tăng</th>
@@ -121,20 +125,36 @@
                                 <th width="10%">Tạm dừng</th>
                                 <th width="11%">Kết thúc tạm dừng</th>
                             </tr>
+                            <tr>
+                                <td>Tổng</td>
+                                <td> {{ $model_congty->Count() }} </td>
+                                <td> {{ $reports->where('type','baotang')->Count() }}  </td>
+                                <td> {{ $reports->where('type','baogiam')->Count() }} </td>
+                                <td> {{ $reports->where('type','tamdung')->Count() }} </td>
+                                <td> {{ $reports->where('type','kethuctamdung')->Count() }} </td>
+                            </tr>
                         </thead>
                         <tbody>
+                            
                             <?php 
 		                    foreach ($model_congty as $key=>$rp ){ ?>
                             <tr>
-                                <?php $report = $reports->where('user',$rp->id); ?>
+                                <?php $report = $reports->where('user',$rp->user); ?>
                                 <td>{{ ++$key }}</td>
                                 <td id="detail"><a
-                                        href="{{ URL::to('/report-detail?user=' . $rp->id . '&tungay=' . $tungay . '&denngay=' . $denngay . '&type_filter=' . $type_filter) }}">{{ $rp->name }}</a>
+                                        href="{{ URL::to('/report-detail?user=' . $rp->user . '&tungay=' . $tungay . '&denngay=' . $denngay . '&type_filter=' . $type_filter) }}">{{ $rp->name }}</a>
                                 </td>
+<<<<<<< HEAD
+                                <td>{{ $report->where('type','baotang')->Count() }} </td>
+                                <td>{{ $report->where('type','baogiam')->Count() }}</td>
+                                <td>{{ $report->where('type','tamdung')->Count() }}</td>
+                                <td>{{ $report->where('type','kethuctamdung')->Count() }}</td>
+=======
                                 <td class="text-center">{{ $report->where('type','baotang')->Count() }}</td>
                                 <td class="text-center">{{ $report->where('type','baogiam')->Count() }}</td>
                                 <td class="text-center">{{ $report->where('type','tamdung')->Count() }}</td>
                                 <td class="text-center">{{ $report->where('type','kethuctamdung')->Count() }}</td>
+>>>>>>> a23fc48efd95b8d9839115670adc7ddc6f0b1e82
 
                                 <td class="text-center"><a onclick="intonghop('{{ $rp->id }}')" title="In báo cáo chi tiết"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#Report_in_tonghop"

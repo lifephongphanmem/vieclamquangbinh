@@ -44,7 +44,7 @@ class AdminTuyendung extends Controller
 		$public_filter = $request->public_filter;
 		$dm_filter = $request->dm_filter;
 		
-		
+
 		$tds= DB::table('tuyendung')->join('company', 'tuyendung.user', '=', 'company.user')
 					->when($search, function ($query, $search) {
 							return $query->where('tuyendung.noidung', 'like', '%'.$search.'%')
@@ -73,24 +73,23 @@ class AdminTuyendung extends Controller
 			} 
 			
 		}
+		$vitri = Vitrituyendung::select('id','idtuyendung','name')->get();
+	
 		return view ('admin.tuyendung.all')
 					->with('tds', $tds)
 					->with('dmhc_list', $dmhc_list)
-					
 					->with('search', $search)
 					->with('dm_filter', $dm_filter)
-					->with('public_filter', $public_filter);
+					->with('public_filter', $public_filter)
+					->with('vitri', $vitri)
+					;
 		
 	}
 	
 	
 	public function edit($tdid)
 	{
-		
 		// get params
-		
-		
-		
 		$td=Tuyendung::find($tdid);
 		$vtmodel = new Vitrituyendung;
 		$vitris= $vtmodel->getVitris($td->id);
@@ -100,7 +99,6 @@ class AdminTuyendung extends Controller
 			
 			->with('vitris',$vitris)
 		;
-		
 		
 	}  	
 	 
@@ -128,7 +126,19 @@ class AdminTuyendung extends Controller
 		return redirect('tuyendung-ba');
 	}
 	
-	 
-	
+	public function get_vitri(Request $request)
+	{		
+        $model = Vitrituyendung::where('idtuyendung',$request->id)->get();
+		
+		$html=' <ol id = "vt">';
+		foreach($model as $ct){
+
+			$html.='<li> <a href="/vanban/mauso_03a_pl1?id='.$ct->id.'&idtuyendung='.$ct->idtuyendung.'" target="_blank" >'.$ct->name.'</a> </li>';
+		};
+		$html .= '</ol>';
+		return response()->json($html);
+	}
+
+
 	
 }
