@@ -24,7 +24,9 @@ use App\Exports\BaocaoExport;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
 use App\Models\nguoilaodong as ModelsNguoilaodong;
 use App\Models\nhankhauModel;
+use App\Models\Tuyendung;
 use App\Models\tuyendungModel;
+use App\Models\Vitrituyendung;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -149,15 +151,22 @@ class baocaotonghopController extends Controller
             ->with('pageTitle', 'Thông tin người lao động nước ngoài');
     }
 
-    public function tinhhinhsudungld()
+    public function mauso_03a_pl1()
     {
-        return view('reports.baocaotonghop.cauld.tinhhinhsudungld')
+        $request = request();
+
+        $tuyendung = Tuyendung::find($request->idtuyendung);
+        $vitritd = Vitrituyendung::find($request->id);
+
+
+        return view('reports.baocaotonghop.cauld.mauso_03a_pl1')
+            ->with('tuyendung',$tuyendung) ->with('vitritd',$vitritd)
             ->with('pageTitle', 'Tình hình sử dụng lao động');
     }
 
     public function dsttcungld()
     {
-        return view('reports.baocaotonghop.cungld.dsttcungld')
+        return view('admin.reports.baocaotonghop.cungld.dsttcungld')
             ->with('pageTitle', 'Danh sách thông tin cung dụng lao động');
     }
     public function nhucautuyendungld()
@@ -454,7 +463,6 @@ class baocaotonghopController extends Controller
     public function BC_doanhnghiep()
     {
         $request = request();
-
         $export = $request->export;
         if ($export) {
             return Excel::download(new BaocaoExport, 'tinhhinhsudunglaodong' . date('m-d-Y-His A e') . '.xlsx');

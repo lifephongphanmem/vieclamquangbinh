@@ -252,7 +252,7 @@
                                                 <td>
                                                     <select class="form-control " name="yeucaukn[]">
                                                         <option value='Không yêu cầu' selected>Không yêu cầu</option>
-                                                        <option value='>Dưới 1 năm'>Dưới 1 năm</option>
+                                                        <option value='Dưới 1 năm'>Dưới 1 năm</option>
                                                         <option value='1 đến 2 năm'>1 đến 2 năm</option>
                                                         <option value='2 đên 5 năm'>2 đên 5 năm</option>
                                                         <option value='Trên 5 năm'>Trên 5 năm</option>

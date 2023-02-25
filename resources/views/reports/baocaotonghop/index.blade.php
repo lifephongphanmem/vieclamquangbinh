@@ -52,12 +52,13 @@
                                     @if (chkPhanQuyen('baocaotinh', 'phanquyen'))
                                         <li><a href="#" data-target="#modify-modal-tinh" data-toggle="modal">Báo cáo
                                                 thông tin cung lao động - Tỉnh (Mẫu 03)</a>
-                                        </li @endif
-                                        {{-- <li><a href="#" data-target="#doanhnghiep-modal" data-toggle="modal">Mẫu số
+                                        </li>
+                                    @endif
+                                    {{-- <li><a href="#" data-target="#doanhnghiep-modal" data-toggle="modal">Mẫu số
                                         01/PLI.
                                         Báo cáo tình hình sử dụng lao động (do người sử dụng lao động lập)</a>
                                 </li> --}}
-                                        {{-- <li><a href="#" data-target="#solaodongtbxh-modal" data-toggle="modal">Mẫu số
+                                    {{-- <li><a href="#" data-target="#solaodongtbxh-modal" data-toggle="modal">Mẫu số
                                             02/PLI. Báo cáo tình hình sử dụng lao động (do Sở Lao động - Thương binh và Xã
                                             hội lập)</a>
                                     </li>
@@ -69,16 +70,16 @@
                                         <a href="#" data-target="#thitruongld-modal" data-toggle="modal">Mẫu số
                                             04. Báo cáo về thông tin thị trường lao động</a>
                                     </li> --}}
-                                        {{-- <hr>
+                                    {{-- <hr>
                                     <li>
                                         <a href="{{ 'bao_cao_tong_hop/thong_tin_cung_lao_dong' }}" target="_blank">Mẫu số
                                             01a. Thông tin về cung lao động</a>
                                     </li> --}}
-                                        {{-- <li>
+                                    {{-- <li>
                                         <a href="{{ 'bao_cao_tong_hop/ds_thong_tin_cung_ld' }}" target="_blank">Mẫu số
                                             01b. Tổng hợp danh sách thông tin về cung lao động (A3)</a>
                                     </li> --}}
-                                        {{-- <li>
+                                    {{-- <li>
                                         <a href="{{ 'bao_cao_tong_hop/thong_tin_nhu_cau_tuyen_dung' }}" target="_blank">Mẫu
                                             số 02.
                                             Thông tin nhu cầu tuyển dụng lao động của người sử dụng lao động</a>
@@ -88,11 +89,12 @@
                                             target="_blank">Mẫu số 03. Thông tin người lao động nước ngoài làm việc tại Việt
                                             Nam</a>
                                     </li>
+                                    --}}
                                     <li>
-                                        <a href="{{ 'bao_cao_tong_hop/tinh_hinh_su_dung_lao_dong' }}" target="_blank">Mẫu
+                                        <a href="{{ 'bao_cao_tong_hop/mauso_03a_pl1' }}" target="_blank">Mẫu
                                             số
                                             03a/PLI. Báo cáo tình hình sử dụng lao động (do người sử dụng lao động lập)</a>
-                                    </li> --}}
+                                    </li> 
 
                                 </ol>
 
