@@ -21,6 +21,7 @@ use App\Models\danhsachnhankhau;
 use App\Models\m_nhankhau;
 use App\Models\Nhankhau;
 use App\Models\nhankhauModel;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\view\view_bao_cao_tonghop;
 use Carbon\Carbon;
@@ -602,6 +603,7 @@ class AdminDieutra extends Controller
     public function create(Request $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
         $list_cmkt = dmtrinhdokythuat::all();
         $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
@@ -616,6 +618,10 @@ class AdminDieutra extends Controller
         $m_nguoithatnghiep = $dm_tinhtrangct->where('manhom', 20221220175720);
         $lydo = $dm_tinhtrangct->where('manhom', 20221220175728);
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
+        $inputs['xa']=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                                ->select('danhmuchanhchinh.maquocgia')
+                                ->where('dmdonvi.madv',$inputs['madv'])
+                                ->first()->maquocgia;
         return view('admin.dieutra.create')
             ->with('inputs', $inputs)
             ->with('m_uutien', $m_uutien)
@@ -636,15 +642,20 @@ class AdminDieutra extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
         // nhankhauModel::create($inputs);
+        $note='';
         $check = $inputs['ho'] ?? '';
         if (!isset($inputs['ho'])) {
             $m_nhankhau = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->get();
             $soho = $m_nhankhau->max('ho');
             $inputs['ho'] = $soho + 1;
+            $note .="Thêm 1 hộ. ";
+            // dd(1);
         }
         // dd($inputs);
         // dd(2);
+        $note .= "Danh sách:";
         for ($i = 0; $i < $inputs['quantity']; $i++) {
             $tmp = array();
             foreach ($inputs as $key => $val) {
@@ -659,6 +670,7 @@ class AdminDieutra extends Controller
             if (isset($cccd)) {
                 continue;
             }
+            $note .= $tmp['hoten'].' ,';
             // dd($tmp);
             nhankhauModel::create($tmp);
             // dd($tmp);
@@ -676,11 +688,16 @@ class AdminDieutra extends Controller
                 'xa' => $inputs['xa'] ?? '',
                 'soluong' => $inputs['quantity'],
                 'kydieutra' => $inputs['kydieutra'],
+                'soho'=>1,
                 'user_id' => $inputs['madv'],
                 'donvinhap' => session('admin')->madv
             ];
             danhsach::create($data);
         }
+        $user=User::where('madv',$inputs['madv'])->first()->id;
+        // add to log system`
+        $rm = new Report();
+        $rm->report('baotang', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $inputs['quantity'], $note,$user,$inputs['kydieutra']);
         if ($check == '') {
             return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
         } else {
@@ -690,6 +707,7 @@ class AdminDieutra extends Controller
 
     public function indanhsachloi(Request $request){
         $inputs=$request->all();
+        // $inputs['madv']=$inputs['madv']??'';
         if(isset($inputs['mahuyen'])){
             $maxa=array_column(getMaXa($inputs['mahuyen'])->toarray(),'madv');
         }else{
@@ -732,5 +750,121 @@ class AdminDieutra extends Controller
                 ->with('model',$model)
                 ->with('pageTitle','Danh sách nhân khẩu lỗi');
 
+    }
+
+    public function biendong(Request $request){
+        $inputs=$request->all();
+        $huyen_list = $this->getDmhc();
+        $dmhc_list = $this->getdanhmuc();
+        $check=$inputs['madv'];
+        $m_donvi = getDonVi(session('admin')->sadmin);
+        $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
+        $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+        $kydieutra = danhsach::orderBy('id', 'desc')->first();
+        if (in_array(session('admin')->sadmin, ['SSA', 'ssa', 'ADMIN'])) {
+            $a_huyen = array_column(danhmuchanhchinh::where('capdo', 'H')->get()->toarray(), 'name', 'maquocgia');
+            $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
+                ->where('parent', $inputs['mahuyen'])->get();
+        } else {
+
+
+            if (session('admin')->capdo == 'H') {
+                $a_huyen = [session('admin')->maquocgia => session('admin')->tendiaban];
+                $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'danhmuchanhchinh.parent')
+                    ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)->get();
+            } else {
+                $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                    ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'danhmuchanhchinh.parent')
+                    ->where('madv', $inputs['madv'])->get();
+                $a_huyen = array_column(danhmuchanhchinh::where('maquocgia', $m_xa->first()->parent)->get()->toarray(), 'name', 'maquocgia');
+            }
+        }
+        if($check != null){
+            $xa_biendong=$m_xa->where('madv',$inputs['madv']);
+        }else{
+            $xa_biendong=$m_xa;
+        }
+        foreach($xa_biendong as $val){
+            $user_id=User::where('madv',$val->madv)->first()->id;
+            $rp=DB::table('report')->where('user',$user_id)->where('kydieutra',$inputs['kydieutra'])->get();
+            $val->soluong=count($rp);
+            $val->kydieutra=$inputs['kydieutra'];
+        }
+        // $model=DB::table('report')->where('')
+        $a_donvi = array_column(dmdonvi::all()->toarray(), 'tendv', 'madv');
+        $inputs['url'] = '/biendong';
+        // dd($inputs);
+        return view('admin.dieutra.biendong.index')
+        ->with('inputs', $inputs)
+        ->with('a_donvi', $a_donvi)
+        ->with('a_huyen', $a_huyen)
+        ->with('a_xa', $m_xa)
+        ->with('xa_biendong', $xa_biendong)
+        ->with('a_kydieutra', $a_kydieutra)
+        ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
+        ->with('dmhc_list', $dmhc_list)
+        ->with('huyen_list', $huyen_list);
+
+    }
+
+    public function biendong_ct(Request $request){
+        $inputs=$request->all();
+        $donvi=User::where('madv',$inputs['madv'])->first();
+        $model=DB::table('report')->where('user',$donvi->id)->where('kydieutra',$inputs['kydieutra'])->get();
+                return view('admin.dieutra.biendong.chitiet')
+            ->with('model',$model);
+    }
+
+    public function inbiendong(Request $request){
+            $inputs=$request->all();
+            $donvi=User::where('madv',$inputs['madv'])->first();
+            $model=DB::table('report')->where('user',$donvi->id)->where('kydieutra',$inputs['kydieutra'])->get();
+
+                                       
+            // dd($model);
+        return view('admin.dieutra.biendong.inbiendong')
+                    ->with('model',$model)
+                    ->with('pageTitle','Biến động nhân khẩu');
+    }
+
+    public function tonghopbiendong(Request $request){
+        $inputs=$request->all();
+       
+        if(isset($inputs['mahuyen'])){
+            $m_huyen=danhmuchanhchinh::where('maquocgia',$inputs['mahuyen'])->get();
+            $maxa=getMaXa($inputs['mahuyen']);
+            $a_xa=array_column($maxa->toarray(),'madv');
+            $user_xa=array_column(User::wherein('madv',$a_xa)->get()->toarray(),'id');        
+            $model=DB::table('report')->wherein('user',$user_xa)->where('kydieutra',$inputs['kydieutra'])->get();
+        }else{
+            $m_huyen=danhmuchanhchinh::where('capdo','H')->get();
+            $model=DB::table('report')->where('kydieutra',$inputs['kydieutra'])->get();
+        }
+        $a_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
+                                    ->join('users','users.madv','dmdonvi.madv')
+                                    ->select('users.id','danhmuchanhchinh.name','dmdonvi.madv','danhmuchanhchinh.parent')
+                                    ->where('danhmuchanhchinh.capdo','X')
+                                    ->get();
+            // dd($model);                       
+        $a_user=User::where('phanloaitk',1)->where('capdo','X')->get();
+
+        if(isset($inputs['mahuyen'])){
+            return view('admin.dieutra.biendong.tonghopbiendong')
+            ->with('model',$model)
+            ->with('m_huyen',$m_huyen)
+            ->with('a_xa',$a_xa)
+            ->with('a_user',$a_user)
+            ->with('pageTitle','Tổng hợp biến động');
+        }else{
+            return view('admin.dieutra.biendong.tonghopbiendong_tinh')
+            ->with('model',$model)
+            ->with('m_huyen',$m_huyen)
+            ->with('a_xa',$a_xa)
+            ->with('a_user',$a_user)
+            ->with('pageTitle','Tổng hợp biến động');
+        }
+       
     }
 }

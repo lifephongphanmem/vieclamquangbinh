@@ -324,11 +324,12 @@ class AdminCompany extends Controller
 		$ctype2 = dmloaihinhhdkt::all();
 
 		$company = DB::table('company')->where('id', $request->cid)->first();
-
-
+		$info =$this->getInfo($company->user);
+		// dd($info);
 		//print_r($cat);
 		return view('admin.company.edit')
 			->with('dmhc', $dmhc)
+			->with('info_th', $info)
 			->with('info', $company)
 			->with('ctype', $ctype)
 			->with('ctype2', $ctype2)
@@ -340,6 +341,20 @@ class AdminCompany extends Controller
 			->with('quymo_min_filter', $quymo_min_filter)
 			->with('quymo_max_filter', $quymo_max_filter);
 	}
+
+	public function getInfo($uid){
+		  
+		$dn= DB::table('company')->where('user',$uid)->first();
+		// dd($dn);
+	   $em= new Employer;
+	   $other_info=$em->getTonghop($dn->id);
+	   $dn->tonghop =$other_info;
+	   $dn->pbcmkt=$em->getPhanbo($dn->id,3);
+	   $dn->pblvdt=$em->getPhanbo($dn->id,11);
+	   $dn->pbnghenghiep=$em->getPhanbo($dn->id,9);
+	   return $dn;
+	 }
+   
 
 
 	public function update(Request $request)
@@ -497,13 +512,21 @@ class AdminCompany extends Controller
 		$a_vitri = array();
 		$a_vitrikhac = array();
 		foreach ($list_nghe as $key => $ct) {
-			if (in_array($ct->id, [37, 38, 39])) {
+			if (in_array($ct->id, [38, 39])) {
 				$a_vitri[$ct->id] = $ct->name;
 			} else {
 				$a_vitrikhac[$key] = $ct->id;
 			}
 		}
+		foreach($model as $val){
+			if(in_array($val->vitri,['Giám đốc','Nhà lãnh đạo','Quản lý'])||strpos($val->vitri,'Phó')||strpos($val->vitri,'Trưởng')){
+				$val->nhaquanly=true;
+			}else{
+				$val->nhaquanly=false;
+			}
+		}
 
+		// dd($model);
 		// dd($a_vitrikhac);
 		// $a_vitri=array_column($list_nghe->toarray(),'name','id');
 		$a_chucvu = array_column(dmchucvu::all()->toarray(), 'tencv', 'id');

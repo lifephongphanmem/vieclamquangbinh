@@ -330,7 +330,7 @@ class baocaotonghopController extends Controller
         $a_vitri_nuocngoai_hientai=['nhaquanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
         $a_vitri_cv=['quanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
         $a_vitri_cv_hientai=['quanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
-// dd($laodong->wherenotin('nation',['Việt Nam','VN','vn','Viet Nam','Vn']));
+
         foreach($laodong as $ct){
             $namtaold=Carbon::parse($ct->created_at)->year;
             if($namtaold == $nam){
@@ -469,5 +469,10 @@ class baocaotonghopController extends Controller
         }
         return view('reports.baocaotonghop.doanhnghiep')
             ->with('pageTitle', 'Báo cáo tình hình sử dụng lao động');
+    }
+
+    public function BaoCaoDN(){
+        // dd(session('admin'));
+        return view('pages.baocao.index');
     }
 }

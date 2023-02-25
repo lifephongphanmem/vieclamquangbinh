@@ -231,7 +231,7 @@
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Tham gia BHXH</label>
-                                                                    <select name="thamgiabhxh[]" class="form-control selec2basic">
+                                                                    <select name="bhxh[]" class="form-control selec2basic">
                                                                         <option value="">---Chọn---</option>
                                                                         @foreach ($a_thamgiabaohiem as $key=>$val)
                                                                             <option value="{{$key}}">{{$val}}</option>
@@ -343,7 +343,7 @@
                         <input type="hidden" name="madv" value="{{$inputs['madv']}}">
                         <input type="hidden" name="kydieutra" value="{{$inputs['kydieutra']}}">
                         <input type="hidden" name="quantity" id="quantity" value="1">
-                        <input type="hidden" name="huyen" id="huyen" value="{{$inputs['huyen']??''}}">
+                        <input type="hidden" name="huyen" id="huyen" value="{{$inputs['mahuyen']??''}}">
                         <input type="hidden" name="xa" id="xa" value="{{$inputs['xa']??''}}">
                         <input type="hidden" name="tinh" id="tinh" value="44">
                         <input type="hidden" name="ho" id="ho" value="{{$inputs['soho']??''}}">

@@ -137,11 +137,12 @@ class HethongchungController extends Controller
 				$user->capdodiaban = $diaban->capdo;
 				$user->phanquyen = json_decode($user->phanquyen, true);
 			} else {
-				$cty = Company::where('madv', $user->madv)->first();
+				$cty = Company::where('email', $user->email)->first();
 				if(!isset($cty)){
 					return view('errors.tontai_dulieu')->with('message', 'Doanh nghiệp chưa đăng ký tài khoản');
 				}
 				$user->tendv = $cty->name;
+				$user->company_id=$cty->id;
 				$user->maxa = $cty->xa;
 				$user->mahuyen = $cty->huyen;
 			}
