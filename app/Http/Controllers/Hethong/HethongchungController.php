@@ -133,9 +133,11 @@ class HethongchungController extends Controller
 				// $m_diaban = dsdiaban::where('madiaban', $user->madiaban)->first();
 
 				$user->tendiaban = $diaban->name;
+				$user->huyen = $diaban->parent;
 				$user->maquocgia = $diaban->maquocgia;
 				$user->capdodiaban = $diaban->capdo;
 				$user->phanquyen = json_decode($user->phanquyen, true);
+				// dd($user);
 			} else {
 				$cty = Company::where('email', $user->email)->first();
 				if(!isset($cty)){

@@ -758,6 +758,14 @@ class AdminDieutra extends Controller
         }
         // dd(session('admin'));
         $inputs=$request->all();
+        if(in_array(session('admin')->sadmin,['SSA','ADMIN'])){
+            $inputs['mahuyen']=450;
+        }elseif(session('admin')->capdo == 'H'){
+            $inputs['mahuyen']=session('admin')->maquocgia;
+        }else{
+            $inputs['mahuyen']=session('admin')->huyen;
+        }
+        // $inputs['mahuyen']=$inputs['mahuyen']??session('admin')->huyen;
         $huyen_list = $this->getDmhc();
         $dmhc_list = $this->getdanhmuc();
         $check=$inputs['madv'];
