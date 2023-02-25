@@ -16,7 +16,6 @@ use Maatwebsite\Excel\Concerns\ToArray;
 class AdminReport extends Controller
 {
 
-
 	public function __construct()
 	{
 		$this->middleware(function ($request, $next) {
@@ -27,9 +26,9 @@ class AdminReport extends Controller
 		});
 	}
 
-	public function show_all($uid = null)
+	public function show_all(Request $request)
 	{
-		$request = request();
+		
 		$search = $request->search;
 		$time_filter = $request->time_filter;
 		$type_filter = $request->type_filter;
@@ -42,9 +41,8 @@ class AdminReport extends Controller
 			$tungay = $request->tungay;
 			$denngay = $request->denngay;
 		}
-
-
-		$reports = DB::table('report')
+		if ($type_filter != 'chuakhaibao') {
+			$reports = DB::table('report')
 			->when($type_filter, function ($query, $type_filter) {
 
 				return $query->where('type', $type_filter);
@@ -65,27 +63,42 @@ class AdminReport extends Controller
 			// 	return $query->where('user', $uid);
 			// })
 			->where('datatable', '!=', 'nhankhau')
-			->orderBy('id', 'desc');
-
+			->orderBy('id', 'desc')->get();
+		}
+		else{
+			$reports = DB::table('report')->get();
+		}
+	
 		$a = [];
+		// $reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
 
-		$reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
-		$a = a_unique(array_column($reports->toarray(), 'user'));
-
+		foreach($reports as $item){
+			$item2 = Carbon::parse($item->time)->toDateString();
+			if ( $item2 == $denngay ) {
+				array_push($a,$item);
+			}
+			if ( $item2 >= $tungay && $item2 <= $denngay ) {
+				array_push($a,$item);
+			}
+		}
+	
+		$b = a_unique(array_column($a, 'user'));
+		
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
-				->select('company.name', 'users.id')
-				->whereNotIn('users.id', $a)
+				->select('company.name', 'company.user')
+				->whereNotIn('company.user', $b)
 				->get();
 				
 		} else {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
-				->select('company.name', 'users.id')
-				->wherein('users.id', $a)
+				->select('company.name', 'company.user')
+				->wherein('company.user', $b)
 				->get();
 		}
+	
 		$inputs['url'] = '/report-ba';
-
+		
 		return view('admin.report.all')->with('model_congty', $model_congty)
 			->with('reports', $reports)
 			->with('search', $search)
@@ -99,35 +112,61 @@ class AdminReport extends Controller
 
 	public function detail(Request $request)
 	{
-		// dd(1);
 		$inputs = $request->all();
-		// $reports = Report::where('user', $request->user)->where('time', '>=', $request->tungay)->where('time', '<=', $request->denngay)->get();
-		$reports = Report::where('user', $request->user)->where(function ($q) use ($inputs) {
-			if (isset($inputs['tungay'])) {
-				$q->where('time', '>=', $inputs['tungay'])->where('time', '<=', $inputs['denngay']);
+	
+		// $reports = Report::where('user', $request->user)->where(function ($q) use ($inputs) {
+		// 	if (isset($inputs['tungay'])) {
+		// 		$q->where('time', '>=', $inputs['tungay'])->where('time', '<=', $inputs['denngay']);
+		// 	}
+		// })->get();
+		$reports = Report::where('user', $inputs['user'])->get();
+	
+		$a = [];
+		foreach($reports as $rp){
+			$rp2 = Carbon::parse($rp->time)->toDateString();
+			
+			if ($rp2 >= $inputs['tungay'] && $rp2 <= $inputs['denngay']) {
+				array_push($a,$rp);
 			}
-		})->get();
+			if ($rp2 == $inputs['denngay']) {
+				array_push($a,$rp);
+			}
+		}
 
+		$reports = $a;
+		
 		foreach ($reports as $report) {
-			$ct = DB::table('company')->where('user', $report->user)->get()->first();
+			$ct = DB::table('company')->where('user', $report->user)->first();
 			if ($ct) {
 				$report->ctyname = $ct->name;
 			} else {
 				$report->ctyname = "";
 			}
 		}
-		$url = '/report-ba?type_filter=' . $request->type_filter . '&tungay=' . $request->tungay . '&denngay=' . $request->denngay;
-		return view('admin.report.detail')->with('reports', $reports)->with('url', $url)->with('user_id', $request->user)->with('tungay', $request->tungay)->with('denngay', $request->denngay);
+		$url = '/report-ba?type_filter=' . $request->type_filter . '&tungay=' . $inputs['tungay'] . '&denngay=' . $inputs['denngay'];
+		return view('admin.report.detail')->with('reports', $reports)->with('url', $url)->with('user_id', $inputs['user'])
+		->with('tungay', $inputs['tungay'])->with('denngay', $inputs['denngay']);
 	}
 
 
 	public function detail_in(Request $request)
 	{
-		$model = Report::where('user', $request->user)->where('time', '>=', $request->tungay)
-			->where('time', '<=', $request->denngay)->where('type', $request->loaikhaibao)->get();
-
-		$tencty = Company::select('name')->where('user', $request->user)->first();
-		return view('admin.report.indetail')->with('model', $model)->with('loaikhaibao', $request->loaikhaibao)->with('tencty', $tencty)->with('pageTitle', 'Danh sách khai báo');
+		$inputs = $request->all();
+		$model = Report::where('user', $inputs['user'])->where('type', $inputs['loaikhaibao'])->get();
+		$a = [];
+		foreach($model as $rp){
+			$rp2 = Carbon::parse($rp->time)->toDateString();
+			if ($rp->time >= $inputs['tungay'] && $rp->time <= $inputs['denngay']) {
+				array_push($a,$rp);
+			}
+			if ($rp2 == $inputs['denngay']) {
+				array_push($a,$rp);
+			}
+		}
+		$model = $a;
+		$tencty = Company::select('name')->where('user', $inputs['user'])->first();
+		return view('admin.report.indetail')->with('model', $model)->with('loaikhaibao', $inputs['loaikhaibao'])
+		->with('tencty', $tencty)->with('pageTitle', 'Danh sách khai báo');
 	}
 
 	public function getDmhc()
@@ -320,22 +359,34 @@ class AdminReport extends Controller
 	public function doanhnghiep_in(Request $request)
 	{
 
-		$reports = DB::table('report')->where('time', '>=', $request->tungay_dn)->where('time', '<=', $request->denngay_dn)->get();
-
+		// $reports = DB::table('report')->where('time', '>=', $request->tungay_dn)->where('time', '<=', $request->denngay_dn)->get();
+		$inputs = $request->all();
+		$reports = Report::all();
 		$a = [];
-		foreach ($reports as $rp) {
-			array_push($a, $rp->user);
+		foreach($reports as $rp){
+			$rp2 = Carbon::parse($rp->time)->toDateString();
+			if ($rp->time >= $inputs['tungay_dn'] && $rp->time <= $inputs['denngay_dn']) {
+				array_push($a,$rp);
+			}
+			if ($rp2 == $inputs['denngay_dn']) {
+				array_push($a,$rp);
+			}
 		}
-		$a = a_unique($a);
+		$reports = $a;
+		$b = [];
+		foreach ($reports as $rp) {
+			array_push($b, $rp->user);
+		}
+		$b = a_unique($b);
 		if ($request->loai == 'kkb') {
 			$model = Company::join('users', 'users.id', 'company.user')
 				->select('company.*', 'users.id')
-				->whereNotIn('users.id', $a)
+				->whereNotIn('users.id', $b)
 				->get();
 		} else {
 			$model = Company::join('users', 'users.id', 'company.user')
 				->select('company.*', 'users.id')
-				->wherein('users.id', $a)
+				->wherein('users.id', $b)
 				->get();
 		}
 		$ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp

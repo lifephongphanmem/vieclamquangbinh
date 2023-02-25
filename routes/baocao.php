@@ -22,5 +22,5 @@ Route::prefix('vanban')->group(function(){
     Route::get('/thong_tin_cung_lao_dong', [baocaotonghopController::class, 'thongtincungld']);
     Route::get('/thong_tin_nhu_cau_tuyen_dung', [baocaotonghopController::class, 'nhucautuyendungld']);
     Route::get('/thong_tin_nguoi_lao_dong_nuoc_ngoai', [baocaotonghopController::class, 'laodongnuocngoai']);
-    Route::get('/tinh_hinh_su_dung_lao_dong', [baocaotonghopController::class, 'tinhhinhsudungld']);
+    Route::get('/mauso_03a_pl1', [baocaotonghopController::class, 'mauso_03a_pl1']);
 });

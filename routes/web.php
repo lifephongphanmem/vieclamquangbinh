@@ -153,7 +153,7 @@ Route::prefix('laodongnuocngoai')->group(function(){
 // Tuyen dụng 
 
 Route::get('/tuyendung-ba/{cid?}',[AdminTuyendung::class,'show_all']); // all
-
+Route::get('/tuyendung-get_vitri',[AdminTuyendung::class,'get_vitri']); //get vt
 Route::get('/tuyendung-bu/{tdid}',[AdminTuyendung::class,'duyet']); // duyet
 
 Route::get('/tuyendung-be/{tdid}',[AdminTuyendung::class,'edit']); // edit

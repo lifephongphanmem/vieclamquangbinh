@@ -113,7 +113,7 @@
                                 <th rowspan="2" width="5%"> # </th>
                                 <th rowspan="2">Công ty</th>
                                 <th colspan="4" style="text-align: center">Khai báo</th>
-                                <th rowspan="2" width="5%">Thao tác</th>
+                                <th rowspan="3" width="5%">Thao tác</th>
                             </tr>
                             <tr>
                                 <th>Báo tăng</th>
@@ -121,17 +121,26 @@
                                 <th>Tạm dừng</th>
                                 <th>Kết thúc tạm dừng</th>
                             </tr>
+                            <tr>
+                                <td>Tổng</td>
+                                <td> {{ $model_congty->Count() }} </td>
+                                <td> {{ $reports->where('type','baotang')->Count() }}  </td>
+                                <td> {{ $reports->where('type','baogiam')->Count() }} </td>
+                                <td> {{ $reports->where('type','tamdung')->Count() }} </td>
+                                <td> {{ $reports->where('type','kethuctamdung')->Count() }} </td>
+                            </tr>
                         </thead>
                         <tbody>
+                            
                             <?php 
 		                    foreach ($model_congty as $key=>$rp ){ ?>
                             <tr>
-                                <?php $report = $reports->where('user',$rp->id); ?>
+                                <?php $report = $reports->where('user',$rp->user); ?>
                                 <td>{{ ++$key }}</td>
                                 <td id="detail"><a
-                                        href="{{ URL::to('/report-detail?user=' . $rp->id . '&tungay=' . $tungay . '&denngay=' . $denngay . '&type_filter=' . $type_filter) }}">{{ $rp->name }}</a>
+                                        href="{{ URL::to('/report-detail?user=' . $rp->user . '&tungay=' . $tungay . '&denngay=' . $denngay . '&type_filter=' . $type_filter) }}">{{ $rp->name }}</a>
                                 </td>
-                                <td>{{ $report->where('type','baotang')->Count() }}</td>
+                                <td>{{ $report->where('type','baotang')->Count() }} </td>
                                 <td>{{ $report->where('type','baogiam')->Count() }}</td>
                                 <td>{{ $report->where('type','tamdung')->Count() }}</td>
                                 <td>{{ $report->where('type','kethuctamdung')->Count() }}</td>
