@@ -52,10 +52,12 @@
                         <h3 class="card-label text-uppercase">Biến động nhân khẩu</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if (chkPhanQuyen('biendonghuyen', 'hoanthanh'))
                         <button title="In tổng hợp" class="btn btn-sm btn-success" onclick="intonghop()"
                             data-target="#modify-modal-intonghop" data-toggle="modal">
                             <i class="icon-lg la flaticon2-print"></i> In tổng hợp
                         </button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -100,7 +102,7 @@
                     </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th style="width:20px;">
                                     STT
                                 </th>
@@ -118,17 +120,22 @@
                         <tbody>
                             @foreach ($xa_biendong as $key=>$val )
                                 <tr>
-                                    <td>{{++$key}}</td>
+                                    <td class="text-center">{{++$key}}</td>
                                     <td><a href="{{'/biendong/ChiTiet?madv='.$val->madv.'&kydieutra='.$inputs['kydieutra']}}">{{$val->name}}</a></td>
                                     {{-- <td>{{$inputs['huyen']}}</td> --}}
                                     <td>{{$a_huyen[$inputs['mahuyen']]}}</td>
-                                    <td>{{$val->kydieutra}}</td>
-                                    <td>{{$val->soluong}}</td>
-                                    <td>
+                                    <td class="text-center">{{$val->kydieutra}}</td>
+                                    <td class="text-center">{{dinhdangso($val->soluong)}}</td>
+                                    <td class="text-center">
+                                        @if (chkPhanQuyen('biendongxa', 'hoanthanh'))
+                                        @if ($val->soluong != 0)
                                         <a href="{{ '/biendong/inbiendong?madv=' . $val->madv . '&kydieutra=' . $val->kydieutra }}"                                           
-                                            class="btn btn-sm btn-clean btn-icon ml-3">
+                                            class="btn btn-sm btn-clean btn-icon ml-3" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
-                                        </a>
+                                        </a> 
+                                        @endif
+
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -182,7 +189,7 @@
                                     style="width:100%">
                                     <option value="">Tất cả</option>
                                     @foreach ($a_huyen as $key => $ct)
-                                        <option value="{{ $key }}">{{ $ct }}</option>
+                                        <option value="{{ $key }}" {{session('admin')->maquocgia == $key?'selected':''}}>{{ $ct }}</option>
                                     @endforeach
                                 </select>
                                 {{-- <input type="hidden" name='math' id='math'> --}}
@@ -191,7 +198,6 @@
                                 <label class="control-label">Kỳ điều tra</label>
                                 <select name="kydieutra" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    <option value="">Tất cả</option>
                                     @foreach ($a_kydieutra as $key => $ct)
                                         <option value="{{ $key }}">{{ $ct }}</option>
                                     @endforeach

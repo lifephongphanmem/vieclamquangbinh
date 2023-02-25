@@ -75,7 +75,7 @@
                             <div class="col-sm-2 m-b-xs">
                                 <select id="khaibao" name="khaibao" class="form-control select2basic"
                                     onchange="this.form.submit()">
-                                    <option value="0">Khai báo</option>
+                                    <option value="0">Tình trạng khai báo</option>
                                     <option value="dkb" <?php if ($khaibao == 'dkb') {
                                         echo 'selected';
                                     } ?>>Đã khai báo</option>
