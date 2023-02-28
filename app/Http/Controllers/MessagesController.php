@@ -24,14 +24,15 @@ class MessagesController extends Controller
 		
         // All threads, ignore deleted/archived participants
         $threads = Thread::getAllLatest()->get();
-		
-		$userId = Auth::id();
+
+		$userId = session('admin')->id;
 		foreach ($threads as $key=>$th){
+            // dd($th->latestMessage->body);
 			if (!$th->hasParticipant($userId)){
 				unset( $threads[$key]);
 			}
 		}
-
+		// dd($threads);
         // All threads that user is participating in
         // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
 
@@ -77,7 +78,7 @@ class MessagesController extends Controller
      */
     public function create()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::where('id', '!=', session('admin')->id)->get();
 
         return view('pages.messenger.create', compact('users'));
     }
@@ -103,14 +104,14 @@ class MessagesController extends Controller
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => session('admin')->id,
             'body' => $input['message'],
         ]);
 
         // Sender
         Participant::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => session('admin')->id,
             'last_read' => new Carbon,
         ]);
 
@@ -128,7 +129,7 @@ class MessagesController extends Controller
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         try {
             $thread = Thread::findOrFail($id);
@@ -143,21 +144,21 @@ class MessagesController extends Controller
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
-            'body' => Request::input('message'),
+            'user_id' => session('admin')->id,
+            'body' => $request->message,
         ]);
 
         // Add replier as a participant
         $participant = Participant::firstOrCreate([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => session('admin')->id,
         ]);
         $participant->last_read = new Carbon;
         $participant->save();
 
         // Recipients
-        if (Request::has('recipients')) {
-            $thread->addParticipant(Request::input('recipients'));
+        if ($request->has('recipients')) {
+            $thread->addParticipant($request->recipients);
         }
 
         return redirect()->route('messages.show', $id);

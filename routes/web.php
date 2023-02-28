@@ -302,13 +302,19 @@ Route::prefix('hopthu')->group(function(){
     Route::get('/create',[HopThuController::class,'create']);
     Route::post('/store',[HopThuController::class,'store']);
     Route::get('/delete/{id}',[HopThuController::class,'destroy']);
+    Route::post('/tralai/{id}',[HopThuController::class,'tinh_tralai']);
 
 Route::prefix('/huyen')->group(function(){
     Route::get('/',[HopThuController::class,'hopthu_huyen']);
+    Route::post('/tralai/{id}',[HopThuController::class,'huyen_tralai']);
+    Route::post('/send/{id}',[HopThuController::class,'huyen_send']);
+    Route::get('/lydo/{id}',[HopThuController::class,'huyen_lydo']);
 }); 
 
 Route::prefix('/xa')->group(function(){
     Route::get('/',[HopThuController::class,'hopthu_xa']);
+    Route::post('/send/{id}',[HopThuController::class,'send']);
+    Route::get('/lydo/{id}',[HopThuController::class,'xa_lydo']);
 });
 });
 

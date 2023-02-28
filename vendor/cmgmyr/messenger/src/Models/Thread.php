@@ -380,8 +380,8 @@ class Thread extends Eloquent
      */
     public function hasParticipant(int $userId): bool
     {
+        // dd($userId);
         $participants = $this->participants()->where('user_id', '=', $userId);
-
         return $participants->count() > 0;
     }
 

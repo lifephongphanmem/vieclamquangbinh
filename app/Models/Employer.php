@@ -390,7 +390,7 @@ class Employer extends Model
 			// add to log system`
 				$rm= new Report();
 				
-				$note= $request->note.' . '.$sqty." mục thay đổi  ." . implode($danhsach, " . ");
+				$note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
 				
 				
 				$rm->report('updateinfo', $result, 'nguoilaodong',$eid,1, $note);
