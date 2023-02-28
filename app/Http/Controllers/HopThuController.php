@@ -24,7 +24,10 @@ class HopThuController extends Controller
         if (!chkPhanQuyen('hopthuttdvvl', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'hopthuttdvvl');
         }
-        $model = hopthu::where('matinh','ttdvvl')->get();
+        $model_nhan = hopthu::where('matinh','ttdvvl')->where('trangthai','DAGUI')->get();
+        $model_gui= hopthu::where('madv',session('admin')->madv)->get();
+        $collection=new Collection([$model_nhan,$model_gui]);
+        $model=$collection->collapse();
         foreach($model as $val){
             if($val->dvnhan != null){
                 $val->loaithu= 'Thư gửi đi';
@@ -32,8 +35,10 @@ class HopThuController extends Controller
                 $val->loaithu= 'Thư đến';
             }
         }
+        $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.index')
-                ->with('model', $model);
+                ->with('model', $model)
+                ->with('a_madv', $a_madv);
     }
 
     /**
@@ -55,7 +60,6 @@ class HopThuController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-
         $m_danhmuchanhchinh = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo')
             ->get();
@@ -73,7 +77,7 @@ class HopThuController extends Controller
         $inputs['thoigiangui'] = $time->toDateString();
         $inputs['loaithu']=1;//1: Thư đi,2:thư đến
         // dd($inputs);
-  
+//   dd(session('admin'));
         // dd($inputs);
         $m_huyen = $m_danhmuchanhchinh->where('capdo', 'H');
         $m_xa = $m_danhmuchanhchinh->where('capdo', 'X');
@@ -117,7 +121,7 @@ class HopThuController extends Controller
                 break;
             case 'bchuyen':
                 $inputs['loaithu']=2;
-                $inputs['mahuyen']=session('admin')->madvbc;
+                $inputs['mahuyen']=session('admin')->huyen;
                 break;
         }
   
@@ -199,13 +203,14 @@ class HopThuController extends Controller
             return view('errors.noperm')->with('machucnang', 'hopthuhuyen');
         }
         $model_ttdvvl=hopthu::join('donvinhanthongbao','donvinhanthongbao.mahopthu','hopthu.dvnhan')
+                    ->select('hopthu.*')
                     ->where('donvinhanthongbao.madv',session('admin')->madv)
                     ->get();
-        $model_xa=hopthu::where('mahuyen',session('admin')->madv)->get();
+        $model_xa=hopthu::where('mahuyen',session('admin')->maquocgia)->where('trangthai','DAGUI')->get();
         $model_gui=hopthu::where('madv',session('admin')->madv)->get();
         $collection=new Collection([$model_ttdvvl,$model_xa,$model_gui]);
         $model=$collection->collapse();
-
+        $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         foreach($model as $val){
             if($val->dvnhan != null ){
                 $val->loaithu= 'Thư đến';
@@ -215,8 +220,10 @@ class HopThuController extends Controller
                 $val->loaithu='Thư gửi đi';
             }
         }
+        // dd($model);
                     return view('admin.hopthu.huyen.index')
-                    ->with('model',$model);
+                    ->with('model',$model)
+                    ->with('a_madv',$a_madv);
     }
 
     public function hopthu_xa(){
@@ -224,6 +231,7 @@ class HopThuController extends Controller
             return view('errors.noperm')->with('machucnang', 'hopthuxa');
         }
         $model_nhan=hopthu::join('donvinhanthongbao','donvinhanthongbao.mahopthu','hopthu.dvnhan')
+        ->select('hopthu.*')
         ->where('donvinhanthongbao.madv',session('admin')->madv)
         ->get();
 
@@ -238,7 +246,64 @@ class HopThuController extends Controller
                     $val->loaithu='Thư gửi đi';
                 }
             }
+            $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.xa.index')
-        ->with('model',$model);
+        ->with('model',$model)
+        ->with('a_madv',$a_madv);
     }
+
+    public function send(Request $request,$id){
+        $model=hopthu::findOrFail($id);
+        if(isset($model)){
+            $model->update(['trangthai'=>'DAGUI']);
+        }
+        return redirect('/hopthu/xa')
+                ->with('success','Gửi thành công');
+    }
+    public function huyen_send($id){
+        $model=hopthu::findOrFail($id);
+        if(isset($model)){
+            $model->update(['trangthai'=>'DAGUI']);
+        }
+        return redirect('/hopthu/huyen')
+                ->with('success','Gửi thành công');
+    }
+
+    public function huyen_tralai(Request $request,$id){
+        $inputs=$request->all();
+        // dd($inputs);
+        $model=hopthu::findOrFail($id);
+        // dd($model);
+        if(isset($model)){
+            $model->update(['trangthai'=>'TRALAI','lydo'=>$inputs['tralai']]);
+        }
+
+        return redirect('/hopthu/huyen')
+                    ->with('success','Trả lại thành công');
+    }
+
+    public function tinh_tralai(Request $request,$id){
+        $inputs=$request->all();
+        // dd($inputs);
+        $model=hopthu::findOrFail($id);
+        // dd($model);
+        if(isset($model)){
+            $model->update(['trangthai'=>'TRALAI','lydo'=>$inputs['tralai']]);
+        }
+
+        return redirect('/hopthu')
+                    ->with('success','Trả lại thành công');
+    }
+
+    public function huyen_lydo(Request $request,$id){
+        $model=hopthu::findOrFail($id);
+        return response()->json($model);
+    }
+
+    public function xa_lydo(Request $request,$id){
+        $model=hopthu::findOrFail($id);
+        return response()->json($model);
+    }
+
+
 }

@@ -47,12 +47,12 @@ class AdminReport extends Controller
 
 				return $query->where('type', $type_filter);
 			})
-			// ->when($tungay, function ($query, $tungay) {
-			// 	return $query->where('type', '>=', $tungay);
-			// })
-			// ->when($denngay, function ($query, $denngay) {
-			// 	return $query->where('type', '<=', $denngay);
-			// })
+			->when($tungay, function ($query, $tungay) {
+				return $query->where('time', '>=', $tungay);
+			})
+			->when($denngay, function ($query, $denngay) {
+				return $query->where('time', '<=', $denngay);
+			})
 			// ->when($time_filter, function ($query, $time_filter) {
 			// 	$ym = explode('-', $time_filter, 2);
 			// 	$timeS = Carbon::create($ym[0], $ym[1])->startOfMonth();
@@ -62,15 +62,16 @@ class AdminReport extends Controller
 			// ->when($uid, function ($query, $uid) {
 			// 	return $query->where('user', $uid);
 			// })
-			->where('datatable', '!=', 'nhankhau')
+			->wherenotin('datatable',['nhankhau','users'])
 			->orderBy('id', 'desc')->get();
+			
 		}
 		else{
 			$reports = DB::table('report')->get();
 		}
-	
+		
 		$a = [];
-		// $reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
+		// $reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay);
 
 		foreach($reports as $item){
 			$item2 = Carbon::parse($item->time)->toDateString();
@@ -99,7 +100,7 @@ class AdminReport extends Controller
 		}
 	
 		$inputs['url'] = '/report-ba';
-		
+		// dd($reports);
 		return view('admin.report.all')->with('model_congty', $model_congty)
 			->with('reports', $reports)
 			->with('search', $search)

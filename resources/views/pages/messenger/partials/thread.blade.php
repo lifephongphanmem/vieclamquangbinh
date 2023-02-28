@@ -1,4 +1,4 @@
-<?php $class = $thread->isUnread(Auth::id()) ? 'alert-info' : ''; ?>
+<?php $class = $thread->isUnread(session('admin')->id) ? 'alert-info' : ''; ?>
 <tr>
 	<td>
 		{{$key +1 }}

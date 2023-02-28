@@ -9,8 +9,9 @@ use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 use DB;
 
 
@@ -84,7 +85,7 @@ class AdminMessages extends Controller
      */
     public function store(Request $request)
     {
-        $input = Request::all();
+        $input = $request->all();
 			$attach_path="";
 		$attach =$request->File('attach');
 		if($attach){
@@ -98,20 +99,26 @@ class AdminMessages extends Controller
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => session('admin')->id,
             'body' => $input['message'],
         ]);
 
         // Sender
         Participant::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' => session('admin')->id,
             'last_read' => new Carbon,
         ]);
 
         // Recipients
-        if (Request::has('recipients')) {
-            $thread->addParticipant($input['recipients']);
+        if ($request->has('recipients')) {
+            if($request->recipients == 0){
+                $user_id=array_column(User::where('phanloaitk',2)->where('status',1)->get()->toarray(),'id');
+            }else{
+                $dv_khaibao=array_column(DB::table('report')->wherein('table',['company','nguoilaodong','notable'])->where('MONTH(time)',date('m'))->get()->toarray(),'user');
+                $user_id=array_column(User::wherenotin('id',$dv_khaibao)->get()->toarray(),'id');
+            }
+            $thread->addParticipant($user_id);
         }
 
         return redirect()->route('admessages');
@@ -123,7 +130,7 @@ class AdminMessages extends Controller
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update(Request $request,$id)
     {
         try {
             $thread = Thread::findOrFail($id);
@@ -138,21 +145,21 @@ class AdminMessages extends Controller
         // Message
         Message::create([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
-            'body' => Request::input('message'),
+            'user_id' => session('admin')->id,
+            'body' => $request->message,
         ]);
 
         // Add replier as a participant
         $participant = Participant::firstOrCreate([
             'thread_id' => $thread->id,
-            'user_id' => Auth::id(),
+            'user_id' =>  session('admin')->id,
         ]);
         $participant->last_read = new Carbon;
         $participant->save();
 
         // Recipients
-        if (Request::has('recipients')) {
-            $thread->addParticipant(Request::input('recipients'));
+        if ($request->has('recipients')) {
+            $thread->addParticipant($request->recipients);
         }
 
         return redirect()->route('admessages.show', $id);

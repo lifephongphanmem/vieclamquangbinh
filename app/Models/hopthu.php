@@ -20,6 +20,7 @@ class hopthu extends Model
         'ttdvvl',
         'dvnhan',
         'loaithu',
-        'matinh'
+        'matinh',
+        'lydo'
     ];
 }
