@@ -147,7 +147,6 @@
                                 <td class="text-center">{{ dinhdangso($report->where('type','tamdung')->Count()) }}</td>
                                 <td class="text-center">{{ dinhdangso($report->where('type','kethuctamdung')->Count()) }}</td>
 
-
                                 <td class="text-center"><a onclick="intonghop('{{ $rp->id }}')" title="In báo cáo chi tiết"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#Report_in_tonghop"
                                         data-toggle="modal">
