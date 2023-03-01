@@ -58,7 +58,9 @@
                         <h3 class="card-label text-uppercase">Danh sách hộ gia đình</h3>
                     </div>
                     <div class="card-toolbar">
+                        @if (chkPhanQuyen('danhsachhogiadinh', 'thaydoi'))
                         <a onclick="themmoi()" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> &ensp;Thêm mới hộ</a>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -128,7 +130,7 @@
 
                                     <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? ''  }}</td>
                                     <td >
-                                        @if (chkPhanQuyen('danhsachhogiadinh', 'thaydoi'))
+                                        @if (chkPhanQuyen('danhsachhogiadinh', 'danhsach'))
                                         <a onclick="chitiet('{{$ld->id}}','{{$ld->ho}}')" class="btn btn-sm btn-clean btn-icon" title="Danh sách nhân khẩu"><i class="icon-lg flaticon-list text-success"></i></a>
                                         @endif
                                         @if (chkPhanQuyen('danhsachhogiadinh', 'thaydoi'))

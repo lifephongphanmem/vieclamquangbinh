@@ -109,11 +109,12 @@
 
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th rowspan="2" width="5%"> STT </th>
                                 <th rowspan="2">Công ty</th>
                                 <th colspan="4" style="text-align: center">Khai báo</th>
-                                <th rowspan="2" width="8%" class="text-center">Thao tác</th>
+                                <th rowspan="3" width="8%" class="text-center">Thao tác</th>
+
                             </tr>
                             <tr class="text-center">
                                 <th width="10%">Báo tăng</th>
@@ -121,17 +122,17 @@
                                 <th width="10%">Tạm dừng</th>
                                 <th width="11%">Kết thúc tạm dừng</th>
                             </tr>
-                            <tr>
-                                <td>Tổng</td>
-                                <td> {{ $model_congty->Count() }} </td>
-                                <td> {{ $reports->where('type','baotang')->Count() }}  </td>
-                                <td> {{ $reports->where('type','baogiam')->Count() }} </td>
-                                <td> {{ $reports->where('type','tamdung')->Count() }} </td>
-                                <td> {{ $reports->where('type','kethuctamdung')->Count() }} </td>
+                            <tr class="text-center" style="font-weight: bold">
+                                <th>Tổng</th>
+                                <th> {{ dinhdangso($model_congty->count()) }} </th>
+                                <th> {{ dinhdangso($reports->where('type','baotang')->count()) }}  </th>
+                                <th> {{dinhdangso( $reports->where('type','baogiam')->count()) }} </th>
+                                <th> {{ dinhdangso($reports->where('type','tamdung')->count()) }} </th>
+                                <th> {{ dinhdangso($reports->where('type','kethuctamdung')->count()) }} </th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+ 
                             <?php 
 		                    foreach ($model_congty as $key=>$rp ){ ?>
                             <tr>
@@ -140,10 +141,11 @@
                                 <td id="detail"><a
                                         href="{{ URL::to('/report-detail?user=' . $rp->user . '&tungay=' . $tungay . '&denngay=' . $denngay . '&type_filter=' . $type_filter) }}">{{ $rp->name }}</a>
                                 </td>
-                                <td class="text-center">{{ $report->where('type','baotang')->Count() }}</td>
-                                <td class="text-center">{{ $report->where('type','baogiam')->Count() }}</td>
-                                <td class="text-center">{{ $report->where('type','tamdung')->Count() }}</td>
-                                <td class="text-center">{{ $report->where('type','kethuctamdung')->Count() }}</td>
+
+                                <td class="text-center">{{ dinhdangso($report->where('type','baotang')->Count()) }}</td>
+                                <td class="text-center">{{ dinhdangso($report->where('type','baogiam')->Count()) }}</td>
+                                <td class="text-center">{{ dinhdangso($report->where('type','tamdung')->Count()) }}</td>
+                                <td class="text-center">{{ dinhdangso($report->where('type','kethuctamdung')->Count()) }}</td>
 
                                 <td class="text-center"><a onclick="intonghop('{{ $rp->id }}')" title="In báo cáo chi tiết"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#Report_in_tonghop"

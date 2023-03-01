@@ -39,7 +39,7 @@
                     <div class="card-toolbar">
                         <a title="Gửi văn bản" data-target="#modify-modal-confirm" data-toggle="modal"
                             class="btn btn-sm btn-success" onclick="guivanban()">
-                            <i class="fa fa-plus"></i> Gửi văn bản
+                            <i class="fa fa-plus"></i> Tạo văn bản
                         </a>
                     </div>
                 </div>
@@ -70,10 +70,11 @@
                             <thead>
                                 <td width="5%">STT</td>
                                 <td width="20%"> Tiêu đề</td>
-                                <td width="40%"> Nội dung</td>
+                                <td width="30%"> Nội dung</td>
                                 <td width="10%"> File đính kèm</td>
-                                <td width="10%">Thời gian gửi</td>
-                                <td width="10%">Loại thư</td>
+                                <td width="8%">Thời gian gửi</td>
+                                <td width="6%">Loại thư</td>
+                                <td width="10%">Đon vị gửi</td>
                                 <td width="15%">Thao tác</td>
 
                             </thead>
@@ -86,14 +87,29 @@
                                         <td><a href="{{asset($ct->file)}}" >Tải file</a></td>
                                         <td>{{getDayVn($ct->thoigiangui)}}</td>
                                         <td>{{$ct->loaithu}}</td>
+                                        <td>{{$a_madv[$ct->madv]}}</td>
                                         <td>
-
+                                            @if (in_array($ct->trangthai,['CHUAGUI','TRALAI']) && $ct->dvnhan == null)
+                                            <button onclick="send('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon" title="Gửi văn bản" data-target="#send-modal-confirm"
+                                                data-toggle="modal"><i class=" fa fa-share-square text-success"></i></button> 
+                                            @endif
+                                            @if ($ct->trangthai == 'DAGUI' && $ct->mahuyen != null && $ct->dvnhan == null)
+                                                <button onclick="tralai('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon"  data-target="#tralai-modal-confirm"
+                                                data-toggle="modal"><i class="icon-lg la la-reply text-warning "></i> </button>
+                                            @endif
+                                            @if ($ct->trangthai == 'TRALAI')
+                                            <button onclick="lydo('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon" title="Lý do trả lại" data-target="#lydo-modal-confirm"
+                                            data-toggle="modal"><i class=" fa fa-question-circle text-primary"></i></button>
+                                            @endif
+                                            @if ($ct->trangthai != 'DAGUI')
                                             <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{'/hopthu/delete/'.$ct->id}}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
                                             <i class="icon-lg flaticon-delete text-danger"></i>
-                                        </button>
+                                            </button>
+                                            @endif
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -177,10 +193,87 @@
                 </div>
             </form>
         </div>
+        <!-- Trả lại -->
+        <div id="tralai-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="tralai" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Trả lại văn bản</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <label>Lý do trả lại</label>
+                            <textarea name="tralai" rows="5" class="form-control"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit"  class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+                                            <!--Model send-->
+                                            <div id="send-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                                                <form id="frmsend" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header modal-header-primary">
+                                                                <h4 id="modal-header-primary-label" class="modal-title">Đồng ý gửi</h4>
+                                                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <label> <b>Sau khi gửi thì sẽ không chỉnh sửa được văn bản</b></label>
+                                                            </div>
+                                    
+                                                            <div class="modal-footer">
+                                                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                                                <button type="submit"   class="btn btn-primary">Đồng
+                                                                    ý</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                                                                                                    <!--Model lydo-->
+                                                                                                                    <div id="lydo-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                                                                                                                        {{-- <form id="frmsend" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data"> --}}
+                                                                                                                            @csrf
+                                                                                                                            <div class="modal-dialog">
+                                                                                                                                <div class="modal-content">
+                                                                                                                                    <div class="modal-header modal-header-primary">
+                                                                                                                                        <h4 id="modal-header-primary-label" class="modal-title">Thông tin</h4>
+                                                                                                                                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="modal-body">
+                                                                                                                                        <label>Lý do trả lại</label>
+                                                                                                                                        <textarea name="lydo" id='lydo' rows="5" class="form-control" readonly></textarea>
+                                                                                                                                    </div>
+                                                                                                            
+                                                                                                                                    <div class="modal-footer">
+                                                                                                                                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                                                                                                                        {{-- <button type="submit"   class="btn btn-primary">Đồng
+                                                                                                                                            ý</button> --}}
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        {{-- </form> --}}
+                                                                                                                    </div>
 
     <script>
         function guivanban(){
 
+        }
+        function send(id){
+            var url='/hopthu/huyen/send/'+id;
+            $('#frmsend').attr('action', url);
         }
 
         function cfDel(url) {
@@ -189,6 +282,31 @@
 
             function subDel() {
                 $('#frmDelete').submit();
+            }
+            function tralai(id){
+                var url='/hopthu/huyen/tralai/'+id;
+                $('#tralai').attr('action', url);
+            }
+            function lydo(id){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                url: '/hopthu/huyen/lydo/'+id,
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    // id: id
+                },
+                dataType: 'JSON',
+              
+                success: function(data) {
+                    // $('#vt').remove();
+                    $('#lydo').val(data.lydo);
+
+                },
+                error: function(message) {
+                    toastr.error(message, "Lỗi")
+                }
+            });
             }
     </script>
  @stop

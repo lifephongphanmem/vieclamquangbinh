@@ -39,7 +39,7 @@
                     <div class="card-toolbar">
                         <a title="Gửi văn bản" data-target="#modify-modal-confirm" data-toggle="modal"
                             class="btn btn-sm btn-success" onclick="guivanban()">
-                            <i class="fa fa-plus"></i> Gửi văn bản
+                            <i class="fa fa-plus"></i> Thêm văn bản
                         </a>
                     </div>
                 </div>
@@ -70,10 +70,11 @@
                             <thead>
                                 <td width="5%">STT</td>
                                 <td width="20%"> Tiêu đề</td>
-                                <td width="40%"> Nội dung</td>
+                                <td width="30%"> Nội dung</td>
                                 <td width="10%"> File đính kèm</td>
-                                <td width="10%">Thời gian gửi</td>
-                                <td width="10%">Loại thư</td>
+                                <td width="8%">Thời gian gửi</td>
+                                <td width="7%">Loại thư</td>
+                                <td width="10%">Đơn vị gửi</td>
                                 <td width="15%">Thao tác</td>
 
                             </thead>
@@ -86,14 +87,20 @@
                                         <td><a href="{{asset($ct->file)}}" >Tải file</a></td>
                                         <td>{{getDayVn($ct->thoigiangui)}}</td>
                                         <td>{{$ct->loaithu==1?'Thư đi':'Thư đến'}}</td>
+                                        <td>{{$a_madv[$ct->madv]}}</td>
                                         <td>
-
+                                            @if ($ct->trangthai == 'DAGUI' && $ct->matinh != null)
+                                            <button onclick="tralai('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon"  data-target="#tralai-modal-confirm"
+                                            data-toggle="modal"><i class="icon-lg la la-reply text-warning "></i> </button>
+                                        @endif
+                                            @if ($ct->trangthai != 'DAGUI' && $ct->dvnhan != null)
                                             <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{'/hopthu/delete/'.$ct->id}}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                             data-toggle="modal">
                                             <i class="icon-lg flaticon-delete text-danger"></i>
                                         </button>
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -104,6 +111,31 @@
             </div>
 		</div>
 	</div>
+
+            <!-- Trả lại -->
+            <div id="tralai-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                <form id="tralai" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <h4 id="modal-header-primary-label" class="modal-title">Trả lại văn bản</h4>
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Lý do trả lại</label>
+                                <textarea name="tralai" rows="5" class="form-control"></textarea>
+                            </div>
+    
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                <button type="submit"  class="btn btn-primary">Đồng
+                                    ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
                     <!--Model gửi văn bản-->
                     <div id="modify-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
@@ -182,6 +214,10 @@
         function guivanban(){
 
         }
+        function tralai(id){
+                var url='/hopthu/tralai/'+id;
+                $('#tralai').attr('action', url);
+            }
 
         function cfDel(url) {
                 $('#frmDelete').attr('action', url);

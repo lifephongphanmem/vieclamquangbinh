@@ -36,12 +36,12 @@ class AdminReport extends Controller
 			$nam = date('Y');
 			$thang = date('m');
 			$ngay = date('d');
-			if ($ngay > 5) {
-				$tungay = Carbon::create($nam, $thang, 5)->toDateString();
+			if ($ngay < 5) {
+				$tungay = Carbon::create($nam, $thang - 1, 5)->toDateString();
 				$denngay = date('Y-m-d');
 			}
 			else{
-				$tungay = Carbon::create($nam, $thang - 1, 5)->toDateString();
+				$tungay = Carbon::create($nam, $thang , 5)->toDateString();
 				$denngay = date('Y-m-d');
 			}
 			
@@ -55,12 +55,12 @@ class AdminReport extends Controller
 
 				return $query->where('type', $type_filter);
 			})
-			// ->when($tungay, function ($query, $tungay) {
-			// 	return $query->where('type', '>=', $tungay);
-			// })
-			// ->when($denngay, function ($query, $denngay) {
-			// 	return $query->where('type', '<=', $denngay);
-			// })
+			->when($tungay, function ($query, $tungay) {
+				return $query->where('time', '>=', $tungay);
+			})
+			->when($denngay, function ($query, $denngay) {
+				return $query->where('time', '<=', $denngay);
+			})
 			// ->when($time_filter, function ($query, $time_filter) {
 			// 	$ym = explode('-', $time_filter, 2);
 			// 	$timeS = Carbon::create($ym[0], $ym[1])->startOfMonth();
@@ -70,16 +70,15 @@ class AdminReport extends Controller
 			// ->when($uid, function ($query, $uid) {
 			// 	return $query->where('user', $uid);
 			// })
-			->where('datatable', '!=', 'nhankhau')
+			->wherenotin('datatable',['nhankhau','users'])
 			->orderBy('id', 'desc')->get();
+			
 		}
 		else{
 			$reports = DB::table('report')->get();
 		}
-	
+		
 		$a = [];
-		// $reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
-
 
 		foreach($reports as $item){
 			$item2 = Carbon::parse($item->time)->toDateString();
@@ -99,6 +98,7 @@ class AdminReport extends Controller
 		// $a = a_unique(array_column($reports->toarray(), 'user'));
 
 
+
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
 				->select('company.name', 'company.user')
@@ -113,7 +113,7 @@ class AdminReport extends Controller
 		}
 	
 		$inputs['url'] = '/report-ba';
-		
+		// dd($reports);
 		return view('admin.report.all')->with('model_congty', $model_congty)
 			->with('reports', $reports)
 			->with('search', $search)
