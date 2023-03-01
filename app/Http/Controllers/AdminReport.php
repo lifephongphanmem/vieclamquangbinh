@@ -35,8 +35,16 @@ class AdminReport extends Controller
 		if ($request->tungay == null && $request->denngay == null) {
 			$nam = date('Y');
 			$thang = date('m');
-			$tungay = Carbon::create($nam, $thang, 5)->toDateString();
-			$denngay = date('Y-m-d');
+			$ngay = date('d');
+			if ($ngay > 5) {
+				$tungay = Carbon::create($nam, $thang, 5)->toDateString();
+				$denngay = date('Y-m-d');
+			}
+			else{
+				$tungay = Carbon::create($nam, $thang - 1, 5)->toDateString();
+				$denngay = date('Y-m-d');
+			}
+			
 		} else {
 			$tungay = $request->tungay;
 			$denngay = $request->denngay;
@@ -71,7 +79,7 @@ class AdminReport extends Controller
 	
 		$a = [];
 		// $reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay)->get();
-<<<<<<< HEAD
+
 
 		foreach($reports as $item){
 			$item2 = Carbon::parse($item->time)->toDateString();
@@ -85,12 +93,12 @@ class AdminReport extends Controller
 	
 		$b = a_unique(array_column($a, 'user'));
 		
-=======
-		$reports = $reports->whereBetween('time',[$tungay,$denngay])->get();
-		// dd($reports);
-		$a = a_unique(array_column($reports->toarray(), 'user'));
 
->>>>>>> a23fc48efd95b8d9839115670adc7ddc6f0b1e82
+		// $reports = $reports->whereBetween('time',[$tungay,$denngay])->get();
+		// // dd($reports);
+		// $a = a_unique(array_column($reports->toarray(), 'user'));
+
+
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
 				->select('company.name', 'company.user')

@@ -148,6 +148,7 @@ Route::prefix('nguoilaodong')->group(function(){
 Route::prefix('laodongnuocngoai')->group(function(){
     Route::get('/danhsach',[AdminEmployer::class,'DanhSach_NN']);
     Route::get('/ThemMoi',[AdminEmployer::class,'ThemMoi_NN']);
+    Route::get('/ThemMoi',[AdminEmployer::class,'ThemMoi_NN']);
 });
 
 // Tuyen dụng 
