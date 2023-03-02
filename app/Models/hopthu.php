@@ -21,6 +21,7 @@ class hopthu extends Model
         'dvnhan',
         'loaithu',
         'matinh',
-        'lydo'
+        'lydo',
+        'status'
     ];
 }

@@ -303,6 +303,7 @@ Route::prefix('hopthu')->group(function(){
     Route::post('/store',[HopThuController::class,'store']);
     Route::get('/delete/{id}',[HopThuController::class,'destroy']);
     Route::post('/tralai/{id}',[HopThuController::class,'tinh_tralai']);
+    Route::get('/check/{id}',[HopThuController::class,'checktn']);
 
 Route::prefix('/huyen')->group(function(){
     Route::get('/',[HopThuController::class,'hopthu_huyen']);

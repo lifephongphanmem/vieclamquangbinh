@@ -10,6 +10,6 @@ class donvinhanthongbao extends Model
     use HasFactory;
     protected $table='donvinhanthongbao';
     protected $fillable=[
-        'madv','mahopthu'
+        'madv','mahopthu','isRead'
     ];
 }
