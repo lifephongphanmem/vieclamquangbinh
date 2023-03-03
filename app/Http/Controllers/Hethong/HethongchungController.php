@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hethong;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmail;
 use App\Models\Company;
 use App\Models\Danhmuc\Chucnang;
 use App\Models\Danhmuc\danhmuchanhchinh;
@@ -57,6 +58,12 @@ class HethongchungController extends Controller
 			return view('errors.tontai_dulieu')
 				->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập')
 				->with('furl', '/');
+		}
+		//Tài khoản chưa kích hoạt
+		if($user->status == 0){
+			return view('errors.tontai_dulieu')
+			->with('message', 'Tài khoản chưa kích hoạt. Truy cập mail để tiến hành kích hoạt.')
+			->with('furl', '/');
 		}
 		//Tài khoản đang bị khóa
 		if ($user->status == 2) {
@@ -113,24 +120,10 @@ class HethongchungController extends Controller
 
 				//dd($ttuser);
 				$user->madiaban = $m_donvi->madiaban;
-				// $user->phanloaitk = $m_donvi->phanloaitk;
 				$user->tendv = $m_donvi->tendv;
 				$user->madvcq = $m_donvi->madvcq;
-				// $user->madvbc=$m_donvi->madvbc;
 				$user->phanloaitaikhoan = $m_donvi->phanloaitaikhoan;
-
-				// $user->emailql = $m_donvi->emailql;
-				// $user->emailqt = $m_donvi->emailqt;
-				// $user->songaylv = $m_donvi->songaylv;
-				// $user->tendvhienthi = $m_donvi->tendvhienthi;
-				// $user->tendvcqhienthi = $m_donvi->tendvcqhienthi;
-				// $user->chucvuky = $m_donvi->chucvuky;
-				// $user->chucvukythay = $m_donvi->chucvukythay;
-				// $user->nguoiky = $m_donvi->nguoiky;
 				$user->diadanh = $m_donvi->diadanh;
-
-				//Lấy thông tin địa bàn
-				// $m_diaban = dsdiaban::where('madiaban', $user->madiaban)->first();
 
 				$user->tendiaban = $diaban->name;
 				$user->huyen = $diaban->parent;
@@ -191,12 +184,12 @@ class HethongchungController extends Controller
 		$inputs = $request->all();
 		$data_user = [
 			'name' => $inputs['name'],
-			'username' => $inputs['username'],
+			// 'username' => $inputs['username'],
 			'email' => $inputs['email'],
 			'password' => Hash::make($inputs['password']),
 			'phanloaitk' => 2,
 			'madv' => $inputs['dkkd'],
-			'status' => 1,
+			'status' => 0,//0: vô hiệu,1: kích hoạt,2: khóa
 			'nhaplieu' => 1,
 			'manhomchucnang'=>1669913835
 		];
@@ -204,7 +197,7 @@ class HethongchungController extends Controller
 		$model = User::where('email', $inputs['email'])->first();
 
 		if (isset($model)) {
-			Session::put('message', "Tài khoản đã tồn tại");
+			Session::put('message', "Mail đã được sử dụng");
 		} else {
 			$model_user = User::create($data_user);
 			$data_company = [
@@ -212,17 +205,38 @@ class HethongchungController extends Controller
 				'madv' => $inputs['dkkd'],
 				// 'masodn' => $inputs['dkkd'],
 				'dkkd' => $inputs['dkkd'],
-				'user' => $model_user->id
+				'user' => $model_user->id,
+				'email'=>$inputs['email']
 			];
-
 			Company::create($data_company);
 		}
+	
+		//Tạo mail để gửi xác minh
+		if(isset($model_user)){
+			
+			$content='<a href="/">Kích hoạt tài khoản</a>';
+			$run=new SendEmail($content,$model_user);
+			$run->handle();
+		}
 
-		return redirect('/')
-			->with('success', 'Đăng ký thành công');
+
+
+		return view('success.dangkythanhcong')
+			->with('message', 'Đăng ký thành công. Vui lòng truy cập Mail đăng ký để kích hoạt tài khoản.');
 	}
 
+	public function kichhoat(Request $request){
+		$inputs=$request->all();
+		$user=User::where('email',$inputs['email'])->first();
+		if(isset($user)){
+			$user->update(['status'=>1]);
 
-
+		}
+		return view('mail.xacthuc')
+			->with('email',$inputs['email'])
+			->with('pageTitle','Xác thực tài khoản');
+	}
 
 }
+
+	

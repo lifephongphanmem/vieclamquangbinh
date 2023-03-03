@@ -35,9 +35,13 @@ class HopThuController extends Controller
                 $val->loaithu= 'Thư đến';
             }
         }
+
+        $chuadoc=hopthu::where('matinh','ttdvvl')->where('trangthai','DAGUI')->where('status',0)->count();
+        // dd($chuadoc);
         $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.index')
                 ->with('model', $model)
+                // ->with('chuadoc', $chuadoc)
                 ->with('a_madv', $a_madv);
     }
 
@@ -203,7 +207,7 @@ class HopThuController extends Controller
             return view('errors.noperm')->with('machucnang', 'hopthuhuyen');
         }
         $model_ttdvvl=hopthu::join('donvinhanthongbao','donvinhanthongbao.mahopthu','hopthu.dvnhan')
-                    ->select('hopthu.*')
+                    ->select('hopthu.*','donvinhanthongbao.isRead')
                     ->where('donvinhanthongbao.madv',session('admin')->madv)
                     ->get();
         $model_xa=hopthu::where('mahuyen',session('admin')->maquocgia)->where('trangthai','DAGUI')->get();
@@ -231,7 +235,7 @@ class HopThuController extends Controller
             return view('errors.noperm')->with('machucnang', 'hopthuxa');
         }
         $model_nhan=hopthu::join('donvinhanthongbao','donvinhanthongbao.mahopthu','hopthu.dvnhan')
-        ->select('hopthu.*')
+        ->select('hopthu.*','donvinhanthongbao.isRead')
         ->where('donvinhanthongbao.madv',session('admin')->madv)
         ->get();
 
@@ -246,6 +250,7 @@ class HopThuController extends Controller
                     $val->loaithu='Thư gửi đi';
                 }
             }
+            // dd($model);
             $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.xa.index')
         ->with('model',$model)
@@ -255,7 +260,7 @@ class HopThuController extends Controller
     public function send(Request $request,$id){
         $model=hopthu::findOrFail($id);
         if(isset($model)){
-            $model->update(['trangthai'=>'DAGUI']);
+            $model->update(['trangthai'=>'DAGUI','status'=>0]);
         }
         return redirect('/hopthu/xa')
                 ->with('success','Gửi thành công');
@@ -263,7 +268,7 @@ class HopThuController extends Controller
     public function huyen_send($id){
         $model=hopthu::findOrFail($id);
         if(isset($model)){
-            $model->update(['trangthai'=>'DAGUI']);
+            $model->update(['trangthai'=>'DAGUI','status'=>0]);
         }
         return redirect('/hopthu/huyen')
                 ->with('success','Gửi thành công');
@@ -275,7 +280,7 @@ class HopThuController extends Controller
         $model=hopthu::findOrFail($id);
         // dd($model);
         if(isset($model)){
-            $model->update(['trangthai'=>'TRALAI','lydo'=>$inputs['tralai']]);
+            $model->update(['trangthai'=>'TRALAI','lydo'=>$inputs['tralai'],'status'=>0]);
         }
 
         return redirect('/hopthu/huyen')
@@ -288,7 +293,7 @@ class HopThuController extends Controller
         $model=hopthu::findOrFail($id);
         // dd($model);
         if(isset($model)){
-            $model->update(['trangthai'=>'TRALAI','lydo'=>$inputs['tralai']]);
+            $model->update(['trangthai'=>'TRALAI','lydo'=>$inputs['tralai'],'status'=>0]);
         }
 
         return redirect('/hopthu')
@@ -303,6 +308,22 @@ class HopThuController extends Controller
     public function xa_lydo(Request $request,$id){
         $model=hopthu::findOrFail($id);
         return response()->json($model);
+    }
+
+    public function checktn(Request $request,$id){
+        $inputs=$request->all();
+        $model=hopthu::findOrFail($id);
+        if($inputs['isRead'] == null){
+           
+            if(isset($model)){
+                $model->update(['status'=>1]);
+    
+            }
+        }else{
+            $model_dvnhan=donvinhanthongbao::where('mahopthu',$model->dvnhan)->where('madv',session('admin')->madv)->first();
+            $model_dvnhan->update(['isRead'=>1]);
+        }
+        return response()->json($inputs);
     }
 
 

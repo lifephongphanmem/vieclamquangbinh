@@ -12,6 +12,9 @@
             margin-top: 0px;
             padding: 0px 15px;
         }
+        .message{
+            background-color: #92d2df;
+        }
     </style>
 @stop
 
@@ -80,15 +83,38 @@
                             </thead>
                             <tbody>
                                 @foreach ($model as $key=>$ct )
-                                    <tr>
-                                        <td>{{++$key}}</td>
-                                        <td>{{$ct->tieude}}</td>
-                                        <td>{{$ct->noidung}}</td>
-                                        <td><a href="{{asset($ct->file)}}" >Tải file</a></td>
-                                        <td>{{getDayVn($ct->thoigiangui)}}</td>
-                                        <td>{{$ct->loaithu}}</td>
-                                        <td>{{$a_madv[$ct->madv]}}</td>
-                                        <td class="text-center">
+                                <?php
+                                if (isset($ct->isRead)) {
+                                    # Thư của ttdvvl
+                                    $class=$ct->isRead == 0?'message':'' ;
+                                } else {
+                                    if ($ct->trangthai == 'TRALAI' && $ct->status == 0) {
+                                        $class='message';
+                                    }elseif ($ct->trangthai == 'DAGUI') {
+                                        
+                                    # Thư các xã
+                                    $class=$ct->status == 0 && $ct->loaithu =='Thư đến'?'message':'';
+                                    }else {
+                                        $class='';
+                                    }
+                                }
+                                 
+                                ?>
+                                    <tr id="{{$ct->id}}" value='{{$ct->isRead}}' class="{{$class}}">
+                                        <td class="{{$class}}">{{++$key}}</td>
+                                        <td class="{{$class}}">
+                                            @if ($class == 'message')
+                                            <button style="border: none; background-color:transparent"> {{$ct->tieude}} </button>
+                                        @else
+                                        {{$ct->tieude}}
+                                        @endif
+                                        </td>
+                                        <td name='noidung' class="{{$class}}">{{$ct->noidung}}</td>
+                                        <td class="{{$class}}"><a href="{{asset($ct->file)}}" >Tải file</a></td>
+                                        <td class="{{$class}}">{{getDayVn($ct->thoigiangui)}}</td>
+                                        <td class="{{$class}}">{{$ct->loaithu}}</td>
+                                        <td class="{{$class}}">{{$a_madv[$ct->madv]}}</td>
+                                        <td class="text-center {{$class}}">
                                             @if (in_array($ct->trangthai,['CHUAGUI','TRALAI']) && $ct->dvnhan == null)
                                             <button onclick="send('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon" title="Gửi văn bản" data-target="#send-modal-confirm"
                                                 data-toggle="modal"><i class=" fa fa-share-square text-success"></i></button> 
@@ -277,5 +303,57 @@
                 }
             });
             }
+            // function checktn(id,isRead =null){
+            //     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            //     console.log(isRead);
+            //     $.ajax({
+            //     url: '/hopthu/check/'+id,
+            //     type: 'GET',
+            //     data: {
+            //         _token: CSRF_TOKEN,
+            //         isRead: isRead
+            //     },
+            //     dataType: 'JSON',
+              
+            //     success: function(data) {
+            //         console.log(data);
+            //         location.reload()
+
+            //     },
+            //     error: function(message) {
+            //         toastr.error(message, "Lỗi")
+            //     }
+            // });
+            // }
+
+            $('#sample_3 tr').click(function () {
+               var tr = $(this).closest('tr');
+               var noidung=$(tr).find('td[name=noidung]').text();
+               var id = $(this).closest('tr').attr('id')
+               var isRead = $(this).closest('tr').attr('value')
+               var hasclass=$(this).closest('tr').hasClass("message");
+               if(hasclass == true){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                // console.log(isRead);
+                $.ajax({
+                url: '/hopthu/check/'+id,
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    isRead: isRead
+                },
+                dataType: 'JSON',
+              
+                success: function(data) {
+                    console.log(data);
+                    location.reload()
+
+                },
+                error: function(message) {
+                    toastr.error(message, "Lỗi")
+                }
+            });
+               };
+            });
     </script>
  @stop

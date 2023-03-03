@@ -12,6 +12,9 @@
             margin-top: 0px;
             padding: 0px 15px;
         }
+        .message{
+            background-color: #92d2df;
+        }
     </style>
 @stop
 
@@ -80,15 +83,22 @@
                             </thead>
                             <tbody>
                                 @foreach ($model as $key=>$ct )
-                                    <tr>
-                                        <td>{{++$key}}</td>
-                                        <td>{{$ct->tieude}}</td>
-                                        <td>{{$ct->noidung}}</td>
-                                        <td><a href="{{asset($ct->file)}}" >Tải file</a></td>
-                                        <td>{{getDayVn($ct->thoigiangui)}}</td>
-                                        <td>{{$ct->loaithu==1?'Thư đi':'Thư đến'}}</td>
-                                        <td>{{$a_madv[$ct->madv]}}</td>
-                                        <td>
+                                <?php $class=$ct->status == 0 && $ct->loaithu =='Thư đến'?'message':'' ?>
+                                    <tr class="{{$class}}">
+                                        <td class="{{$class}}">{{++$key}}</td>
+                                        <td class="{{$class}}">
+                                            @if ($class == 'message')
+                                                <button style="border: none; background-color:transparent"> {{$ct->tieude}} </button>
+                                            @else
+                                            {{$ct->tieude}}
+                                            @endif
+                                        </td>
+                                        <td class="{{$class}}">{{$ct->noidung}}</td>
+                                        <td class="{{$class}}"><a href="{{asset($ct->file)}}" >Tải file</a></td>
+                                        <td class="{{$class}}">{{getDayVn($ct->thoigiangui)}}</td>
+                                        <td class="{{$class}}">{{$ct->loaithu}}</td>
+                                        <td class="{{$class}}">{{$a_madv[$ct->madv]}}</td>
+                                        <td class="{{$class}}">
                                             @if ($ct->trangthai == 'DAGUI' && $ct->matinh != null)
                                             <button onclick="tralai('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon"  data-target="#tralai-modal-confirm"
                                             data-toggle="modal"><i class="icon-lg la la-reply text-warning "></i> </button>
@@ -226,5 +236,58 @@
             function subDel() {
                 $('#frmDelete').submit();
             }
+
+            // function checktn(id,isRead=null){
+            //     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            //     // console.log(id);
+            //     $.ajax({
+            //     url: '/hopthu/check/'+id,
+            //     type: 'GET',
+            //     data: {
+            //         _token: CSRF_TOKEN,
+            //         isRead: isRead
+            //     },
+            //     dataType: 'JSON',
+              
+            //     success: function(data) {
+            //         location.reload()
+
+            //     },
+            //     error: function(message) {
+            //         toastr.error(message, "Lỗi")
+            //     }
+            // });
+            // }
+
+            $('#sample_3 tr').click(function () {
+               var tr = $(this).closest('tr');
+               var noidung=$(tr).find('td[name=noidung]').text();
+               var id = $(this).closest('tr').attr('id')
+               var isRead = $(this).closest('tr').attr('value')
+               var hasclass=$(this).closest('tr').hasClass('message');
+                if(hasclass == true){
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                console.log(isRead);
+                $.ajax({
+                url: '/hopthu/check/'+id,
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    isRead: isRead
+                },
+                dataType: 'JSON',
+              
+                success: function(data) {
+                    console.log(data);
+                    location.reload()
+
+                },
+                error: function(message) {
+                    toastr.error(message, "Lỗi")
+                }
+                });
+                }
+
+            });
     </script>
  @stop
