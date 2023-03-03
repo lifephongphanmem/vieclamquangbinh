@@ -91,6 +91,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                 @if ($errors->has('message'))
                                     <p class="alert alert-danger ">{{ $errors->first('message') }}</p>
                                 @endif
+                                @if ($errors->has('email') || $errors->has('dkkd') || $errors->has('password'))
+                                    <p class="alert alert-danger">Đăng ký lỗi. Trở lại trang đăng ký để kiểm tra.</p>
+                                @endif
+
                             </div>
 
                             {!! Form::open(['url' => '/DangNhap', 'class' => 'form text-left', 'id' => 'kt_login_signin_form']) !!}
@@ -146,18 +150,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                         placeholder="Tên công ty" name="name" required />
                                 </div>
 
-                                <div class="form-group py-2 m-0 border-top">
+                                {{-- <div class="form-group py-2 m-0 border-top">
                                     <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="text"
                                         placeholder="Tên tài khoản" name="username" required />
-                                </div>
+                                </div> --}}
 
-                                <div class="form-group py-2 m-0 border-top">                                    
+                                <div class="form-group py-2 m-0 border-top"> 
+                                    @if ($errors->has('dkkd'))
+                                    <p class="text-danger ">{{ $errors->first('dkkd') }}</p>
+                                    @endif                                   
                                     <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="text"
                                         placeholder="Mã số DKKD (* Không thể thay đổi sau này )" name="dkkd"
                                         required />
                                 </div>
 
                                 <div class="form-group py-2 m-0 border-top">
+                                    @if ($errors->has('email'))
+                                    <p class="text-danger ">{{ $errors->first('email') }}</p>
+                                    @endif  
                                     <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="text"
                                         placeholder="Email Address (* Không thể thay đổi sau này)" name="email"
                                         autocomplete="off" />
@@ -165,10 +175,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                 <div class="form-group py-2 m-0 border-top">
                                     @if ($errors->has('password'))
-                                        <span class="text-danger">
-                                            <i>Mật khẩu chưa trùng khớp</i>
-                                        </span>
-                                    @endif
+                                    <p class="text-danger ">{{ $errors->first('password') }}</p>
+                                    @endif  
                                     <input class="form-control h-auto border-0 px-0 placeholder-dark-75" type="password"
                                         placeholder="Mật khẩu" name="password" />
                                 </div>

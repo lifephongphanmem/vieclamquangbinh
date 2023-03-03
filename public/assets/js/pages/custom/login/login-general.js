@@ -178,6 +178,7 @@ var KTLogin = function() {
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
+						
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
