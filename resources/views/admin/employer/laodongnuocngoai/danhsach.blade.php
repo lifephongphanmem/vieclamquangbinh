@@ -47,7 +47,7 @@
                                 <th>Ngày sinh</th>
                                 <th>Công ty</th>
                                 <th>Quốc Tịch</th>
-
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,8 +62,11 @@
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cmnd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ getDayvn($ld->ngaysinh) }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->ctyname }}</td>
-
                                 <td><span class="text-ellipsis"> </span>{{ $ld->nation }}</td>
+                                <td>
+                                    <a href="{{ '/vanban/thong_tin_nguoi_lao_dong_nuoc_ngoai?id='.$ld->id  }}" class="btn btn-sm mr-2" title="In thông tin" target="_blank">
+                                        <i class="icon-lg la flaticon2-print text-dark"></i></a>
+                                </td>
                             </tr>
                             <?php } ?>
 

@@ -145,9 +145,27 @@ class baocaotonghopController extends Controller
         return view('reports.baocaotonghop.cungld.thongtincungld')
             ->with('pageTitle', 'Thông tin cung lao động lao động');
     }
-    public function laodongnuocngoai()
+    public function laodongnuocngoai(Request $request)
     {
+ 
+        $ldnuocngoai = DB::table('nguoilaodong')->where('id',$request->id)->first();
+        $doanhnghiep = Company::find($ldnuocngoai->company);
+        $ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
+     
+        $ctype2 = dmloaihinhhdkt::all();
+    
+        if ($doanhnghiep->tinh == "44") {
+            $lh = $ctype2->where('madmlhkt',$doanhnghiep->loaihinh)->first();
+            $loaihinh = $lh->tenlhkt;
+        }
+        else{
+            $lh = $ctype->where('id',$doanhnghiep->loaihinh)->first();
+            $loaihinh = $lh->name;
+        }
+
         return view('reports.baocaotonghop.cungld.laodongnuocngoai')
+            ->with('ldnuocngoai', $ldnuocngoai)->with('doanhnghiep', $doanhnghiep)
+            ->with('loaihinh', $loaihinh)
             ->with('pageTitle', 'Thông tin người lao động nước ngoài');
     }
 
@@ -475,4 +493,14 @@ class baocaotonghopController extends Controller
         // dd(session('admin'));
         return view('pages.baocao.index');
     }
+
+    public function getParamsByNametype($paramtype)
+	{
+		$cats = array();
+		$type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
+		if ($type) {
+			$cats = DB::table('param')->where('type', $type->id)->get();
+		}
+		return $cats;
+	}
 }

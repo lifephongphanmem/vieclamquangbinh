@@ -1,25 +1,26 @@
 @extends('main_baocao')
 
 @section('content')
+<table>
     <div style="margin-left: 5%">
         <p style="text-transform: uppercase;font-weight: bold;width: auto;">TRUNG TÂM DỊCH VỤ VIỆC
             LÀM TỈNH QUẢNG BÌNH<br></p>
     </div>
-    </table>
+   
     <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">PHIẾU ĐĂNG KÝ GIỚI THIỆU/CUNG
-        ỨNG LAO ĐỘNG<br>
+        ỨNG LAO ĐỘNG </i><br>
 
     </p>
     <p style="text-align: center">
-        <i style="text-align: center"> (Dành cho người sử dụng lao động)</i>
+        <i style="text-align: center"> (Dành cho người sử dụng lao động) </i>
     </p>
     <p style="text-transform: uppercase;font-weight: bold,;text-align: right">
         Mã số:...................................................................
     </p>
-
+</table>
     <table cellspacing="0" cellpadding="0" border="1">
         <tr>
-            <th colspan="5" style="text-align: left;">1. Thông tin tuyển dụng</th>
+            <th colspan="5" style="text-align: left;">1. Thông tin tuyển dụng </th>
         </tr>
         <tr>
             <td colspan="4" style="text-align: left;"> Tên công việc*: {{ $vitritd->name }}

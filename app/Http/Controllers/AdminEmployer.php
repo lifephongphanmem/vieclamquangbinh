@@ -215,4 +215,6 @@ class AdminEmployer extends Controller
 		return view('admin.employer.laodongnuocngoai.create');
 	}
 
+
+
 }
