@@ -65,6 +65,9 @@
                             case 'nothing':
                                 echo 'Không có biến động';
                                 break;
+                            case 'thembangtay':
+                                echo 'Thêm thủ công';
+                                break;
                         } ?></td>
                     <td style="text-align: left ; vertical-align: middle">{{ $item->note }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->time }}</td>

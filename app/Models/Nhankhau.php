@@ -60,6 +60,8 @@ class Nhankhau extends Model
 		$errs = array();
 		$nfield = sizeof($arr_col);
 		$hoindex = 1;
+
+
 		if (DB::table('nhankhau')->count() > 0) {
 			$idmax = DB::table('nhankhau')->where('id', \DB::raw("(select max(id) from nhankhau)"))->first()->id;
 		} else {
@@ -94,16 +96,18 @@ class Nhankhau extends Model
 
 				$data[$arr_col[$j]] = $arr[$i][$j + 2] ?? '';
 			}
-			// dd($data);
+
+						//check data
+						if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
+							continue;
+						};
+
 			if(!$data['cccd']){
 				$loi_cccd++;
 				continue;
 			}
 
-			// check data
-			// if (!$data['hoten'] && !$data['ngaysinh'] && !$data['cccd']) {
-			// 	continue;
-			// };
+
 			//Kiểm tra trùng
 			// $check=check_trung($arr,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
 			// $check_insert=check_trung($lds,['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']]);
@@ -124,12 +128,12 @@ class Nhankhau extends Model
 			}else{
 				$data['soluongtrung']=count($check);
 			}
-
+			
 			$check_insert=check_trung($lds,['5'=>$data['cccd']]);
 			if(count($check_insert)>2){
 				continue;
 			}
-
+			
 			$data['danhsach_id'] = $cid;
 
 			if ($data['ngaysinh']) {
@@ -244,6 +248,9 @@ class Nhankhau extends Model
 			if ($loi || $loi2 || $loi3 || $loi4) {
 				$data_loi[] = $data['maloi'];
 			}
+			$nhankhau_kytruoc=nhankhauModel::where('madv',$inputs['madv'])->where('kydieutra',($inputs['kydieutra']-1))->where('cccd',$data['cccd'])->first();
+			
+			$data['loaibiendong']=isset($nhankhau_kytruoc)?0:2; //0: import, 1:thêm bằng tay, 2: báo tăng
 			// dd($data);
 			DB::table('nhankhau')->insert($data);
 			//  $lds[] = ['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']];

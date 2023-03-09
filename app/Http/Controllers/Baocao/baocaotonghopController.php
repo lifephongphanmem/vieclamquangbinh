@@ -21,7 +21,10 @@ use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use Illuminate\Support\Facades\Session;
 use App\Exports\BaocaoExport;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
+use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\nguoilaodong as ModelsNguoilaodong;
 use App\Models\nhankhauModel;
 use App\Models\Tuyendung;
@@ -68,21 +71,34 @@ class baocaotonghopController extends Controller
                 ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
                 ->get();
         }
-        if (in_array(session('admin')->capdo, ['T', 'H'])) {
+        if (session('admin')->capdo == 'T') {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
                 ->where('danhmuchanhchinh.capdo', 'X')
                 ->get();
-        } else {
+        } else if(session('admin')->capdo == 'H') {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+                ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
                 ->get();
+        }else{
+            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+            ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+            ->get();
         }
 
+        $trinhdoGDPT=dmtrinhdogdpt::all();
+        $trinhdocmkt=dmtrinhdokythuat::all();
+        $dmuutien=dmdoituonguutien::all();
+        $dmtinhtranghdkt=dmtinhtrangthamgiahdkt::all();
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         return view('reports.baocaotonghop.index', compact('nguoidung', 'company', 'dmdonvi'))
             ->with('m_huyen', $m_huyen)
+            ->with('trinhdoGDPT', $trinhdoGDPT)
+            ->with('trinhdocmkt', $trinhdocmkt)
+            ->with('dmuutien', $dmuutien)
+            ->with('dmtinhtranghdkt', $dmtinhtranghdkt)
             ->with('a_kydieutra', $a_kydieutra)
             ->with('m_xa', $m_xa);
     }

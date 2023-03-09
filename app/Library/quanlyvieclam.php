@@ -104,3 +104,9 @@ function getiDxa($mahuyen){
 
                                     return $id_xa;
 }
+
+function getKydieutra($kydieutra){
+    $a_kydieutra=explode(';',$kydieutra);
+
+    return $a_kydieutra;
+}

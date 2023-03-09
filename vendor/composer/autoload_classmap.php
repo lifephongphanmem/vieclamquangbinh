@@ -80,6 +80,8 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Imports\\ColectionImport' => $baseDir . '/app/Imports/ColectionImport.php',
+    'App\\Jobs\\SendEmail' => $baseDir . '/app/Jobs/SendEmail.php',
+    'App\\Mail\\MailDangKy' => $baseDir . '/app/Mail/MailDangKy.php',
     'App\\Models\\Company' => $baseDir . '/app/Models/Company.php',
     'App\\Models\\Dangky' => $baseDir . '/app/Models/Dangky.php',
     'App\\Models\\Danhmuc\\Chucnang' => $baseDir . '/app/Models/Danhmuc/Chucnang.php',

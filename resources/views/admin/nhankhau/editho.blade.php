@@ -38,7 +38,8 @@
                     </div>
                     @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
                     <div class="card-toolbar">
-                        <a onclick="themmoi('{{$inputs['soho']}}','{{$inputs['madv']}}','{{$inputs['kydieutra']}}','{{$inputs['nkid']}}')" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> &ensp;Thêm thành viên</a>
+                        <a onclick="themmoi('{{$inputs['soho']}}','{{$inputs['madv']}}','{{$inputs['kydieutra']}}','{{$inputs['nkid']}}')" class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i> &ensp;Thêm thành viên</a>
+                        <a onclick="history.back()" class="btn btn-xs btn-primary"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
                     @endif
                 </div>
@@ -64,7 +65,7 @@
                             <tr>
                                 <td>{{ ++$key }} </td>
 
-                                <td><a href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id.'?mahuyen='.$inputs['mahuyen'].'&view=ho') }}">{{ $ld->hoten }}</a></td>
+                                <td><a href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id.'?mahuyen='.$inputs['mahuyen'].'&view=ho'.'&kydieutra='.$inputs['kydieutra']) }}">{{ $ld->hoten }}</a></td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->ngaysinh }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->mqh }}</td>
@@ -73,7 +74,7 @@
                                 <td>
                                     @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
                                     <button title="Xóa nhân khẩu" type="button"
-                                    onclick="cfDel('{{'/nhankhau/XoaNhanKhau/'.$ld->id.'?mahuyen='.$inputs['mahuyen']}}')"
+                                    onclick="cfDel('{{'/nhankhau/XoaNhanKhau/'.$ld->id.'?mahuyen='.$inputs['mahuyen'].'&kydieutra='.$inputs['kydieutra']}}')"
                                     class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                     data-toggle="modal">
                                     <i class="icon-lg flaticon-delete text-danger"></i>

@@ -326,6 +326,7 @@ Route::prefix('/biendong')->group(function(){
     Route::get('/ChiTiet',[AdminDieutra::class,'biendong_ct']);
     Route::get('/inbiendong',[AdminDieutra::class,'inbiendong']);
     Route::post('/tonghopbiendong',[AdminDieutra::class,'tonghopbiendong']);
+    Route::post('/danhsach',[AdminDieutra::class,'export_biendong']);
 });
 
 Route::prefix('BaoCaoDN')->group(function(){
