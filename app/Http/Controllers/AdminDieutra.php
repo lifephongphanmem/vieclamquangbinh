@@ -446,7 +446,7 @@ class AdminDieutra extends Controller
         // dd($inputs);
         $a_chuyenmon = dmtrinhdokythuat::select('tentdkt', 'stt')->get()->toarray();
         // dd($a_chuyenmon);
-        $model = nhankhauModel::where('kydieutra', 'like', '%' . $inputs['kydieutra'] . '%')
+        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where(function ($q) use ($inputs) {
 
                 if (isset($inputs['gender'])) {

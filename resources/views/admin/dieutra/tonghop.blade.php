@@ -26,7 +26,7 @@
         </tr>
     </table>
     <p id="data_body1" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO <br>VỀ THÔNG TIN
-        CUNG LAO ĐỘNG NĂM {{date('Y',strtotime($inputs['kydieutra']))}}</p>
+        CUNG LAO ĐỘNG NĂM {{$inputs['kydieutra']}}</p>
     <p id="data_body2" style="text-align: center;font-style: italic;">Kính gửi: Ủy Ban nhân dân {{$m_donvi->huyen}}</p>
 
     <table id="data_body3" cellspacing="0" cellpadding="0" border="1"
