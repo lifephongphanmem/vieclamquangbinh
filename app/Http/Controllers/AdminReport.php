@@ -10,6 +10,7 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Report;
 use App\Models\User;
+use App\Models\Vitrituyendung;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToArray;
 
@@ -111,7 +112,7 @@ class AdminReport extends Controller
 				->wherein('company.user', $b)
 				->get();
 		}
-	
+		
 		$inputs['url'] = '/report-ba';
 		// dd($reports);
 		return view('admin.report.all')->with('model_congty', $model_congty)
@@ -410,4 +411,5 @@ class AdminReport extends Controller
 		return view('/admin.report.indoanhnghiep')->with('model', $model)->with('ctype', $ctype)->with('cfield', $cfield)
 			->with('loai', $request->loai)->with('pageTitle', 'Danh sách phân loại doanh nghiệp');
 	}
+
 }

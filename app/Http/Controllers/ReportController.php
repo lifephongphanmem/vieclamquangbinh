@@ -46,7 +46,7 @@ class ReportController extends Controller
 		// dd(session('admin'));
 		$rmodel = new Report;
 		$reports = $rmodel->getReports($uid, $time_filter);
-// dd($reports);
+ 	
 		return view('pages.report.all')
 			->with('reports', $reports)
 			->with('time_filter', $time_filter);
