@@ -68,7 +68,7 @@ class AdminTuyendung extends Controller
 			$td->desc="";
 			$td->sltuyen=0;
 			foreach ($vitris as $vt){
-				$td->desc.= "  ".$vt->name." ";
+				$td->desc.= $vt->name.". ";
 				$td->sltuyen +=$vt->soluong;
 			} 
 			

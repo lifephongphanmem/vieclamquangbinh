@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <title>{{ $pageTitle }}</title>
+    <title >{{ $pageTitle }}</title>
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
         type="text/css" />
     <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
@@ -157,7 +157,10 @@
         function exportTableToExcel(type) {
             var downloadLink;
             // var dataType = 'application/vnd.ms-excel';
-            var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;';
+             var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+             // var dataType = 'application/x-xls';
+  
+   
             var tableHTML = '';
             //Tiêu đề
             var data_header = document.getElementById('data_header');
@@ -208,13 +211,13 @@
             }
 
             // Specify file name
-            var filename = $('#title').val() + '.xls';
-
+             var filename = $('#title').val() ;
+         
             // Create download link element
             downloadLink = document.createElement("a");
 
             document.body.appendChild(downloadLink);
-
+            console.log(tableHTML);
             if (navigator.msSaveOrOpenBlob) {
                 var blob = new Blob(['\ufeff', tableHTML], {
                     type: dataType
@@ -229,12 +232,13 @@
 
                 //triggering the function
                 downloadLink.click();
-        }
+            }
         }
     </script>
 </head>
 
 <body style="font:normal 11px Times, serif;">
+    <input id="title" value="{{$pageTitle}}" hidden >
     <div class="in">
         <nav id="fixNav">
             <ul>

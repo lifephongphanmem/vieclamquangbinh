@@ -44,11 +44,11 @@
                                             target="_blank">Mẫu số 03. Thông tin người lao động nước ngoài làm việc tại Việt
                                             Nam</a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ '/vanban/tinh_hinh_su_dung_lao_dong' }}" target="_blank">Mẫu
                                             số
                                             03a/PLI. Báo cáo tình hình sử dụng lao động (do người sử dụng lao động lập)</a>
-                                    </li>
+                                    </li> --}}
 
                                 </ol>
 

@@ -128,6 +128,7 @@
 
                                         </select>
                                     </td>
+                               
                                 </tr>
                                 <tr>
                                     <td>Xã/Phường</td>
@@ -160,11 +161,15 @@
                                             echo 'checked';
                                         } ?>>
                                     </td>
+                              
                                 </tr>
                                 <tr>
                                     <td>Địa chỉ</td>
                                     <td>
                                         <textarea type="text" class="form-control" name="adress" required>{{ $info->adress }}</textarea>
+                                    </td>
+                                    <td rowspan="5">
+                                        <img style="width: 18rem" src="{{ $info->image }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -219,8 +224,11 @@
                                 </tr>
                                 <tr>
                                     <td>Ảnh giấy DKKD</td>
-                                    <td><input type="file" name="image" value="{{ $info->email }}"
-                                            class="form-control"> </td>
+                                    <td>
+                                        <input type="file" name="image" value="{{ $info->email }}"
+                                            class="form-control">
+                                    </td>
+                            
                                 </tr>
 
                             </table>
@@ -231,7 +239,7 @@
                                 <hr>
                             </div>
                             <div>
-                                <input type='submit' value=" Cập nhật thông tin">
+                                <input class="btn btn-success btn-sm" type='submit' value=" Cập nhật thông tin">
                             </div>
                         </form>
                     </div>
@@ -394,17 +402,19 @@
                         </label></a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{{ URL::to('/') }}/huongdan.xlsx" download><i class="fa fa-file"></i> <button
-                            class="  " type="button">Hướng dẫn điền dữ liệu</button></a>
+                    <a href="{{ URL::to('/') }}/huongdan.xlsx" download><i style="font-size: 2.5rem ;"
+                            class="fa fa-file"></i> <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"
+                            type="button">Hướng dẫn điền dữ liệu</button></a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{{ URL::to('/') }}/maunhapnguoilaodong.xlsx" download><i class="fa fa-file"></i> <button
-                            class="  " type="button">Tải
+                    <a href="{{ URL::to('/') }}/maunhapnguoilaodong.xlsx" download><i style="font-size: 2.5rem ;"
+                            class="fa fa-file"></i> <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"
+                            type="button">Tải
                             mẫu</button></a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{{ URL::to('laodong-ex') }}"><i class="fa fa-file"></i>
-                        <button class="  " type="button">Tải danh sách
+                    <a href="{{ URL::to('laodong-ex') }}"><i style="font-size: 2.5rem ;" class="fa fa-file"></i>
+                        <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem" type="button">Tải danh sách
                             NLĐ</button></a>
                 </div>
             </div>

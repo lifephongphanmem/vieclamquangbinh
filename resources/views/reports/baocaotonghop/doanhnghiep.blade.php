@@ -50,10 +50,10 @@
                                         <a href="#" data-target="#thitruongld-modal" data-toggle="modal">Mẫu số
                                             04. Báo cáo về thông tin thị trường lao động</a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ '/vanban/mauso_03a_pl1' }}"  target="_blank">Mẫu
                                             số 03a/PLI. Báo cáo tình hình sử dụng lao động </a>
-                                    </li>
+                                    </li> --}}
                                 </ol>
                             </div>
                         </div>

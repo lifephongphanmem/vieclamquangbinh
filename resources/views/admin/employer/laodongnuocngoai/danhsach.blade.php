@@ -36,6 +36,10 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách người lao động</h3>
                     </div>
+                    <div class="card-toolbar">
+                        <a href="{{ '/laodongnuocngoai/indanhsach' }}" target="_bank" class="btn btn-xs btn-success"><i class="icon-lg la flaticon2-print text-primary"></i>
+                            In danh sách</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">

@@ -83,6 +83,7 @@ Route::get('/tuyendung-fe/{tdid}', [TuyendungController::class,'edit']);
 Route::post('/tuyendung-fs', [TuyendungController::class,'save']);
 Route::post('/tuyendung-fru', [TuyendungController::class,'updatebaocao']);
 Route::get('/tuyendung-fr/{tdid}', [TuyendungController::class,'baocao']);
+Route::get('/tuyendung-get_vitri_page',[TuyendungController::class,'get_vitri']); //get vt page
 // messenger
 
 Route::group(['prefix' => 'messages'], function () {
@@ -148,7 +149,7 @@ Route::prefix('nguoilaodong')->group(function(){
 Route::prefix('laodongnuocngoai')->group(function(){
     Route::get('/danhsach',[AdminEmployer::class,'DanhSach_NN']);
     Route::get('/ThemMoi',[AdminEmployer::class,'ThemMoi_NN']);
-    Route::get('/ThemMoi',[AdminEmployer::class,'ThemMoi_NN']);
+    Route::get('/indanhsach',[AdminEmployer::class,'indanhsach']);
 });
 
 // Tuyen dụng 
@@ -158,6 +159,7 @@ Route::get('/tuyendung-get_vitri',[AdminTuyendung::class,'get_vitri']); //get vt
 Route::get('/tuyendung-bu/{tdid}',[AdminTuyendung::class,'duyet']); // duyet
 
 Route::get('/tuyendung-be/{tdid}',[AdminTuyendung::class,'edit']); // edit
+
 
 // Dieu tra
 
