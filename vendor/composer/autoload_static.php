@@ -629,6 +629,8 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Imports\\ColectionImport' => __DIR__ . '/../..' . '/app/Imports/ColectionImport.php',
+        'App\\Jobs\\SendEmail' => __DIR__ . '/../..' . '/app/Jobs/SendEmail.php',
+        'App\\Mail\\MailDangKy' => __DIR__ . '/../..' . '/app/Mail/MailDangKy.php',
         'App\\Models\\Company' => __DIR__ . '/../..' . '/app/Models/Company.php',
         'App\\Models\\Dangky' => __DIR__ . '/../..' . '/app/Models/Dangky.php',
         'App\\Models\\Danhmuc\\Chucnang' => __DIR__ . '/../..' . '/app/Models/Danhmuc/Chucnang.php',

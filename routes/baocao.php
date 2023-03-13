@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+use App\Http\Controllers\AdminDieutra;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Baocao\baocaotonghopController;
 
@@ -24,3 +25,5 @@ Route::prefix('vanban')->group(function(){
     Route::get('/thong_tin_nguoi_lao_dong_nuoc_ngoai', [baocaotonghopController::class, 'laodongnuocngoai']);
     Route::get('/mauso_03a_pl1', [baocaotonghopController::class, 'mauso_03a_pl1']);
 });
+
+Route::post('/baocaotuybien',[AdminDieutra::class,'baocaotuybien']);

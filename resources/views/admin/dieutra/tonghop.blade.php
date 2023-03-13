@@ -167,14 +167,14 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_covieclam->where('khuvuc', 'thanhthi')) }}</td>
+            <td style="text-align: center;">{{ count($model_thatnghiep->where('khuvuc', 'thanhthi')) }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_covieclam->where('khuvuc', 'nongthon')) }}</td>
+            <td style="text-align: center;">{{ count($model_thatnghiep->where('khuvuc', 'nongthon')) }}</td>
             <td style="text-align: center;"></td>
         </tr>
         <tr>

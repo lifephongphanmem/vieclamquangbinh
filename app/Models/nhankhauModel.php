@@ -15,7 +15,7 @@ class nhankhauModel extends Model
         'danhsach_id',
         'hoten','gioitinh','ngaysinh','cccd','bhxh','thuongtru','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat','chuyennganh','tinhtranghdkt',
         'nguoicovieclam','congvieccuthe','thamgiabhxh','hdld','noilamviec','loaihinhnoilamviec','diachinoilamviec','thatnghiep','thoigianthatnghiep',
-        'khongthamgiahdkt','ho','mqh','maloi','maloailoi','madv','kydieutra','soluongtrung'
+        'khongthamgiahdkt','ho','mqh','maloi','maloailoi','madv','kydieutra','soluongtrung','loaibiendong'
 
     ];
 }

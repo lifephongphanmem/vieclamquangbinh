@@ -44,7 +44,7 @@
                 <div class="card-body">
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th style="width:20px;">
                                     STT
                                 </th>
@@ -56,10 +56,10 @@
                         </thead>
                         <tbody>
                         @foreach ($a_model as $key=>$ct )
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{++$key}}</td>
                                 <td>{{$ct['loailoi']}}</td>
-                                <td>{{$ct['mota']}}</td>
+                                <td class="text-left">{{$ct['mota']}}</td>
                                 <td>{{$ct['soluong']}}</td>
                                 <td>
                                     @if ($ct['loailoi']!= 'CCCD')
@@ -68,9 +68,9 @@
                                     class="btn btn-sm btn-clean btn-icon">
                                     <i class="icon-lg flaticon-list text-success"></i>
                                 </a>
-                                <a href="" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                {{-- <a href="" title="In báo cáo chi tiết"  class="btn btn-sm btn-clean btn-icon" target="_blank">
                                     <i class="icon-lg la flaticon2-print text-primary"></i>
-                                </a>
+                                </a> --}}
                                     @endif
 
 

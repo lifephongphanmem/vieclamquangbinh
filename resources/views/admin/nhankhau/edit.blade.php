@@ -44,7 +44,7 @@
                     <form role="form" method="POST" action="{{'/nhankhau/update/'.$ld->id.'?mahuyen='.$inputs['mahuyen']}}" enctype='multipart/form-data'>
                         {{ csrf_field() }}
                         <div class="card-body" id='dynamicTable'>
-
+                            <input type="hidden" name=kydieutra value="{{$inputs['kydieutra']}}">
                             <div class="row">
                                 <div class="col-md-12 ">
                                     <div class="col-md-3">
