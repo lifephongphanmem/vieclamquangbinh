@@ -110,25 +110,22 @@
                                         <?php }elseif($td->state==1){ echo "Đã duyệt"; }
 					else { echo "Đã báo cáo";}
 					?>
-
                                     </span>
                                 </td>
                                 <td>
-
-                                    <button title="In thông tin" type="button" data-target="#modal-inbaocao"
+                                    <button title="In thông tin giới thiệu cung ứng, mẫu 03a/pl1" type="button" data-target="#modal-inbaocao"
                                         data-toggle="modal" onclick="get_vitri('{{ $td->id }}')"
                                         class="btn btn-sm btn-clean btn-icon">
                                         <i class="icon-lg flaticon-list text-success"></i>
                                     </button>
+                                    <a  href="{{ '/vanban/thong_tin_nhu_cau_tuyen_dung?id='.$td->id }}" title="In thông tin nhu cầu tuyển dụng, mẫu 02"
+                                         class="btn btn-sm btn-clean btn-icon" target="_bank"> <i class="icon-lg la flaticon2-print text-primary"></i>
+                                    </a>
                                 </td>
-                                
-                        
                             </tr>
-
                             <?php } ?>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -140,8 +137,7 @@
                 @csrf
                 <div class="modal-dialog modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title"> Báo cáo tình hình sử
-                            dụng lao động Mẫu số
+                        <h4 id="modal-header-primary-label" class="modal-title">Phiếu đăng ký giới thiệu/cung ứng lao động
                             03a/PLI.
                         </h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true"

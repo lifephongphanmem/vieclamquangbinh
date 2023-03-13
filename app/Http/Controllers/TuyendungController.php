@@ -68,8 +68,10 @@ class TuyendungController extends Controller
 			} 
 			
 		}
+		$vitri = Vitrituyendung::select('id','idtuyendung','name')->get();
 		return view('pages.tuyendung.all')
 				->with('tds',$tds)
+				->with('vitri',$vitri)
 				->with('dmhc',$dmhc)
 				->with('list_cmkt',$list_cmkt)
 				->with('list_tdgd',$list_tdgd)
@@ -219,7 +221,18 @@ class TuyendungController extends Controller
 		return $cats;
 	}
 
-	
+	public function get_vitri(Request $request)
+	{		
+        $model = Vitrituyendung::where('idtuyendung',$request->id)->get();
+		
+		$html=' <ol id = "vt">';
+		foreach($model as $ct){
+
+			$html.='<li> <a href="/vanban/mauso_03a_pl1?id='.$ct->id.'&idtuyendung='.$ct->idtuyendung.'" target="_blank" >'.$ct->name.'</a> </li>';
+		};
+		$html .= '</ol>';
+		return response()->json($html);
+	}
 }
 
 ?>

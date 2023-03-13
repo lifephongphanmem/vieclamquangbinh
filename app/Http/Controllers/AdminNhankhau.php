@@ -533,7 +533,6 @@ class AdminNhankhau extends Controller
     {
         $inputs = $request->all();
 
-
         if ($inputs['tinhtrang'] != 4) {
             $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like','%'.$inputs['kydieutra'].'%')->where('tinhtranghdkt', $inputs['tinhtrang'])->get();
         } else {
@@ -554,6 +553,7 @@ class AdminNhankhau extends Controller
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
+           
         $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
         $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
 

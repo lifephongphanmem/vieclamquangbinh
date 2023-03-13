@@ -1,32 +1,53 @@
 @extends('main_baocao')
-@section('custom-style')
-@stop
-@section('custom-script')
-@stop
+
 @section('content')
-    <table>
-        <div style="margin-left: 5%">
-            <p style="text-transform: uppercase;font-weight: bold;width: auto;">ỦY BAN NHÂN DÂN TỈNH/THÀNH PHỐ<br
-                    style="text-align: center"> QUẢNG BÌNH </p>
-        </div>
+    <table id="data_body">
+        <tr>
+            <td style="text-align: left;">
+                <div>
+                    <p style="text-transform: uppercase;font-weight: bold;width: auto;">ỦY BAN NHÂN DÂN TỈNH/THÀNH PHỐ QUẢNG BÌNH </p>
+                </div>
+            </td>
+            <td>
+                <p style="text-align: right;">Mẫu số 03</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">THÔNG TIN NGƯỜI
+                    LAO ĐỘNG
+                    NƯỚC NGOÀI LÀM VIỆC TẠI VIỆT NAM
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left; ">
+                <b>
+                    I. THÔNG TIN CHUNG
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left; ">
+                1. Họ và tên:
+                {{ $ldnuocngoai->hoten != null ? $ldnuocngoai->hoten : '......................................................................................' }}
+            </td>
+            <td>
+                2.Giới tính:
+                {{ $ldnuocngoai->gioitinh == 'Nam' || $ldnuocngoai->gioitinh == 'nam' ? '☑ Nam ☐ Nữ' : '☐ Nữ ☑ Nam ' }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">
+                3. Ngày, tháng, năm sinh:
+                {{ $ldnuocngoai->ngaysinh != null ? $ldnuocngoai->ngaysinh : '............/............./........................' }}
 
-        <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">THÔNG TIN NGƯỜI LAO ĐỘNG
-            NƯỚC NGOÀI <br> LÀM VIỆC TẠI VIỆT NAM
-        </p>
-
-        <p style="text-transform: uppercase;font-weight: bold">
-            I. THÔNG TIN CHUNG
-        </p>
-        <p>1. Họ và tên:
-            {{ $ldnuocngoai->hoten != null ? $ldnuocngoai->hoten : '............................................................................................' }}
-            <span style="margin-left: 30%;"></span> 2.Giới tính:
-            {{ $ldnuocngoai->gioitinh == 'Nam' || $ldnuocngoai->gioitinh == 'nam' ? '☑ Nam ☐ Nữ' : '☐ Nữ ☑ Nam ' }}
-        </p>
-        <p>3. Ngày, tháng, năm sinh:
-            {{ $ldnuocngoai->ngaysinh != null ? $ldnuocngoai->ngaysinh : '............/............./........................' }}
-            <span style="margin-left: 29%;"></span> 4. Quốc tịch:
-            {{ $ldnuocngoai->nation != null ? $ldnuocngoai->nation : '.................................................' }}
-        </p>
+            </td>
+            <td>
+                4. Quốc tịch:
+                {{ $ldnuocngoai->nation != null ? $ldnuocngoai->nation : '.................................................' }}
+            </td>
+        </tr>
         <tr>
             <td style="text-align: left;width: 50%;">5. Số hộ chiếu:
                 {{ $ldnuocngoai->cmnd != null ? $ldnuocngoai->cmnd : '........................................................................' }}
@@ -105,9 +126,12 @@
         <tr>
             <td style="text-align: left">
                 2. Nơi làm việc:<br>
-                - Tên doanh nghiệp, tổ chức: {{$doanhnghiep->name != null ? $doanhnghiep->name : '................................................................................................'}}<br>
-                - Mã số:.................................................................................................................................<br>
-                - Địa chỉ: {{$doanhnghiep->adress .' - ' . $doanhnghiep->xa .' - '.$doanhnghiep->huyen .' - '.$doanhnghiep->tinh}}<br>
+                - Tên doanh nghiệp, tổ chức:
+                {{ $doanhnghiep->name != null ? $doanhnghiep->name : '................................................................................................' }}<br>
+                - Mã
+                số:.................................................................................................................................<br>
+                - Địa chỉ:
+                {{ $doanhnghiep->adress . ' - ' . $doanhnghiep->xa . ' - ' . $doanhnghiep->huyen . ' - ' . $doanhnghiep->tinh }}<br>
                 - Loại hình doanh nghiệp, tổ chức làm việc: {{ $loaihinh }}<br>
             </td>
         </tr>
@@ -176,7 +200,8 @@
         </tr>
     </table>
 
-    <table width="96%" cellspacing="0" height cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0"
+        style="margin: 20px auto;text-align: center; height:200px">
         <tr>
             <td width="40%" style="text-align: left; vertical-align: top;">
             </td>

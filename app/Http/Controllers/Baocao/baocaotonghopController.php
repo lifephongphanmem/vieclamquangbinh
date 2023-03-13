@@ -93,12 +93,14 @@ class baocaotonghopController extends Controller
         $dmuutien=dmdoituonguutien::all();
         $dmtinhtranghdkt=dmtinhtrangthamgiahdkt::all();
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+        $donvi = danhmuchanhchinh::where('capdo','!=','T')->get();
         return view('reports.baocaotonghop.index', compact('nguoidung', 'company', 'dmdonvi'))
             ->with('m_huyen', $m_huyen)
+
             ->with('trinhdoGDPT', $trinhdoGDPT)
             ->with('trinhdocmkt', $trinhdocmkt)
             ->with('dmuutien', $dmuutien)
-            ->with('dmtinhtranghdkt', $dmtinhtranghdkt)
+            ->with('donvi', $donvi)
             ->with('a_kydieutra', $a_kydieutra)
             ->with('m_xa', $m_xa);
     }
@@ -188,11 +190,11 @@ class baocaotonghopController extends Controller
     public function mauso_03a_pl1()
     {
         $request = request();
-
+   
         $tuyendung = Tuyendung::find($request->idtuyendung);
         $vitritd = Vitrituyendung::find($request->id);
-
-
+        $kcn = $this->getParamsByNametype("Khu công nghiệp");// lấy danh mục khu công nghiệp
+   
         return view('reports.baocaotonghop.cauld.mauso_03a_pl1')
             ->with('tuyendung',$tuyendung) ->with('vitritd',$vitritd)
             ->with('pageTitle', 'Tình hình sử dụng lao động');
@@ -205,7 +207,19 @@ class baocaotonghopController extends Controller
     }
     public function nhucautuyendungld()
     {
+        $request = request();
+        $tuyendung = Tuyendung::find($request->id);
+        $vitritd = Vitrituyendung::where('idtuyendung',$request->id)->get();
+        $company = Company::where('user',$tuyendung->user)->first();
+        $manghe = dmmanghetrinhdo::where('trangthai','kh')->get();
+        $kcn = $this->getParamsByNametype("Khu công nghiệp")->where('id',$tuyendung->khucn)->first();
+       
         return view('reports.baocaotonghop.cauld.nhucautuyendungld')
+            ->with('kcn',$kcn)
+            ->with('vitritd',$vitritd)
+            ->with('tuyendung',$tuyendung)
+            ->with('company',$company)
+            ->with('manghe',$manghe)
             ->with('pageTitle', 'Thông tin nhu cầu tuyển dụng lao động');
     }
     public function cungldcapxahuyen(Request $request)

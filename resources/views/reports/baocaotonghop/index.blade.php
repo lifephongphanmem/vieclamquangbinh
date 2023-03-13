@@ -64,6 +64,15 @@
                                             <a href="#" data-target="#modify-modal-biendong-xa" data-toggle="modal">Danh sách biến động - Mẫu A3</a>
                                         </li>
                                         @endif
+
+
+                                    <li><a href="#" data-target="#danhsach-modal-confirm" data-toggle="modal">Báo cáo
+                                            thông tin lao động đủ 15 tuổi</a>
+                                    </li>
+                                    <li><a href="#" data-target="#danhsach-modal-nhankhau" data-toggle="modal">Báo cáo
+                                        thông tin chi tiết nhân khẩu</a>
+                                    </li>
+
                                 </ol>
 
                             </div>
@@ -455,12 +464,108 @@
         </div>
     </form>
 
+
     <!-- modal báo cáo tùy biến -->
-    <form method="POST" action="{{ '/baocaotuybien' }}" accept-charset="UTF-8" id="frm_modify_huyen" target="_blank">
+    {{-- <form method="POST" action="{{ '/baocaotuybien' }}" accept-charset="UTF-8" id="frm_modify_huyen" target="_blank">
         @csrf
         <div id="tuybien-modal" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg"> --}}
+
+    <!--Model lao động đủ 15 tuổi-->
+    <form method="POST" action="{{ '/nhankhau/danhsach_tinhtrang' }}" accept-charset="UTF-8" id="frmDanhsachnk" target="_blank">
+        @csrf
+        <div id="danhsach-modal-confirm" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">In báo cáo thông tin lao động đủ 15 tuổi</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12 mb-2">
+                            <label class="control-label">Đơn vị</label>
+                            <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                                {{-- <option value="">Tất cả</option> --}}
+                                @foreach ($m_xa as $key => $ct)
+                                    <option
+                                        value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="control-label">Kỳ điều tra</label>
+                            <select name="kydieutra" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($a_kydieutra as $key => $ct)
+                                    <option value="{{ $key }}">{{ $ct }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input name='tinhtrang' id='tinhtrang' value="4" hidden>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" id="submit" name="submit" value="submit"
+                            class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--Model chi tiết nhân khẩu -->
+    <form method="get" action="{{ '/nhankhau-in' }}" accept-charset="UTF-8" id="frmDanhsach" target="_blank">
+        @csrf
+        <div id="danhsach-modal-nhankhau" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">In báo cáo thông tin chi tiết nhân khẩu </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12 mb-2">
+                            <label class="control-label">Đơn vị</label>
+                            <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                                @foreach ($m_xa as $key => $ct)
+                                    <option
+                                        value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="control-label">Kỳ điều tra</label>
+                            <select name="kydieutra" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($a_kydieutra as $key => $ct)
+                                    <option value="{{ $key }}">{{ $ct }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" id="submit" name="submit" value="submit"
+                            class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div id="cungxahuyen-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frm_cungxahuyen" method="get" accept-charset="UTF-8"
+            action="{{ 'bao_cao_tong_hop/tong_hop_cung_ld_cap_xa_huyen' }}" target="_blank">>
+            @csrf
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4>

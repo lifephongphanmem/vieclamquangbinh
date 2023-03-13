@@ -129,7 +129,6 @@
                                             <option value='Gặp trực tiếp' <?php if ($td->contacttype == 'Gặp trực tiếp') {
                                                 echo 'selected';
                                             } ?>>Gặp trực tiếp</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -159,7 +158,6 @@
 									$i=0;
 								foreach ($vitris as $vitri) { $i++; ?>
                                 <div class="row" id="1stld">
-
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <div><a href="#"> Vị trí {{ $i }} </a> </div>
                                         <label> Tên công việc </label>
@@ -169,7 +167,6 @@
                                         <label>Số lượng tuyển</label>
                                         <input type="text" name="soluong[]" class="form-control" size=10
                                             value="{{ $vitri->soluong }}" required>
-
                                     </div>
                                     <div class="col-sm-4 ">
                                         <label> Mô tả công việc </label>

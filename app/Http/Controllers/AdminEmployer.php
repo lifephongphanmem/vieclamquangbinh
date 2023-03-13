@@ -215,6 +215,18 @@ class AdminEmployer extends Controller
 		return view('admin.employer.laodongnuocngoai.create');
 	}
 
-
+	public function indanhsach()
+	{
+		$model=DB::table('nguoilaodong')->wherenotin('nation',['VN','Viet Nam','vn','Việt Nam','không'])->get();
+        foreach($model as $ld){
+			
+			$cty= DB::table('company')->where('id',$ld->company)->get()->first();
+			$ld->ctyname=$cty->name;
+		}
+	
+		return view('admin.employer.laodongnuocngoai.indanhsach')
+		->with('model',$model)
+		->with('pageTitle','danh sách người lao động nước ngoài');
+	}
 
 }

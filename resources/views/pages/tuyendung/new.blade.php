@@ -11,6 +11,9 @@
             margin-top: 0px;
             padding: 0px 15px;
         }
+        td.input{
+            color: #313444;
+        }
     </style>
 @stop
 
@@ -62,7 +65,6 @@
                                                 <input type='date' name="thoihan" class="form-control" required>
                                             </div>
 
-
                                         </div>
                                         <div class="col-sm-5 ">
 
@@ -81,14 +83,12 @@
                                                 <input type="email" size=40 name="emailtd" class="form-control"required>
                                             </div>
 
-
                                             <div class="form-group">
                                                 <label> Yêu cầu TTDVVL</label>
                                                 <select class="form-control " name="yeucau">
                                                     <option value='Tư vấn' selected>Tư vấn</option>
                                                     <option value='Giới thiệu việc làm'>Giới thiệu việc làm</option>
                                                     <option value='Cung ứng lao động'>Cung ứng lao động</option>
-
                                                 </select>
                                             </div>
                                         </div>
@@ -108,8 +108,6 @@
                                                 <input type="text" name="quantity" id="quantity" class="form-control"
                                                     readonly value="1">
                                             </div>
-                                            </br>
-
                                         </div>
 
                                 </fieldset>
@@ -123,29 +121,27 @@
                                     <legend>
                                         <button type="button" class="btn btn-success">Vị trí tuyển dụng</button>
                                     </legend>
-                                    <div class="col-sm-6   ">
-                                        <table class="table table-bordered ">
+                                    <div class="col-sm-6 ">
+                                        <table class="table table-bordered " >
                                             <tr>
-                                                <td width="30%">Tên công việc (*)</td>
+                                                <td style="color: #313444;" width="30%" >Tên công việc (*)</td>
                                                 <td>
-
-                                                    <input type="text" name="name[]" size=40 required>
+                                                    <input class="form-control" type="text" name="name[]"  required>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Số lượng tuyển (*)</td>
-                                                <td><input type="text" name="soluong[]" size=10 required></td>
+                                                <td style="color: #313444;">Số lượng tuyển (*)</td>
+                                                <td><input class="form-control" type="text" name="soluong[]" required></td>
                                             </tr>
                                             <tr>
-                                                <td>Mô tả công việc (*)</td>
+                                                <td style="color: #313444;">Mô tả công việc (*)</td>
                                                 <td>
-                                                    <textarea rows=6 cols=30 name="description[]" required></textarea>
+                                                    <textarea class="form-control" rows=6 cols=30 name="description[]" required></textarea>
                                                 </td>
                                             </tr>
 
-
                                             <tr>
-                                                <td>Trình độ văn hóa</td>
+                                                <td style="color: #313444;">Trình độ văn hóa</td>
                                                 <td>
                                                     <select class="form-control " name="tdgd[]">
                                                         <?php foreach ( $list_tdgd as $td){ ?>
@@ -156,7 +152,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Trình độ CMKT</td>
+                                                <td style="color: #313444;">Trình độ CMKT</td>
                                                 <td>
                                                     <select class="form-control " name="tdcmkt[]">
                                                         <?php foreach ( $list_cmkt as $td){ ?>
@@ -166,7 +162,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Chuyên ngành đào tạo</td>
+                                                <td style="color: #313444;">Chuyên ngành đào tạo</td>
                                                 <td>
                                                     <select class="form-control " name="chuyennganh[]">
 
@@ -178,21 +174,24 @@
                                             </tr>
 
                                             <tr>
-                                                <td>Trình độ ngoại ngữ</td>
+                                                <td style="color: #313444;">Trình độ ngoại ngữ</td>
                                                 <td>
-                                                    Ngoại ngữ 1 <input type="text" size=10 name="ngoaingu1[]"
-                                                        value=""> Chứng chỉ <input type="text" size=2
-                                                        name="chungchinn1[]" value=" ">
-                                                    <select class="form-control " name="xeploainn1[]">
+                                                   <span style="color: #313444;">Ngoại ngữ 1 </span>
+                                                    <input type="text" name="ngoaingu1[]" value="" style="width: 30%;height: 2.5rem;
+                                                     margin-right: 2%;border:1px solid #E4E6EF;" >
+                                                    <span style="color: #313444;"> Chứng chỉ</span>
+                                                    <input type="text" size=2 name="chungchinn1[]" value=" "  style="width: 30%;height: 2.5rem;border:1px solid #E4E6EF" ><br>
+                                                    <select class="form-control " name="xeploainn1[]" style="margin-top: 0.3rem">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
                                                     </select>
                                                     <br>
-                                                    Ngoại ngữ 2 <input type="text" size=10 value=" "
-                                                        name="ngoaingu2[]"> Chứng chỉ <input type="text" size=2
-                                                        name="chungchinn2[]"value=" ">
-                                                    <select class="form-control " name="xeploainn1[]">
+                                                    <span style="color: #313444;">ngại ngữ 2 </span>
+                                                    <input type="text"  value=" " name="ngoaingu2[]" style="width: 30%;height: 2.5rem;margin-right: 2%;border:1px solid #E4E6EF">
+                                                    <span style="color: #313444;"> Chứng chỉ</span> 
+                                                    <input type="text" size=2 name="chungchinn2[]"value=" " style="width: 30%;height: 2.5rem;border:1px solid #E4E6EF">
+                                                    <select class="form-control " name="xeploainn1[]" style="margin-top: 0.3rem">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
@@ -200,16 +199,15 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Trình độ tin học</td>
-                                                <td>Tin học văn phòng
-                                                    <select class="form-control " name="loaithvp[]">
+                                                <td style="color: #313444;">Trình độ tin học</td>
+                                                <td style="color: #313444;">Tin học văn phòng
+                                                    <select class="form-control " name="loaithvp[]" style="margin-bottom: 1.5rem">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
                                                     </select>
-                                                    Khác <input type="text" size=10 value=" "
-                                                        name="tinhockhac[]">
-                                                    <select class="form-control " name="loaithk[]">
+                                                    Khác <input type="text"  value=" " name="tinhockhac[]" style="width: 90%;height: 2.5rem;border:1px solid #E4E6EF;" >
+                                                    <select class="form-control " name="loaithk[]" style="margin-top: 0.3rem">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
@@ -227,12 +225,11 @@
                                     <div class="col-sm-6">
                                         <table class="table table-bordered ">
                                             <tr>
-                                                <td>Kỹ năng mềm</td>
+                                                <td style="color: #313444;">Kỹ năng mềm</td>
                                                 <td>
-                                                    <input type="hidden" name="kynangmem[]" class="kynangmem"
-                                                        value="">
-                                                    <select class="form-control kynang" rows=11 multiple height="40">
-                                                        <option value='Giao tiếp' selected>Giao tiếp</option>
+
+                                                    <select class="form-control select2basic"  multiple  name="kynangmem[]" >
+                                                        <option value='Giao tiếp' >Giao tiếp</option>
                                                         <option value='Thuyết trình'>Thuyết trình</option>
                                                         <option value='Quản lý thời gian'>Quản lý thời gian</option>
                                                         <option value='Quản lý nhân sự'>Quản lý nhân sự</option>
@@ -248,7 +245,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Yêu cầu kinh nghiệm</td>
+                                                <td style="color: #313444;">Yêu cầu kinh nghiệm</td>
                                                 <td>
                                                     <select class="form-control " name="yeucaukn[]">
                                                         <option value='Không yêu cầu' selected>Không yêu cầu</option>
@@ -262,16 +259,16 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Nơi làm việc dự kiến (*)</td>
+                                                <td style="color: #313444;">Nơi làm việc dự kiến (*)</td>
                                                 <td>
 
-                                                    <input type="text" size=40 name="diadiem[]" required>
+                                                    <input class="form-control "  type="text" size=40 name="diadiem[]" required>
                                                 </td>
                                             </tr>
 
 
                                             <tr>
-                                                <td>Hình thức làm việc</td>
+                                                <td style="color: #313444;">Hình thức làm việc</td>
                                                 <td>
                                                     <select class="form-control " name="hinhthuclv[]">
                                                         <option value='Toàn thời gian' selected>Toàn thời gian</option>
@@ -281,7 +278,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Mục đích làm việc</td>
+                                                <td style="color: #313444;">Mục đích làm việc</td>
                                                 <td>
                                                     <select class="form-control " name="mucdichlv[]">
                                                         <option value='Làm lâu dài' selected>Làm lâu dài</option>
@@ -292,7 +289,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Mức lương (*)</td>
+                                                <td style="color: #313444;">Mức lương (*)</td>
                                                 <td>
                                                     <select class="form-control" name="mucluong[]">
                                                         <option value='Dưới 5 triệu' selected> Dưới 5 triệu </option>
@@ -306,7 +303,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Hỗ trợ ăn uống </td>
+                                                <td style="color: #313444;">Hỗ trợ ăn uống </td>
                                                 <td>
                                                     <select class="form-control " name="hotroan[]">
                                                         <option value='Không' selected> Không</option>
@@ -319,7 +316,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Phúc lợi khác</td>
+                                                <td style="color: #313444;">Phúc lợi khác</td>
                                                 <td>
                                                     <input type="hidden" name="phucloi[]" class="phucloival"
                                                         value="">
@@ -342,7 +339,7 @@
                                                     hội thăng tiến
                                                     <br>
                                                     <input type="checkbox" id="checkphucloikhac"> Khác <input
-                                                        type="text" id="phucloikhac" value="" size=30>
+                                                    class="form-control "   type="text" id="phucloikhac" value="" size=30>
 
 
                                                 </td>
