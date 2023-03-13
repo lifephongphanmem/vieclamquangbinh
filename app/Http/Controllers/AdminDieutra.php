@@ -17,19 +17,13 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\danhsach;
 use App\Models\danhsachloi;
-use App\Models\danhsachnhankhau;
-use App\Models\m_nhankhau;
 use App\Models\Nhankhau;
 use App\Models\nhankhauModel;
 use App\Models\Report;
 use App\Models\User;
-use App\Models\view\view_bao_cao_tonghop;
-use Carbon\Carbon;
-use Hamcrest\Type\IsNumeric;
 use Session;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 
-use Maatwebsite\Excel\Facades\Excel;
 
 class AdminDieutra extends Controller
 {
@@ -973,6 +967,7 @@ class AdminDieutra extends Controller
     public function export_biendong(Request $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
         if(session('admin')->capdo == 'X'){
             $inputs['madv']=session('admin')->madv;
         }
@@ -981,28 +976,57 @@ class AdminDieutra extends Controller
             ->get();
         $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
         $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
-        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+        $model_biendong = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where(function ($query) use ($inputs) {
-                if ($inputs['biendong'] != 'all') {
+                if ($inputs['biendong'] != 'all' && $inputs['biendong'] != 4) {
                     $query->where('loaibiendong', $inputs['biendong']);
                 }
 
                 if($inputs['madv'] != 'all'){
                     $query->where('madv',$inputs['madv']);
                 }else{
-                    $a_xa=getMaXa(session('admin')->maquocgia);
+                    $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
                     $query->wherein('madv',$a_xa);
                 }
             })
             ->get();
+            // dd($model_biendong->take(10));
+            //Báo giảm
+            if(in_array($inputs['biendong'],['all',4])){
+                $a_cccd=array_column($model_biendong->toarray(),'cccd');
+                $model_giam=nhankhauModel::where('kydieutra',($inputs['kydieutra']-1))
+                                        ->where(function($query) use ($inputs){
+                                            if($inputs['madv'] != 'all'){
+                                                $query->where('madv',$inputs['madv']);
+                                            }else{
+                                                $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
+                                               
+                                                $query->wherein('madv',$a_xa);
+                                            }
+                                        })
+                                        ->get();
+                                        $model_giam=$a_cccd == []?$model_giam:$model_giam->wherenotin('cccd',$a_cccd);
+                                       
+                                        foreach($model_giam as $ct){
+                                            $ct->loaibiendong=4;
+                                        }
+                                        
+                                        $collection=new Collection([$model_biendong,$model_giam]);
+                                        $model=$collection->collapse();
+            }else{
+                $model=$model_biendong;
+            }
 
+                                    // dd($model);
+            
         switch ($inputs['biendong']) {
             case 'all':
                     $a_loaibiendong = array(
                         '0' => 'Nhận từ file excel',
                         '1' => 'Nhận thủ công',
                         '2' => 'Báo tăng',
-                        '3' => 'Cập nhật thông tin'
+                        '3' => 'Cập nhật thông tin',
+                        '4' => 'Báo giảm'
                     );
                     break;
             case 0:
@@ -1017,7 +1041,9 @@ class AdminDieutra extends Controller
             case 3:
                 $a_loaibiendong = array('3' => 'Cập nhật thông tin');
                 break;
-
+            case 4:
+                $a_loaibiendong = array('4' => 'Báo giảm');
+                break;
         }
 
         return view('admin.dieutra.biendong.danhsach')

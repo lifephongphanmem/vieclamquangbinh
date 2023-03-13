@@ -59,11 +59,11 @@
                                         {{-- <li>
                                             <a href="#" data-target="#modify-modal-biendong" data-toggle="modal">Danh sách biến động (Tỉnh) - Mẫu A3</a>
                                         </li> --}}
+                                        @if (in_array(session('admin')->capdo,['H','X']))
                                         <li>
                                             <a href="#" data-target="#modify-modal-biendong-xa" data-toggle="modal">Danh sách biến động - Mẫu A3</a>
                                         </li>
-
-
+                                        @endif
                                 </ol>
 
                             </div>
@@ -663,15 +663,23 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-lg-12 mb-2">
+                            <div class="col-lg-12 mb-2 mt-2">
                                 <label class="control-label">Đơn vị</label>
                                 <select name="madv" id="" class="form-control select2basic" style="width:100%">
                                     <option value="all">Tất cả</option>
+                                    @if (session('admin')->capdo == 'T')
+                                    @foreach ($m_huyen as $key => $ct)
+                                    <option
+                                        value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
+                                @endforeach
+                                    @else
                                     @foreach ($m_xa as $key => $ct)
-                                        <option
-                                            value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
-                                            {{ $ct->name }}</option>
-                                    @endforeach
+                                    <option
+                                        value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
+                                @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-lg-12">
@@ -682,6 +690,7 @@
                                     <option value="2">Báo tăng</option>
                                     <option value="1">Nhận thủ công</option>
                                     <option value="3">Cập nhật thông tin</option>
+                                    <option value="4">Báo giảm</option>
                                 </select>
                             </div>
     

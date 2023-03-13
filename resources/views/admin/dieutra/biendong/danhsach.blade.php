@@ -79,7 +79,7 @@
             ?>
             <tr style="font-weight:bold">
                 <td>{{convert2Roman($stt)}}</td>
-                <td colspan="24">{{$val}}</td>
+                <td colspan="25">{{$val}}</td>
             </tr>
             @foreach ($m_model as $item)
             <tr>
