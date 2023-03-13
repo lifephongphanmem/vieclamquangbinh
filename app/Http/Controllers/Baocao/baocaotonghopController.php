@@ -96,10 +96,10 @@ class baocaotonghopController extends Controller
         $donvi = danhmuchanhchinh::where('capdo','!=','T')->get();
         return view('reports.baocaotonghop.index', compact('nguoidung', 'company', 'dmdonvi'))
             ->with('m_huyen', $m_huyen)
-
             ->with('trinhdoGDPT', $trinhdoGDPT)
             ->with('trinhdocmkt', $trinhdocmkt)
             ->with('dmuutien', $dmuutien)
+            ->with('dmtinhtranghdkt', $dmtinhtranghdkt)
             ->with('donvi', $donvi)
             ->with('a_kydieutra', $a_kydieutra)
             ->with('m_xa', $m_xa);

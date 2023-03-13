@@ -64,14 +64,12 @@
                                             <a href="#" data-target="#modify-modal-biendong-xa" data-toggle="modal">Danh sách biến động - Mẫu A3</a>
                                         </li>
                                         @endif
-
-
-                                    <li><a href="#" data-target="#danhsach-modal-confirm" data-toggle="modal">Báo cáo
-                                            thông tin lao động đủ 15 tuổi</a>
+                                        @if (chkPhanQuyen('danhsachxa', 'phanquyen'))
+                                    <li><a href="#" data-target="#danhsach-modal-confirm" data-toggle="modal">Lao động sắp tốt nghiệp PTTH</a>
                                     </li>
-                                    <li><a href="#" data-target="#danhsach-modal-nhankhau" data-toggle="modal">Báo cáo
-                                        thông tin chi tiết nhân khẩu</a>
+                                    <li><a href="#" data-target="#danhsach-modal-nhankhau" data-toggle="modal">Lao động đủ 15 tuổi</a>
                                     </li>
+                                    @endif
 
                                 </ol>
 

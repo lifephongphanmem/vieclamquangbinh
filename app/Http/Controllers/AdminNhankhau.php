@@ -534,9 +534,9 @@ class AdminNhankhau extends Controller
         $inputs = $request->all();
 
         if ($inputs['tinhtrang'] != 4) {
-            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like','%'.$inputs['kydieutra'].'%')->where('tinhtranghdkt', $inputs['tinhtrang'])->get();
+            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like',$inputs['kydieutra'])->where('tinhtranghdkt', $inputs['tinhtrang'])->get();
         } else {
-            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like','%'.$inputs['kydieutra'].'%')->where('tinhtranghdkt', 3)->where('khongthamgiahdkt', 1)->get();
+            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like',$inputs['kydieutra'])->where('tinhtranghdkt', 3)->where('khongthamgiahdkt', 1)->get();
             foreach ($model as $val) {
                 $ns = str_replace('/', '-', $val->ngaysinh);
                 $ns1 = str_replace('--', '-', $ns);
