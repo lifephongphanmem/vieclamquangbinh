@@ -11,6 +11,7 @@
     <title>Trung tâm dịch vụ việc làm Quảng Bình</title>
     <meta name="description" content="Quản lý việc làm" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
     <link rel="canonical" href="https://phanmemcuocsong.com" />
         <!--begin::hethongcu-->
         {{-- <link rel="stylesheet" href="{{URL::asset('')}}backend/css/bootstrap.min.css" > --}}

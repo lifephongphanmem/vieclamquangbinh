@@ -18,6 +18,9 @@ Route::post('/DangNhap',[HethongchungController::class,'DangNhap']);
 Route::post('/DangKy',[HethongchungController::class,'DangKy']);
 Route::get('/DangXuat',[HethongchungController::class,'logout']);
 
+//kích hoạt tài khoản
+Route::get('/kichhoat',[HethongchungController::class,'kichhoat']);
+
 
 
 //dmdonvi
