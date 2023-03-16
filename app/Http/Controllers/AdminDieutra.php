@@ -1052,4 +1052,41 @@ class AdminDieutra extends Controller
             ->with('m_donvi', $m_donvi)
             ->with('pageTitle', 'Danh sách biến động');
     }
+
+    public function TaoMoi(){
+        $kydieutra_truoc=nhankhauModel::max('kydieutra');
+        $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->get();
+        $danhsach_kytruoc=danhsach::where('user_id',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->first();
+        dd(session('admin'));
+        // $data=[
+        //     'tinh'=>44,
+        //     'huyen'=>$danhsach_kytruoc->huyen,
+        //     'xa'=>$danhsach_kytruoc->xa,
+        //     'soluong'=>0,
+        //     'soho'=>0,
+        //     'kydieutra'=>$kydieutra_truoc+1,
+        //     'donvinhap'=>session('admin')->madv,
+        //     'user_id'=>$danhsach_kytruoc->user_id,
+        //     'loi_cccd'=>$danhsach_kytruoc->loi-cccd,
+        //     'loi_hoten'=>$danhsach_kytruoc->loi_hoten,
+        //     'loi_ngaysinh'=>$danhsach_kytruoc->loi_ngaysinh,
+        //     'loi_loai2'=>$da
+        // ]
+            $danhsach_kytruoc->soluong=0;
+            $danhsach_kytruoc->donvinhap=session('admin')->madv;
+            $danhsach_kytruoc->soho=0;
+            $danhsach_kytruoc->kydieutra=date('Y');
+        unset($danhsach_kytruoc->id,$danhsach_kytruoc->created_at);
+        $danhsach=danhsach::create($danhsach_kytruoc->toarray());
+        $count_nhankhau=0;
+        foreach($model as $ct){
+            $ct->kydieutra=date('Y');
+            $ct->danhsach_id=$danhsach->id;
+            unset($ct->id);
+            nhankhauModel::create($ct->toarray());
+            $count_nhankhau++;
+        }
+        $danhsach->update(['soluong'=>$count_nhankhau]);
+        return redirect('/dashboard')->with('success','Tạo kỳ điều tra mới thành công');
+    }
 }

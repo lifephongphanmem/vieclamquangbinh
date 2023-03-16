@@ -10,12 +10,12 @@ class nhankhauModel extends Model
     use HasFactory;
 
     protected $table='nhankhau';
-    public $timestamps = false;
     protected $fillable=[
         'danhsach_id',
         'hoten','gioitinh','ngaysinh','cccd','bhxh','thuongtru','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat','chuyennganh','tinhtranghdkt',
         'nguoicovieclam','congvieccuthe','thamgiabhxh','hdld','noilamviec','loaihinhnoilamviec','diachinoilamviec','thatnghiep','thoigianthatnghiep',
-        'khongthamgiahdkt','ho','mqh','maloi','maloailoi','madv','kydieutra','soluongtrung','loaibiendong'
+        'khongthamgiahdkt','ho','mqh','maloi','maloailoi','madv','kydieutra','soluongtrung','loaibiendong','truongbiendong'
 
+        //Loại biến động: 1:báo tăng, 2:báo giảm,3:cập nhật
     ];
 }

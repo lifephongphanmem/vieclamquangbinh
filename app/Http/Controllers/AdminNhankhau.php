@@ -69,7 +69,7 @@ class AdminNhankhau extends Controller
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
-        $lds = nhankhauModel::where('kydieutra','like','%'.$inputs['kydieutra'].'%')
+        $lds = nhankhauModel::where('kydieutra','like',$inputs['kydieutra'])
             ->where('madv', $inputs['madv'])->get();
         $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
@@ -316,6 +316,8 @@ class AdminNhankhau extends Controller
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
         $model = new Nhankhau();
         $ld = $model::find($nkid);
+        // dd($inputs);
+        $inputs['kydieutra']=$ld->kydieutra;
         if (isset($inputs['loailoi'])) {
             return view('admin.nhankhau.edit_loi')
                 ->with('ld', $ld)
@@ -497,27 +499,50 @@ class AdminNhankhau extends Controller
         $note='';
         $model->fill($inputs);
         $dirty=$model->getDirty();
+        // dd($dirty);
 		$sqty=count($dirty);
 		
 		$danhsach= array();
-		
+        $biendong=false;
+        // $danhsach[]=$model->cccd;
+		$arr_biendong=array('trinhdogiaoduc','chuyenmonkythuat','chuyennganh','tinhtranghdkt','nguoicovieclam','congvieccuthe','loaihinhnoilamviec','thatnghiep','thoigianthatnghiep','khongthamgiahdkt');
 		foreach ($dirty as $field => $newdata)
         {
           $olddata = $model->getOriginal($field);
-          if ($olddata != $newdata)
+          if ($olddata != $newdata && in_array($field,$arr_biendong))
           {
-           $danhsach[]=$field. " thay đổi từ ".$olddata." sang ".$newdata;
+        //    $danhsach[]=$field. " thay đổi từ ".$olddata." sang ".$newdata;
+           $danhsach[]=$field;
+           $biendong=true;
+
           }
         }
         // dd($danhsach);
         $user=User::where('madv',$model->madv)->first()->id;
+
+        
         if($sqty > 0){
-            $inputs['loaibiendong']=3;//cập nhật thông tin
+            if($biendong){
+                $inputs['loaibiendong']=3;
+                $note= implode( " ; ",$danhsach);
+                $inputs['truongbiendong']=$note;
+                //Tính xem nhân khẩu đã có cập nhật chưa
+                $nhankhau_capnhat=DB::table('report')->where('user',$user)->where('kydieutra',$model->kydieutra)->where('lastid',$model->id)->first();
+                
+                if(isset($nhankhau_capnhat )){
+                    $nhankhau_capnhat->update(['note'=>$note]);
+                }else{
+                    $rm = new Report();
+                    // $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
+                    
+                    $rm->report('updateinfo', "1", 'nhankhau', $model->id, 1, $note,$user,$model->kydieutra);  
+                }
+            }
+            // $inputs['loaibiendong']=3;//cập nhật thông tin
             $model->update($inputs);
-            $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', 'like'.$kydieutra.'%')->where('ho', $model->ho)->where('mqh', 'CH')->first();
-            $rm = new Report();
-            $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
-            $rm->report('updateinfo', "1", 'nhankhau', DB::getPdo()->lastInsertId(), 1, $note,$user,$model->kydieutra);
+            $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
+           
+
         }
 
         if (isset($sualoi)) {

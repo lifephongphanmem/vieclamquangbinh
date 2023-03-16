@@ -110,3 +110,11 @@ function getKydieutra($kydieutra){
 
     return $a_kydieutra;
 }
+
+function getdanhmuc()
+{
+
+    $dm = DB::table('danhmuchanhchinh')->where('public', '1')->get();
+    return $dm;
+}
+
