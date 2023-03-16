@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\AdminBiendong;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route; 
 use App\Http\Controllers\UserController; 
@@ -182,6 +183,7 @@ Route::prefix('dieutra')->group(function(){
     Route::get('/danhsachloi/{id}',[AdminDieutra::class,'danhsachloi']);
     Route::get('/danhsachloi_chitiet',[AdminDieutra::class,'danhsachloi_chitiet']);
     Route::post('/indanhsachloi',[AdminDieutra::class,'indanhsachloi']);
+    Route::get('/TaoMoi',[AdminDieutra::class,'TaoMoi']);
 
 });
 
@@ -329,10 +331,17 @@ Route::prefix('/biendong')->group(function(){
     Route::get('/inbiendong',[AdminDieutra::class,'inbiendong']);
     Route::post('/tonghopbiendong',[AdminDieutra::class,'tonghopbiendong']);
     Route::post('/danhsach',[AdminDieutra::class,'export_biendong']);
+
+    Route::get('/danhsach_biendong',[AdminBiendong::class,'index_cung']);
+    Route::get('/thongtinthaydoi/{id}',[AdminBiendong::class,'thongtinthaydoi']);
 });
 
 Route::prefix('BaoCaoDN')->group(function(){
     Route::get('/',[baocaotonghopController::class,'BaoCaoDN']);
+});
+
+Route::prefix('baocao_tonghop')->group(function(){
+    Route::get('/',[baocaotonghopController::class,'index_cung']);
 });
 
 

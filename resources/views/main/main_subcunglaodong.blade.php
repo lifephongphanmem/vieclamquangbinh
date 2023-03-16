@@ -27,8 +27,6 @@
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
                 @if (chkPhanQuyen('danhsachdieutra', 'phanquyen'))
-
-                {{-- @endif --}}
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <i class="menu-bullet menu-bullet-dot">
@@ -190,5 +188,6 @@
             </ul>
         </div>
     </li>
+    
             
 @endif
