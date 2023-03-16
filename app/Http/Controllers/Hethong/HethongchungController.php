@@ -84,7 +84,7 @@ class HethongchungController extends Controller
 				'password'=>$inputs['password']
 			];
 		  }
-
+	
 		//Sai tài khoản
 
 		$res=Auth::attempt($data);
@@ -154,6 +154,7 @@ class HethongchungController extends Controller
 		// dd(session('chucnang'));
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['username'])->get()->keyBy('machucnang')->toArray());
+		
 		if(session('admin')->phanloaitk ==1){
 			return redirect('/dashboard')
 			->with('success', 'Đăng nhập thành công');
@@ -161,7 +162,7 @@ class HethongchungController extends Controller
 			return redirect('/doanhnghieppanel')
 			->with('success', 'Đăng nhập thành công');
 		}
-
+		
 	}
 	public function logout()
 	{

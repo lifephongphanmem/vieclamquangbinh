@@ -31,7 +31,7 @@ class UserController extends Controller
 	
 	  public function show_login () {
 		  
-		 
+	
 		// if (Auth::check()) {
 		// 	if (Auth::user()->level==3)
         //    return redirect('doanhnghieppanel');

@@ -113,13 +113,93 @@
         </div>
     @endif
     @if (chkPhanQuyen('trangchuxa', 'phanquyen'))
+    @if ($kydieutra_truoc != null)
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card card-custom">
+
+                <div class="card-header card-header-tabs-line">
+                    <div class="card-title">
+                        <h3 class="card-label text-uppercase">Kỳ điều tra năm {{$kydieutra_truoc}}</h3>
+                    </div>
+                    <div class="card-toolbar">
+                        {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
+                        class="btn btn-sm btn-success" onclick="intonghop()">
+                        <i class="icon-lg la flaticon2-print"></i> In tổng hợp
+                    </button> --}}
+                    </div>
+                </div>
+                <div class="market-updates">
+                    <div class="col-md-3 market-update-gd">
+                        <div class="market-update-block clr-block-2">
+                            <div class="col-md-4 market-update-right">
+                                <i class="fa fa-eye"> </i>
+                            </div>
+                            <div class="col-md-8 market-update-left">
+                                <h4>LĐ trên 15 tuổi</h4>
+                                <h4>{{ $tongsonhankhau['kytruoc'] }}</h4>
+
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 market-update-gd">
+                        <div class="market-update-block clr-block-1">
+                            <div class="col-md-4 market-update-right">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="col-md-8 market-update-left">
+                                <h4>LĐ có việc làm</h4>
+                                {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
+                                <h4>{{ $ldcovieclam['kytruoc'] }}</h4>
+
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 market-update-gd">
+                        <div class="market-update-block clr-block-3">
+                            <div class="col-md-4 market-update-right">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="col-md-8 market-update-left">
+                                <h4>LĐ thất nghiệp</h4>
+                                {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
+                                <h4>{{ $ldthatnghiep['kytruoc'] }}</h4>
+
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 market-update-gd">
+                        <div class="market-update-block clr-block-4">
+                            <div class="col-md-4 market-update-right">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-12 market-update-left">
+                                <h4>LĐ không tham gia HĐKT</h4>
+                                {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
+                                <h4>{{ $ldkhongthamgia['kytruoc'] }}</h4>
+
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+
         <div class="row mt-5">
             <div class="col-md-12">
                 <div class="card card-custom">
 
                     <div class="card-header card-header-tabs-line">
                         <div class="card-title">
-                            <h3 class="card-label text-uppercase">Cung lao động</h3>
+                            <h3 class="card-label text-uppercase">Kỳ điều tra năm {{$kydieutra_hientai}}</h3>
                         </div>
                         <div class="card-toolbar">
                             {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
@@ -136,7 +216,7 @@
                                 </div>
                                 <div class="col-md-8 market-update-left">
                                     <h4>LĐ trên 15 tuổi</h4>
-                                    <h4>{{ $tongsonhankhau }}</h4>
+                                    <h4>{{ $tongsonhankhau['kyhientai'] }}</h4>
 
                                 </div>
                                 <div class="clearfix"> </div>
@@ -150,7 +230,7 @@
                                 <div class="col-md-8 market-update-left">
                                     <h4>LĐ có việc làm</h4>
                                     {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
-                                    <h4>{{ $ldcovieclam }}</h4>
+                                    <h4>{{ $ldcovieclam['kyhientai'] }}</h4>
 
                                 </div>
                                 <div class="clearfix"> </div>
@@ -164,7 +244,7 @@
                                 <div class="col-md-8 market-update-left">
                                     <h4>LĐ thất nghiệp</h4>
                                     {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
-                                    <h3>{{ $ldthatnghiep }}</h3>
+                                    <h4>{{ $ldthatnghiep['kyhientai'] }}</h4>
 
                                 </div>
                                 <div class="clearfix"> </div>
@@ -178,7 +258,7 @@
                                 <div class="col-md-12 market-update-left">
                                     <h4>LĐ không tham gia HĐKT</h4>
                                     {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
-                                    <h3>{{ $ldkhongthamgia }}</h3>
+                                    <h4>{{ $ldkhongthamgia['kyhientai'] }}</h4>
 
                                 </div>
                                 <div class="clearfix"> </div>
@@ -186,12 +266,114 @@
                         </div>
                         <div class="clearfix"> </div>
                     </div>
-                    <a href="" class="btn btn-sm btn-primary col-md-3 mb-3 ml-3">Xuất báo cáo theo mẫu 03/TT1
-
-                    </a>
                 </div>
             </div>
         </div>
+        @if ($kydieutra_truoc != null)
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card card-custom">
+
+                    <div class="card-header card-header-tabs-line">
+                        <div class="card-title">
+                            <h3 class="card-label text-uppercase">Biến động</h3>
+                        </div>
+                        <div class="card-toolbar">
+                            {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
+                            class="btn btn-sm btn-success" onclick="intonghop()">
+                            <i class="icon-lg la flaticon2-print"></i> In tổng hợp
+                        </button> --}}
+                        </div>
+                    </div>
+                    <div class="market-updates">
+                        <div class="col-md-3 market-update-gd">
+                            <div class="market-update-block clr-block-2">
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-eye"> </i>
+                                </div>
+                                <div class="col-md-8 market-update-left">
+                                    <h4>LĐ trên 15 tuổi</h4>
+                                    <h4>
+                                        @if($tongso_biendong==0)
+                                        {{$tongso_biendong}}
+                                        @elseif ($tongso_biendong > 0)
+                                        Tăng : {{$tongso_biendong}}
+                                        @else
+                                        Giảm : {{abs($tongso_biendong)}}
+                                        @endif</h3>
+                                    </h4>
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 market-update-gd">
+                            <div class="market-update-block clr-block-1">
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="col-md-8 market-update-left">
+                                    <h4>LĐ có việc làm</h4>
+                                    {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
+                                    <h4>@if($ldcovieclam_biendong==0)
+                                        {{$ldcovieclam_biendong}}
+                                        @elseif ($ldcovieclam_biendong > 0)
+                                        Tăng : {{$ldcovieclam_biendong}}
+                                        @else
+                                        Giảm : {{abs($ldcovieclam_biendong)}}
+                                        @endif
+                                    </h4>
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 market-update-gd">
+                            <div class="market-update-block clr-block-3">
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="col-md-8 market-update-left">
+                                    <h4>LĐ thất nghiệp</h4>
+                                    {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
+                                    <h4>@if($ldthatnghiep_biendong==0)
+                                        {{$ldthatnghiep_biendong}}
+                                        @elseif ($ldthatnghiep_biendong > 0)
+                                        Tăng : {{$ldthatnghiep_biendong}}
+                                        @else
+                                        Giảm : {{abs($ldthatnghiep_biendong)}}
+                                        @endif</h4>
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 market-update-gd">
+                            <div class="market-update-block clr-block-4">
+                                <div class="col-md-4 market-update-right">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-md-12 market-update-left">
+                                    <h4>LĐ không tham gia HĐKT</h4>
+                                    {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
+                                    <h4>@if($ldkhongthamgia_biendong==0)
+                                        {{$ldkhongthamgia_biendong}}
+                                        @elseif ($ldkhongthamgia_biendong > 0)
+                                        Tăng : {{$ldkhongthamgia_biendong}}
+                                        @else
+                                        Giảm : {{abs($ldkhongthamgia_biendong)}}
+                                        @endif</h4>
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     @endif
     <!-- //market-->
     {{-- <div class="row mb-3"  >

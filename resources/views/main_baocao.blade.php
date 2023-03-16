@@ -43,10 +43,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
     <script type="text/javascript" src="{{ url('js/sheet.js') }}"></script>
 
+
     <!-- END THEME STYLES -->
-    <link rel="shortcut icon" href="{{ url('images/LIFESOFT.png') }}" type="image/x-icon">
+    {{-- <link rel="shortcut icon" href="{{ url('images/LIFESOFT.png') }}" type="image/x-icon"> --}}
+    <link rel="shortcut icon" href="{{ url('assets/media/logos/ttdvvl.png') }}" />
     <style type="text/css">
         /* .header tr td {
             padding-top: 0px;
@@ -205,10 +208,12 @@
         // }
 
         function exportTableToExcel(type) {
-            //  var downloadLink;
+
+             var downloadLink;
             //var dataType = 'application/vnd.ms-excel';
             var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             // var dataType = 'application/x-xls';
+
 
             var tableHTML = '';
             //Tiêu đề
@@ -258,14 +263,14 @@
                 tableHTML = tableHTML + data_footer1.outerHTML.replace(/ /g, '%20');
             }
             // Specify file name
-            var filename = $('#title').val();
+
+             var filename = $('#title').val() + '.xls' ;
+         
 
             // Create download link element
             downloadLink = document.createElement("a");
-
+            
             document.body.appendChild(downloadLink);
-            // console.log(tableHTML);
-
 
             if (navigator.msSaveOrOpenBlob) {
                 var blob = new Blob(['\ufeff', tableHTML], {
@@ -274,6 +279,7 @@
                 navigator.msSaveOrOpenBlob(blob, filename);
             } else {
                 // Create a link to the file
+
                 downloadLink.href = 'data:' + dataType + ',' + tableHTML;
 
                 // Setting the file name

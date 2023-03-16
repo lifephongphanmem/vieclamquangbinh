@@ -50,24 +50,17 @@
                                                 thông tin cung lao động - Huyện (Mẫu 03)</a>
                                         </li>
                                     @endif
-                                    @if (chkPhanQuyen('baocaotinh', 'phanquyen'))
-                                        <li><a href="#" data-target="#modify-modal-tinh" data-toggle="modal">Báo cáo
-                                                thông tin cung lao động - Tỉnh (Mẫu 03)</a>
-                                        </li>
-                                    @endif
-                                    {{-- <li><a href="#" data-target="#tuybien-modal" data-toggle="modal">Báo cáo tùy biến</a> --}}
-                                        {{-- <li>
-                                            <a href="#" data-target="#modify-modal-biendong" data-toggle="modal">Danh sách biến động (Tỉnh) - Mẫu A3</a>
-                                        </li> --}}
                                         @if (in_array(session('admin')->capdo,['H','X']))
                                         <li>
                                             <a href="#" data-target="#modify-modal-biendong-xa" data-toggle="modal">Danh sách biến động - Mẫu A3</a>
                                         </li>
                                         @endif
+
+                                        <li>
+                                            <a href="#" data-target="#modify-modal-biendong-xa" data-toggle="modal">Tổng hợp </a>
+                                        </li>
                                         @if (chkPhanQuyen('danhsachxa', 'phanquyen'))
-                                    <li><a href="#" data-target="#danhsach-modal-confirm" data-toggle="modal">Lao động sắp tốt nghiệp PTTH</a>
-                                    </li>
-                                    <li><a href="#" data-target="#danhsach-modal-nhankhau" data-toggle="modal">Lao động đủ 15 tuổi</a>
+                                    <li><a href="#" data-target="#danhsach-modal-nhankhau" data-toggle="modal">Báo cáo thông tin thị trường</a>
                                     </li>
                                     @endif
 

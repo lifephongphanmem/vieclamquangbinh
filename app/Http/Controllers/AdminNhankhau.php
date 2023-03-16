@@ -69,8 +69,8 @@ class AdminNhankhau extends Controller
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
-        $lds = view_nhankhau_danhsach::where('kydieutra', $inputs['kydieutra'])
-            ->where('user_id', $inputs['madv'])->get();
+        $lds = nhankhauModel::where('kydieutra','like',$inputs['kydieutra'])
+            ->where('madv', $inputs['madv'])->get();
         $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
@@ -111,7 +111,6 @@ class AdminNhankhau extends Controller
         }
 
         $m_diaban = danhmuchanhchinh::all();
-// dd($a_huyen);
         $inputs['url'] = '/nhankhau/danhsach';
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
@@ -163,7 +162,7 @@ class AdminNhankhau extends Controller
         //     ->select('nhankhau.id', 'nhankhau.danhsach_id', 'nhankhau.hoten', 'nhankhau.cccd', 'nhankhau.ngaysinh', 'nhankhau.mqh', 'nhankhau.diachi', 'nhankhau.noilamviec')
         //     ->where('danhsach.kydieutra', $inputs['kydieutra'])
         //     ->where('mqh', "CH");
-        $lds = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('mqh', 'CH')->get();
+        $lds = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like','%'.$inputs['kydieutra'].'%')->where('mqh', 'CH')->get();
         // $donvi = User::where('madv', $inputs['madv'])->first();
 
         $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
@@ -277,7 +276,7 @@ class AdminNhankhau extends Controller
             ->when($age_filter, function ($query, $age_filter) {
                 return $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > " . $age_filter);
             })
-
+            ->where('kydieutra','like','%'.$inputs['kydieutra'].'%')
             ->get();
         $inputs['nkid'] = $nkid;
         return view('admin.nhankhau.editho')
@@ -315,9 +314,10 @@ class AdminNhankhau extends Controller
         $m_nguoithatnghiep = $dm_tinhtrangct->where('manhom', 20221220175720);
         $lydo = $dm_tinhtrangct->where('manhom', 20221220175728);
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
-
         $model = new Nhankhau();
         $ld = $model::find($nkid);
+        // dd($inputs);
+        $inputs['kydieutra']=$ld->kydieutra;
         if (isset($inputs['loailoi'])) {
             return view('admin.nhankhau.edit_loi')
                 ->with('ld', $ld)
@@ -460,11 +460,10 @@ class AdminNhankhau extends Controller
     {
         $inputs = $request->all();
         $loailoi = $inputs['loailoi'] ?? '';
-
-
+        $kydieutra=$inputs['kydieutra'];
         // $model=DB::table('nhankhau')->where('id',$id)->first();
         $model = nhankhauModel::findOrFail($id);
-        unset($inputs['_token']);
+        unset($inputs['_token'],$inputs['kydieutra']);
         if (isset($inputs['loailoi'])) {
             $sualoi = strtoupper(chuyenkhongdau(str_replace(' ', '', $inputs['loailoi'])));
             unset($inputs['loailoi']);
@@ -477,7 +476,7 @@ class AdminNhankhau extends Controller
             }
             $inputs['maloailoi'] = $maloi;
 
-            $m_danhsach = danhsach::where('user_id', $model->madv)->where('kydieutra', $model->kydieutra)->first();
+            $m_danhsach = danhsach::where('user_id', $model->madv)->where('kydieutra',$kydieutra)->first();
             switch ($sualoi) {
                 case 'LOAI1':
                     $loi_ngaysinh = $m_danhsach->loi_ngaysinh - 1;
@@ -500,26 +499,50 @@ class AdminNhankhau extends Controller
         $note='';
         $model->fill($inputs);
         $dirty=$model->getDirty();
+        // dd($dirty);
 		$sqty=count($dirty);
 		
 		$danhsach= array();
-		
+        $biendong=false;
+        // $danhsach[]=$model->cccd;
+		$arr_biendong=array('trinhdogiaoduc','chuyenmonkythuat','chuyennganh','tinhtranghdkt','nguoicovieclam','congvieccuthe','loaihinhnoilamviec','thatnghiep','thoigianthatnghiep','khongthamgiahdkt');
 		foreach ($dirty as $field => $newdata)
         {
           $olddata = $model->getOriginal($field);
-          if ($olddata != $newdata)
+          if ($olddata != $newdata && in_array($field,$arr_biendong))
           {
-           $danhsach[]=$field. " thay đổi từ ".$olddata." sang ".$newdata;
+        //    $danhsach[]=$field. " thay đổi từ ".$olddata." sang ".$newdata;
+           $danhsach[]=$field;
+           $biendong=true;
+
           }
         }
         // dd($danhsach);
         $user=User::where('madv',$model->madv)->first()->id;
+
+        
         if($sqty > 0){
+            if($biendong){
+                $inputs['loaibiendong']=3;
+                $note= implode( " ; ",$danhsach);
+                $inputs['truongbiendong']=$note;
+                //Tính xem nhân khẩu đã có cập nhật chưa
+                $nhankhau_capnhat=DB::table('report')->where('user',$user)->where('kydieutra',$model->kydieutra)->where('lastid',$model->id)->first();
+                
+                if(isset($nhankhau_capnhat )){
+                    $nhankhau_capnhat->update(['note'=>$note]);
+                }else{
+                    $rm = new Report();
+                    // $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
+                    
+                    $rm->report('updateinfo', "1", 'nhankhau', $model->id, 1, $note,$user,$model->kydieutra);  
+                }
+            }
+            // $inputs['loaibiendong']=3;//cập nhật thông tin
             $model->update($inputs);
-            $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
-            $rm = new Report();
-            $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
-            $rm->report('updateinfo', "1", 'nhankhau', DB::getPdo()->lastInsertId(), 1, $note,$user,$model->kydieutra);
+            $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
+           
+
         }
 
         if (isset($sualoi)) {
@@ -536,9 +559,9 @@ class AdminNhankhau extends Controller
         $inputs = $request->all();
 
         if ($inputs['tinhtrang'] != 4) {
-            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('tinhtranghdkt', $inputs['tinhtrang'])->get();
+            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like',$inputs['kydieutra'])->where('tinhtranghdkt', $inputs['tinhtrang'])->get();
         } else {
-            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('tinhtranghdkt', 3)->where('khongthamgiahdkt', 1)->get();
+            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like',$inputs['kydieutra'])->where('tinhtranghdkt', 3)->where('khongthamgiahdkt', 1)->get();
             foreach ($model as $val) {
                 $ns = str_replace('/', '-', $val->ngaysinh);
                 $ns1 = str_replace('--', '-', $ns);
@@ -570,15 +593,39 @@ class AdminNhankhau extends Controller
     public function XoaHoGD(Request $request)
     {
         $inputs = $request->all();
-        $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('ho', $inputs['ho'])->get();
+        $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like','%'.$inputs['kydieutra'].'%')->where('ho', $inputs['ho'])->get();
         if (count($model) > 0) {
             foreach ($model as $val) {
-                $val->delete();
+                $kydieutra=getKydieutra($val->kydieutra);
+
+                if(in_array($inputs['kydieutra'],$kydieutra)){
+                    $index=array_search($inputs['kydieutra'],$kydieutra);
+                    unset($kydieutra[$index]);        
+                  $kydieutra=implode(';',$kydieutra);
+                  if($kydieutra != ''){
+                    $val->update(['kydieutra'=>$kydieutra]);
+                  }else{
+                    $val->delete();
+                  }
+                }
+                // $val->delete();
             }
             $danhsach = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
             $soluong = $danhsach->soluong - count($model);
             $soho = $danhsach->soho - 1;
-            $danhsach->update(['soluong' => $soluong, 'soho' => $soho]);
+            if($soluong > 0){
+                $danhsach->update(['soluong' => $soluong, 'soho' => $soho]);
+            }else{
+                $danhsach->delete();
+            }
+            
+        }
+        if(in_array(session('admin')->capdo,['H','T'])){
+            $danhsach_conlai=danhsach::where('kydieutra',$inputs['kydieutra'])->get();
+            $inputs['kydieutra']=count($danhsach_conlai) > 0 ? $inputs['kydieutra']:$inputs['kydieutra']-1;
+
+        }else{
+            $inputs['kydieutra']=$inputs['kydieutra']-1;
         }
 
         return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['mahuyen']);
@@ -590,19 +637,32 @@ class AdminNhankhau extends Controller
         $model = nhankhauModel::findOrFail($id);
 
         $madv = $model->madv;
-        $kydieutra = $model->kydieutra;
-        $danhsach = danhsach::where('user_id', $model->madv)->where('kydieutra', $model->kydieutra)->first();
+        // $kydieutra = $model->kydieutra;
+        $danhsach = danhsach::where('user_id', $model->madv)->where('kydieutra', $inputs['kydieutra'])->first();
         $soho = $model->mqh == 'CH' ? $danhsach->soho - 1 : $danhsach->soho;
         $soluong = $danhsach->soluong - 1;
+        $kydieutra=getKydieutra($model->kydieutra);
 
-        $model->delete();
+        if(in_array($inputs['kydieutra'],$kydieutra)){
+            $index=array_search($inputs['kydieutra'],$kydieutra);
+            unset($kydieutra[$index]);
+
+          $kydieutra=implode(';',$kydieutra);
+          if($kydieutra != ''){
+            $model->update(['kydieutra'=>$kydieutra]);
+          }else{
+            $model->delete();
+          }
+        }
+        // dd($kydieutra);
+        // $model->delete();
         $danhsach->update(['soluong' => $soluong, 'soho' => $soho]);
-        $ho = nhankhauModel::where('ho', $model->ho)->where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->get();
+        $ho = nhankhauModel::where('ho', $model->ho)->where('madv', $model->madv)->where('kydieutra','like','%'.$inputs['kydieutra'].'%')->get();
         if (count($ho) > 0) {
             $ch = $ho->where('mqh', 'CH')->first();
-            return redirect('/nhankhau/ChiTietHoGiaDinh/' . $ch->id . '?soho=' . $ch->ho . '&madv=' . $ch->madv . '&kydieutra=' . $ch->kydieutra . '&mahuyen=' . $inputs['mahuyen']);
+            return redirect('/nhankhau/ChiTietHoGiaDinh/' . $ch->id . '?soho=' . $ch->ho . '&madv=' . $ch->madv . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['mahuyen']);
         } else {
-            return redirect('/nhankhau/hogiadinh?madv=' . $madv . '&kydieutra=' . $kydieutra . '&mahuyen=' . $inputs['mahuyen']);
+            return redirect('/nhankhau/hogiadinh?madv=' . $madv . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['mahuyen']);
         }
     }
 }

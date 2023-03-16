@@ -104,3 +104,17 @@ function getiDxa($mahuyen){
 
                                     return $id_xa;
 }
+
+function getKydieutra($kydieutra){
+    $a_kydieutra=explode(';',$kydieutra);
+
+    return $a_kydieutra;
+}
+
+function getdanhmuc()
+{
+
+    $dm = DB::table('danhmuchanhchinh')->where('public', '1')->get();
+    return $dm;
+}
+
