@@ -183,7 +183,7 @@ Route::prefix('dieutra')->group(function(){
     Route::get('/danhsachloi/{id}',[AdminDieutra::class,'danhsachloi']);
     Route::get('/danhsachloi_chitiet',[AdminDieutra::class,'danhsachloi_chitiet']);
     Route::post('/indanhsachloi',[AdminDieutra::class,'indanhsachloi']);
-    Route::get('/TaoMoi',[AdminDieutra::class,'TaoMoi']);
+    Route::post('/TaoMoi',[AdminDieutra::class,'TaoMoi']);
 
 });
 
@@ -334,6 +334,7 @@ Route::prefix('/biendong')->group(function(){
 
     Route::get('/danhsach_biendong',[AdminBiendong::class,'index_cung']);
     Route::get('/thongtinthaydoi/{id}',[AdminBiendong::class,'thongtinthaydoi']);
+    Route::post('/baogiam/{id}',[AdminNhankhau::class,'baogiam']);
 });
 
 Route::prefix('BaoCaoDN')->group(function(){
@@ -342,6 +343,8 @@ Route::prefix('BaoCaoDN')->group(function(){
 
 Route::prefix('baocao_tonghop')->group(function(){
     Route::get('/',[baocaotonghopController::class,'index_cung']);
+    Route::post('/tonghop',[baocaotonghopController::class,'tonghop']);
+    Route::post('/thongtincunglaodong',[baocaotonghopController::class,'thongtincunglaodong']);
 });
 
 

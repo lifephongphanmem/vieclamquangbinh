@@ -319,7 +319,31 @@
                                 <!--end::Aside-->
                                 
                                 <div class="content-wrapper flex-row-fluid">                                    
-                                    @yield('content')                                    
+                                    @yield('content') 
+                                            <!--Model delete-->
+        <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="frmDelete" method="POST" action="{{'/dieutra/TaoMoi'}}" accept-charset="UTF-8" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Đồng ý tạo mới kỳ điều tra</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        {{-- <div class="modal-body">
+                            <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra
+                                    này</b></label>
+                        </div> --}}
+
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit"  class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>                                   
                                 </div>
                             </div>
                         </div>

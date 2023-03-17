@@ -21,6 +21,7 @@
         src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') }}"></script>
 
     <script src="{{ url('assets/admin/pages/scripts/table-lifesc.js') }}"></script>
+    <script src="{{ url('js/baocaoxa.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
@@ -57,12 +58,12 @@
                                         @endif
 
                                         <li>
-                                            <a href="#" data-target="#modify-modal-biendong-xa" data-toggle="modal">Tổng hợp </a>
+                                            <a href="#" data-target="#modify-modal-tonghop" data-toggle="modal">Tổng hợp </a>
                                         </li>
-                                        @if (chkPhanQuyen('danhsachxa', 'phanquyen'))
-                                    <li><a href="#" data-target="#danhsach-modal-nhankhau" data-toggle="modal">Báo cáo thông tin thị trường</a>
+                                        
+                                    <li><a href="#" data-target="#thitruongld-modal" data-toggle="modal">Báo cáo thông tin thị trường cung lao động</a>
                                     </li>
-                                    @endif
+                                   
 
                                 </ol>
 
@@ -75,6 +76,222 @@
             </div>
         </div>
     </div>
+
+        <!--Model thị trường lao động-->
+        <div id="thitruongld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="frmDanhsach" method="POST" action="{{ '/baocao_tonghop/thongtincunglaodong' }}"
+                accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Mẫu 04</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-lg-12 mb-2">
+                                <label class="control-label">Năm điều tra</label>
+                                <select class="form-control select2basic" id="nam" name="nam" style="width:100%">
+                                    <?php $nam_start = date('Y') - 5;
+                                    $nam_stop = date('Y'); ?>
+                                    @for ($i = $nam_start; $i <= $nam_stop; $i++)
+                                        <option value="{{ $i }}" {{ $i == $nam_stop ? 'selected' : '' }}>Năm
+                                            {{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-lg-12 mb-2">
+                                <label class="control-label">Loại báo cáo</label>
+                                <select class="form-control select2basic" id="loaibaocao" name="loaibaocao" style="width:100%">
+                                        <option value="2">2 năm</option>
+                                        <option value="3">3 năm</option>
+                                        <option value="4">4 năm</option>
+                                        <option value="5">5 năm</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <!-- modal tổng hợp -->
+    <form method="POST" action="{{ '/baocao_tonghop/tonghop' }}" accept-charset="UTF-8" id="frm_modify_tinh" target="_blank">
+        @csrf
+        <div id="modify-modal-tonghop" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Tổng hợp</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            <label class="control-label" style="font-weight: bold">Kỳ điều tra</label>
+                            <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
+                                @foreach ($a_kydieutra as $key => $ct)
+                                    <option value="{{ $key }}">{{ $ct }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <label class="control-label mt-3" style="font-weight: bold">Chọn tùy biến</label>
+                        </div>
+                        <div class="row mt-1 ml-5" id="1stld">
+                            <div class="form-check form-check-inline" style="width:20%">
+                                <input class="form-check-input" type="checkbox" id="gioitinh_th" name=gender value="gender">
+                                <label class="form-check-label" for="gioitinh_th">Giới tính</label>
+                            </div>
+                            {{-- <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" id="dotuoi" name=dotuoi value="dotuoi">
+                                <label class="form-check-label" for="gioitinh">Độ tuổi</label>
+                            </div> --}}
+                            <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="tthdkt" id="tthdkt_th"
+                                    value="tthdkt">
+                                <label class="form-check-label" for="tthdkt_th">Tình trạng HĐKT</label>
+
+                            </div>
+                            <div class="form-check form-check-inline "style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="dtut" id="dtut_th"
+                                    value="dtut">
+                                <label class="form-check-label" for="dtut_th">Đối tượng UT</label>
+
+                            </div>
+                        </div>
+                        <div class="row mt-1 ml-5" id="1stld">
+                            <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="trinhdogdpt" id="trinhdogdpt_th"
+                                    value="trinhdogdpt">
+                                <label class="form-check-label" for="trinhdogdpt_th">Trình độ GDPT</label>
+
+                            </div>
+                            <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="trinhdocmkt" id="trinhdocmkt_th"
+                                    value="trinhdocmkt">
+                                <label class="form-check-label" for="trinhdocmkt_th">Trình độ CMKT</label>
+
+                            </div>
+                            <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="loaihinh" id="loaihinh"
+                                    value="loaihinh">
+                                <label class="form-check-label" for="loaihinh">Loại hình nơi làm việc</label>
+                            </div>
+                            <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="thatnghiep_th" id="thatnghiep"
+                                    value="thatnghiep">
+                                <label class="form-check-label" for="thatnghiep">Thất nghiệp</label>
+                            </div>
+                        </div>
+                        <div class="row mt-1 ml-5" id="1stld">
+                            <div class="form-check form-check-inline"style="width:20%">
+                                <input class="form-check-input" type="checkbox" name="ktghdkt" id="ktghdkt"
+                                    value="ktghdkt">
+                                <label class="form-check-label" for="ktghdkt">Không tham gia HĐKT</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="col-lg-10 d-none mt-2" id='gt_th'>
+                                <label class="control-label" style="font-weight: bold">Giới tính</label>
+                                <select name="gioitinh" id="" class="form-control select2basic" style="width:100%">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='tuoi'>
+                                <label class="control-label" style="font-weight: bold">Độ tuổi</label>
+                                <div>
+                                    <label class="mt-3">Từ&nbsp;</label> <input type="text" name='tuoitu' class="form-control" style="width:15%;text-align:center;display:inline"> &nbsp; Đến &nbsp; <input type="text" name="tuoiden" class="form-control" style="width:15%;text-align:center;display:inline">
+                                </div>
+                               
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='hdkt_th'>
+                                <label class="control-label" style="font-weight: bold">Tình trạng HĐKT</label>
+                                <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($dmtinhtranghdkt as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tentgkt }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='ut_th'>
+                                <label class="control-label" style="font-weight: bold">Đối tượng UT</label>
+                                <select name="uutien" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($dmuutien as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tendoituong }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='gdpt_th'>
+                                <label class="control-label" style="font-weight: bold">Trình độ DGPT</label>
+                                <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($trinhdoGDPT as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tengdpt }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='cmkt_th'>
+                                <label class="control-label" style="font-weight: bold">Trình độ CMKT</label>
+                                <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($trinhdocmkt as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tentdkt }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='lh'>
+                                <label class="control-label" style="font-weight: bold">Loại hình nơi làm việc</label>
+                                <select name="loaihinhnoilamviec" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($loaihinh as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tenlhkt }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-10 d-none mt-2" id='thatn'>
+                                <label class="control-label" style="font-weight: bold">Thất nghiệp</label>
+                                <select name="thatnghiep" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($a_thatnghiep as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div class="col-lg-10 d-none mt-2" id='khongthamgiahdkt'>
+                                <label class="control-label" style="font-weight: bold">Không tham gia HĐKT</label>
+                                <select name="khongthamgiahdkt" id="" class="form-control select2basic"
+                                    style="width:100%">
+                                    @foreach ($a_khongthamgia as $val)
+                                        <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                {{-- </div> --}}
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
 
     <!-- modal in báo cáo tỉnh -->
     <form method="POST" action="{{ '/dieutra/inbaocaotinh' }}" accept-charset="UTF-8" id="frm_modify_tinh" target="_blank">
