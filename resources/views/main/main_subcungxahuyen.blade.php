@@ -1,5 +1,7 @@
 <li class="menu-item" aria-haspopup="true">
-    <a href="{{'/dieutra/TaoMoi'}}" class="menu-link">
+    {{-- <a href="{{'/dieutra/TaoMoi'}}" class="menu-link"> --}}
+        <a  data-target="#delete-modal-confirm"
+        data-toggle="modal" class="menu-link">
 
         <i class="menu-bullet menu-bullet-dot">
             <span></span>

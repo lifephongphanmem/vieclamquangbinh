@@ -304,6 +304,7 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         // dd($inputs);
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+            ->where('loaibiendong','!=',2)
             ->when($inputs['madv'], function ($q, $inputs) {
                 return $q->where('madv', $inputs);
             })
@@ -374,6 +375,7 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         // dd($inputs);
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+            ->where('loaibiendong','!=',2)
             ->where(function ($q) use ($inputs) {
 
                 if (isset($inputs['gender'])) {
@@ -447,6 +449,7 @@ class AdminDieutra extends Controller
         $a_chuyenmon = dmtrinhdokythuat::select('tentdkt', 'stt')->get()->toarray();
         // dd($a_chuyenmon);
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+            ->where('loaibiendong','!=',2)
             ->where(function ($q) use ($inputs) {
 
                 if (isset($inputs['gender'])) {
@@ -722,7 +725,7 @@ class AdminDieutra extends Controller
                 continue;
             }
             $note .= $tmp['hoten'] . ' ,';
-            $tmp['loaibiendong'] = 1; //0: import, 1:thêm bằng tay
+            $tmp['loaibiendong'] = 1; //0: import, 1:báo tăng
             // dd($tmp);
             nhankhauModel::create($tmp);
             // dd($tmp);
@@ -750,11 +753,12 @@ class AdminDieutra extends Controller
         // add to log system`
         $rm = new Report();
         $rm->report('thembangtay', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $inputs['quantity'], $note, $user, $inputs['kydieutra']);
-        if ($check == '') {
-            return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
-        } else {
-            return redirect('/nhankhau/ChiTietHoGiaDinh/' . $inputs['nkid'] . '?soho=' . $inputs['ho'] . '&madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
-        }
+        return redirect('/biendong/danhsach_biendong?madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&loaibiendong=1');
+        // if ($check == '') {
+        //     return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
+        // } else {
+        //     return redirect('/nhankhau/ChiTietHoGiaDinh/' . $inputs['nkid'] . '?soho=' . $inputs['ho'] . '&madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
+        // }
     }
 
     public function indanhsachloi(Request $request)
@@ -976,10 +980,12 @@ class AdminDieutra extends Controller
             ->get();
         $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
         $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
-        $model_biendong = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where(function ($query) use ($inputs) {
-                if ($inputs['biendong'] != 'all' && $inputs['biendong'] != 4) {
+                if ($inputs['biendong'] != 'all') {
                     $query->where('loaibiendong', $inputs['biendong']);
+                }else{
+                    $query->where('loaibiendong', '!=',0);
                 }
 
                 if($inputs['madv'] != 'all'){
@@ -992,58 +998,58 @@ class AdminDieutra extends Controller
             ->get();
             // dd($model_biendong->take(10));
             //Báo giảm
-            if(in_array($inputs['biendong'],['all',4])){
-                $a_cccd=array_column($model_biendong->toarray(),'cccd');
-                $model_giam=nhankhauModel::where('kydieutra',($inputs['kydieutra']-1))
-                                        ->where(function($query) use ($inputs){
-                                            if($inputs['madv'] != 'all'){
-                                                $query->where('madv',$inputs['madv']);
-                                            }else{
-                                                $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
+            // if(in_array($inputs['biendong'],['all',4])){
+            //     $a_cccd=array_column($model_biendong->toarray(),'cccd');
+            //     $model_giam=nhankhauModel::where('kydieutra',($inputs['kydieutra']-1))
+            //                             ->where(function($query) use ($inputs){
+            //                                 if($inputs['madv'] != 'all'){
+            //                                     $query->where('madv',$inputs['madv']);
+            //                                 }else{
+            //                                     $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
                                                
-                                                $query->wherein('madv',$a_xa);
-                                            }
-                                        })
-                                        ->get();
-                                        $model_giam=$a_cccd == []?$model_giam:$model_giam->wherenotin('cccd',$a_cccd);
+            //                                     $query->wherein('madv',$a_xa);
+            //                                 }
+            //                             })
+            //                             ->get();
+            //                             $model_giam=$a_cccd == []?$model_giam:$model_giam->wherenotin('cccd',$a_cccd);
                                        
-                                        foreach($model_giam as $ct){
-                                            $ct->loaibiendong=4;
-                                        }
+            //                             foreach($model_giam as $ct){
+            //                                 $ct->loaibiendong=4;
+            //                             }
                                         
-                                        $collection=new Collection([$model_biendong,$model_giam]);
-                                        $model=$collection->collapse();
-            }else{
-                $model=$model_biendong;
-            }
+            //                             $collection=new Collection([$model_biendong,$model_giam]);
+            //                             $model=$collection->collapse();
+            // }else{
+            //     $model=$model_biendong;
+            // }
 
                                     // dd($model);
             
         switch ($inputs['biendong']) {
             case 'all':
                     $a_loaibiendong = array(
-                        '0' => 'Nhận từ file excel',
-                        '1' => 'Nhận thủ công',
-                        '2' => 'Báo tăng',
+                        // '0' => 'Nhận từ file excel',
+                        '1' => 'Tăng',
+                        '2' => 'Giảm',
                         '3' => 'Cập nhật thông tin',
-                        '4' => 'Báo giảm'
+                        // '4' => 'Báo giảm'
                     );
                     break;
-            case 0:
-                $a_loaibiendong = array('0' => 'Nhận từ file excel');
-                break;
+            // case 0:
+            //     $a_loaibiendong = array('0' => 'Nhận từ file excel');
+            //     break;
             case 1:
-                $a_loaibiendong = array('1' => 'Nhận thủ công');
+                $a_loaibiendong = array('1' => 'Tăng');
                 break;
             case 2:
-                $a_loaibiendong = array('2' => 'Báo tăng');
+                $a_loaibiendong = array('2' => 'Giảm');
                 break;
             case 3:
                 $a_loaibiendong = array('3' => 'Cập nhật thông tin');
                 break;
-            case 4:
-                $a_loaibiendong = array('4' => 'Báo giảm');
-                break;
+            // case 4:
+            //     $a_loaibiendong = array('4' => 'Báo giảm');
+            //     break;
         }
 
         return view('admin.dieutra.biendong.danhsach')
@@ -1057,7 +1063,7 @@ class AdminDieutra extends Controller
         $kydieutra_truoc=nhankhauModel::max('kydieutra');
         $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->get();
         $danhsach_kytruoc=danhsach::where('user_id',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->first();
-        dd(session('admin'));
+        // dd(session('admin'));
         // $data=[
         //     'tinh'=>44,
         //     'huyen'=>$danhsach_kytruoc->huyen,

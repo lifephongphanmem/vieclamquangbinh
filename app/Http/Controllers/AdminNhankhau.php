@@ -69,8 +69,8 @@ class AdminNhankhau extends Controller
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
-        $lds = nhankhauModel::where('kydieutra','like',$inputs['kydieutra'])
-            ->where('madv', $inputs['madv'])->get();
+        $lds = nhankhauModel::where('kydieutra',$inputs['kydieutra'])
+            ->where('madv', $inputs['madv'])->where('loaibiendong','!=',2)->get();
         $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
@@ -559,9 +559,9 @@ class AdminNhankhau extends Controller
         $inputs = $request->all();
 
         if ($inputs['tinhtrang'] != 4) {
-            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like',$inputs['kydieutra'])->where('tinhtranghdkt', $inputs['tinhtrang'])->get();
+            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->where('tinhtranghdkt', $inputs['tinhtrang'])->where('loaibiendong','!=',2)->get();
         } else {
-            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra','like',$inputs['kydieutra'])->where('tinhtranghdkt', 3)->where('khongthamgiahdkt', 1)->get();
+            $model = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->where('tinhtranghdkt', 3)->where('khongthamgiahdkt', 1)->where('loaibiendong','!=',2)->get();
             foreach ($model as $val) {
                 $ns = str_replace('/', '-', $val->ngaysinh);
                 $ns1 = str_replace('--', '-', $ns);
@@ -664,5 +664,18 @@ class AdminNhankhau extends Controller
         } else {
             return redirect('/nhankhau/hogiadinh?madv=' . $madv . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['mahuyen']);
         }
+    }
+
+    public function baogiam($id){
+        $model=nhankhauModel::findOrFail($id);
+
+        $danhsach=danhsach::where('user_id',$model->madv)->where('kydieutra',$model->kydieutra)->first();
+        $soluong=$danhsach->soluong -1;
+
+        $model->update(['loaibiendong'=>2]);
+        $danhsach->update(['soluong'=>$soluong]);
+
+        return redirect('/biendong/danhsach_biendong?madv='.$model->madv.'&kydieutra='.$model->kydieutra.'&loaibiendong=2')
+            ->with('success','Báo giảm thành công');
     }
 }
