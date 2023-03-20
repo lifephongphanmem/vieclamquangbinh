@@ -40,7 +40,6 @@ class AdminController extends Controller
 
 	public function dashboard()
 	{
-		
 		// if (Auth::check()) {
 		//   if(Auth::user()->level<3){
 
@@ -88,7 +87,7 @@ class AdminController extends Controller
 		} else {
 			$kydieutra = danhsach::where('user_id', session('admin')->madv)->max('kydieutra');
 		}
-		
+
 		//  dd($kydieutra);
 		if ($kydieutra == date(('Y'))) {
 			$kydieutra_truoc = $kydieutra - 1;
@@ -112,9 +111,9 @@ class AdminController extends Controller
 			$tongso = danhsach::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->get();
 			$tongsonhankhau['kytruoc'] = $tongso->where('kydieutra', $kydieutra_truoc)->sum('soluong');
 			$tongsonhankhau['kyhientai'] = $tongso->where('kydieutra', $kydieutra_hientai)->sum('soluong');
-		
+	
 			$model = nhankhauModel::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->get();
-		
+			
 			$ldcovieclam['kytruoc'] = $model->where('kydieutra', $kydieutra_truoc)->where('tinhtranghdkt', '1')->count();
 			$ldcovieclam['kyhientai'] = $model->where('kydieutra', $kydieutra_hientai)->where('tinhtranghdkt', '1')->count();
 
@@ -169,7 +168,7 @@ class AdminController extends Controller
 		$ldkhongthamgia_biendong = $ldkhongthamgia['kyhientai'] - $ldkhongthamgia['kytruoc'];
 		// dd($ldcovieclam);
 
-	
+
 		return view('admin.dashboard')
 			->with('einfo', $einfo)
 			->with('tongso_biendong', $tongso_biendong)

@@ -42,7 +42,6 @@ class HethongchungController extends Controller
 
 	public function DangNhap(Request $request)
 	{
-
 		$inputs = $request->all();
 		
 		$user_gmail=User::where('email',$inputs['username'])->first();
