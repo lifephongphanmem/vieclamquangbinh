@@ -35,7 +35,7 @@
                 @endif --}}
 
                 @if (session('admin')->phanloaitk == 1)
-                    
+                <ul class="menu-nav">                   
                     @include('main.main_subdoanhnghiep')
                     
                     @if (session('admin')->capdo == 'T')
@@ -45,7 +45,7 @@
                     @else
                     @include('main.main_subcungxahuyen')
                     @endif
-
+                </ul>
 
                 @else
                     @include('main.main_doanhnghiep')
