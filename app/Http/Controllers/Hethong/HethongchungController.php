@@ -7,9 +7,16 @@ use App\Jobs\SendEmail;
 use App\Models\Company;
 use App\Models\Danhmuc\Chucnang;
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
+use App\Models\Danhmuc\dmtrinhdogdpt;
+use App\Models\Danhmuc\dmtrinhdokythuat;
+use App\Models\danhsach;
 use App\Models\Hethong\dstaikhoan_phanquyen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,12 +51,27 @@ class HethongchungController extends Controller
 	{
 		$inputs = $request->all();
 		
-		$user_gmail=User::where('email',$inputs['username'])->first();
-		if(isset($user_gmail)){
-			$user=$user_gmail;
-		}else{
+		// $user_gmail=User::where('email',$inputs['username'])->first();
+		$email=$inputs['username'];
+		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$user=User::where('email',$inputs['username'])->first();
+			$data=[
+				'email'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  } else {
 			$user = User::where('username', $inputs['username'])->first();
-		}
+			$data=[
+				'username'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  }
+
+		// if(isset($user_gmail)){
+		// 	$user=$user_gmail;
+		// }else{
+		// 	$user = User::where('username', $inputs['username'])->first();
+		// }
 
 // dd($user);
 		//tài khoản không tồn tại
@@ -71,6 +93,7 @@ class HethongchungController extends Controller
 				->with('furl', '/home');
 		}
 		// dd(emailValid('hailinhsale01@gmail.com'));
+
 		$email=$inputs['username'];
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$data=[
@@ -84,6 +107,7 @@ class HethongchungController extends Controller
 			];
 		  }
 	
+
 		//Sai tài khoản
 
 		$res=Auth::attempt($data);
@@ -153,7 +177,57 @@ class HethongchungController extends Controller
 		// dd(session('chucnang'));
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['username'])->get()->keyBy('machucnang')->toArray());
-		
+
+		if (session('admin')->capdo == 'T') {
+            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.capdo', 'X')
+                ->get();
+        } else if (session('admin')->capdo == 'H') {
+            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
+                ->get();
+        } else {
+            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+                ->get();
+        }
+		Session::put('m_xa', $m_xa);
+
+		$a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+		Session::put('a_kydieutra', $a_kydieutra);
+
+		$trinhdoGDPT = dmtrinhdogdpt::all();
+        $trinhdocmkt = dmtrinhdokythuat::all();
+        $dmuutien = dmdoituonguutien::all();
+        $dmtinhtranghdkt = dmtinhtrangthamgiahdkt::all();
+		$a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
+        $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
+        $loaihinh = dmloaihinhhdkt::all();
+		Session::put('trinhdoGDPT', $trinhdoGDPT);
+		Session::put('trinhdocmkt', $trinhdocmkt);
+		Session::put('dmuutien', $dmuutien);
+		Session::put('dmtinhtranghdkt', $dmtinhtranghdkt);
+		Session::put('a_khongthamgia', $a_khongthamgia);
+		Session::put('a_thatnghiep', $a_thatnghiep);
+		Session::put('loaihinh', $loaihinh);
+
+		if (session('admin')->capdo == 'T') {
+            $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.capdo', 'H')
+                ->get();
+        } else {
+            $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+                ->get();
+        }
+
+		Session::put('m_huyen', $m_huyen);
+
 		if(session('admin')->phanloaitk ==1){
 			return redirect('/dashboard')
 			->with('success', 'Đăng nhập thành công');
