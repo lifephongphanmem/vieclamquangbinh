@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="{{URL::to('laodong-fnothing')}}" class="menu-link">
+                <a data-toggle="modal" data-target="#modal-khongbiendong" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>

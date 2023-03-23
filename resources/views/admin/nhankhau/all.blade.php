@@ -56,6 +56,12 @@
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
+                        @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
+                        <div class="card-toolbar">
+                            <a onclick="themmoi('{{$inputs['madv']}}','{{$inputs['kydieutra']}}')" class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i> &ensp;Thêm</a>
+                            
+                        </div>
+                        @endif
                     </div>
 
                 </div>
@@ -94,23 +100,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label style="font-weight: bold">Huyện</label>
-                            <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
-                                @foreach ($a_huyen as $key=>$ct )
-                                    <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label style="font-weight: bold">Xã</label>
-                            <select name="madv" id="madv"  class="form-control select2basic">
-                                <option value="">----Chọn xã---</option>
-                                @foreach ($a_xa as $key=>$ct )
-                                <option value="{{$ct->madv}}" {{$ct->madv == $inputs['madv']?'selected':''}}>{{$ct->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
 
                             <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
@@ -119,6 +108,28 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Xã</label>
+                            <select name="madv" id="madv"  class="form-control select2basic">
+                                @if (in_array(session('admin')->capdo,['T','H']))
+                                <option value="">----Chọn xã---</option>
+                                @endif
+
+                                @foreach ($a_xa as $key=>$ct )
+                                <option value="{{$ct->madv}}" {{$ct->madv == $inputs['madv']?'selected':''}}>{{$ct->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Huyện</label>
+                            <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
+                                @foreach ($a_huyen as $key=>$ct )
+                                    <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
@@ -148,8 +159,14 @@
                                 </td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
                                 <td class="text-ellipsis">
-                                    <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
-                                        <i class="icon-lg la flaticon2-print text-dark"></i></a>
+                                        <button 
+                                            onclick="baogiam('{{$ld->id}}')"
+                                            data-target="#baogiam" data-toggle="modal" title="Báo giảm"
+                                            class="btn btn-xs btn-warning ml-3"> Giảm
+                                            {{-- <i class="fa fa-arrows-down-to-people"></i> --}}
+                                        </button>
+                                    {{-- <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
+                                        <i class="icon-lg la flaticon2-print text-dark"></i></a> --}}
                                 </td>
                             </tr>
                             <?php } ?>
@@ -159,7 +176,30 @@
             </div>
         </div>
 
+        <!--Modal báo giảm-->
+        <div id="baogiam" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <form id="giam" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-primary">
+                            <h4 id="modal-header-primary-label" class="modal-title">Đồng ý</h4>
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                        </div>
+                        {{-- <div class="modal-body">
+                            <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra
+                                    này</b></label>
+                        </div> --}}
 
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         {{-- modal --}}
         <div id="cungld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
             <form id="frm_cungld" method="get" accept-charset="UTF-8" action="{{ '/nhankhau-in' }}" target="_blank">
@@ -240,5 +280,17 @@
                     // $('#madv option[value=' + madv + ' ]').attr('selected', 'selected');
                     // getxa();
             }
+            function themmoi(madv,kydieutra){
+            huyen=$('#huyen').val();
+            xa=$('#xa').val();
+            url='/dieutra/create?madv='+madv+'&kydieutra='+kydieutra+'&huyen='+huyen+'&xa='+xa;
+            window.location.href = url;
+        }
+
+        function baogiam(id){
+            console.log(1)
+            var url='/biendong/baogiam/'+id;
+            $('#giam').attr('action', url);
+        }
         </script>
     @endsection

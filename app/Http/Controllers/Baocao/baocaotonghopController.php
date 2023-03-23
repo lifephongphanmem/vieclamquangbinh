@@ -76,24 +76,24 @@ class baocaotonghopController extends Controller
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
                 ->where('danhmuchanhchinh.capdo', 'X')
                 ->get();
-        } else if(session('admin')->capdo == 'H') {
+        } else if (session('admin')->capdo == 'H') {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
                 ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
                 ->get();
-        }else{
+        } else {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-            ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
-            ->get();
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+                ->get();
         }
 
-        $trinhdoGDPT=dmtrinhdogdpt::all();
-        $trinhdocmkt=dmtrinhdokythuat::all();
-        $dmuutien=dmdoituonguutien::all();
-        $dmtinhtranghdkt=dmtinhtrangthamgiahdkt::all();
+        $trinhdoGDPT = dmtrinhdogdpt::all();
+        $trinhdocmkt = dmtrinhdokythuat::all();
+        $dmuutien = dmdoituonguutien::all();
+        $dmtinhtranghdkt = dmtinhtrangthamgiahdkt::all();
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
-        $donvi = danhmuchanhchinh::where('capdo','!=','T')->get();
+        $donvi = danhmuchanhchinh::where('capdo', '!=', 'T')->get();
         return view('reports.baocaotonghop.index', compact('nguoidung', 'company', 'dmdonvi'))
             ->with('m_huyen', $m_huyen)
             ->with('trinhdoGDPT', $trinhdoGDPT)
@@ -165,19 +165,18 @@ class baocaotonghopController extends Controller
     }
     public function laodongnuocngoai(Request $request)
     {
- 
-        $ldnuocngoai = DB::table('nguoilaodong')->where('id',$request->id)->first();
+
+        $ldnuocngoai = DB::table('nguoilaodong')->where('id', $request->id)->first();
         $doanhnghiep = Company::find($ldnuocngoai->company);
         $ctype = $this->getParamsByNametype("Loại hình doanh nghiệp"); // lấy loại hình doanh nghiệp
-     
+
         $ctype2 = dmloaihinhhdkt::all();
-    
+
         if ($doanhnghiep->tinh == "44") {
-            $lh = $ctype2->where('madmlhkt',$doanhnghiep->loaihinh)->first();
+            $lh = $ctype2->where('madmlhkt', $doanhnghiep->loaihinh)->first();
             $loaihinh = $lh->tenlhkt;
-        }
-        else{
-            $lh = $ctype->where('id',$doanhnghiep->loaihinh)->first();
+        } else {
+            $lh = $ctype->where('id', $doanhnghiep->loaihinh)->first();
             $loaihinh = $lh->name;
         }
 
@@ -190,13 +189,13 @@ class baocaotonghopController extends Controller
     public function mauso_03a_pl1()
     {
         $request = request();
-   
+
         $tuyendung = Tuyendung::find($request->idtuyendung);
         $vitritd = Vitrituyendung::find($request->id);
-        $kcn = $this->getParamsByNametype("Khu công nghiệp");// lấy danh mục khu công nghiệp
-   
+        $kcn = $this->getParamsByNametype("Khu công nghiệp"); // lấy danh mục khu công nghiệp
+
         return view('reports.baocaotonghop.cauld.mauso_03a_pl1')
-            ->with('tuyendung',$tuyendung) ->with('vitritd',$vitritd)
+            ->with('tuyendung', $tuyendung)->with('vitritd', $vitritd)
             ->with('pageTitle', 'Tình hình sử dụng lao động');
     }
 
@@ -209,17 +208,17 @@ class baocaotonghopController extends Controller
     {
         $request = request();
         $tuyendung = Tuyendung::find($request->id);
-        $vitritd = Vitrituyendung::where('idtuyendung',$request->id)->get();
-        $company = Company::where('user',$tuyendung->user)->first();
-        $manghe = dmmanghetrinhdo::where('trangthai','kh')->get();
-        $kcn = $this->getParamsByNametype("Khu công nghiệp")->where('id',$tuyendung->khucn)->first();
-       
+        $vitritd = Vitrituyendung::where('idtuyendung', $request->id)->get();
+        $company = Company::where('user', $tuyendung->user)->first();
+        $manghe = dmmanghetrinhdo::where('trangthai', 'kh')->get();
+        $kcn = $this->getParamsByNametype("Khu công nghiệp")->where('id', $tuyendung->khucn)->first();
+
         return view('reports.baocaotonghop.cauld.nhucautuyendungld')
-            ->with('kcn',$kcn)
-            ->with('vitritd',$vitritd)
-            ->with('tuyendung',$tuyendung)
-            ->with('company',$company)
-            ->with('manghe',$manghe)
+            ->with('kcn', $kcn)
+            ->with('vitritd', $vitritd)
+            ->with('tuyendung', $tuyendung)
+            ->with('company', $company)
+            ->with('manghe', $manghe)
             ->with('pageTitle', 'Thông tin nhu cầu tuyển dụng lao động');
     }
     public function cungldcapxahuyen(Request $request)
@@ -268,7 +267,7 @@ class baocaotonghopController extends Controller
             ->get();
 
         $a_dm = array_column($m_danhmuc->toarray(), 'level', 'madv');
-        $cunglaodong = nhankhauModel::wherein('kydieutra',[$nam,$nam-1])->get();
+        $cunglaodong = nhankhauModel::wherein('kydieutra', [$nam, $nam - 1])->get();
 
         $a_ketqua = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
         $a_covl = ['thanhthi' => 0, 'nongthon' => 0];
@@ -278,10 +277,10 @@ class baocaotonghopController extends Controller
         $a_ketqua_hientai = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
         $a_covl_hientai = ['thanhthi' => 0, 'nongthon' => 0];
         $a_thatnghiep_hientai = ['thanhthi' => 0, 'nongthon' => 0];
-        foreach($cunglaodong as $key=>$ct){
+        foreach ($cunglaodong as $key => $ct) {
             if ($a_dm[$ct->madv] == 'Xã') {
                 $ct->khuvuc = 'nongthon';
-                if($ct->kydieutra == $nam){
+                if ($ct->kydieutra == $nam) {
                     $a_ketqua_hientai['nongthon']++;
 
                     //có việc làm và thất nghiệp
@@ -290,7 +289,7 @@ class baocaotonghopController extends Controller
                     } elseif ($ct->tinhtranghdkt == 2) {
                         $a_thatnghiep_hientai['nongthon']++;
                     }
-                }else{
+                } else {
                     $a_ketqua['nongthon']++;
 
                     //có việc làm và thất nghiệp
@@ -300,10 +299,9 @@ class baocaotonghopController extends Controller
                         $a_thatnghiep['nongthon']++;
                     }
                 }
-
             } else {
                 $ct->khuvuc = 'thanhthi';
-                if($ct->kydieutra == $nam){                   
+                if ($ct->kydieutra == $nam) {
                     $a_ketqua_hientai['thanhthi']++;
 
                     //có việc làm và thất nghiệp
@@ -312,8 +310,7 @@ class baocaotonghopController extends Controller
                     } elseif ($ct->tinhtranghdkt == 2) {
                         $a_thatnghiep_hientai['thanhthi']++;
                     }
-                }
-                else{
+                } else {
                     $a_ketqua['thanhthi']++;
 
                     //có việc làm và thất nghiệp
@@ -323,21 +320,20 @@ class baocaotonghopController extends Controller
                         $a_thatnghiep['thanhthi']++;
                     }
                 }
-
             }
-            if($ct->kydieutra == $nam){     
-            if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
-                $a_ketqua_hientai['nam']++;
+            if ($ct->kydieutra == $nam) {
+                if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
+                    $a_ketqua_hientai['nam']++;
+                } else {
+                    $a_ketqua_hientai['nu']++;
+                }
             } else {
-                $a_ketqua_hientai['nu']++;
+                if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
+                    $a_ketqua['nam']++;
+                } else {
+                    $a_ketqua['nu']++;
+                }
             }
-        }else{
-            if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
-                $a_ketqua['nam']++;
-            } else {
-                $a_ketqua['nu']++;
-            }
-        }
         }
         $loaihinhkt = dmloaihinhhdkt::all();
         $company = Company::all();
@@ -373,88 +369,87 @@ class baocaotonghopController extends Controller
         $a_vitri = ['nhaquanly' => 0, 'chuyenmonbaccao' => 0, 'chuyenmonbactrung' => 0, 'khac' => 0];
         $a_vitri_hientai = ['nhaquanly' => 0, 'chuyenmonbaccao' => 0, 'chuyenmonbactrung' => 0, 'khac' => 0];
         $a_tong = ['namtruoc' => 0, 'namhientai' => 0];
-        $a_tongld_nuocngoai=['namtruoc'=>0,'hientai'=>0];
-        $a_vitri_nuocngoai=['nhaquanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
-        $a_vitri_nuocngoai_hientai=['nhaquanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
-        $a_vitri_cv=['quanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
-        $a_vitri_cv_hientai=['quanly'=>0,'giamdoc'=>0,'chuyengia'=>0,'kythuat'=>0];
+        $a_tongld_nuocngoai = ['namtruoc' => 0, 'hientai' => 0];
+        $a_vitri_nuocngoai = ['nhaquanly' => 0, 'giamdoc' => 0, 'chuyengia' => 0, 'kythuat' => 0];
+        $a_vitri_nuocngoai_hientai = ['nhaquanly' => 0, 'giamdoc' => 0, 'chuyengia' => 0, 'kythuat' => 0];
+        $a_vitri_cv = ['quanly' => 0, 'giamdoc' => 0, 'chuyengia' => 0, 'kythuat' => 0];
+        $a_vitri_cv_hientai = ['quanly' => 0, 'giamdoc' => 0, 'chuyengia' => 0, 'kythuat' => 0];
 
-        foreach($laodong as $ct){
-            $namtaold=Carbon::parse($ct->created_at)->year;
-            if($namtaold == $nam){
+        foreach ($laodong as $ct) {
+            $namtaold = Carbon::parse($ct->created_at)->year;
+            if ($namtaold == $nam) {
 
                 $a_tong['namhientai']++;
-                if(in_array($ct->gioitinh,['nu','Nữ'])){
+                if (in_array($ct->gioitinh, ['nu', 'Nữ'])) {
                     $a_loailaodong_hientai['nu']++;
                 }
-                if(getAge($ct->ngaysinh) > 35){
+                if (getAge($ct->ngaysinh) > 35) {
                     $a_loailaodong_hientai['tren35t']++;
                 }
-                if($ct->sobaohiem != null || $ct->sobaohiem != 0){
+                if ($ct->sobaohiem != null || $ct->sobaohiem != 0) {
                     $a_loailaodong_hientai['bhbatbuoc']++;
                 }
 
-                if(in_array($ct->trinhdocmkt,['Đại học trở lên','Đại học']) ){
+                if (in_array($ct->trinhdocmkt, ['Đại học trở lên', 'Đại học'])) {
                     $a_vitri_hientai['chuyenmonbaccao']++;
-                }elseif(in_array($ct->trinhdocmkt,['Trung cấp chuyên nghiệp','Cao đẳng'])){
+                } elseif (in_array($ct->trinhdocmkt, ['Trung cấp chuyên nghiệp', 'Cao đẳng'])) {
                     $a_vitri_hientai['chuyenmonbactrung']++;
-                }else{
+                } else {
                     $a_vitri_hientai['khac']++;
                 }
 
-                if(in_array($ct->chucvu,['Nhà lãnh đạo','Giám đốc','Phó Giám đốc','giám đốc','Phó Tổng Giám đốc','GIÁM ĐỐC','PHÓ GIÁM ĐỐC'])){
+                if (in_array($ct->chucvu, ['Nhà lãnh đạo', 'Giám đốc', 'Phó Giám đốc', 'giám đốc', 'Phó Tổng Giám đốc', 'GIÁM ĐỐC', 'PHÓ GIÁM ĐỐC'])) {
                     $a_vitri['nhaquanly']++;
                 }
 
-                if(!in_array($ct->nation,['Việt Nam','VN','vn','Viet Nam','Vn'])){
+                if (!in_array($ct->nation, ['Việt Nam', 'VN', 'vn', 'Viet Nam', 'Vn'])) {
                     $a_tongld_nuocngoai['hientai']++;
-                    if(in_array($ct->chucvu,['Nhà lãnh đạo'])){
+                    if (in_array($ct->chucvu, ['Nhà lãnh đạo'])) {
                         $a_vitri_cv_hientai['quanly']++;
-                    }elseif(in_array($ct->chucvu,['Giám đốc','giám đốc','GIÁM ĐỐC'])){
+                    } elseif (in_array($ct->chucvu, ['Giám đốc', 'giám đốc', 'GIÁM ĐỐC'])) {
                         $a_vitri_cv_hientai['giamdoc']++;
-                    }elseif(in_array($ct->chucvu,['Chuyên gia an toàn'])){
+                    } elseif (in_array($ct->chucvu, ['Chuyên gia an toàn'])) {
                         $a_vitri_cv_hientai['chuyengia']++;
-                    }else{
-                        $a_vitri_cv_hientai['kythuat']++; 
+                    } else {
+                        $a_vitri_cv_hientai['kythuat']++;
                     };
                 }
-            }else{
-                if(!in_array($ct->nation,['Việt Nam','VN','vn','Viet Nam','Vn'])){
+            } else {
+                if (!in_array($ct->nation, ['Việt Nam', 'VN', 'vn', 'Viet Nam', 'Vn'])) {
                     $a_tongld_nuocngoai['namtruoc']++;
-                    if(in_array($ct->chucvu,['Nhà lãnh đạo'])){
+                    if (in_array($ct->chucvu, ['Nhà lãnh đạo'])) {
                         $a_vitri_cv['quanly']++;
-                    }elseif(in_array($ct->chucvu,['Giám đốc','giám đốc','GIÁM ĐỐC'])){
+                    } elseif (in_array($ct->chucvu, ['Giám đốc', 'giám đốc', 'GIÁM ĐỐC'])) {
                         $a_vitri_cv['giamdoc']++;
-                    }elseif(in_array($ct->chucvu,['Chuyên gia an toàn'])){
+                    } elseif (in_array($ct->chucvu, ['Chuyên gia an toàn'])) {
                         $a_vitri_cv['chuyengia']++;
-                    }else{
-                        $a_vitri_cv['kythuat']++; 
+                    } else {
+                        $a_vitri_cv['kythuat']++;
                     };
                 }
                 $a_tong['namtruoc']++;
-                if(in_array($ct->gioitinh,['nu','Nữ'])){
+                if (in_array($ct->gioitinh, ['nu', 'Nữ'])) {
                     $a_loailaodong['nu']++;
                 }
-                if(getAge($ct->ngaysinh) > 35){
+                if (getAge($ct->ngaysinh) > 35) {
                     $a_loailaodong['tren35t']++;
                 }
-                if($ct->sobaohiem != null || $ct->sobaohiem != 0){
+                if ($ct->sobaohiem != null || $ct->sobaohiem != 0) {
                     $a_loailaodong['bhbatbuoc']++;
                 }
 
-                if(in_array($ct->trinhdocmkt,['Đại học trở lên','Đại học']) ){
+                if (in_array($ct->trinhdocmkt, ['Đại học trở lên', 'Đại học'])) {
                     $a_vitri['chuyenmonbaccao']++;
-                }elseif(in_array($ct->trinhdocmkt,['Trung cấp chuyên nghiệp','Cao đẳng'])){
+                } elseif (in_array($ct->trinhdocmkt, ['Trung cấp chuyên nghiệp', 'Cao đẳng'])) {
                     $a_vitri['chuyenmonbactrung']++;
-                }else{
+                } else {
                     $a_vitri['khac']++;
                 }
 
-                if(in_array($ct->chucvu,['Nhà lãnh đạo','Giám đốc','Phó Giám đốc','giám đốc','Phó Tổng Giám đốc','GIÁM ĐỐC','PHÓ GIÁM ĐỐC'])){
+                if (in_array($ct->chucvu, ['Nhà lãnh đạo', 'Giám đốc', 'Phó Giám đốc', 'giám đốc', 'Phó Tổng Giám đốc', 'GIÁM ĐỐC', 'PHÓ GIÁM ĐỐC'])) {
                     $a_vitri['nhaquanly']++;
                 }
             }
-
         }
         // dd($caulaodong);
         //Tuyển dụng
@@ -464,21 +459,21 @@ class baocaotonghopController extends Controller
         $loaihinhdn = array_column(getParamsByNametype('Loại hình doanh nghiệp')->toarray(), 'name', 'id');
         foreach ($tuyendung as $ct) {
             $ct->nam = Carbon::parse($ct->thoihan)->year;
-            $dn=$doanhnghiep->where('user',$ct->user)->first();
-            $ct->loaihinh=$dn->loaihinh;
+            $dn = $doanhnghiep->where('user', $ct->user)->first();
+            $ct->loaihinh = $dn->loaihinh;
         }
-        
+
         // foreach($loaihinhdn as $k=>$val){
         //     dd($tuyendung->where('nam',$nam)->where('loaihinh',$k)->sum('soluong'));
         // }
-        
+
         return view('reports.baocaotonghop.cauld.thongtinthitruongld', compact(
             'loaihinhkt',
             'company',
             'dmmanghetrinhdo',
             'nam'
         ))
-            ->with('cunglaodong',$cunglaodong)
+            ->with('cunglaodong', $cunglaodong)
             // ->with('inputs', $inputs)
             ->with('a_ketqua', $a_ketqua)
             ->with('a_covl', $a_covl)
@@ -519,22 +514,24 @@ class baocaotonghopController extends Controller
             ->with('pageTitle', 'Báo cáo tình hình sử dụng lao động');
     }
 
-    public function BaoCaoDN(){
+    public function BaoCaoDN()
+    {
         // dd(session('admin'));
         return view('pages.baocao.index');
     }
 
     public function getParamsByNametype($paramtype)
-	{
-		$cats = array();
-		$type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
-		if ($type) {
-			$cats = DB::table('param')->where('type', $type->id)->get();
-		}
-		return $cats;
-	}
+    {
+        $cats = array();
+        $type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
+        if ($type) {
+            $cats = DB::table('param')->where('type', $type->id)->get();
+        }
+        return $cats;
+    }
 
-    public function index_cung(){
+    public function index_cung()
+    {
         $madv = session('admin')['madv'];
         $nguoidung = Company::where('madv', $madv)->first();
 
@@ -557,24 +554,27 @@ class baocaotonghopController extends Controller
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
                 ->where('danhmuchanhchinh.capdo', 'X')
                 ->get();
-        } else if(session('admin')->capdo == 'H') {
+        } else if (session('admin')->capdo == 'H') {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
                 ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
                 ->get();
-        }else{
+        } else {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-            ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
-            ->get();
+                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+                ->get();
         }
 
-        $trinhdoGDPT=dmtrinhdogdpt::all();
-        $trinhdocmkt=dmtrinhdokythuat::all();
-        $dmuutien=dmdoituonguutien::all();
-        $dmtinhtranghdkt=dmtinhtrangthamgiahdkt::all();
+        $trinhdoGDPT = dmtrinhdogdpt::all();
+        $trinhdocmkt = dmtrinhdokythuat::all();
+        $dmuutien = dmdoituonguutien::all();
+        $dmtinhtranghdkt = dmtinhtrangthamgiahdkt::all();
+        $a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
+        $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
+        $loaihinh = dmloaihinhhdkt::all();
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
-        $donvi = danhmuchanhchinh::where('capdo','!=','T')->get();
+        $donvi = danhmuchanhchinh::where('capdo', '!=', 'T')->get();
         return view('admin.baocao.index', compact('nguoidung', 'company', 'dmdonvi'))
             ->with('m_huyen', $m_huyen)
             ->with('trinhdoGDPT', $trinhdoGDPT)
@@ -583,6 +583,223 @@ class baocaotonghopController extends Controller
             ->with('dmtinhtranghdkt', $dmtinhtranghdkt)
             ->with('donvi', $donvi)
             ->with('a_kydieutra', $a_kydieutra)
+            ->with('a_khongthamgia', $a_khongthamgia)
+            ->with('a_thatnghiep', $a_thatnghiep)
+            ->with('loaihinh', $loaihinh)
             ->with('m_xa', $m_xa);
+    }
+
+    public function tonghop(Request $request)
+    {
+        $inputs = $request->all();
+        if (session('admin')->capdo == 'H') {
+            $madv = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+        } else {
+            $madv = [session('admin')->madv];
+        }
+        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+            ->where('loaibiendong','!=',2)
+            ->where(function ($q) use ($inputs) {
+
+                if (isset($inputs['gender'])) {
+                    $q->where('gioitinh', $inputs['gioitinh']);
+                }
+                if (isset($inputs['tthdkt'])) {
+                    $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
+                }
+                if (isset($inputs['dtut'])) {
+                    $q->where('uutien', $inputs['uutien']);
+                }
+                if (isset($inputs['trinhdogdpt'])) {
+                    $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
+                }
+                if (isset($inputs['trinhdocmkt'])) {
+                    $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
+                }
+                if (isset($inputs['loaihinh'])) {
+                    $q->where('loaihinhnoilamviec', $inputs['loaihinhnoilamviec']);
+                }
+                if (isset($inputs['thatnghiep_th'])) {
+                    $q->where('thatnghiep', $inputs['thatnghiep']);
+                }
+                if (isset($inputs['ktghdkt'])) {
+                    $q->where('khongthamgiahdkt', $inputs['khongthamgiahdkt']);
+                }
+            })
+            // ->when($inputs['tuoitu'],function($query,$tuoitu){
+            //     $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > $tuoitu");
+            // })
+            ->wherein('madv', $madv)
+            ->get();
+
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
+
+        $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
+        $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        return view('admin.baocao.tonghop')
+            ->with('model', $model)
+            ->with('inputs', $inputs)
+            ->with('m_donvi', $m_donvi)
+            ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
+            ->with('pageTitle', 'Tổng hợp');
+    }
+
+    public function thongtincunglaodong(Request $request){
+        $inputs=$request->all();
+        if (session('admin')->capdo == 'H') {
+            $madv = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+        } else {
+            $madv = [session('admin')->madv];
+        }
+        $nam = $request->nam;
+        $namtruoc=$nam-$inputs['loaibaocao'] +1;
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
+
+        $a_dm = array_column($m_danhmuc->toarray(), 'level', 'madv');
+        $cunglaodong = nhankhauModel::wherein('kydieutra', [$nam, $namtruoc])->wherein('madv',$madv)->get();
+
+        $a_ketqua = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
+        $a_covl = ['thanhthi' => 0, 'nongthon' => 0];
+        $a_thatnghiep = ['thanhthi' => 0, 'nongthon' => 0];
+
+
+        $a_ketqua_hientai = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
+        $a_covl_hientai = ['thanhthi' => 0, 'nongthon' => 0];
+        $a_thatnghiep_hientai = ['thanhthi' => 0, 'nongthon' => 0];
+        foreach ($cunglaodong as $key => $ct) {
+            if ($a_dm[$ct->madv] == 'Xã') {
+                $ct->khuvuc = 'nongthon';
+                if ($ct->kydieutra == $nam) {
+                    $a_ketqua_hientai['nongthon']++;
+
+                    //có việc làm và thất nghiệp
+                    if ($ct->tinhtranghdkt == 1) {
+                        $a_covl_hientai['nongthon']++;
+                    } elseif ($ct->tinhtranghdkt == 2) {
+                        $a_thatnghiep_hientai['nongthon']++;
+                    }
+                } else {
+                    $a_ketqua['nongthon']++;
+
+                    //có việc làm và thất nghiệp
+                    if ($ct->tinhtranghdkt == 1) {
+                        $a_covl['nongthon']++;
+                    } elseif ($ct->tinhtranghdkt == 2) {
+                        $a_thatnghiep['nongthon']++;
+                    }
+                }
+            } else {
+                $ct->khuvuc = 'thanhthi';
+                if ($ct->kydieutra == $nam) {
+                    $a_ketqua_hientai['thanhthi']++;
+
+                    //có việc làm và thất nghiệp
+                    if ($ct->tinhtranghdkt == 1) {
+                        $a_covl_hientai['thanhthi']++;
+                    } elseif ($ct->tinhtranghdkt == 2) {
+                        $a_thatnghiep_hientai['thanhthi']++;
+                    }
+                } else {
+                    $a_ketqua['thanhthi']++;
+
+                    //có việc làm và thất nghiệp
+                    if ($ct->tinhtranghdkt == 1) {
+                        $a_covl['thanhthi']++;
+                    } elseif ($ct->tinhtranghdkt == 2) {
+                        $a_thatnghiep['thanhthi']++;
+                    }
+                }
+            }
+            if ($ct->kydieutra == $nam) {
+                if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
+                    $a_ketqua_hientai['nam']++;
+                } else {
+                    $a_ketqua_hientai['nu']++;
+                }
+            } else {
+                if (in_array($ct->gioitinh, ['nam', 'Nam'])) {
+                    $a_ketqua['nam']++;
+                } else {
+                    $a_ketqua['nu']++;
+                }
+            }
+        }
+
+        //Tính tăng giảm giữa 2 kỳ
+        $tang_ketqua=array('thanhthi'=>0,'nongthon'=>0,'nam'=>0,'nu'=>0);
+        $giam_ketqua=array('thanhthi'=>0,'nongthon'=>0,'nam'=>0,'nu'=>0);
+        //người từ 15 tuổi
+        foreach($a_ketqua as $key=>$ct){
+            $result=$a_ketqua_hientai[$key]-$ct;
+            if($result > 0){
+                $tang_ketqua[$key]=$result;
+            }
+            if($result < 0){
+                $giam_ketqua[$key]=abs($result);
+            }
+        }
+        $tang_covl=array('thanhthi'=>0,'nongthon'=>0);
+        $giam_covl=array('thanhthi'=>0,'nongthon'=>0);
+        foreach($a_covl as $k=>$ct){
+            $res=$a_covl_hientai[$k]-$ct;
+            if($result > 0){
+                $tang_covl[$k]=$res;
+            }
+            if($result < 0){
+                $giam_covl[$k]=abs($res);
+            }
+        }
+
+        $tang_thatnghiep=array('thanhthi'=>0,'nongthon'=>0);
+        $giam_thatnghiep=array('thanhthi'=>0,'nongthon'=>0);
+        foreach($a_thatnghiep as $k=>$ct){
+            $res=$a_thatnghiep_hientai[$k]-$ct;
+            if($result > 0){
+                $tang_thatnghiep[$k]=$res;
+            }
+            if($result < 0){
+                $giam_thatnghiep[$k]=abs($res);
+            }
+        }
+        $loaihinhkt = dmloaihinhhdkt::all();
+        $company = Company::all();
+        // $nhucautuyendungct = nhucautuyendungct::all();
+        $dmmanghetrinhdo = dmmanghetrinhdo::all();
+        $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
+        $a_chuyenmon = dmtrinhdokythuat::select('tentdkt', 'stt')->get()->toarray();
+        $a_cmkt = array_column($a_chuyenmon, 'tentdkt', 'stt');
+        $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
+        $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
+
+        return view('admin.baocao.thongtincunglaodong', compact(
+            'loaihinhkt',
+            'company',
+            'dmmanghetrinhdo',
+            'nam','namtruoc'
+        ))
+            ->with('cunglaodong', $cunglaodong)
+            // ->with('inputs', $inputs)
+            ->with('a_ketqua', $a_ketqua)
+            ->with('a_covl', $a_covl)
+            ->with('a_thatnghiep', $a_thatnghiep)
+            ->with('a_ketqua_hientai', $a_ketqua_hientai)
+            ->with('a_covl_hientai', $a_covl_hientai)
+            ->with('a_thatnghiep_hientai', $a_thatnghiep_hientai)
+            ->with('a_vithevl', $a_vithevl)
+            ->with('a_cmkt', $a_cmkt)
+            ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
+            ->with('a_khongthamgia', $a_khongthamgia)
+            ->with('tang_ketqua', $tang_ketqua)
+            ->with('giam_ketqua', $giam_ketqua)
+            ->with('tang_covl', $tang_covl)
+            ->with('giam_covl', $giam_covl)
+            ->with('tang_thatnghiep', $tang_thatnghiep)
+            ->with('giam_thatnghiep', $giam_thatnghiep)
+
+            ->with('pageTitle', 'Báo cáo về thông tin thị trường cung lao động');
     }
 }

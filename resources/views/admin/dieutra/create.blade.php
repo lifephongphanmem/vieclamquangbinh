@@ -313,7 +313,7 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            {{-- <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Mối quan hệ</label>
                                                                     <select name="mqh[]" class="form-control selec2basic">
@@ -323,7 +323,7 @@
                                                                         <option value="Con">Con</option>
                                                                     </select>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
 
                                                 </div>
