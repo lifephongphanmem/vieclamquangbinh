@@ -25,17 +25,17 @@ var KTLogin = function() {
 			KTUtil.getById('kt_login_signin_form'),
 			{
 				fields: {
-					email: {
+					username: {
 						validators: {
 							notEmpty: {
-								message: 'Email không được bỏ trống.'
+								message: 'Tài khoản không được để trống'
 							}
 						}
 					},
 					password: {
 						validators: {
 							notEmpty: {
-								message: 'Mật khẩu không được bỏ trống.'
+								message: 'Mật khẩu không được để trống'
 							}
 						}
 					}
@@ -54,13 +54,24 @@ var KTLogin = function() {
 
             validation.validate().then(function(status) {
 		        if (status == 'Valid') {
-					$("#kt_login_signin_form").unbind('submit').submit();                    
+					$("#kt_login_signin_form").unbind('submit').submit();   
+                    // swal.fire({
+		            //     text: "All is cool! Now you submit this form",
+		            //     icon: "success",
+		            //     buttonsStyling: false,
+		            //     confirmButtonText: "Ok, got it!",
+                    //     customClass: {
+    				// 		confirmButton: "btn font-weight-bold btn-light-primary"
+    				// 	}
+		            // }).then(function() {
+					// 	KTUtil.scrollTop();
+					// });
 				} else {
 					swal.fire({
-		                text: "Đăng nhập thất bại",
+		                text: "Đăng nhập thất bại.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Thực hiện lại",
+		                confirmButtonText: "Đăng nhập lại!",
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
@@ -93,54 +104,47 @@ var KTLogin = function() {
 			form,
 			{
 				fields: {
-					ctyname: {
+					name: {
 						validators: {
 							notEmpty: {
-								message: 'Tên công ty không được bỏ trống.'
-							}
-						}
-					},
-					dkkd: {
-						validators: {
-							notEmpty: {
-								message: 'Số đăng ký kinh doanh không được bỏ trống.'
+								message: 'Không để trống tên công ty'
 							}
 						}
 					},
 					email: {
                         validators: {
 							notEmpty: {
-								message: 'Email không được bỏ trống'
+								message: 'Không để trống email'
 							},
                             emailAddress: {
-								message: 'Đây không phải địa chỉ Email'
+								message: 'Không phải định dạng email'
 							}
 						}
 					},
                     password: {
                         validators: {
                             notEmpty: {
-                                message: 'Mật khẩu không được bỏ trống'
+                                message: 'Không để trống mật khẩu'
                             }
                         }
                     },
-                    password_confirmation: {
+                    cpassword: {
                         validators: {
                             notEmpty: {
-                                message: 'Nhắc lại mật khẩu không được bỏ trống'
+                                message: 'Không để trống xác nhận lại mật khẩu'
                             },
                             identical: {
                                 compare: function() {
                                     return form.querySelector('[name="password"]').value;
                                 },
-                                message: 'Mật khẩu nhắc lại không giống mật khẩu.'
+                                message: 'Chưa trùng mật khẩu'
                             }
                         }
                     },
                     agree: {
                         validators: {
                             notEmpty: {
-                                message: 'You must accept the terms and conditions'
+                                message: 'Đồng ý điều khoản'
                             }
                         }
                     },
@@ -171,14 +175,13 @@ var KTLogin = function() {
 					// });
 				} else {
 					swal.fire({
-		                text: "Thông tin đăng ký không hợp lệ",
+		                text: "Lỗi đăng ký, vui lòng thử lại.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Thực hiện lại",
+		                confirmButtonText: "Chấp nhận!",
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
-						
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});

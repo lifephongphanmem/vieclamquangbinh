@@ -42,6 +42,8 @@
             </div>
             <!--end::Iconbox-->
         </div>
+        @foreach ($a_vp as $vp )
+        <?php $vanphong = $model_vp->where('vanphong', $vp);  ?>
 
         <div class="col-lg-6 col-xl-6 mb-5">
             <!--begin::Iconbox-->
@@ -67,15 +69,16 @@
                             </span>
                         </div>
                         <div class="d-flex flex-column">
-                            <span class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">PHÒNG TKBT I -
-                                QUẢN LÝ ĐỊA BÀN CÁC TỈNH PHÍA NAM</span>
+                            <span class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">{{$vp}}</span>
                             <div class="text-dark-75">
+                                @foreach ($vanphong as $ct )
                                 <p>
                                     <span class="label label-danger label-dot mr-2"></span>
-                                    <span style="color:blue">Nguyễn Xuân Trường</span>- Số điện thoại: <span style="color:blue">0917
-                                        737456</span>
+                                    <span style="color:blue">{{$ct->hoten}}</span>- Số điện thoại: <span style="color:blue">{{$ct->sdt}}</span>
                                 </p>
-                                <p>
+                                @endforeach
+
+                                {{-- <p>
                                     <span class="label label-danger label-dot mr-2"></span>
                                     <span style="color:blue">Hoàng Ngọc Long</span>- Số điện thoại: <span style="color:blue">0985
                                         365683</span>
@@ -84,7 +87,7 @@
                                     <span class="label label-danger label-dot mr-2"></span>
                                     <span style="color:blue">Tạ Đình Hữu</span>- Số điện thoại: <span style="color:blue">0917
                                         179993</span>
-                                </p>
+                                </p> --}}
                             </div>
                         </div>
                     </div>
@@ -92,8 +95,8 @@
             </div>
             <!--end::Iconbox-->
         </div>
-
-        <div class="col-lg-6 col-xl-6 mb-5">
+        @endforeach
+        {{-- <div class="col-lg-6 col-xl-6 mb-5">
             <!--begin::Iconbox-->
             <div class="card card-custom mb-8 mb-lg-0">
                 <div class="card-body">
@@ -141,6 +144,6 @@
                 </div>
             </div>
             <!--end::Iconbox-->
-        </div>
+        </div> --}}
     </div>
 @stop

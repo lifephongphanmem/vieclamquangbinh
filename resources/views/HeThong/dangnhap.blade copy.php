@@ -216,7 +216,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Main-->
     {{-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> --}}
     {{-- <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script> --}}
-    {{-- <script>
+    <!-- {{-- <script>
 			jQuery(document).ready(function() {
 				$("#matkhau").keydown(function(event){
 					if(event.keyCode == 13){
@@ -224,7 +224,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					}
 				});
 		
-    		}); --}}
+    		}); --}} -->
     </script>
     <script>
         var HOST_URL = "https://phanmemcuocsong.com/";

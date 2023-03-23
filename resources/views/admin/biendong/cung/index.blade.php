@@ -3,16 +3,6 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
-    <style>
-        .col-md-3 {
-            float: left;
-        }
-
-        .wrapper {
-            margin-top: 0px;
-            padding: 0px 15px;
-        }
-    </style>
 @stop
 
 @section('custom-script')
@@ -27,22 +17,22 @@
             TableManaged3.init();
 
             $('#madv').change(function() {
-                // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                //     '&kydieutra=' + $('#kydieutra').val();
-                    window.location.href = "{{ $inputs['url'] }}" + '?madv=' +$('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val()+ '&loaibiendong='+ $('#loaibiendong').val();
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val() +
+                    '&loaibiendong=' + $('#loaibiendong').val();
             });
             $('#mahuyen').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+ $('#mahuyen').val()+ '&loaibiendong='+ $('#loaibiendong').val();
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val() +
+                    '&loaibiendong=' + $('#loaibiendong').val();
             });
             $('#kydieutra').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val()+ '&loaibiendong='+ $('#loaibiendong').val();
+                    '&kydieutra=' + $('#kydieutra').val() + '&loaibiendong=' + $('#loaibiendong').val();
             });
             $('#loaibiendong').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val()+ '&loaibiendong='+ $('#loaibiendong').val();
+                    '&kydieutra=' + $('#kydieutra').val() + '&loaibiendong=' + $('#loaibiendong').val();
             });
             // getxa();
             // getdulieu();
@@ -60,7 +50,9 @@
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
-                        <label class="mt-3 mr-5 text-bold" for=""style="font-weight: bold">Số lượng :</label>  <input type="text" value="{{count($model)}}" style="width:35%;text-align:center" class="form-control" readonly >
+                        <label class="mt-3 mr-5 text-bold" for=""style="font-weight: bold">Số lượng :</label> <input
+                            type="text" value="{{ count($model) }}" style="width:35%;text-align:center"
+                            class="form-control" readonly>
                     </div>
 
                 </div>
@@ -68,39 +60,46 @@
                     <div class="form-group row">
                         <div class="col-md-3">
                             <label style="font-weight: bold">Loại biến động</label>
-                            <select name="loaibiendong" id="loaibiendong"  class="form-control select2basic">
+                            <select name="loaibiendong" id="loaibiendong" class="form-control select2basic">
                                 <option value="">Tất cả</option>
-                                @foreach ($a_loaibiendong as $key=>$ct )
-                                <option value="{{$key}}" {{isset($inputs['loaibiendong'])?($inputs['loaibiendong'] == $key?'selected':''):''}}>{{$ct}}</option>
-                            @endforeach
+                                @foreach ($a_loaibiendong as $key => $ct)
+                                    <option value="{{ $key }}"
+                                        {{ isset($inputs['loaibiendong']) ? ($inputs['loaibiendong'] == $key ? 'selected' : '') : '' }}>
+                                        {{ $ct }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label style="font-weight: bold">Kỳ điều tra</label>
 
-                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
-                                @foreach ($a_kydieutra as $key=>$ct )
-                                    <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
+                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()"
+                                class="form-control select2basic">
+                                @foreach ($a_kydieutra as $key => $ct)
+                                    <option value="{{ $key }}" {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
+                                        {{ $ct }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label style="font-weight: bold">Xã</label>
-                            <select name="madv" id="madv"  class="form-control select2basic">
-                                @if (in_array(session('admin')->capdo,['T','H']))
-                                <option value="">----Chọn xã---</option>
+                            <select name="madv" id="madv" class="form-control select2basic">
+                                @if (in_array(session('admin')->capdo, ['T', 'H']))
+                                    <option value="">----Chọn xã---</option>
                                 @endif
-                                
-                                @foreach ($a_xa as $key=>$ct )
-                                <option value="{{$ct->madv}}" {{$ct->madv == $inputs['madv']?'selected':''}}>{{$ct->name}}</option>
+
+                                @foreach ($a_xa as $key => $ct)
+                                    <option value="{{ $ct->madv }}" {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}>
+                                        {{ $ct->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label style="font-weight: bold">Huyện</label>
-                            <select name="mahuyen" id="mahuyen"  class="form-control select2basic">
-                                @foreach ($a_huyen as $key=>$ct )
-                                    <option value="{{$key}}" {{isset($inputs['mahuyen'])?($inputs['mahuyen'] == $key?'selected':''):''}}>{{$ct}}</option>
+                            <select name="mahuyen" id="mahuyen" class="form-control select2basic">
+                                @foreach ($a_huyen as $key => $ct)
+                                    <option value="{{ $key }}"
+                                        {{ isset($inputs['mahuyen']) ? ($inputs['mahuyen'] == $key ? 'selected' : '') : '' }}>
+                                        {{ $ct }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -123,18 +122,23 @@
                         </thead>
                         <tbody>
                             <?php 
-		foreach ($model as $key=>$ld ){
-	?>
+		                foreach ($model as $key=>$ld ){
+	                        ?>
                             <tr>
                                 <td>{{ ++$key }} </td>
-                                <td><a href="{{ URL::to('/biendong/thongtinthaydoi/' . $ld->id.'?mahuyen='.$inputs['mahuyen'].'&view=nhankhau') }}">{{ $ld->hoten }}</a></td>
+                                <td><a
+                                        href="{{ URL::to('/biendong/thongtinthaydoi/' . $ld->id . '?mahuyen=' . $inputs['mahuyen'] . '&view=nhankhau') }}">{{ $ld->hoten }}</a>
+                                </td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->thuongtru }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
+                                <td><span class="text-ellipsis">
+                                    </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
                                 </td>
-                                <td><span class="text-ellipsis"> </span>{{ \Carbon\Carbon::parse($ld->created_at)->format('d/m/Y') }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ \Carbon\Carbon::parse($ld->updated_at)->format('d/m/Y') }}</td>
+                                <td><span class="text-ellipsis">
+                                    </span>{{ \Carbon\Carbon::parse($ld->created_at)->format('d/m/Y') }}</td>
+                                <td><span class="text-ellipsis">
+                                    </span>{{ \Carbon\Carbon::parse($ld->updated_at)->format('d/m/Y') }}</td>
                                 {{-- <td class="text-ellipsis">
                                     <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
                                         <i class="icon-lg la flaticon2-print text-dark"></i></a>
@@ -146,14 +150,15 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
 
 
         <script>
             function getxa() {
-                var madv=$('#mdv').val;
-                var url='/nhankhau/get_xa?madv='+madv;
+                var madv = $('#mdv').val;
+                var url = '/nhankhau/get_xa?madv=' + madv;
                 var mahuyen = $('#mahuyen').val();
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
@@ -175,13 +180,12 @@
                 });
             };
 
-            function getdulieu()
-            {
-                madv=$('#madv').val();
+            function getdulieu() {
+                madv = $('#madv').val();
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + madv +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen='+$('#mahuyen').val();
-                    // $('#madv option[value=' + madv + ' ]').attr('selected', 'selected');
-                    // getxa();
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
+                // $('#madv option[value=' + madv + ' ]').attr('selected', 'selected');
+                // getxa();
             }
         </script>
     @endsection

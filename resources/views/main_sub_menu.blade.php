@@ -1,4 +1,4 @@
-<div class="aside aside-left d-flex flex-column flex-row-auto" id="kt_aside">
+{{-- <div class="aside aside-left d-flex flex-column flex-row-auto" id="kt_aside">
 
     <!--begin::Aside Menu-->
     <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
@@ -8,7 +8,7 @@
             data-menu-dropdown-timeout="500">
             <!--begin::Menu Nav-->
             <ul class="menu-nav">
-                {{-- @if (session('admin')->phanloaitk ==1) --}}
+
                     
                 @if (chkPhanQuyen('trangchu', 'phanquyen'))
                 <li class="menu-item font-weight-bold" aria-haspopup="true">
@@ -32,8 +32,8 @@
                         <span class="menu-text font-weight-bold">Trang chủ</span>
                     </a>
                 </li>
-                @endif
-                {{-- @endif --}}
+                @endif --}}
+
                 @if (session('admin')->phanloaitk == 1)
                     
                     @include('main.main_subdoanhnghiep')
@@ -56,11 +56,11 @@
 
 
 
-            </ul>
+            {{-- </ul>
             <!--end::Menu Nav-->
         </div>
         <!--end::Menu Container-->
     </div>
     <!--end::Aside Menu-->
-</div>
+</div> --}}
 

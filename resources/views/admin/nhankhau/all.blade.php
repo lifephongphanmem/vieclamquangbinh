@@ -3,16 +3,6 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
-    <style>
-        .col-md-3 {
-            float: left;
-        }
-
-        .wrapper {
-            margin-top: 0px;
-            padding: 0px 15px;
-        }
-    </style>
 @stop
 
 @section('custom-script')
@@ -25,7 +15,6 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
-
             $('#madv').change(function() {
                 // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
                 //     '&kydieutra=' + $('#kydieutra').val();
@@ -102,7 +91,7 @@
                         <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
 
-                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
+                            <select name="kydieutra" id="kydieutra"  class="form-control select2basic">
                                 @foreach ($a_kydieutra as $key=>$ct )
                                     <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
                                 @endforeach
@@ -133,7 +122,7 @@
                     </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th width="5%"> STT </th>
                                 <th>Tên</th>
                                 <th>CMND/CCCD</th>
@@ -175,6 +164,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <!--Modal báo giảm-->
         <div id="baogiam" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">

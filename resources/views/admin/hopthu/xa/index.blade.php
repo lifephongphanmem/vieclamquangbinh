@@ -47,26 +47,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    {{-- <div  style="margin-bottom: 0.5% ">
-                        <div  style="text-align: center">
-                            <form class="form-inline" method="GET">
-                                <label>Tình trạng</label>
-                                <select class="form-control w-sm inline v-middle" name="state_filter"
-                                    onchange="this.form.submit()">
-                                    <option value="0">Tất cả</option>
-                                    <option value="1" <?php if ($state_filter == 1) {
-                                        echo 'selected';
-                                    } ?>>Đã gửi</option>
-                                    <option value="2"<?php if ($state_filter == 2) {
-                                        echo 'selected';
-                                    } ?>>Đã nhận</option>
-                                </select>
-                            </form>
-                        </div>
-
-                    </div> --}}
-
-
 
                     <div class="panel-body">
 						<table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">

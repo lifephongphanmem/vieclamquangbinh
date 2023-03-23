@@ -1,6 +1,6 @@
 {{-- @extends ('admin.layout') --}}
 @extends ('main')
-@section('custom-style')
+{{-- @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
     <style>
@@ -13,7 +13,7 @@
             padding: 0px 15px;
         }
     </style>
-@stop
+@stop --}}
 
 @section('custom-script')
     <script type="text/javascript" src="{{ url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') }}">
@@ -113,84 +113,134 @@
         </div>
     @endif
     @if (chkPhanQuyen('trangchuxa', 'phanquyen'))
-    @if ($kydieutra_truoc != null)
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <div class="card card-custom">
+        @if ($kydieutra_truoc != null)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-custom">
 
-                <div class="card-header card-header-tabs-line">
-                    <div class="card-title">
-                        <h3 class="card-label text-uppercase">Kỳ điều tra năm {{$kydieutra_truoc}}</h3>
-                    </div>
-                    <div class="card-toolbar">
-                        {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
-                        class="btn btn-sm btn-success" onclick="intonghop()">
-                        <i class="icon-lg la flaticon2-print"></i> In tổng hợp
-                    </button> --}}
-                    </div>
-                </div>
-                <div class="market-updates">
-                    <div class="col-md-3 market-update-gd">
-                        <div class="market-update-block clr-block-2">
-                            <div class="col-md-4 market-update-right">
-                                <i class="fa fa-eye"> </i>
+                        <div class="card-header card-header-tabs-line">
+                            <div class="card-title">
+                                <h3 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_truoc }}</h3>
                             </div>
-                            <div class="col-md-8 market-update-left">
-                                <h4>LĐ trên 15 tuổi</h4>
-                                <h4>{{ $tongsonhankhau['kytruoc'] }}</h4>
-
+                            <div class="card-toolbar">
                             </div>
-                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-primary gutter-b" style="height: 150px">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            {{ $tongsonhankhau['kytruoc'] }}</div>
+                                        <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                            trên 15 tuổi</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-success gutter-b" style="height: 150px">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            {{ $ldcovieclam['kytruoc'] }}</div>
+                                        <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                            có việc làm</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-danger gutter-b" style="height: 150px;">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Delete-user.svg--><svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z M21,8 L17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L21,6 C21.5522847,6 22,6.44771525 22,7 C22,7.55228475 21.5522847,8 21,8 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            {{ $ldthatnghiep['kytruoc'] }}</div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ thất
+                                            nghiệp</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-dark gutter-b" style="height: 150px;">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\User.svg--><svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            {{ $ldkhongthamgia['kytruoc'] }}</div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ không tham
+                                            gia HĐKT</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3 market-update-gd">
-                        <div class="market-update-block clr-block-1">
-                            <div class="col-md-4 market-update-right">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <div class="col-md-8 market-update-left">
-                                <h4>LĐ có việc làm</h4>
-                                {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
-                                <h4>{{ $ldcovieclam['kytruoc'] }}</h4>
-
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 market-update-gd">
-                        <div class="market-update-block clr-block-3">
-                            <div class="col-md-4 market-update-right">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <div class="col-md-8 market-update-left">
-                                <h4>LĐ thất nghiệp</h4>
-                                {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
-                                <h4>{{ $ldthatnghiep['kytruoc'] }}</h4>
-
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 market-update-gd">
-                        <div class="market-update-block clr-block-4">
-                            <div class="col-md-4 market-update-right">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            </div>
-                            <div class="col-md-12 market-update-left">
-                                <h4>LĐ không tham gia HĐKT</h4>
-                                {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
-                                <h4>{{ $ldkhongthamgia['kytruoc'] }}</h4>
-
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
                 </div>
             </div>
-        </div>
-    </div>
-    @endif
+        @endif
 
 
         <div class="row mt-5">
@@ -199,180 +249,277 @@
 
                     <div class="card-header card-header-tabs-line">
                         <div class="card-title">
-                            <h3 class="card-label text-uppercase">Kỳ điều tra năm {{$kydieutra_hientai}}</h3>
+                            <h3 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_hientai }}</h3>
                         </div>
                         <div class="card-toolbar">
-                            {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
-                            class="btn btn-sm btn-success" onclick="intonghop()">
-                            <i class="icon-lg la flaticon2-print"></i> In tổng hợp
-                        </button> --}}
                         </div>
                     </div>
-                    <div class="market-updates">
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-2">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-eye"> </i>
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-primary gutter-b" style="height: 150px">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                        {{ $tongsonhankhau['kyhientai'] }}</div>
+                                    <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                        trên 15 tuổi</a>
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ trên 15 tuổi</h4>
-                                    <h4>{{ $tongsonhankhau['kyhientai'] }}</h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-1">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-users"></i>
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-success gutter-b" style="height: 150px">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                        {{ $ldcovieclam['kyhientai'] }}</div>
+                                    <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                        có việc làm</a>
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ có việc làm</h4>
-                                    {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
-                                    <h4>{{ $ldcovieclam['kyhientai'] }}</h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-3">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-users"></i>
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-danger gutter-b" style="height: 150px;">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Delete-user.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z M21,8 L17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L21,6 C21.5522847,6 22,6.44771525 22,7 C22,7.55228475 21.5522847,8 21,8 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                        {{ $ldthatnghiep['kyhientai'] }}</div>
+                                    <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                        thất nghiệp</a>
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ thất nghiệp</h4>
-                                    {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
-                                    <h4>{{ $ldthatnghiep['kyhientai'] }}</h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-4">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-dark gutter-b" style="height: 150px;">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\User.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                        {{ $ldkhongthamgia['kyhientai'] }}</div>
+                                    <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                        không tham gia HĐKT</a>
                                 </div>
-                                <div class="col-md-12 market-update-left">
-                                    <h4>LĐ không tham gia HĐKT</h4>
-                                    {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
-                                    <h4>{{ $ldkhongthamgia['kyhientai'] }}</h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="clearfix"> </div>
                     </div>
                 </div>
             </div>
         </div>
         @if ($kydieutra_truoc != null)
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <div class="card card-custom">
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="card card-custom">
 
-                    <div class="card-header card-header-tabs-line">
-                        <div class="card-title">
-                            <h3 class="card-label text-uppercase">Biến động</h3>
-                        </div>
-                        <div class="card-toolbar">
-                            {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
-                            class="btn btn-sm btn-success" onclick="intonghop()">
-                            <i class="icon-lg la flaticon2-print"></i> In tổng hợp
-                        </button> --}}
-                        </div>
-                    </div>
-                    <div class="market-updates">
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-2">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-eye"> </i>
-                                </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ trên 15 tuổi</h4>
-                                    <h4>
-                                        @if($tongso_biendong==0)
-                                        {{$tongso_biendong}}
-                                        @elseif ($tongso_biendong > 0)
-                                        Tăng : {{$tongso_biendong}}
-                                        @else
-                                        Giảm : {{abs($tongso_biendong)}}
-                                        @endif</h3>
-                                    </h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
+                        <div class="card-header card-header-tabs-line">
+                            <div class="card-title">
+                                <h3 class="card-label text-uppercase">Biến động</h3>
+                            </div>
+                            <div class="card-toolbar">
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-1">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-users"></i>
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-primary gutter-b" style="height: 150px">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            @if ($tongso_biendong == 0)
+                                                {{ $tongso_biendong }}
+                                            @elseif ($tongso_biendong > 0)
+                                                Tăng : {{ $tongso_biendong }}
+                                            @else
+                                                Giảm : {{ abs($tongso_biendong) }}
+                                            @endif
+                                        </div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                            trên 15 tuổi</a>
+                                    </div>
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ có việc làm</h4>
-                                    {{-- <h4>{{ $ldcovieclam }}/{{ $tongsonhankhau }}</h4> --}}
-                                    <h4>@if($ldcovieclam_biendong==0)
-                                        {{$ldcovieclam_biendong}}
-                                        @elseif ($ldcovieclam_biendong > 0)
-                                        Tăng : {{$ldcovieclam_biendong}}
-                                        @else
-                                        Giảm : {{abs($ldcovieclam_biendong)}}
-                                        @endif
-                                    </h4>
-
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-success gutter-b" style="height: 150px">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            @if ($ldcovieclam_biendong == 0)
+                                                {{ $ldcovieclam_biendong }}
+                                            @elseif ($ldcovieclam_biendong > 0)
+                                                Tăng : {{ $ldcovieclam_biendong }}
+                                            @else
+                                                Giảm : {{ abs($ldcovieclam_biendong) }}
+                                            @endif
+                                        </div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có việc
+                                            làm</a>
+                                    </div>
                                 </div>
-                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-danger gutter-b" style="height: 150px;">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Delete-user.svg--><svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z M21,8 L17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L21,6 C21.5522847,6 22,6.44771525 22,7 C22,7.55228475 21.5522847,8 21,8 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            @if ($ldthatnghiep_biendong == 0)
+                                                {{ $ldthatnghiep_biendong }}
+                                            @elseif ($ldthatnghiep_biendong > 0)
+                                                Tăng : {{ $ldthatnghiep_biendong }}
+                                            @else
+                                                Giảm : {{ abs($ldthatnghiep_biendong) }}
+                                            @endif
+                                        </div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ thất
+                                            nghiệp</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card card-custom bg-dark gutter-b" style="height: 150px;">
+                                    <div class="card-body">
+                                        <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                            <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\User.svg--><svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                                    <path
+                                                        d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                    <path
+                                                        d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                                        fill="#000000" fill-rule="nonzero" />
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                            @if ($ldkhongthamgia_biendong == 0)
+                                                {{ $ldkhongthamgia_biendong }}
+                                            @elseif ($ldkhongthamgia_biendong > 0)
+                                                Tăng : {{ $ldkhongthamgia_biendong }}
+                                            @else
+                                                Giảm : {{ abs($ldkhongthamgia_biendong) }}
+                                            @endif
+                                        </div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ không tham
+                                            gia HĐKT</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-3">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-users"></i>
-                                </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>LĐ thất nghiệp</h4>
-                                    {{-- <h3>{{ $ldthatnghiep }}/{{ $tongsonhankhau }}</h3> --}}
-                                    <h4>@if($ldthatnghiep_biendong==0)
-                                        {{$ldthatnghiep_biendong}}
-                                        @elseif ($ldthatnghiep_biendong > 0)
-                                        Tăng : {{$ldthatnghiep_biendong}}
-                                        @else
-                                        Giảm : {{abs($ldthatnghiep_biendong)}}
-                                        @endif</h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-4">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                </div>
-                                <div class="col-md-12 market-update-left">
-                                    <h4>LĐ không tham gia HĐKT</h4>
-                                    {{-- <h3>{{ $ldkhongthamgia }}/{{ $tongsonhankhau }}</h3> --}}
-                                    <h4>@if($ldkhongthamgia_biendong==0)
-                                        {{$ldkhongthamgia_biendong}}
-                                        @elseif ($ldkhongthamgia_biendong > 0)
-                                        Tăng : {{$ldkhongthamgia_biendong}}
-                                        @else
-                                        Giảm : {{abs($ldkhongthamgia_biendong)}}
-                                        @endif</h4>
-
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"> </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endif
     @endif
     <!-- //market-->
@@ -866,7 +1013,7 @@
         </div>
         <div class="clearfix"> </div>
     </div>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
 
             //CHARTS
@@ -945,6 +1092,6 @@
 
 
         });
-    </script>
+    </script> --}}
 
 @endsection

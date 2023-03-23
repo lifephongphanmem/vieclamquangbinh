@@ -231,9 +231,9 @@ class HopThuController extends Controller
     }
 
     public function hopthu_xa(){
-        if (!chkPhanQuyen('hopthuxa', 'danhsach')) {
-            return view('errors.noperm')->with('machucnang', 'hopthuxa');
-        }
+        // if (!chkPhanQuyen('hopthuxa', 'danhsach')) {
+        //     return view('errors.noperm')->with('machucnang', 'hopthuxa');
+        // }
         $model_nhan=hopthu::join('donvinhanthongbao','donvinhanthongbao.mahopthu','hopthu.dvnhan')
         ->select('hopthu.*','donvinhanthongbao.isRead')
         ->where('donvinhanthongbao.madv',session('admin')->madv)
