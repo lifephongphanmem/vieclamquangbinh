@@ -37,7 +37,7 @@
                 @if (session('admin')->phanloaitk == 1)
                 <ul class="menu-nav">                   
                     @include('main.main_subdoanhnghiep')
-                    
+
                     @if (session('admin')->capdo == 'T')
                     @include('main.main_subcunglaodong')
                     @include('main.main_subbaocao')

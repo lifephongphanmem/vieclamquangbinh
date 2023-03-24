@@ -2,13 +2,14 @@
 
 @section('content')
 
-    <p id='data_header'
-        style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;margin-bottom:10px;">DANH SÁCH
-        NGƯỜI LAO ĐỘNG NƯỚC NGOÀI<br>
-    </p>
+
 
     <table id="data_body" border="1" cellspacing="0" cellpadding="0">
-        <thead>
+       
+  
+            <tr style="border-top: none;border-left: none;border-right: none;">
+                <th colspan="12" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;padding-bottom:2rem;"> DANH SÁCH NGƯỜI LAO ĐỘNG NƯỚC NGOÀI</th>
+            </tr>
             <tr>
                 <th rowspan="2" width='2%'>STT</th>
                 <th rowspan="2" width='15%'>Họ và tên </th>
@@ -26,9 +27,7 @@
                 <th>Nam</th>
                 <th>Nữ</th>
             </tr>
-        </thead>
-        <tbody>
-
+ 
             @foreach ($model as $key => $item)
                 <tr>
                     <td>{{ ++$key }}</td>
@@ -46,6 +45,7 @@
 
                 </tr>
             @endforeach
-        </tbody>
+
     </table>
+
 @stop
