@@ -49,7 +49,6 @@ class HethongchungController extends Controller
 
 	public function DangNhap(Request $request)
 	{
-
 		$inputs = $request->all();
 		
 		// $user_gmail=User::where('email',$inputs['username'])->first();
@@ -94,6 +93,20 @@ class HethongchungController extends Controller
 				->with('furl', '/home');
 		}
 		// dd(emailValid('hailinhsale01@gmail.com'));
+
+		$email=$inputs['username'];
+		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$data=[
+				'email'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  } else {
+			$data=[
+				'username'=>$inputs['username'],
+				'password'=>$inputs['password']
+			];
+		  }
+	
 
 		//Sai tài khoản
 
@@ -164,6 +177,7 @@ class HethongchungController extends Controller
 		// dd(session('chucnang'));
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['username'])->get()->keyBy('machucnang')->toArray());
+
 		if (session('admin')->capdo == 'T') {
             $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
                 ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
@@ -213,6 +227,7 @@ class HethongchungController extends Controller
         }
 
 		Session::put('m_huyen', $m_huyen);
+
 		if(session('admin')->phanloaitk ==1 && session('admin')->sadmin != 'SSA'){
 			return redirect('/dashboard')
 			->with('success', 'Đăng nhập thành công');
@@ -223,7 +238,7 @@ class HethongchungController extends Controller
 			return redirect('/doanhnghieppanel')
 			->with('success', 'Đăng nhập thành công');
 		}
-
+		
 	}
 	public function logout()
 	{

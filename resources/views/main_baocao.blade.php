@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <title >{{ $pageTitle }}</title>
+    <title>{{ $pageTitle }}</title>
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
         type="text/css" />
     <link href="{{ url('assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
@@ -43,6 +43,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+    <script type="text/javascript" src="{{ url('js/sheet.js') }}"></script>
+
+
     <!-- END THEME STYLES -->
     {{-- <link rel="shortcut icon" href="{{ url('images/LIFESOFT.png') }}" type="image/x-icon"> --}}
     <link rel="shortcut icon" href="{{ url('assets/media/logos/ttdvvl.png') }}" />
@@ -154,13 +158,63 @@
             document.body.removeChild(fileDownload);
         }
 
+
+
+        // function exportExcel(TableName, color, fineName) {
+
+        //     if (TableName.trim() === "") {
+        //         alert(" không có bảng được cung cấp");
+        //         return;
+        //     }
+        //     if (color.trim() === "") {
+        //         color = "#87AFC6";
+        //     }
+        //     if (fineName.trim() === "") {
+        //         fineName = "data";
+        //     }
+        //     var export_data = "";
+        //     arrTableName = TableName.split("|");
+
+        //     if (arrTableName.length > 0) {
+        //         //duyệt từng bảng
+        //         for (let i = 0; i < arrTableName.length; i++) {
+        //             export_data += "<table border='2xp'> <tr bgcolor='" + color + "'>";
+        //             console.log(document.getElementById(arrTableName[i]));
+        //             var objectTable = document.getElementById(arrTableName[i]); //lấy id bảng thứu tự
+        //             if (objectTable === "undefined") {
+        //                 alert("bảng không tìm thấy");
+        //                 return;
+        //             }
+        //             //duyệt từng dòng dữ liệu lưu vào export_data
+        //             for (let j = 0; j < objectTable.rows.length; j++) {
+        //                 export_data += objectTable.rows[j].innerHTML + "</tr>"
+        //             }
+        //             export_data += "</table>"
+        //         }
+
+        //         if (window.navigator.userAgent.indexOf("MSIE") > 0 || !!window.navigator.userAgent.match(
+        //                 /trient.*rv\:11\./)) {
+        //             exportIf.document.open("txt/html", "replace");
+        //             exportIf.document.write(export_data);
+        //             exportIf.document.close();
+        //             exportIf.focus();
+        //             sa = exportIf.document.execCommand("SaveAs", true, fineName + ".xsl");
+        //         } else {
+        //             sa = window.open("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet," +
+        //                 encodeURIComponent(export_data))
+        //         }
+
+        //     }
+        // }
+
         function exportTableToExcel(type) {
-            var downloadLink;
-            var dataType = 'application/vnd.ms-excel';
-            //  var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            //  var dataType = 'application/x-xls';
-  
-   
+
+             var downloadLink;
+            //var dataType = 'application/vnd.ms-excel';
+            var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            // var dataType = 'application/x-xls';
+
+
             var tableHTML = '';
             //Tiêu đề
             var data_header = document.getElementById('data_header');
@@ -198,7 +252,6 @@
             if (data_body5) {
                 tableHTML = tableHTML + data_body5.outerHTML.replace(/ /g, '%20');
             }
-
             //Chữ ký
             var data_footer = document.getElementById('data_footer');
             if (data_footer) {
@@ -209,14 +262,16 @@
             if (data_footer1) {
                 tableHTML = tableHTML + data_footer1.outerHTML.replace(/ /g, '%20');
             }
-
             // Specify file name
+
              var filename = $('#title').val() + '.xls' ;
          
+
             // Create download link element
             downloadLink = document.createElement("a");
             
             document.body.appendChild(downloadLink);
+
             if (navigator.msSaveOrOpenBlob) {
                 var blob = new Blob(['\ufeff', tableHTML], {
                     type: dataType
@@ -224,7 +279,9 @@
                 navigator.msSaveOrOpenBlob(blob, filename);
             } else {
                 // Create a link to the file
-                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                downloadLink.href = 'data:' + dataType + ',' + tableHTML;
+
                 // Setting the file name
                 downloadLink.download = filename;
 
@@ -233,10 +290,11 @@
             }
         }
     </script>
+
 </head>
 
 <body style="font:normal 11px Times, serif;">
-    <input id="title" value="{{$pageTitle}}" hidden >
+    <input id="title" value="{{ $pageTitle }}" hidden>
     <div class="in">
         <nav id="fixNav">
             <ul>
@@ -257,6 +315,13 @@
                         onclick="exportTableToExcel()">
                         <i class="fa fa-file-excel-o"></i> File Excel
                     </button>
+                    {{-- <button type="button" class="btn btn-info btn-xs" style="border-radius: 20px;"
+                    onclick="exportExcel('data_body','','')">
+                    <i class="fa fa-file-excel-o"></i> File Excel
+                    </button> --}}
+                    {{-- <button id="exportExcel1" type="button" class="btn btn-info btn-xs" style="border-radius: 20px;"
+                        onclick="exportData('xlsx')" > <i class="fa fa-file-excel-o"></i> File Excel
+                    </button> --}}
                 </li>
             </ul>
         </nav>
@@ -266,5 +331,22 @@
         @yield('content')
     </div>
 </body>
+{{-- <script>
+    function exportData(type) {
+       
+        var fileName = $('#title').val() +'.' + type;
+        var table = document.getElementById("data_body");
+        var wb = XLSX.utils.table_to_book(table);
+
+        // if (document.getElementById("data_body")) {
+        //     table2 = document.getElementById("data_body");
+        //     var wb2 = XLSX.utils.table_to_book(table2);
+        // }
+        //  var  wb = Object.assign(wb1, wb2);
+        //  console.log(wb);
+        // XLSX.writeFile(wb1, fileName);
+        XLSX.writeFile(wb, fileName);
+    }
+</script> --}}
 
 </html>
