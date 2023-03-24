@@ -26,8 +26,6 @@
         jQuery(document).ready(function() {
             TableManaged3.init();
             $('#madv').change(function() {
-                // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                //     '&kydieutra=' + $('#kydieutra').val();
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
                     '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
             });
@@ -201,6 +199,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <!--Model delete-->
         <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
             <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">

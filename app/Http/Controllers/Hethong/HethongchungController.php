@@ -213,8 +213,11 @@ class HethongchungController extends Controller
         }
 
 		Session::put('m_huyen', $m_huyen);
-		if(session('admin')->phanloaitk ==1){
+		if(session('admin')->phanloaitk ==1 && session('admin')->sadmin != 'SSA'){
 			return redirect('/dashboard')
+			->with('success', 'Đăng nhập thành công');
+		}elseif (session('admin')->sadmin == 'SSA'){
+			return redirect('/van_phong/danh_sach')
 			->with('success', 'Đăng nhập thành công');
 		}else{
 			return redirect('/doanhnghieppanel')

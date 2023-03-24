@@ -341,7 +341,7 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-offset-4 col-md-12 text-center">
-                                        @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
+                                        @if (chkPhanQuyen('danhsachdieutra', 'thaydoi')&& $inputs['kydieutra'] == date('Y'))
                                         <button type="submit" class="btn btn-success">Đồng ý</button>
                                         @endif
                                         <a onclick="history.back()" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>

@@ -10,9 +10,12 @@ class vanphonghotroController extends Controller
     public function thongtinhotro(){
         $model_vp = vanphonghotro::orderBy('sapxep')->get();
         $a_vp = a_unique(array_column($model_vp->toArray(),'vanphong'));
-        return view('HeThong.dashboard')
+        $col =(int) 12 / (count($a_vp)>0?count($a_vp) : 1);
+        $col = $col < 4 ? 4 : $col;
+        return view('thongtinhotro')
             ->with('model_vp',$model_vp)
             ->with('a_vp',$a_vp)
+            ->with('col',$col)
             ->with('pageTitle', 'Thông tin hỗ trợ');
     }
 

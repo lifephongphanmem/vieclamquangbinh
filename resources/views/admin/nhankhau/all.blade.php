@@ -45,7 +45,7 @@
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
-                        @if (chkPhanQuyen('danhsachnhankhau', 'thaydoi'))
+                        @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $inputs['kydieutra'] == date('Y'))
                         <div class="card-toolbar">
                             <a onclick="themmoi('{{$inputs['madv']}}','{{$inputs['kydieutra']}}')" class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i> &ensp;Thêm</a>
                             
@@ -130,8 +130,9 @@
                                 <th>Địa chỉ</th>
                                 <th>Tình trạng việc làm</th>
                                 <th>Nơi làm việc</th>
+                                @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $inputs['kydieutra'] == date('Y'))
                                 <th>Thao tác</th>
-
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -147,6 +148,7 @@
                                 <td><span class="text-ellipsis"> </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
                                 </td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
+                                @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $ld->kydieutra == date('Y'))
                                 <td class="text-ellipsis">
                                         <button 
                                             onclick="baogiam('{{$ld->id}}')"
@@ -157,6 +159,7 @@
                                     {{-- <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
                                         <i class="icon-lg la flaticon2-print text-dark"></i></a> --}}
                                 </td>
+                                @endif
                             </tr>
                             <?php } ?>
                         </tbody>

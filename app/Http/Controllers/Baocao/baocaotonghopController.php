@@ -25,6 +25,7 @@ use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
 use App\Models\Danhmuc\dmtrinhdogdpt;
+use App\Models\Employer;
 use App\Models\nguoilaodong as ModelsNguoilaodong;
 use App\Models\nhankhauModel;
 use App\Models\Tuyendung;
@@ -802,4 +803,24 @@ class baocaotonghopController extends Controller
 
             ->with('pageTitle', 'Báo cáo về thông tin thị trường cung lao động');
     }
+
+    public function mau02(){
+        $emodel= new Employer();
+		$htxinfo=$emodel->getTypeCompanyInfo('Hợp tác xã');
+		$hkdinfo=$emodel->getTypeCompanyInfo('Hộ kinh doanh');
+		$tcinfo=$emodel->getTypeCompanyInfo('Cơ quan tổ chức khác');
+		$einfo=$emodel->getEmployerState();
+        $ctys=DB::table('company')->where('user',null)->get();
+        $einfo['tong']+=$ctys->sum('sld');
+        $einfo['bhxh']+=$ctys->sum('sld');
+        $einfo['hdcothoihan']+=$ctys->sum('sld');
+	   return view('admin.baocao.mau02pli', [
+            'einfo' => $einfo ,
+            'htxinfo' => $htxinfo ,
+            'hkdinfo' => $hkdinfo ,
+            'tcinfo' => $tcinfo ,
+            'pageTitle'=>'Báo cáo thông tin thị trường lao động'
+        ]);
+    }
+
 }
