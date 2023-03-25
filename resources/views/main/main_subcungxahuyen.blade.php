@@ -1,5 +1,6 @@
 <ul class="menu-nav">
-    <li class="menu-item menu-item-open menu-item-here menu-item-submenu menu-item-rel menu-item-open menu-item-here"
+    @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
+    <li class="menu-item menu-item-submenu menu-item-rel"
         data-menu-toggle="click" aria-haspopup="true">
         <a data-target="#delete-modal-confirm" data-toggle="modal" class="menu-link">
             <span class="menu-text">Tạo kỳ điều tra mới</span>
@@ -7,6 +8,8 @@
             <i class="menu-arrow"></i>
         </a>
     </li>
+    @endif
+    @if (chkPhanQuyen('nhankhau', 'phanquyen'))
     <li class="menu-item menu-item-submenu menu-item-rel">
         <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
             <span class="menu-text">Nhân khẩu</span>
@@ -15,13 +18,16 @@
         </a>
 
     </li>
-    <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
-        <a href="{{ '/biendong/danhsach_biendong' }}" class="menu-link">
+    @endif
+    @if (chkPhanQuyen('biendongxa', 'phanquyen'))
+    <li class="menu-item menu-item-submenu menu-item-rel">
+        <a href="{{ '/biendong/danhsach_biendong' }}" class="menu-link" >
             <span class="menu-text">Biến động</span>
             <span class="menu-desc"></span>
             <i class="menu-arrow"></i>
         </a>
     </li>
+    @endif
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">Tổng hợp - báo cáo</span>
@@ -53,7 +59,7 @@
                     </a>
                     <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                         <ul class="menu-subnav">
-                            @if (chkPhanQuyen('hopthuxa', 'phanquyen'))
+                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a data-target="#modify-modal-xa" data-toggle="modal" class="menu-link">
                                         <i class="menu-bullet menu-bullet-dot">
@@ -74,7 +80,7 @@
                                 </li>
                             @endif
                             <li class="menu-item" aria-haspopup="true">
-                                <a data-target="#thitruongld-modal" data-toggle="modal" class="menu-link">
+                                <a data-target="#thitruongld-cung-modal" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>

@@ -2,6 +2,12 @@
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
+        <style>
+            table, th, td {
+  border: 1px solid black !important;
+  border-collapse: collapse !important;
+}
+        </style>
 @stop
 
 @section('custom-script')
@@ -46,7 +52,7 @@
                     <div class="form-group row">
                         {{$vp}}
                     </div>
-                    <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
+                    <table style="width:100%" class="table table-hover table-light">
                         <thead>
                             <tr class="uppercase text-center">
                                 <th width="40%">
@@ -150,7 +156,7 @@
             </div>
         </div>
     </div> --}}
-
+    </div>
     <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xs">
             <div class="modal-content">

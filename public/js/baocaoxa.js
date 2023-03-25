@@ -73,3 +73,5 @@ $('#ktghdkt').on('click', function() {
         $('#khongthamgiahdkt').addClass('d-none');
     }
 });
+
+

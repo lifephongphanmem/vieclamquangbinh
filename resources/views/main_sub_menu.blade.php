@@ -34,7 +34,7 @@
                 </li>
                 @endif --}}
 
-                @if (session('admin')->phanloaitk == 1)
+                @if (session('admin')->phanloaitk == 1 && session('admin')->sadmin != 'SSA')
                 <ul class="menu-nav">                   
                     @include('main.main_subdoanhnghiep')
 
@@ -47,12 +47,19 @@
                     @endif
                 </ul>
 
+                @elseif (session('admin')->sadmin == 'SSA')
+                <ul class="menu-nav"> 
+                    @include('main.main_subhethong')
+                    @include('main.mai_subvanphonghotro')
+                    </ul>
                 @else
                     @include('main.main_doanhnghiep')
                     @include('main.main_subkhaibao')
                     @include('main.main_subcaulaodong')
                     @include('main.main_subvanban')
                 @endif
+
+
 
 
 

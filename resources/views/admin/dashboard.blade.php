@@ -42,90 +42,159 @@
                             <h3 class="card-label text-uppercase">Doanh nghiệp</h3>
                         </div>
                         <div class="card-toolbar">
-                            {{-- <button title="In tổng hợp" data-target="#modify-modal-in" data-toggle="modal"
-                            class="btn btn-sm btn-success" onclick="intonghop()">
-                            <i class="icon-lg la flaticon2-print"></i> In tổng hợp
-                        </button> --}}
                         </div>
                     </div>
-                    <div class="market-updates">
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-2">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-eye"> </i>
+                    <div class="row mt-3" style="width:100%;margin: 0 auto">
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-primary gutter-b" style="height: 150px">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">Doanh nghiệp</a>
+                                    </div>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2">
+                                        {{ $dinfo['pcompany'] }}/{{ $dinfo['upcompany'] }}</div>
+                                    <div class="text-inverse-primary font-weight-bold font-size-xs">
+                                        Hoạt động/ Dừng</div>
+                                    {{-- <p> Hoạt động/ Dừng</p> --}}
+
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>DOANH NGHIỆP</h4>
-                                    <h4>{{ $dinfo['pcompany'] }}/{{ $dinfo['upcompany'] }}</h4>
-                                    <p> Hoạt động/ Dừng</p>
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-1">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-users"></i>
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-success gutter-b" style="height: 150px">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">Lao động</a>
+                                    </div>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2">
+                                        {{ $dinfo['laodong'] }}/{{ $einfo['tong'] }}</div>
+                                    <div class="text-inverse-primary font-weight-bold font-size-xs">
+                                        Tổng số LĐ / Số LĐ được sử dụng</div>
+
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>Lao động</h4>
-                                    <h4>{{ $dinfo['laodong'] }}/{{ $einfo['tong'] }}</h4>
-                                    <p>Tổng số LĐ / Số LĐ được sử dụng </p>
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-3">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-users"></i>
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-danger gutter-b" style="height: 150px;">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Delete-user.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z M21,8 L17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L21,6 C21.5522847,6 22,6.44771525 22,7 C22,7.55228475 21.5522847,8 21,8 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">Tuyển dụng</a>
+                                    </div>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                        {{ $dinfo['tuyendung'] }}</div>
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4>Tuyển dụng</h4>
-                                    <h3>{{ $dinfo['tuyendung'] }}</h3>
-                                    <p> Nhu cầu tuyển dụng</p>
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd">
-                            <div class="market-update-block clr-block-4">
-                                <div class="col-md-4 market-update-right">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <div class="col-md-3">
+                            <div class="card card-custom bg-dark gutter-b" style="height: 150px;">
+                                <div class="card-body">
+                                    <span class="svg-icon svg-icon-3x svg-icon-white ml-n2">
+                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\User.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                <path
+                                                    d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path
+                                                    d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                                    fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <div>
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">Khai báo</a>
+                                    </div>
+                                    <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
+                                        {{ $dinfo['dnkhaibao'] }}</div>
+
                                 </div>
-                                <div class="col-md-8 market-update-left">
-                                    <h4> Khai báo </h4>
-                                    <h3>{{ $dinfo['dnkhaibao'] }}</h3>
-                                    <p>Số DN khai báo </p>
-                                </div>
-                                <div class="clearfix"> </div>
                             </div>
                         </div>
-                        <div class="clearfix"> </div>
                     </div>
-                    <form class="form-inline" method="GET">
+                    {{-- <form class="form-inline" method="GET">
                         <button class="btn btn-sm btn-primary mb-3 ml-3" name="export" value="1" type="submit">Xuất
                             Báo cáo theo mẫu Mẫu số 02/PLI</button>
-                    </form>
+                    </form> --}}
                 </div>
 
             </div>
         </div>
     @endif
     @if (chkPhanQuyen('trangchuxa', 'phanquyen'))
-        @if ($kydieutra_truoc != null)
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-custom">
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card card-custom">
 
-                        <div class="card-header card-header-tabs-line">
+                    <div class="card-header card-header-tabs-line">
+                        <div class="card-title">
+                            <h3 class="card-label text-uppercase">CUNG LAO ĐỘNG</h3>
+                        </div>
+                        <div class="card-toolbar">
+                        </div>
+                    </div>
+                    <!-- Kỳ điều tra trước -->
+                    @if ($kydieutra_truoc != null)
+                        <div class="card-header card-header-tabs-line" style="border-bottom: none">
                             <div class="card-title">
-                                <h3 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_truoc }}</h3>
-                            </div>
-                            <div class="card-toolbar">
+                                <h6 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_truoc }}</h6>
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        <div class="row" style="width:100%;margin: 0 auto">
                             <div class="col-md-3">
                                 <div class="card card-custom bg-primary gutter-b" style="height: 150px">
                                     <div class="card-body">
@@ -148,7 +217,8 @@
                                         </span>
                                         <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                             {{ $tongsonhankhau['kytruoc'] }}</div>
-                                        <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
                                             trên 15 tuổi</a>
                                     </div>
                                 </div>
@@ -175,7 +245,8 @@
                                         </span>
                                         <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                             {{ $ldcovieclam['kytruoc'] }}</div>
-                                        <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                        <a href="#"
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
                                             có việc làm</a>
                                     </div>
                                 </div>
@@ -237,24 +308,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+                    @endif
 
-
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <div class="card card-custom">
-
-                    <div class="card-header card-header-tabs-line">
+                    <!-- Kỳ điều tra hiện tại -->
+                    <div class="card-header card-header-tabs-line" style="border-bottom: none">
                         <div class="card-title">
-                            <h3 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_hientai }}</h3>
-                        </div>
-                        <div class="card-toolbar">
+                            <h6 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_hientai }}</h6>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row" style="width:100%;margin: 0 auto">
                         <div class="col-md-3">
                             <div class="card card-custom bg-primary gutter-b" style="height: 150px">
                                 <div class="card-body">
@@ -360,22 +422,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        @if ($kydieutra_truoc != null)
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <div class="card card-custom">
-
-                        <div class="card-header card-header-tabs-line">
+                    @if ($kydieutra_truoc != null)
+                        <!-- Biến động -->
+                        <div class="card-header card-header-tabs-line" style="border-bottom: none">
                             <div class="card-title">
-                                <h3 class="card-label text-uppercase">Biến động</h3>
-                            </div>
-                            <div class="card-toolbar">
+                                <h6 class="card-label text-uppercase">Biến động</h6>
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        <div class="row" style="width:100%;margin: 0 auto">
                             <div class="col-md-3">
                                 <div class="card card-custom bg-primary gutter-b" style="height: 150px">
                                     <div class="card-body">
@@ -441,7 +495,8 @@
                                             @endif
                                         </div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có việc
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có
+                                            việc
                                             làm</a>
                                     </div>
                                 </div>
@@ -511,16 +566,19 @@
                                             @endif
                                         </div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ không tham
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
+                                            không tham
                                             gia HĐKT</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
+
             </div>
-        @endif
+        </div>
+
     @endif
     <!-- //market-->
     {{-- <div class="row mb-3"  >

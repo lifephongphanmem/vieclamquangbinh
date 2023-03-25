@@ -39,6 +39,7 @@ use App\Http\Controllers\Baocao\baocaotonghopController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HopThuController;
+use App\Http\Controllers\vanbanController;
 use App\Http\Controllers\vanphonghotroController;
 
 // Frontend SECTION
@@ -343,6 +344,8 @@ Route::prefix('baocao_tonghop')->group(function(){
     Route::get('/',[baocaotonghopController::class,'index_cung']);
     Route::post('/tonghop',[baocaotonghopController::class,'tonghop']);
     Route::post('/thongtincunglaodong',[baocaotonghopController::class,'thongtincunglaodong']);
+
+    Route::get('/mau02PLI',[baocaotonghopController::class,'mau02']);
 });
 Route::get('thongtinhotro', [vanphonghotroController::class,'thongtinhotro']);
 
@@ -351,6 +354,12 @@ Route::group(['prefix' => 'van_phong'], function () {
     Route::get('get_chucnang',[vanphonghotroController::class,'edit']);
     Route::post('store', [vanphonghotroController::class,'store']);
     Route::post('delete', [vanphonghotroController::class,'destroy']);
+});
+Route::prefix('vanban_tailieu')->group(function(){
+    Route::get('/danh_sach',[vanbanController::class,'index']);
+    Route::post('store',[vanbanController::class,'store']);
+    Route::get('edit',[vanbanController::class,'edit']);
+    Route::post('delete',[vanbanController::class,'destroy']);
 });
 
 
