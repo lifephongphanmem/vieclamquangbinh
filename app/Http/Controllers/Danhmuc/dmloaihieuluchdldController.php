@@ -25,7 +25,8 @@ class dmloaihieuluchdldController extends Controller
         }	
         $model = dmloaihieuluchdld::all()->sortBy('stt');	
 		$count = Count($model);		
-		return view('danhmuc.loaihieuluc_hdld.loaihieuluchdld',compact('model','count'));
+		return view('danhmuc.loaihieuluc_hdld.loaihieuluchdld',compact('model','count'))
+        ->with('baocao', getdulieubaocao());
 	}
 
 

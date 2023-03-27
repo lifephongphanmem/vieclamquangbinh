@@ -201,6 +201,7 @@ class AdminCompany extends Controller
 		return view('admin.company.all')->with('ctys', $ctys)
 			->with('dmhc_list', $dmhc_list)
 			->with('search', $search)
+			->with('baocao', getdulieubaocao())
 			->with('dm_filter', $dm_filter)
 			->with('public_filter', $public_filter)
 			->with('quymo_max_filter', $quymo_max_filter)
@@ -329,6 +330,7 @@ class AdminCompany extends Controller
 		//print_r($cat);
 		return view('admin.company.edit')
 			->with('dmhc', $dmhc)
+			->with('baocao', getdulieubaocao())
 			->with('info_th', $info)
 			->with('info', $company)
 			->with('ctype', $ctype)

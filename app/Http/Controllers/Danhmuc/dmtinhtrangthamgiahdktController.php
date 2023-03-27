@@ -27,7 +27,8 @@ class dmtinhtrangthamgiahdktController extends Controller
         }	
 		$model = dmtinhtrangthamgiahdkt::all()->sortBy('stt');
 		$count = Count($model);
-		return view('danhmuc.tinhtrangthamgiahoatdongkinhte.tinhtrangthamgiahdkt', compact('model', 'count'));
+		return view('danhmuc.tinhtrangthamgiahoatdongkinhte.tinhtrangthamgiahdkt', compact('model', 'count'))
+		->with('baocao', getdulieubaocao());
 	}
 
 	public function store_update(Request $request)

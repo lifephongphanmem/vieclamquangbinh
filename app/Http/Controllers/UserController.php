@@ -175,9 +175,9 @@ class UserController extends Controller
 	}
 	public function index_nn(Request $request)
 	{
-		// if (!chkPhanQuyen('taikhoan', 'danhsach')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
 		$inputs=$request->all();
 		$model = User::where('phanloaitk', $inputs['phanloaitk'])->get();
 		$model_dv = dmdonvi::all();
@@ -185,6 +185,7 @@ class UserController extends Controller
 		if($inputs['phanloaitk'] == 1){
 			return view('HeThong.manage.taikhoan.index')
 			->with('model', $model)
+			->with('baocao', getdulieubaocao())
 			->with('phanloaitk', $inputs['phanloaitk'])
 			->with('model_dv', $model_dv)
 			->with('model_hc', $model_hc);
@@ -193,6 +194,7 @@ class UserController extends Controller
 			$a_nhomtk = array_column(dsnhomtaikhoan::all()->toArray(), 'tennhomchucnang', 'manhomchucnang');
 			return view('HeThong.manage.taikhoan.dstaikhoan_doanhnghiep')
 			->with('model', $model)
+			->with('baocao', getdulieubaocao())
 			->with('phanloaitk', $inputs['phanloaitk'])
 			->with('model_dv', $model_dv)
 			->with('model_hc', $model_hc)
@@ -205,24 +207,25 @@ class UserController extends Controller
 	
 	public function chitiet(Request $request)
 	{
-		// if (!chkPhanQuyen('taikhoan', 'danhsach')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
 		$inputs = $request->all();
 		$model = dmdonvi::where('madv', $inputs['madv'])->first();
 		$model_tk = User::where('madv', $inputs['madv'])->get();
 		$a_nhomtk = array_column(dsnhomtaikhoan::all()->toArray(), 'tennhomchucnang', 'manhomchucnang');
 		return view('HeThong.manage.taikhoan.chitiet')
 			->with('model', $model)
+			->with('baocao', getdulieubaocao())
 			->with('a_nhomtk',$a_nhomtk )
 			->with('model_tk', $model_tk);
 	}
 
 	public function create(Request $request)
 	{
-		// if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
 		$inputs['id'] = $request->id;
 		$model = dmdonvi::findOrFail($inputs['id']);
 		$model_dvbc=User::where('tonghop',1)->get();
@@ -235,9 +238,9 @@ class UserController extends Controller
 
 	public function store(Request $request)
 	{
-		// if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
 		$inputs = $request->all();
 		$inputs['password'] = md5($inputs['password']);
 		$inputs['phanloaitk']=1;
@@ -251,9 +254,9 @@ class UserController extends Controller
 
 	public function phanquyen(Request $request)
 	{
-		// if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
 		$inputs=$request->all();
 		$m_taikhoan = User::where('username', $inputs['tendangnhap'])->first();
 		$m_phanquyen = dstaikhoan_phanquyen::where('tendangnhap', $inputs['tendangnhap'])->get();
@@ -271,14 +274,15 @@ class UserController extends Controller
 		return view('HeThong.manage.taikhoan.phanquyen')
 		->with('model', $m_chucnang->where('capdo', '1')->sortby('id'))
 		->with('m_chucnang', $m_chucnang)
+		->with('baocao', getdulieubaocao())
 		->with('m_taikhoan', $m_taikhoan);
 	}
 
 	public function luuphanquyen(Request $request)
 	{
-		// if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
 		$inputs=$request->all();
 		$inputs['phanquyen'] = isset($inputs['phanquyen']) ? 1 : 0;
         $inputs['danhsach'] = isset($inputs['danhsach']) ? 1 : 0;
@@ -328,9 +332,9 @@ class UserController extends Controller
         // if (!chkPhanQuyen('dstaikhoan', 'thaydoi')) {
         //     return view('errors.noperm')->with('machucnang', 'dstaikhoan');
         // }
-		// if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
-        //     return view('errors.noperm')->with('machucnang', 'taikhoan');
-        // }
+		if (!chkPhanQuyen('taikhoan', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'taikhoan');
+        }
         $inputs = $request->all();
         $m_taikhoan = User::where('username', $inputs['tendangnhap'])->first();
         // dd($inputs);
@@ -383,6 +387,7 @@ class UserController extends Controller
         $m_donvi = dmdonvi::all();
         return view('HeThong.manage.taikhoan.doimatkhau')
             ->with('model', $model)
+			->with('baocao', getdulieubaocao())
             ->with('a_donvi', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('pageTitle', 'Chỉnh sửa thông tin đơn vị');
 	}

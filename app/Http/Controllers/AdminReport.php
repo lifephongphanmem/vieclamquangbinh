@@ -117,6 +117,7 @@ class AdminReport extends Controller
 		// dd($reports);
 		return view('admin.report.all')->with('model_congty', $model_congty)
 			->with('reports', $reports)
+			->with('baocao', getdulieubaocao())
 			->with('search', $search)
 			->with('time_filter', $time_filter)
 			->with('type_filter', $type_filter)
@@ -161,7 +162,8 @@ class AdminReport extends Controller
 		}
 		$url = '/report-ba?type_filter=' . $request->type_filter . '&tungay=' . $inputs['tungay'] . '&denngay=' . $inputs['denngay'];
 		return view('admin.report.detail')->with('reports', $reports)->with('url', $url)->with('user_id', $inputs['user'])
-		->with('tungay', $inputs['tungay'])->with('denngay', $inputs['denngay']);
+		->with('tungay', $inputs['tungay'])->with('denngay', $inputs['denngay'])
+		->with('baocao', getdulieubaocao());
 	}
 
 
@@ -256,6 +258,7 @@ class AdminReport extends Controller
 		//print_r($cat);
 		return view('admin.company.edit')
 			->with('dmhc', $dmhc)
+			->with('baocao', getdulieubaocao())
 			->with('info', $company)
 			->with('ctype', $ctype)
 			->with('kcn', $kcn)

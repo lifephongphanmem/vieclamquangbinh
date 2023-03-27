@@ -215,7 +215,10 @@
                         <!--begin::Container-->
                         <div>
                             @yield('content')
+                            @if (session('admin')->phanloaitk == 1)
                             @include('includes.modal')
+                            @endif
+                            
                         </div>
                         <!--end::Container-->
                     </div>

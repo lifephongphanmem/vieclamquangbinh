@@ -23,7 +23,8 @@ class dsdonviController extends Controller
         }
 
         return view('danhmuc.dsdonvi.index')
-                ->with('model',$model);
+                ->with('model',$model)
+                ->with('baocao', getdulieubaocao());
     }
 
 

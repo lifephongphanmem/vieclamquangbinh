@@ -77,6 +77,7 @@ class AdminTuyendung extends Controller
 	
 		return view ('admin.tuyendung.all')
 					->with('tds', $tds)
+					->with('baocao', getdulieubaocao())
 					->with('dmhc_list', $dmhc_list)
 					->with('search', $search)
 					->with('dm_filter', $dm_filter)
@@ -96,7 +97,7 @@ class AdminTuyendung extends Controller
 		
 		return view ('admin.tuyendung.edit')
 			->with('td', $td)
-			
+			->with('baocao', getdulieubaocao())
 			->with('vitris',$vitris)
 		;
 		

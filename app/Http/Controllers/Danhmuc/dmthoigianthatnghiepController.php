@@ -25,7 +25,8 @@ class dmthoigianthatnghiepController extends Controller
         }	
         $model = dmthoigianthatnghiep::all()->sortBy('stt');	
 		$count = Count($model);		
-		return view('danhmuc.thoigianthatnghiep.thoigianthatnghiep',compact('model','count'));
+		return view('danhmuc.thoigianthatnghiep.thoigianthatnghiep',compact('model','count'))
+        ->with('baocao', getdulieubaocao());
 	}
 
 

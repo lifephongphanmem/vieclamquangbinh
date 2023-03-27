@@ -30,7 +30,8 @@ class dmchucvuController extends Controller
         // }
         $model=dmchucvu::all();
         return view('danhmuc.dmchucvu.index')
-                    ->with('model',$model);
+                    ->with('model',$model)
+                    ->with('baocao', getdulieubaocao());
     }
 
 

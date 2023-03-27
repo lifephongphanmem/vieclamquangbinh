@@ -128,6 +128,7 @@ class AdminDieutra extends Controller
         //  dd($dss);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
+            ->with('baocao', getdulieubaocao())
             ->with('data_loi', $data_loi)
             ->with('a_donvi', $a_donvi)
             ->with('a_huyen', $a_huyen)
@@ -187,6 +188,7 @@ class AdminDieutra extends Controller
         return view('admin.dieutra.new')
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('m_xa', $m_xa)
+            ->with('baocao', getdulieubaocao())
             ->with('m_huyen', $m_huyen)
             ->with('inputs', $inputs)
             ->with('dmhc', $dmhc);
@@ -558,7 +560,7 @@ class AdminDieutra extends Controller
         if (isset($model)) {
 
             // $danhsach=danhsachnhankhau::where('danhsach_id',$model->id)->get();
-            $danhsach = nhankhauModel::where('madv', $model->user_id)->where('kydieutra', 'like', '%' . $model->kydieutra . '%')->get();
+            $danhsach = nhankhauModel::where('madv', $model->user_id)->where('kydieutra', $model->kydieutra)->get();
             // $maloi=array_column($danhsach->toarray(),'maloi');  
             foreach ($danhsach as $val) {
                 $kydieutra = getKydieutra($val->kydieutra);
@@ -626,6 +628,7 @@ class AdminDieutra extends Controller
 
         return view('admin.dieutra.danhsachloi')
             ->with('a_model', $a_model)
+            ->with('baocao', getdulieubaocao())
             ->with('inputs', $inputs)
             ->with('id', $id);
     }
@@ -649,6 +652,7 @@ class AdminDieutra extends Controller
         // dd($inputs);
         return view('admin.dieutra.danhsachloi_chitiet')
             ->with('a_loi', $a_loi)
+            ->with('baocao', getdulieubaocao())
             ->with('inputs', $inputs)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
             ->with('loailoi', $loailoi);
@@ -678,6 +682,7 @@ class AdminDieutra extends Controller
             ->first()->maquocgia;
         return view('admin.dieutra.create')
             ->with('inputs', $inputs)
+            ->with('baocao', getdulieubaocao())
             ->with('m_uutien', $m_uutien)
             ->with('m_tinhtrangvl', $m_tinhtrangvl)
             ->with('m_vithevl', $m_vithevl)
@@ -866,6 +871,7 @@ class AdminDieutra extends Controller
         // dd($inputs);
         return view('admin.dieutra.biendong.index')
             ->with('inputs', $inputs)
+            ->with('baocao', getdulieubaocao())
             ->with('a_donvi', $a_donvi)
             ->with('a_huyen', $a_huyen)
             ->with('a_xa', $m_xa)
@@ -885,6 +891,7 @@ class AdminDieutra extends Controller
         $donvi = User::where('madv', $inputs['madv'])->first();
         $model = DB::table('report')->where('user', $donvi->id)->where('kydieutra', $inputs['kydieutra'])->get();
         return view('admin.dieutra.biendong.chitiet')
+        ->with('baocao', getdulieubaocao())
             ->with('model', $model);
     }
 
@@ -929,6 +936,7 @@ class AdminDieutra extends Controller
         if (isset($inputs['mahuyen'])) {
             return view('admin.dieutra.biendong.tonghopbiendong')
                 ->with('model', $model)
+                ->with('baocao', getdulieubaocao())
                 ->with('m_huyen', $m_huyen)
                 ->with('a_xa', $a_xa)
                 ->with('a_user', $a_user)
@@ -936,6 +944,7 @@ class AdminDieutra extends Controller
         } else {
             return view('admin.dieutra.biendong.tonghopbiendong_tinh')
                 ->with('model', $model)
+                ->with('baocao', getdulieubaocao())
                 ->with('m_huyen', $m_huyen)
                 ->with('a_xa', $a_xa)
                 ->with('a_user', $a_user)

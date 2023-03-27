@@ -42,7 +42,6 @@ class AdminController extends Controller
 	{
 		// if (Auth::check()) {
 		//   if(Auth::user()->level<3){
-
 		$ctys = DB::table('company')->where('user', null)->get();
 		$dinfo = $this->getDashboard();
 		$dinfo['laodong'] += $ctys->sum('sld');
@@ -173,6 +172,7 @@ class AdminController extends Controller
 
 		return view('admin.dashboard')
 			->with('einfo', $einfo)
+			->with('baocao', getdulieubaocao())
 			->with('tongso_biendong', $tongso_biendong)
 			->with('ldcovieclam_biendong', $ldcovieclam_biendong)
 			->with('ldthatnghiep_biendong', $ldthatnghiep_biendong)

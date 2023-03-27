@@ -34,6 +34,7 @@ class ChucnangController extends Controller
         //     dd($m_cn);
         // }
         return view('HeThong.manage.chucnang.index')
+        ->with('baocao', getdulieubaocao())
                 ->with('model',$model);
     }
 

@@ -33,7 +33,8 @@ class DmdonviController extends Controller
         $model_diaban=danhmuchanhchinh::where('capdo','!=','Th')->get();
         // dd($model_diaban);
         return view('HeThong.manage.dmdonvi.index')
-                ->with('model_diaban',$model_diaban);
+                ->with('model_diaban',$model_diaban)
+                ->with('baocao', getdulieubaocao());
     }
 
     /**
@@ -63,6 +64,7 @@ class DmdonviController extends Controller
        $m_diaban=danhmuchanhchinh::where('maquocgia',$inputs['maquocgia'])->first();
         return view('HeThong.manage.dmdonvi.create')
                     ->with('model_diaban',$m_diaban)
+                    ->with('baocao', getdulieubaocao())
                     ->with('furl','/dmdonvi/')
                     ->with('inputs',$inputs['madonvi'])
                     ->with('model_donvi',$model_donvi);
@@ -115,6 +117,7 @@ class DmdonviController extends Controller
         $model_donvi= dmdonvi::wherein('madiaban',$a_diaban)->get();
         return view('HeThong.manage.dmdonvi.edit')
         ->with('model',$model)
+        ->with('baocao', getdulieubaocao())
         ->with('furl','/dmdonvi/')
         // ->with('inputs',$inputs['madonvi'])
         ->with('model_donvi',$model_donvi);
@@ -176,6 +179,7 @@ class DmdonviController extends Controller
         $model_hc=danhmuchanhchinh::findOrFail($id);
         return view('HeThong.manage.dmdonvi.dvql')
                 ->with('model_donvi',$model_donvi)
+                ->with('baocao', getdulieubaocao())
                 ->with('model_hc',$model_hc);
     }
 
