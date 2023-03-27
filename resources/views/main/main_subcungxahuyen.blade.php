@@ -171,7 +171,7 @@
             <a href="{{ '/hopthu/huyen' }}" class="menu-link">
                 <span class="menu-text">Hộp thư
                     @if ($model_ttdvvl > 0)
-                        <i class="fa fa-envelope ml-30 mr-1" style="color:#FDB45E;"></i>{{ $count_huyen }}
+                        <i class="fa fa-envelope ml-2 mr-1" style="color:#FDB45E;"></i>{{ $count_huyen }}
                     @endif
                 </span>
                 <span class="menu-desc"></span>
@@ -196,7 +196,7 @@
             <a href="{{ '/hopthu/xa' }}" class="menu-link">
                 <span class="menu-text">Hộp thư
                     @if ($model_ttdvvl > 0)
-                        <i class="fa fa-envelope ml-30 mr-1"
+                        <i class="fa fa-envelope ml-2 mr-1"
                             style="color:#FDB45E;"></i>{{ $model_ttdvvl + $model_tralai }}
                     @endif
                 </span>
