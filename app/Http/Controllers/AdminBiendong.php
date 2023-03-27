@@ -43,8 +43,7 @@ class AdminBiendong extends Controller
 
 	public function index_cung(Request $request){
 		$inputs=$request->all();
-		$dmhc_list
-		= getdanhmuc();
+		$dmhc_list= getdanhmuc();
 		$m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
@@ -98,6 +97,7 @@ class AdminBiendong extends Controller
 		->with('model',$model)
 		->with('a_huyen', $a_huyen)
             ->with('a_xa', $a_xa)
+            ->with('baocao', getdulieubaocao())
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
