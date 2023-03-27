@@ -174,12 +174,22 @@ function getdulieubaocao(){
             ->get();
     }
 
+    if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
+        $kydieutra = danhsach::max('kydieutra');
+    } elseif (session('admin')->capdo == 'H') {
+        $madv = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+        $kydieutra = danhsach::wherein('user_id', $madv)->max('kydieutra');
+    } else {
+        $kydieutra = danhsach::where('user_id', session('admin')->madv)->max('kydieutra');
+    }
+
     // Session::put('m_huyen', $m_huyen);
 
     $arr=array(
         'm_xa'=>$m_xa,
         'm_huyen'=>$m_huyen,
         'a_kydieutra'=>$a_kydieutra,
+        'kydieutra'=>$kydieutra,
         'trinhdoGDPT'=>$trinhdoGDPT,
         'trinhdocmkt'=>$trinhdocmkt,
         'dmuutien'=>$dmuutien,
