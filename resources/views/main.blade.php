@@ -134,7 +134,7 @@
                             <div class="dropdown">
                                 <!--begin::Toggle-->
                                 <div class="topbar-item" data-offset="10px,0px">
-                                    <a href="{{ '/thongtinhotro' }}" target="_blank" title="Trợ giúp">
+                                    <a href="{{ '/thongtinhotro' }}" title="Trợ giúp">
                                         <div
                                             class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
 
@@ -215,7 +215,7 @@
                         <!--begin::Container-->
                         <div>
                             @yield('content')
-                            @if (session('admin')->phanloaitk == 1)
+                            @if (session('admin')->phanloaitk == 1 && session('admin')->sadmin != 'SSA')
                             @include('includes.modal')
                             @endif
                             
