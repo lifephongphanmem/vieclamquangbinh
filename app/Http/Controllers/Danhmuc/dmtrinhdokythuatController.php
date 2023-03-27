@@ -25,7 +25,8 @@ class dmtrinhdokythuatController extends Controller
         }
         $model = dmtrinhdokythuat::all()->sortBy('stt');	
 		$count = Count($model);		
-		return view('danhmuc.trinhdochuyenmonkythuat.trinhdokythuat',compact('model','count'));
+		return view('danhmuc.trinhdochuyenmonkythuat.trinhdokythuat',compact('model','count'))
+        ->with('baocao', getdulieubaocao());
 	}
 
 

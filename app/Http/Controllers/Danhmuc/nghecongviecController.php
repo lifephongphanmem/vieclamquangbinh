@@ -30,7 +30,8 @@ class nghecongviecController extends Controller
         }
         $model=nghecongviec::all();
         return view('danhmuc.nghecongviec.index')
-                ->with('model',$model);
+                ->with('model',$model)
+                ->with('baocao', getdulieubaocao());
     }
 
 

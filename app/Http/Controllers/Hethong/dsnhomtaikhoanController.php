@@ -43,6 +43,7 @@ class dsnhomtaikhoanController extends Controller
         return view('HeThong.manage.nhomchucnang.index')
             ->with('model', $model)
             ->with('inputs', $inputs)
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Danh sách nhóm tài khoản');
     }
 
@@ -100,6 +101,7 @@ class dsnhomtaikhoanController extends Controller
         return view('HeThong.manage.nhomchucnang.phanquyen')
             ->with('model', $m_chucnang->where('capdo', '1')->sortby('sapxep'))
             ->with('m_chucnang', $m_chucnang)
+            ->with('baocao', getdulieubaocao())
             ->with('m_nhomtaikhoan', $m_nhomtaikhoan)
             ->with('pageTitle', 'Phân quyền tài khoản');
     }
@@ -184,6 +186,7 @@ class dsnhomtaikhoanController extends Controller
         //dd($inputs);
         return view('HeThong.manage.nhomchucnang.danhsach')
             ->with('model', $model)
+            ->with('baocao', getdulieubaocao())
             ->with('m_nhom', $m_nhom)
             ->with('inputs', $inputs)
             ->with('pageTitle', 'Danh sách tài khoản trong nhóm');

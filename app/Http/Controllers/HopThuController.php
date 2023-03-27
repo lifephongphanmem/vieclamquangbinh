@@ -41,6 +41,7 @@ class HopThuController extends Controller
         $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.index')
                 ->with('model', $model)
+                ->with('baocao', getdulieubaocao())
                 // ->with('chuadoc', $chuadoc)
                 ->with('a_madv', $a_madv);
     }
@@ -227,6 +228,7 @@ class HopThuController extends Controller
         // dd($model);
                     return view('admin.hopthu.huyen.index')
                     ->with('model',$model)
+                    ->with('baocao', getdulieubaocao())
                     ->with('a_madv',$a_madv);
     }
 
@@ -254,6 +256,7 @@ class HopThuController extends Controller
             $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.xa.index')
         ->with('model',$model)
+        ->with('baocao', getdulieubaocao())
         ->with('a_madv',$a_madv);
     }
 

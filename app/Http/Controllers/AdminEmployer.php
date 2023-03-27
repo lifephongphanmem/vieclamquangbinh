@@ -71,6 +71,7 @@ class AdminEmployer extends Controller
 		// }		
 		return view ('admin.employer.all')
 					->with('lds', $lds)
+					->with('baocao', getdulieubaocao())
 					->with('search', $search)
 					->with('a_congty', $a_congty)
 					->with('gioitinh_filter', $gioitinh_filter)
@@ -150,6 +151,7 @@ class AdminEmployer extends Controller
 		// dd($hosos);
 		return view ('admin.employer.chitiet')
 			->with('ld', $ld)
+			->with('baocao', getdulieubaocao())
 			->with('countries_list', $countries_list)
 			->with('dmhc',$dmhc)			
 			->with('list_cmkt',$list_cmkt)
@@ -207,7 +209,8 @@ class AdminEmployer extends Controller
 			$ld->ctyname=$cty->name;
 		}
         return view('admin.employer.laodongnuocngoai.danhsach')
-                    ->with('model',$model);	
+                    ->with('model',$model)
+					->with('baocao', getdulieubaocao());	
     }
 
 	public function ThemMoi_NN()
@@ -226,6 +229,7 @@ class AdminEmployer extends Controller
 	
 		return view('admin.employer.laodongnuocngoai.indanhsach')
 		->with('model',$model)
+		->with('baocao', getdulieubaocao())
 		->with('pageTitle','danh sách người lao động nước ngoài');
 	}
 

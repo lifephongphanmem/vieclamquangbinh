@@ -178,55 +178,55 @@ class HethongchungController extends Controller
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['username'])->get()->keyBy('machucnang')->toArray());
 
-		if (session('admin')->capdo == 'T') {
-            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-                ->where('danhmuchanhchinh.capdo', 'X')
-                ->get();
-        } else if (session('admin')->capdo == 'H') {
-            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-                ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
-                ->get();
-        } else {
-            $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
-                ->get();
-        }
-		Session::put('m_xa', $m_xa);
+		// if (session('admin')->capdo == 'T') {
+        //     $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+        //         ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+        //         ->where('danhmuchanhchinh.capdo', 'X')
+        //         ->get();
+        // } else if (session('admin')->capdo == 'H') {
+        //     $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+        //         ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+        //         ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
+        //         ->get();
+        // } else {
+        //     $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+        //         ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+        //         ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+        //         ->get();
+        // }
+		// Session::put('m_xa', $m_xa);
 
-		$a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
-		Session::put('a_kydieutra', $a_kydieutra);
+		// $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+		// Session::put('a_kydieutra', $a_kydieutra);
 
-		$trinhdoGDPT = dmtrinhdogdpt::all();
-        $trinhdocmkt = dmtrinhdokythuat::all();
-        $dmuutien = dmdoituonguutien::all();
-        $dmtinhtranghdkt = dmtinhtrangthamgiahdkt::all();
-		$a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
-        $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
-        $loaihinh = dmloaihinhhdkt::all();
-		Session::put('trinhdoGDPT', $trinhdoGDPT);
-		Session::put('trinhdocmkt', $trinhdocmkt);
-		Session::put('dmuutien', $dmuutien);
-		Session::put('dmtinhtranghdkt', $dmtinhtranghdkt);
-		Session::put('a_khongthamgia', $a_khongthamgia);
-		Session::put('a_thatnghiep', $a_thatnghiep);
-		Session::put('loaihinh', $loaihinh);
+		// $trinhdoGDPT = dmtrinhdogdpt::all();
+        // $trinhdocmkt = dmtrinhdokythuat::all();
+        // $dmuutien = dmdoituonguutien::all();
+        // $dmtinhtranghdkt = dmtinhtrangthamgiahdkt::all();
+		// $a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
+        // $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
+        // $loaihinh = dmloaihinhhdkt::all();
+		// Session::put('trinhdoGDPT', $trinhdoGDPT);
+		// Session::put('trinhdocmkt', $trinhdocmkt);
+		// Session::put('dmuutien', $dmuutien);
+		// Session::put('dmtinhtranghdkt', $dmtinhtranghdkt);
+		// Session::put('a_khongthamgia', $a_khongthamgia);
+		// Session::put('a_thatnghiep', $a_thatnghiep);
+		// Session::put('loaihinh', $loaihinh);
 
-		if (session('admin')->capdo == 'T') {
-            $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-                ->where('danhmuchanhchinh.capdo', 'H')
-                ->get();
-        } else {
-            $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-                ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
-                ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
-                ->get();
-        }
+		// if (session('admin')->capdo == 'T') {
+        //     $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+        //         ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+        //         ->where('danhmuchanhchinh.capdo', 'H')
+        //         ->get();
+        // } else {
+        //     $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+        //         ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+        //         ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+        //         ->get();
+        // }
 
-		Session::put('m_huyen', $m_huyen);
+		// Session::put('m_huyen', $m_huyen);
 
 		if(session('admin')->phanloaitk ==1 && session('admin')->sadmin != 'SSA'){
 			return redirect('/dashboard')

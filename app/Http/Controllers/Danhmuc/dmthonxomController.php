@@ -21,6 +21,7 @@ class dmthonxomController extends Controller
 // dd($a_xa);
         return view('danhmuc.dmthonxom.index')
                 ->with('model',$model)
+                ->with('baocao', getdulieubaocao())
                 ->with('a_xa',$a_xa);
     }
 

@@ -88,6 +88,7 @@ class CompanyController extends Controller
 	
 		return view('pages.doanhnghiep')
 				->with('info',$info)
+				// ->with('baocao', getdulieubaocao())
 				->with('ctype',$ctype)
 				->with('kcn',$kcn)
 				->with('cfield',$cfield)
