@@ -17,6 +17,15 @@ use DB;
 
 class AdminMessages extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     /**
      * Show all of the message threads to the user.
      *
