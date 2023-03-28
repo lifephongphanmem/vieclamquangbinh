@@ -295,6 +295,9 @@ class AdminNhankhau extends Controller
 
     public function edit(Request $request, $nkid)
     {
+        if (!chkPhanQuyen('danhsachnhankhau', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'nhankhau');
+        }
         $inputs = $request->all();
         $countries_list = getCountries();
         // get params
@@ -535,7 +538,7 @@ class AdminNhankhau extends Controller
                 $nhankhau_capnhat=DB::table('report')->where('user',$user)->where('kydieutra',$model->kydieutra)->where('lastid',$model->id)->first();
                 
                 if(isset($nhankhau_capnhat )){
-                    $nhankhau_capnhat->update(['note'=>$note]);
+                    DB::table('report')->where('user',$user)->where('kydieutra',$model->kydieutra)->where('lastid',$model->id)->update(['note'=>$note]);
                 }else{
                     $rm = new Report();
                     // $note= $request->note.' . '.$sqty." mục thay đổi  ." . implode( " . ",$danhsach);
@@ -637,7 +640,10 @@ class AdminNhankhau extends Controller
     }
 
     public function XoaNhanKhau(Request $request, $id)
-    {
+    {        
+        if (!chkPhanQuyen('danhsachnhankhau', 'thaydoi')) {
+        return view('errors.noperm')->with('machucnang', 'nhankhau');
+    }
         $inputs = $request->all();
         $model = nhankhauModel::findOrFail($id);
 
@@ -672,6 +678,9 @@ class AdminNhankhau extends Controller
     }
 
     public function baogiam($id){
+        if (!chkPhanQuyen('danhsachnhankhau', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'nhankhau');
+        }
         $model=nhankhauModel::findOrFail($id);
 
         $danhsach=danhsach::where('user_id',$model->madv)->where('kydieutra',$model->kydieutra)->first();

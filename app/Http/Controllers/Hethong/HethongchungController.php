@@ -257,7 +257,6 @@ class HethongchungController extends Controller
 			'dkkd' => 'required|max:20|unique:company',
 			'password' => 'required|min:8|confirmed',
 		]);
-		
 		$inputs = $request->all();
 		$data_user = [
 			'name' => $inputs['name'],

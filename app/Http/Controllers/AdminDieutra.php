@@ -300,8 +300,8 @@ class AdminDieutra extends Controller
 
     public function intonghop(Request $request)
     {
-        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
-            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        if (!chkPhanQuyen('baocaoxa', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'baocaoxa');
         }
         $inputs = $request->all();
         // dd($inputs);
@@ -371,8 +371,8 @@ class AdminDieutra extends Controller
     }
     public function inbaocaohuyen(Request $request)
     {
-        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
-            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        if (!chkPhanQuyen('baocaohuyen', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
         // dd($inputs);
@@ -443,8 +443,8 @@ class AdminDieutra extends Controller
 
     public function inbaocaotinh(Request $request)
     {
-        if (!chkPhanQuyen('danhsachdieutra', 'hoanthanh')) {
-            return view('errors.noperm')->with('machucnang', 'danhsachdieutra');
+        if (!chkPhanQuyen('baocaotinh', 'hoanthanh')) {
+            return view('errors.noperm')->with('machucnang', 'baocaotinh');
         }
         $inputs = $request->all();
         // dd($inputs);
@@ -1074,6 +1074,12 @@ class AdminDieutra extends Controller
         if($model->max('kydieutra') == date('Y')){
             return view('errors.tontai_dulieu')
             ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
+            ->with('furl', '/dashboard');
+        }
+
+        if(count($model) <= 0){
+            return view('errors.tontai_dulieu')
+            ->with('message', 'Chưa có dữ liệu nhân khẩu kỳ trước')
             ->with('furl', '/dashboard');
         }
         $danhsach_kytruoc=danhsach::where('user_id',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->first();

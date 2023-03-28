@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\vanphonghotro;
 use Illuminate\Http\Request;
+use Session;
 
 class vanphonghotroController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     public function thongtinhotro(){
         $model_vp = vanphonghotro::orderBy('sapxep')->get();
         $a_vp = a_unique(array_column($model_vp->toArray(),'vanphong'));

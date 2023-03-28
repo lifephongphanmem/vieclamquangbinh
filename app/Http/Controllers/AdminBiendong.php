@@ -19,9 +19,19 @@ use App\Models\nhankhauModel;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Session;
 
 class AdminBiendong extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     public function show_all()
 	{
 		
@@ -141,6 +151,7 @@ class AdminBiendong extends Controller
 		return view('admin.biendong.cung.chitiet')
                 ->with('ld', $ld)
                 ->with('inputs', $inputs)
+                ->with('baocao', getdulieubaocao())
                 ->with('a_thaydoi', $a_thaydoi)
                 ->with('m_uutien', $m_uutien)
                 ->with('m_tinhtrangvl', $m_tinhtrangvl)
