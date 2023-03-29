@@ -185,7 +185,9 @@ class AdminCompany extends Controller
 			$tenxa = isset($a_dm[$val->xa]) ? $a_dm[$val->xa] : $val->xa;
 			$tenhuyen = isset($a_dm[$val->huyen]) ? $a_dm[$val->huyen] : $val->huyen;
 			$tentinh = isset($a_dm[$val->tinh]) ? $a_dm[$val->tinh] : $val->tinh;
-			$val->diachi = $tenxa . ' - ' . $tenhuyen . ' - ' . $tentinh;
+			$_xa=$tenxa == ''?'':' - ';
+			$_huyen=$tenhuyen == ''?'': ' - ';
+			$val->diachi = $tenxa . $_xa . $tenhuyen . $_huyen . $tentinh;
 			// try {
 			// 	$tenxa = $a_dm[$val->xa];
 			// 	$tenhuyen = $a_dm[$val->huyen];
@@ -484,6 +486,12 @@ class AdminCompany extends Controller
 				->with('message', 'Doanh nghiệp đăng ký')
 				->with('furl', '/doanhnghiep-ba');
 		}
+		if(isset($model)){
+			return view('errors.tontai_dulieu')
+			->with('message', 'Doanh nghiệp đã có')
+			->with('furl', '/doanhnghiep-ba');
+		}
+
 		unset($inputs['_token']);
 		// dd($inputs);
 		DB::table('company')->insert($inputs);

@@ -16,18 +16,6 @@ use Illuminate\Support\Facades\Hash;
 class CompanyController extends Controller
 {
 
-	// public function __construct() {
-	// 	$this->middleware(function ($request, $next) {
-    //         if(!Auth::check()){ 
-	// 		return redirect('home');
-	// 		};
-	// 		if(Auth::user()->level!=3){
-
-	// 			return redirect('home'); 
-	// 			}
-	// 		return $next($request);
-    //     });
-	// } 
 	public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -88,7 +76,7 @@ class CompanyController extends Controller
 	
 		return view('pages.doanhnghiep')
 				->with('info',$info)
-				// ->with('baocao', getdulieubaocao())
+				->with('baocao', getdulieubaocao())
 				->with('ctype',$ctype)
 				->with('kcn',$kcn)
 				->with('cfield',$cfield)
@@ -216,6 +204,7 @@ class CompanyController extends Controller
 		$dmhanhchinh=danhmuchanhchinh::all();
 		return view('admin.company.create')
 					->with('kcn',$kcn)
+					->with('baocao', getdulieubaocao())
 					->with('loaihinh',$ctype)
 					->with('dmhanhchinh',$dmhanhchinh)
 					->with('nganhnghe',$cfield);
