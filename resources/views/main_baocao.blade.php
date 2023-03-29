@@ -45,7 +45,8 @@
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
     <script type="text/javascript" src="{{ url('js/sheet.js') }}"></script>
-
+<!-- use version 0.19.2 -->
+        <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.19.2/package/dist/xlsx.full.min.js"></script>
 
     <!-- END THEME STYLES -->
     {{-- <link rel="shortcut icon" href="{{ url('images/LIFESOFT.png') }}" type="image/x-icon"> --}}

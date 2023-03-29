@@ -128,7 +128,7 @@ var KTLogin = function() {
                             }
                         }
                     },
-                    cpassword: {
+                    password_confirmation: {
                         validators: {
                             notEmpty: {
                                 message: 'Không để trống xác nhận lại mật khẩu'

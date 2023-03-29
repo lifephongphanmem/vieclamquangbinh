@@ -18,6 +18,7 @@ class dsdiabanController extends Controller
         $model=dsdiaban::all();
 
         return view('danhmuc.dsdiaban.index')
+        ->with('baocao', getdulieubaocao())
                 ->with('model',$model);
     }
 

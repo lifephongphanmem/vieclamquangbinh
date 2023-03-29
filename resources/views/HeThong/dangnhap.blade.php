@@ -106,7 +106,8 @@ License: You must have a valid license purchased only from themeforest(the above
 								<h3>ĐĂNG KÝ</h3>
 								<div class="text-muted font-weight-bold">Nhập thông tin doanh nghiệp</div>
 							</div>
-							<form class="form" id="kt_login_signup_form">
+							{{-- <form class="form" id="kt_login_signup_form"> --}}
+								{!! Form::open(['url' => '/DangKy', 'class' => 'form text-left', 'id' => 'kt_login_signup_form']) !!} 
 								<div class="form-group mb-5">
                                     <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
                                     placeholder="Tên công ty" name="name" required />
@@ -136,7 +137,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
                                 <div class="form-group mb-5">
                                     <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
-                                        placeholder="Xác nhận lại mật khẩu" name="cpassword" />
+                                        placeholder="Xác nhận lại mật khẩu" name="password_confirmation" />
 								</div>
 								<div class="form-group mb-5 text-left">
 									<div class="checkbox-inline">

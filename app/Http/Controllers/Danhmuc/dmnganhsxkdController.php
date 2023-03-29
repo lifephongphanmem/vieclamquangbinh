@@ -25,7 +25,8 @@ class dmnganhsxkdController extends Controller
         }
         $model = dmnganhsxkd::all()->sortBy('stt');	
 		$count = Count($model);		
-		return view('danhmuc.nganhsanxuatkinhdoanh.nganhsxkd',compact('model','count'));
+		return view('danhmuc.nganhsanxuatkinhdoanh.nganhsxkd',compact('model','count'))
+        ->with('baocao', getdulieubaocao());
 	}
 
 

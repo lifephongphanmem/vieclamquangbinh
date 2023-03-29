@@ -63,7 +63,7 @@
                     </li>
                 @endif
                 <li class="menu-item" aria-haspopup="true">
-                    <a href="{{ '/biendong?madv=' . '&kydieutra=' . (date('Y') - 1) }}" class="menu-link">
+                    <a href="{{ '/biendong?madv=' . '&kydieutra=' . $baocao['kydieutra'] }}" class="menu-link">
                         <span class="svg-icon menu-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-clipboard-pulse" viewBox="0 0 16 16">
@@ -77,6 +77,7 @@
                 @if (chkPhanQuyen('hopthuttdvvl', 'phanquyen'))
                     <?php $count = \App\Models\hopthu::where('matinh', 'ttdvvl')
                         ->where('trangthai', 'DAGUI')
+                        ->where('loaithu',2)
                         ->where('status', 0)
                         ->count(); ?>
                     <li class="menu-item" aria-haspopup="true">

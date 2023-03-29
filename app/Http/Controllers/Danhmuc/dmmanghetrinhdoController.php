@@ -26,7 +26,8 @@ class dmmanghetrinhdoController extends Controller
         }	
         $model = dmmanghetrinhdo::all()->sortBy('stt');
         $count = Count($model);
-        return view('danhmuc.manghetrinhdo.manghetrinhdo', compact('model', 'count'));
+        return view('danhmuc.manghetrinhdo.manghetrinhdo', compact('model', 'count'))
+        ->with('baocao', getdulieubaocao());
     }
 
 

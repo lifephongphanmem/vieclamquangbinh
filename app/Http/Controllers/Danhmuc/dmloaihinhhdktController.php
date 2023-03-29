@@ -25,7 +25,8 @@ class dmloaihinhhdktController extends Controller
         }	
         $model = dmloaihinhhdkt::all()->sortBy('stt');	
 		$count = Count($model);		
-		return view('danhmuc.loaihinhhoatdongkinhte.loaihinhhdkt',compact('model','count'));
+		return view('danhmuc.loaihinhhoatdongkinhte.loaihinhhdkt',compact('model','count'))
+        ->with('baocao', getdulieubaocao());
 	}
 
 

@@ -30,7 +30,8 @@ class dmchuyenmondaotaoController extends Controller
         }
         $model=dmchuyenmondaotao::all();
         return view('danhmuc.dmchuyenmondaotao.index')
-                ->with('model',$model);
+                ->with('model',$model)
+                ->with('baocao', getdulieubaocao());
     
     }
 

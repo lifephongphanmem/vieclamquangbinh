@@ -17,6 +17,15 @@ use DB;
 
 class AdminMessages extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     /**
      * Show all of the message threads to the user.
      *
@@ -35,7 +44,8 @@ class AdminMessages extends Controller
         // All threads that user is participating in, with new messages
         // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
 
-        return view('admin.messenger.index', compact('threads','state_filter'));
+        return view('admin.messenger.index', compact('threads','state_filter'))
+        ->with('baocao', getdulieubaocao());
     }
 
     /**
@@ -75,7 +85,8 @@ class AdminMessages extends Controller
     {
         $users = User::where('id', '!=', session('admin')->id)->get();
 
-        return view('admin.messenger.create', compact('users'));
+        return view('admin.messenger.create', compact('users'))
+        ->with('baocao', getdulieubaocao());
     }
 
     /**

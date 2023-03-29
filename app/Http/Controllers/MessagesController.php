@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Session;
 
 class MessagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     /**
      * Show all of the message threads to the user.
      *
@@ -39,7 +48,8 @@ class MessagesController extends Controller
         // All threads that user is participating in, with new messages
         // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
 
-        return view('pages.messenger.index', compact('threads'));
+        return view('pages.messenger.index', compact('threads'))
+        ->with('baocao', getdulieubaocao());
     }
 
     /**
@@ -68,7 +78,8 @@ class MessagesController extends Controller
 
         $thread->markAsRead($userId);
 
-        return view('pages.messenger.show', compact('thread', 'users'));
+        return view('pages.messenger.show', compact('thread', 'users'))
+        ->with('baocao', getdulieubaocao());
     }
 
     /**
@@ -80,7 +91,8 @@ class MessagesController extends Controller
     {
         $users = User::where('id', '!=', session('admin')->id)->get();
 
-        return view('pages.messenger.create', compact('users'));
+        return view('pages.messenger.create', compact('users'))
+        ->with('baocao', getdulieubaocao());
     }
 
     /**

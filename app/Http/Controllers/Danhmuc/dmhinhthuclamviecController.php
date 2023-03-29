@@ -30,7 +30,8 @@ class dmhinhthuclamviecController extends Controller
         }
         $model=dmhinhthuclamviec::all();
         return view('danhmuc.hinhthuclamviec.index')
-                ->with('model',$model);
+                ->with('model',$model)
+                ->with('baocao', getdulieubaocao());
     }
 
 

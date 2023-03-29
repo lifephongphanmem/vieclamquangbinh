@@ -248,9 +248,9 @@ class Nhankhau extends Model
 			if ($loi || $loi2 || $loi3 || $loi4) {
 				$data_loi[] = $data['maloi'];
 			}
-			$nhankhau_kytruoc=nhankhauModel::where('madv',$inputs['madv'])->where('kydieutra',($inputs['kydieutra']-1))->where('cccd',$data['cccd'])->first();
+			// $nhankhau_kytruoc=nhankhauModel::where('madv',$inputs['madv'])->where('kydieutra',($inputs['kydieutra']-1))->where('cccd',$data['cccd'])->first();
 			
-			$data['loaibiendong']=isset($nhankhau_kytruoc)?0:2; //0: import, 1:thêm bằng tay, 2: báo tăng
+			$data['loaibiendong']=0; //0: import, 1:thêm bằng tay, 2: báo tăng
 			// dd($data);
 			DB::table('nhankhau')->insert($data);
 			//  $lds[] = ['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']];

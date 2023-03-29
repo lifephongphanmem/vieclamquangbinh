@@ -31,7 +31,8 @@ class danhmuchanhchinhController extends Controller
         $model=danhmuchanhchinh::where('capdo','!=','Th')->get();
         // dd(getdate()[0]);
         return view('HeThong.manage.diaban.index')
-                ->with('model',$model);
+                ->with('model',$model)
+                ->with('baocao', getdulieubaocao());
     }
 
     /**

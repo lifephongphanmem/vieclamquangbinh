@@ -19,9 +19,19 @@ use App\Models\nhankhauModel;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Session;
 
 class AdminBiendong extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     public function show_all()
 	{
 		
@@ -43,8 +53,7 @@ class AdminBiendong extends Controller
 
 	public function index_cung(Request $request){
 		$inputs=$request->all();
-		$dmhc_list
-		= getdanhmuc();
+		$dmhc_list= getdanhmuc();
 		$m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
@@ -98,6 +107,7 @@ class AdminBiendong extends Controller
 		->with('model',$model)
 		->with('a_huyen', $a_huyen)
             ->with('a_xa', $a_xa)
+            ->with('baocao', getdulieubaocao())
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
@@ -141,6 +151,7 @@ class AdminBiendong extends Controller
 		return view('admin.biendong.cung.chitiet')
                 ->with('ld', $ld)
                 ->with('inputs', $inputs)
+                ->with('baocao', getdulieubaocao())
                 ->with('a_thaydoi', $a_thaydoi)
                 ->with('m_uutien', $m_uutien)
                 ->with('m_tinhtrangvl', $m_tinhtrangvl)

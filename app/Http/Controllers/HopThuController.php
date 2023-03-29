@@ -11,9 +11,19 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Session;
 
 class HopThuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,6 +51,7 @@ class HopThuController extends Controller
         $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.index')
                 ->with('model', $model)
+                ->with('baocao', getdulieubaocao())
                 // ->with('chuadoc', $chuadoc)
                 ->with('a_madv', $a_madv);
     }
@@ -227,6 +238,7 @@ class HopThuController extends Controller
         // dd($model);
                     return view('admin.hopthu.huyen.index')
                     ->with('model',$model)
+                    ->with('baocao', getdulieubaocao())
                     ->with('a_madv',$a_madv);
     }
 
@@ -254,6 +266,7 @@ class HopThuController extends Controller
             $a_madv=array_column(dmdonvi::all()->toarray(),'tendv','madv');
         return view('admin.hopthu.xa.index')
         ->with('model',$model)
+        ->with('baocao', getdulieubaocao())
         ->with('a_madv',$a_madv);
     }
 

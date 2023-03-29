@@ -40,23 +40,22 @@
                                                     <div class="modal-body">
                                                         <div class="col-lg-12 mb-2">
                                                             <label class="control-label">Đơn vị</label>
-                                                            {{-- {!! Form::select('tinhtrangvl', setArray($a_tinhtrangvl,'Tất cả',null), ['id' => 'tinhtrangvl', 'class' => 'form-control select2basic']) !!} --}}
+
                                                             <select name="madv" id=""
                                                                 class="form-control select2basic" style="width:100%">
                                                                 <option value="">Tất cả</option>
-                                                                @foreach (session('m_xa') as $key => $ct)
+                                                                @foreach ($baocao['m_xa'] as $key => $ct)
                                                                     <option
                                                                         value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
                                                                         {{ $ct->name }}</option>
                                                                 @endforeach
                                                             </select>
-                                                            {{-- <input type="hidden" name='math' id='math'> --}}
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <label class="control-label">Kỳ điều tra</label>
                                                             <select name="kydieutra" id=""
                                                                 class="form-control select2basic" style="width:100%">
-                                                                @foreach (session('a_kydieutra') as $key => $ct)
+                                                                @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                                                     <option value="{{ $key }}">
                                                                         {{ $ct }}</option>
                                                                 @endforeach
@@ -118,7 +117,7 @@
                                                                 <select name="tinhtranghdkt" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('dmtinhtranghdkt') as $val)
+                                                                    @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tentgkt }}</option>
                                                                     @endforeach
@@ -129,7 +128,7 @@
                                                                 <select name="uutien" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('dmuutien') as $val)
+                                                                    @foreach ($baocao['dmuutien'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tendoituong }}</option>
                                                                     @endforeach
@@ -140,7 +139,7 @@
                                                                 <select name="trinhdogiaoduc" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('trinhdoGDPT') as $val)
+                                                                    @foreach ($baocao['trinhdoGDPT'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tengdpt }}</option>
                                                                     @endforeach
@@ -151,7 +150,7 @@
                                                                 <select name="chuyenmonkythuat" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('trinhdocmkt') as $val)
+                                                                    @foreach ($baocao['trinhdocmkt'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tentdkt }}</option>
                                                                     @endforeach
@@ -190,24 +189,22 @@
                                                     <div class="modal-body">
                                                         <div class="col-lg-12 mb-2">
                                                             <label class="control-label">Đơn vị</label>
-                                                            {{-- {!! Form::select('tinhtrangvl', setArray($a_tinhtrangvl,'Tất cả',null), ['id' => 'tinhtrangvl', 'class' => 'form-control select2basic']) !!} --}}
                                                             <select name="madv" id=""
                                                                 class="form-control select2basic" style="width:100%">
                                                                 <option value="">Tất cả</option>
-                                                                @foreach (session('m_huyen') as $key => $ct)
+                                                                @foreach ($baocao['m_huyen'] as $key => $ct)
                                                                     <option value="{{ $ct->madv }}"
                                                                         {{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
                                                                         {{ $ct->name }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            {{-- <input type="hidden" name='math' id='math'> --}}
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <label class="control-label">Kỳ điều tra</label>
                                                             <select name="kydieutra" id=""
                                                                 class="form-control select2basic" style="width:100%">
-                                                                @foreach (session('a_kydieutra') as $key => $ct)
+                                                                @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                                                     <option value="{{ $key }}">
                                                                         {{ $ct }}</option>
                                                                 @endforeach
@@ -270,7 +267,7 @@
                                                                 <select name="tinhtranghdkt" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('dmtinhtranghdkt') as $val)
+                                                                    @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tentgkt }}</option>
                                                                     @endforeach
@@ -281,7 +278,7 @@
                                                                 <select name="uutien" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('dmuutien') as $val)
+                                                                    @foreach ($baocao['dmuutien'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tendoituong }}</option>
                                                                     @endforeach
@@ -292,7 +289,7 @@
                                                                 <select name="trinhdogiaoduc" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('trinhdoGDPT') as $val)
+                                                                    @foreach ($baocao['trinhdoGDPT'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tengdpt }}</option>
                                                                     @endforeach
@@ -303,7 +300,7 @@
                                                                 <select name="chuyenmonkythuat" id=""
                                                                     class="form-control select2basic"
                                                                     style="width:100%">
-                                                                    @foreach (session('trinhdocmkt') as $val)
+                                                                    @foreach ($baocao['trinhdocmkt'] as $val)
                                                                         <option value="{{ $val->stt }}">
                                                                             {{ $val->tentdkt }}</option>
                                                                     @endforeach
@@ -337,7 +334,7 @@
                         <div class="col-lg-12">
                             <label class="control-label">Kỳ điều tra</label>
                             <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
-                                @foreach (session('a_kydieutra') as $key => $ct)
+                                @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                     <option value="{{ $key }}">{{ $ct }}</option>
                                 @endforeach
                             </select>
@@ -388,7 +385,7 @@
                                 <label class="control-label">Tình trạng HĐKT</label>
                                 <select name="tinhtranghdkt" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('dmtinhtranghdkt') as $val)
+                                    @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tentgkt }}</option>
                                     @endforeach
                                 </select>
@@ -397,7 +394,7 @@
                                 <label class="control-label">Đối tượng UT</label>
                                 <select name="uutien" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('dmuutien') as $val)
+                                    @foreach ($baocao['dmuutien'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tendoituong }}</option>
                                     @endforeach
                                 </select>
@@ -406,7 +403,7 @@
                                 <label class="control-label">Trình độ DGPT</label>
                                 <select name="trinhdogiaoduc" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('trinhdoGDPT') as $val)
+                                    @foreach ($baocao['trinhdoGDPT'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tengdpt }}</option>
                                     @endforeach
                                 </select>
@@ -415,7 +412,7 @@
                                 <label class="control-label">Trình độ CMKT</label>
                                 <select name="chuyenmonkythuat" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('trinhdocmkt') as $val)
+                                    @foreach ($baocao['trinhdocmkt'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tentdkt }}</option>
                                     @endforeach
                                 </select>
@@ -423,7 +420,6 @@
                         </div>
 
                     </div>
-                {{-- </div> --}}
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                     <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
@@ -539,7 +535,7 @@
                         <div class="col-lg-12">
                             <label class="control-label" style="font-weight: bold">Kỳ điều tra</label>
                             <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
-                                @foreach (session('a_kydieutra') as $key => $ct)
+                                @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                     <option value="{{ $key }}">{{ $ct }}</option>
                                 @endforeach
                             </select>
@@ -623,7 +619,7 @@
                                 <label class="control-label" style="font-weight: bold">Tình trạng HĐKT</label>
                                 <select name="tinhtranghdkt" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('dmtinhtranghdkt') as $val)
+                                    @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tentgkt }}</option>
                                     @endforeach
                                 </select>
@@ -632,7 +628,7 @@
                                 <label class="control-label" style="font-weight: bold">Đối tượng UT</label>
                                 <select name="uutien" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('dmuutien') as $val)
+                                    @foreach ($baocao['dmuutien'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tendoituong }}</option>
                                     @endforeach
                                 </select>
@@ -641,7 +637,7 @@
                                 <label class="control-label" style="font-weight: bold">Trình độ DGPT</label>
                                 <select name="trinhdogiaoduc" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('trinhdoGDPT') as $val)
+                                    @foreach ($baocao['trinhdoGDPT'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tengdpt }}</option>
                                     @endforeach
                                 </select>
@@ -650,7 +646,7 @@
                                 <label class="control-label" style="font-weight: bold">Trình độ CMKT</label>
                                 <select name="chuyenmonkythuat" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('trinhdocmkt') as $val)
+                                    @foreach ($baocao['trinhdocmkt'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tentdkt }}</option>
                                     @endforeach
                                 </select>
@@ -659,7 +655,7 @@
                                 <label class="control-label" style="font-weight: bold">Loại hình nơi làm việc</label>
                                 <select name="loaihinhnoilamviec" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('loaihinh') as $val)
+                                    @foreach ($baocao['loaihinh'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tenlhkt }}</option>
                                     @endforeach
                                 </select>
@@ -668,7 +664,7 @@
                                 <label class="control-label" style="font-weight: bold">Thất nghiệp</label>
                                 <select name="thatnghiep" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('a_thatnghiep') as $val)
+                                    @foreach ($baocao['a_thatnghiep'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
                                     @endforeach
                                 </select>
@@ -678,7 +674,7 @@
                                 <label class="control-label" style="font-weight: bold">Không tham gia HĐKT</label>
                                 <select name="khongthamgiahdkt" id="" class="form-control select2basic"
                                     style="width:100%">
-                                    @foreach (session('a_khongthamgia') as $val)
+                                    @foreach ($baocao['a_khongthamgia'] as $val)
                                         <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
                                     @endforeach
                                 </select>
@@ -687,7 +683,6 @@
                         </div>
 
                     </div>
-                {{-- </div> --}}
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                     <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
@@ -713,7 +708,7 @@
                                 <div class="col-lg-12">
                                     <label class="control-label">Kỳ điều tra</label>
                                     <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
-                                        @foreach (session('a_kydieutra') as $key => $ct)
+                                        @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                             <option value="{{ $key }}">{{ $ct }}</option>
                                         @endforeach
                                     </select>
@@ -723,13 +718,13 @@
                                     <select name="madv" id="" class="form-control select2basic" style="width:100%">
                                         <option value="all">Tất cả</option>
                                         @if (session('admin')->capdo == 'T')
-                                        @foreach (session('m_huyen') as $key => $ct)
+                                        @foreach ($baocao['m_huyen'] as $key => $ct)
                                         <option
                                             value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
                                             {{ $ct->name }}</option>
                                     @endforeach
                                         @else
-                                        @foreach (session('m_xa') as $key => $ct)
+                                        @foreach ($baocao['m_xa'] as $key => $ct)
                                         <option
                                             value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
                                             {{ $ct->name }}</option>
@@ -741,16 +736,13 @@
                                     <label class="control-label mt-3">Biến động</label>
                                     <select name="biendong" id="" class="form-control select2basic" style="width:100%">
                                         <option value="all">Tất cả</option>
-                                        {{-- <option value="0">Nhận từ file excel</option> --}}
                                         <option value="1">Báo tăng</option>
-                                        {{-- <option value="1">Nhận thủ công</option> --}}
                                         <option value="3">Cập nhật thông tin</option>
                                         <option value="2">Báo giảm</option>
                                     </select>
                                 </div>
         
                             </div>
-                        {{-- </div> --}}
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                             <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng

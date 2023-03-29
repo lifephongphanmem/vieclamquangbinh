@@ -26,7 +26,8 @@ class dmdoituonguutienController extends Controller
         // }
         $model = dmdoituonguutien::all()->sortBy('stt');	
 		$count = Count($model);			
-		return view('danhmuc.doituonguutien.doituonguutien',compact('model','count'));
+		return view('danhmuc.doituonguutien.doituonguutien',compact('model','count'))
+        ->with('baocao', getdulieubaocao());
 	}
 
 

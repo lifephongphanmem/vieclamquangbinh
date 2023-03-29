@@ -1,7 +1,14 @@
 <?php
 
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
+use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
+use App\Models\Danhmuc\dmtrinhdogdpt;
+use App\Models\Danhmuc\dmtrinhdokythuat;
+use App\Models\danhsach;
 
 function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
 {
@@ -116,5 +123,83 @@ function getdanhmuc()
 
     $dm = DB::table('danhmuchanhchinh')->where('public', '1')->get();
     return $dm;
+}
+
+function getdulieubaocao(){
+    if (session('admin')->capdo == 'T') {
+        $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+            ->where('danhmuchanhchinh.capdo', 'X')
+            ->get();
+    } else if (session('admin')->capdo == 'H') {
+        $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+            ->where('danhmuchanhchinh.parent', session('admin')->maquocgia)
+            ->get();
+    } else {
+        $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+            ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+            ->get();
+    }
+    // Session::put('m_xa', $m_xa);
+
+    $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+    // Session::put('a_kydieutra', $a_kydieutra);
+
+    $trinhdoGDPT = dmtrinhdogdpt::all();
+    $trinhdocmkt = dmtrinhdokythuat::all();
+    $dmuutien = dmdoituonguutien::all();
+    $dmtinhtranghdkt = dmtinhtrangthamgiahdkt::all();
+    $a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
+    $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
+    $loaihinh = dmloaihinhhdkt::all();
+    // Session::put('trinhdoGDPT', $trinhdoGDPT);
+    // Session::put('trinhdocmkt', $trinhdocmkt);
+    // Session::put('dmuutien', $dmuutien);
+    // Session::put('dmtinhtranghdkt', $dmtinhtranghdkt);
+    // Session::put('a_khongthamgia', $a_khongthamgia);
+    // Session::put('a_thatnghiep', $a_thatnghiep);
+    // Session::put('loaihinh', $loaihinh);
+
+    if (session('admin')->capdo == 'T') {
+        $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+            ->where('danhmuchanhchinh.capdo', 'H')
+            ->get();
+    } else {
+        $m_huyen = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+            ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
+            ->where('danhmuchanhchinh.maquocgia', session('admin')->maquocgia)
+            ->get();
+    }
+
+    if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
+        $kydieutra = danhsach::max('kydieutra');
+    } elseif (session('admin')->capdo == 'H') {
+        $madv = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+        $kydieutra = danhsach::wherein('user_id', $madv)->max('kydieutra');
+    } else {
+        $kydieutra = danhsach::where('user_id', session('admin')->madv)->max('kydieutra');
+    }
+
+    // Session::put('m_huyen', $m_huyen);
+
+    $arr=array(
+        'm_xa'=>$m_xa,
+        'm_huyen'=>$m_huyen,
+        'a_kydieutra'=>$a_kydieutra,
+        'kydieutra'=>$kydieutra,
+        'trinhdoGDPT'=>$trinhdoGDPT,
+        'trinhdocmkt'=>$trinhdocmkt,
+        'dmuutien'=>$dmuutien,
+        'dmtinhtranghdkt'=>$dmtinhtranghdkt,
+        'a_khongthamgia'=>$a_khongthamgia,
+        'a_thatnghiep'=>$a_thatnghiep,
+        'loaihinh'=>$loaihinh
+        
+    );
+
+    return $arr;
 }
 
