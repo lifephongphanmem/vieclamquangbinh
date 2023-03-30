@@ -125,7 +125,6 @@ class AdminDieutra extends Controller
         // dd($inputs);
         // dd($m_xa);
         // dd($m_donvi);
-         dd($dss);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
             ->with('baocao', getdulieubaocao())
@@ -1070,7 +1069,7 @@ class AdminDieutra extends Controller
 
     public function TaoMoi(){
         $kydieutra_truoc=nhankhauModel::where('madv',session('admin')->madv)->max('kydieutra');    
-        $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->get();
+        $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->where('loaibiendong','!=',2)->get();
         if($model->max('kydieutra') == date('Y')){
             return view('errors.tontai_dulieu')
             ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
