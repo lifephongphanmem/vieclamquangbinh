@@ -471,7 +471,7 @@ class AdminDieutra extends Controller
             })
             ->get();
 
-        // dd($model);
+ 
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
