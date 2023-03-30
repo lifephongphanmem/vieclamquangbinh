@@ -112,7 +112,7 @@ class AdminController extends Controller
 			$tongsonhankhau['kyhientai'] = $tongso->where('kydieutra', $kydieutra_hientai)->sum('soluong');
 
 
-			$model = nhankhauModel::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->where('loaibiendong','!=',2)->get();
+			$model = nhankhauModel::select('tinhtranghdkt')->wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->where('loaibiendong','!=',2)->get();
 
 			$ldcovieclam['kytruoc'] = $model->where('kydieutra', $kydieutra_truoc)->where('tinhtranghdkt', '1')->count();
 			$ldcovieclam['kyhientai'] = $model->where('kydieutra', $kydieutra_hientai)->where('tinhtranghdkt', '1')->count();
@@ -134,7 +134,7 @@ class AdminController extends Controller
 			$tongsonhankhau['kytruoc'] = $tongso->where('kydieutra', $kydieutra_truoc)->sum('soluong');
 			$tongsonhankhau['kyhientai'] = $tongso->where('kydieutra', $kydieutra_hientai)->sum('soluong');
 
-			$model = nhankhauModel::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->wherein('madv', $madv)->where('loaibiendong','!=',2)->get();
+			$model = nhankhauModel::select('tinhtranghdkt')->wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->wherein('madv', $madv)->where('loaibiendong','!=',2)->get();
 
 			$ldcovieclam['kytruoc'] = $model->where('kydieutra', $kydieutra_truoc)->where('tinhtranghdkt', '1')->count();
 			$ldcovieclam['kyhientai'] = $model->where('kydieutra', $kydieutra_hientai)->where('tinhtranghdkt', '1')->count();
@@ -150,7 +150,7 @@ class AdminController extends Controller
 			$tongsonhankhau['kytruoc'] = $tongso->where('kydieutra', $kydieutra_truoc)->sum('soluong');
 			$tongsonhankhau['kyhientai'] = $tongso->where('kydieutra', $kydieutra_hientai)->sum('soluong');
 
-			$model = nhankhauModel::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->where('madv', session('admin')->madv)->where('loaibiendong','!=',2)->get();
+			$model = nhankhauModel::select('tinhtranghdkt')->wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->where('madv', session('admin')->madv)->where('loaibiendong','!=',2)->get();
 
 			$ldcovieclam['kytruoc'] = $model->where('kydieutra', $kydieutra_truoc)->where('tinhtranghdkt', '1')->count();
 			$ldcovieclam['kyhientai'] = $model->where('kydieutra', $kydieutra_hientai)->where('tinhtranghdkt', '1')->count();
