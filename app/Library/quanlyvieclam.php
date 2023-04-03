@@ -180,7 +180,7 @@ function getdulieubaocao(){
         $madv = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
         $kydieutra = danhsach::wherein('user_id', $madv)->max('kydieutra');
     } else {
-        $kydieutra = danhsach::where('user_id', session('admin')->madv)->max('kydieutra');
+        $kydieutra = danhsach::where('user_id', 3101104089)->max('kydieutra');
     }
 
     // Session::put('m_huyen', $m_huyen);

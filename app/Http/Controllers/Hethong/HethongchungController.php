@@ -73,7 +73,6 @@ class HethongchungController extends Controller
 		// 	$user = User::where('username', $inputs['username'])->first();
 		// }
 
-// dd($user);
 		//tài khoản không tồn tại
 		if (!isset($user)) {
 			return view('errors.tontai_dulieu')
