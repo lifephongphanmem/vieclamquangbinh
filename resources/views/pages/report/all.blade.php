@@ -77,7 +77,7 @@
                             <td width="5%"> Số lượng</td>
                             <td width="45%"> Mô tả</td>
                             <td width="15%"> Thời gian</td>
-                            <td width="10%"> thao tác</td>
+                            {{-- <td width="10%"> thao tác</td> --}}
                         </thead>
                         <tbody>
                             <?php 
@@ -121,13 +121,13 @@
                                 <td> {{ $rp->numrow }}</td>
                                 <td> {{ $rp->note }}</td>
                                 <td> {{ $rp->time }}</td>
-                                <td>
+                                {{-- <td>
                                     <button title="Xóa thông tin" data-toggle="modal" data-target="#delete-modal-confirm"
                                         type="button" onclick="cfDel('{{ 'report-fa-delete/' . $rp->id }}')"
                                         class="btn btn-sm btn-clean btn-icon">
                                         <i class="icon-lg flaticon-delete text-danger"></i>
                                     </button>
-                                </td>
+                                </td> --}}
                             </tr>
                             <?php } ?>
                         </tbody>

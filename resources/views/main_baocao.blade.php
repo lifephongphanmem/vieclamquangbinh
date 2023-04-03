@@ -266,7 +266,6 @@
             // Specify file name
 
              var filename = $('#title').val() + '.xls' ;
-         
 
             // Create download link element
             downloadLink = document.createElement("a");

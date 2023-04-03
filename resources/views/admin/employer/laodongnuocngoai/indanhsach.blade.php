@@ -8,7 +8,7 @@
        
   
             <tr style="border-top: none;border-left: none;border-right: none;">
-                <th colspan="12" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;padding-bottom:2rem;"> DANH SÁCH NGƯỜI LAO ĐỘNG NƯỚC NGOÀI</th>
+                <th colspan="12" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;padding-bottom:2rem;">DANH SÁCH NGƯỜI LAO ĐỘNG NƯỚC NGOÀI</th>
             </tr>
             <tr>
                 <th rowspan="2" width='2%'>STT</th>

@@ -753,6 +753,7 @@
                 </div>
             </form>
 
+
                                     <script>
                                         $('#gioitinh').on('click', function() {
                                             var check = $('#gioitinh').is(':checked');
