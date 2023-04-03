@@ -46,8 +46,9 @@
 
                 </div>
                 <div class="card-body">
-                    <div class="col-xl-12 ">
-                        <form role="form" method="POST" action="{{ URL::to('doanhnghiep-fu') }}"
+                    <div class="row">
+                        <div class="col-xl-8 ">
+                            <form role="form" method="POST" action="{{ URL::to('doanhnghiep-fu') }}"
                             enctype='multipart/form-data'>
                             {{ csrf_field() }}
                             <table>
@@ -63,7 +64,7 @@
                                 </tr>
                                 <tr>
                                     <td>Tên doanh nghiệp</td>
-                                    <td><input type="text" class="form-control" name="name"
+                                    <td><input type="text" class="form-control"  name="name"
                                             value="{{ $info->name }}" required></td>
                                 </tr>
                                 <tr>
@@ -168,9 +169,9 @@
                                     <td>
                                         <textarea type="text" class="form-control" name="adress" required>{{ $info->adress }}</textarea>
                                     </td>
-                                    <td rowspan="5">
+                                    {{-- <td rowspan="5">
                                         <img style="width: 18rem" src="{{ $info->image }}">
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr>
                                     <td>Khu công nghiệp</td>
@@ -228,12 +229,8 @@
                                         <input type="file" name="image" value="{{ $info->email }}"
                                             class="form-control">
                                     </td>
-                            
                                 </tr>
-
                             </table>
-
-
 
                             <div>
                                 <hr>
@@ -241,7 +238,17 @@
                             <div>
                                 <input class="btn btn-success btn-sm" type='submit' value=" Cập nhật thông tin">
                             </div>
-                        </form>
+                            </form>
+                        </div>
+
+                        <div class="col-xl-4 ">
+                           
+                            <div >
+                                <img style="position: absolute;  bottom: 8%;left: 0%;;"  class="col-xl-12" src="{{ $info->image }}">
+                            </div>
+                           
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -308,8 +315,6 @@
 								{ ?>
                             <div>{{ $key }} : {{ $val }}</div>
                             <?php } ?>
-
-
 
                         </div>
                     </div>
@@ -402,18 +407,17 @@
                         </label></a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{{ URL::to('/') }}/huongdan.xlsx" download><i style="font-size: 2.5rem ;"
-                            class="fa fa-file"></i> <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"
+                    <a href="{{ URL::to('/') }}/huongdan.xlsx" download> <i style="font-size: 2.3rem ;" class="far fa-address-book"></i>
+                         <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"
                             type="button">Hướng dẫn điền dữ liệu</button></a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{{ URL::to('/') }}/maunhapnguoilaodong.xlsx" download><i style="font-size: 2.5rem ;"
-                            class="fa fa-file"></i> <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"
-                            type="button">Tải
-                            mẫu</button></a>
+                    <a href="{{ URL::to('/') }}/maunhapnguoilaodong.xlsx" download><i style="font-size: 2.3rem ;" class="fas fa-align-center"></i>
+                        <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"
+                            type="button">Tải mẫu</button></a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{{ URL::to('laodong-ex') }}"><i style="font-size: 2.5rem ;" class="fa fa-file"></i>
+                    <a href="{{ URL::to('laodong-ex') }}"><i style="font-size: 2.3rem ;" class="far fa-list-alt"></i>
                         <button class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem" type="button">Tải danh sách
                             NLĐ</button></a>
                 </div>
@@ -446,11 +450,12 @@
 
 
                         </ul> --}}
-            {{-- </div>
-                </div> --}}
+            {{-- </div>--}}
+                </div> 
 
             <div class="row ">
-                <div class="col-xl-12 col-sm-offset-0">
+                <div class="col-xl-12">
+                     <div class="card card-custom">
                     {{-- <form class="form-inline" id="formnld" method="GET" action="#collapsenld">
 						<div class="row ">
 							<div class="col-sm-6 col-sm-offset-0">
@@ -486,6 +491,7 @@
 						</div>
 		
 					</form> --}}
+                    <div class="card-body">
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <td width="2%"> # </td>
@@ -556,8 +562,13 @@
                             </tr>
                             <?php } ?>
                         </tbody>
+                        
                     </table>
+                     </div>
+                </div>
                 </div>
             </div>
+
+            
         </div>
     @endsection

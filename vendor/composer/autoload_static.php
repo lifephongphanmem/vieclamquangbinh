@@ -683,6 +683,7 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
         'App\\Models\\nguoilaodong' => __DIR__ . '/../..' . '/app/Models/nguoilaodong.php',
         'App\\Models\\nhankhauModel' => __DIR__ . '/../..' . '/app/Models/nhankhauModel.php',
         'App\\Models\\tuyendungModel' => __DIR__ . '/../..' . '/app/Models/tuyendungModel.php',
+        'App\\Models\\vanbantailieu' => __DIR__ . '/../..' . '/app/Models/vanbantailieu.php',
         'App\\Models\\vanphonghotro' => __DIR__ . '/../..' . '/app/Models/vanphonghotro.php',
         'App\\Models\\view\\view_bao_cao_tonghop' => __DIR__ . '/../..' . '/app/Models/view/view_bao_cao_tonghop.php',
         'App\\Models\\view\\view_nhankhau_danhsach' => __DIR__ . '/../..' . '/app/Models/view/view_nhankhau_danhsach.php',

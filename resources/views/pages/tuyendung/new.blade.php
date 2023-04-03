@@ -49,7 +49,7 @@
 
 
                         <div class="row">
-                            <div class="col-sm-10 col-sm-offset-1 ">
+                            <div class="col-sm-12 col-sm-offset-1 ">
                                 <fieldset class="scheduler-border">
                                     <legend class="scheduler-border text-info">Thông tin chung</legend>
                                     <div class="row">
@@ -118,11 +118,11 @@
 
                         <div class="vitri" id='dynamicTable'>
                             <div class="row" id="1stld">
-                                    <legend>
+                                    <legend class="col-sm-12 ">
                                         <button type="button" class="btn btn-success">Vị trí tuyển dụng</button>
                                     </legend>
                                     <div class="col-sm-6 ">
-                                        <table class="table table-bordered " >
+                                        <table class="table border" >
                                             <tr>
                                                 <td style="color: #313444;" width="30%" >Tên công việc (*)</td>
                                                 <td>
@@ -175,27 +175,39 @@
 
                                             <tr>
                                                 <td style="color: #313444;">Trình độ ngoại ngữ</td>
-                                                <td>
-                                                   <span style="color: #313444;">Ngoại ngữ 1 </span>
-                                                    <input type="text" name="ngoaingu1[]" value="" style="width: 30%;height: 2.5rem;
-                                                     margin-right: 2%;border:1px solid #E4E6EF;" >
-                                                    <span style="color: #313444;"> Chứng chỉ</span>
-                                                    <input type="text" size=2 name="chungchinn1[]" value=" "  style="width: 30%;height: 2.5rem;border:1px solid #E4E6EF" ><br>
+                                                <td >
+                                                     <div class="row" >
+                                                        <div class="col-sm-5" style=" margin-right: 5%;">
+                                                        <span >ngại ngữ 1 </span>
+                                                        <input type="text"  class="form-control"name="ngoaingu1[]" style="width: 100%;">
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                        <span > Chứng chỉ</span> 
+                                                        <input type="text" name="chungchinn1[]" class="form-control" style="width: 100%;">
+                                                        </div>
+                                                        </div>
                                                     <select class="form-control " name="xeploainn1[]" style="margin-top: 0.3rem">
                                                         <option value='Trung bình'>Trung bình</option>
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
                                                     </select>
                                                     <br>
-                                                    <span style="color: #313444;">ngại ngữ 2 </span>
-                                                    <input type="text"  value=" " name="ngoaingu2[]" style="width: 30%;height: 2.5rem;margin-right: 2%;border:1px solid #E4E6EF">
-                                                    <span style="color: #313444;"> Chứng chỉ</span> 
-                                                    <input type="text" size=2 name="chungchinn2[]"value=" " style="width: 30%;height: 2.5rem;border:1px solid #E4E6EF">
-                                                    <select class="form-control " name="xeploainn1[]" style="margin-top: 0.3rem">
-                                                        <option value='Trung bình'>Trung bình</option>
-                                                        <option value='Khá' selected>Khá</option>
-                                                        <option value='Tốt'>Tốt</option>
-                                                    </select>
+                                                        <div class="row" >
+                                                        <div class="col-sm-5" style=" margin-right: 5%;">
+                                                        <span >ngại ngữ 2 </span>
+                                                        <input type="text"  class="form-control"name="ngoaingu2[]" style="width: 100%;">
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                        <span > Chứng chỉ</span> 
+                                                        <input type="text" name="chungchinn2[]" class="form-control" style="width: 100%;">
+                                                        </div>
+                                                        </div>
+                                                        <select class="form-control " name="xeploainn1[]" style="margin-top: 0.3rem" >
+                                                            <option value='Trung bình'>Trung bình</option>
+                                                            <option value='Khá' selected>Khá</option>
+                                                            <option value='Tốt'>Tốt</option>
+                                                        </select>
+                                                   
                                                 </td>
                                             </tr>
                                             <tr>
@@ -206,13 +218,14 @@
                                                         <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
                                                     </select>
-                                                    Khác <input type="text"  value=" " name="tinhockhac[]" style="width: 90%;height: 2.5rem;border:1px solid #E4E6EF;" >
-                                                    <select class="form-control " name="loaithk[]" style="margin-top: 0.3rem">
-                                                        <option value='Trung bình'>Trung bình</option>
-                                                        <option value='Khá' selected>Khá</option>
+                                                    <div>
+                                                        Khác <input type="text" class="form-control" name="tinhockhac[]" style="width: 100%;" >
+                                                        <select class="form-control " name="loaithk[]" style="margin-top: 0.3rem">
+                                                            <option value='Trung bình'>Trung bình</option>
+                                                            <option value='Khá' selected>Khá</option>
                                                         <option value='Tốt'>Tốt</option>
-                                                    </select>
-
+                                                        </select>
+                                                    </div>
                                                 </td>
                                             </tr>
 
@@ -223,12 +236,12 @@
 
 
                                     <div class="col-sm-6">
-                                        <table class="table table-bordered ">
+                                        <table class="table border ">
                                             <tr>
                                                 <td style="color: #313444;">Kỹ năng mềm</td>
                                                 <td>
 
-                                                    <select class="form-control select2basic"  multiple  name="kynangmem[]" >
+                                                    <select class="form-control select2basic" style="width: 100%;"  multiple  name="kynangmem[]" >
                                                         <option value='Giao tiếp' >Giao tiếp</option>
                                                         <option value='Thuyết trình'>Thuyết trình</option>
                                                         <option value='Quản lý thời gian'>Quản lý thời gian</option>
@@ -351,17 +364,20 @@
 
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1 ">
-
-                        <button type="button" name="add" id="add" class="btn btn-success"> Thêm vị
-                            trí</button>
-                        <button type="button" class="btn btn-danger" id='remove'>Giảm vị trí</button>
-                        <button type='submit' class="btn btn-warning btn-lg pull-right"> Đăng tuyển dụng </button>
-
-                    </div>
+             <legend class="col-sm-12 ">
+                <div class=" col-sm-12" >
+                    <button type="button" name="add" id="add" class="btn btn-success"> Thêm vị trí</button>
+                    <button type="button" class="btn btn-danger" id='remove'>Giảm vị trí</button>
                 </div>
-                </form>
+            </legend>
+                <div class=" col-sm-12" style="text-align: center;margin-bottom: 1%">
+                    <button  type='submit' class="btn btn-warning btn-lg pull-right"> Đăng tuyển dụng </button>
+                </div>
+               
+            </form>
+        </div>
+    </div>        
+      </div>     
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 
