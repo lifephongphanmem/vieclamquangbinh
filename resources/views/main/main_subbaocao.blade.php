@@ -74,6 +74,16 @@
                                 <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span>
                             </a>
                         </li>
+                        @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                        <li class="menu-item" aria-haspopup="true">
+                            <a data-target="#modify-modal-huyen" data-toggle="modal" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Huyện)</span>
+                            </a>
+                        </li>
+                    @endif
                     </ul>
                 </div>
             </li>

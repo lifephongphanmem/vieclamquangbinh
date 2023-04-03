@@ -288,8 +288,7 @@ class HethongchungController extends Controller
 		}
 	
 		//Tạo mail để gửi xác minh
-		if(isset($model_user)){
-			
+		if(isset($model_user)){			
 			$content='<a href="/">Kích hoạt tài khoản</a>';
 			$run=new SendEmail($content,$model_user);
 			$run->handle();

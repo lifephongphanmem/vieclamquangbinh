@@ -125,7 +125,6 @@ class AdminDieutra extends Controller
         // dd($inputs);
         // dd($m_xa);
         // dd($m_donvi);
-        //  dd($dss);
         return view('admin.dieutra.all')
             ->with('dss', $dss)
             ->with('baocao', getdulieubaocao())
@@ -472,7 +471,7 @@ class AdminDieutra extends Controller
             })
             ->get();
 
-        // dd($model);
+ 
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -1069,8 +1068,8 @@ class AdminDieutra extends Controller
     }
 
     public function TaoMoi(){
-        $kydieutra_truoc=nhankhauModel::max('kydieutra');
-        $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->get();
+        $kydieutra_truoc=nhankhauModel::where('madv',session('admin')->madv)->max('kydieutra');    
+        $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->where('loaibiendong','!=',2)->get();
         if($model->max('kydieutra') == date('Y')){
             return view('errors.tontai_dulieu')
             ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
@@ -1083,7 +1082,6 @@ class AdminDieutra extends Controller
             ->with('furl', '/dashboard');
         }
         $danhsach_kytruoc=danhsach::where('user_id',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->first();
-            
             $danhsach_kytruoc->soluong=0;
             $danhsach_kytruoc->donvinhap=session('admin')->madv;
             $danhsach_kytruoc->soho=0;
