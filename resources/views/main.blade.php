@@ -216,7 +216,27 @@
                             @if (session('admin')->phanloaitk == 1 && session('admin')->sadmin != 'SSA')
                             @include('includes.modal')
                             @endif
-                            
+                                
+            <!-- modal khai báo không biến động -->
+            <form method="get" action="{{'/laodong-fnothing'}}" accept-charset="UTF-8" id="frm_khongbiendong" >
+                @csrf
+                <div id="modal-khongbiendong" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <h4 id="modal-header-primary-label" class="modal-title">Không có biến động trong kỳ?</h4>
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                            <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                                ý</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </form>
                         </div>
                         <!--end::Container-->
                     </div>
@@ -254,6 +274,7 @@
         </div>
         <!--end::Page-->
     </div>
+
     <!--end::Main-->
     <!-- begin::User Panel-->
     <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">

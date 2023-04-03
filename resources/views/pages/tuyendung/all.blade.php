@@ -118,7 +118,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{-- </div> --}}
+                </div>
             </div>
         </div>
         <!-- Modal In báo cáo -->

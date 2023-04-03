@@ -134,6 +134,7 @@ return array(
     'App\\Models\\nguoilaodong' => $baseDir . '/app/Models/nguoilaodong.php',
     'App\\Models\\nhankhauModel' => $baseDir . '/app/Models/nhankhauModel.php',
     'App\\Models\\tuyendungModel' => $baseDir . '/app/Models/tuyendungModel.php',
+    'App\\Models\\vanbantailieu' => $baseDir . '/app/Models/vanbantailieu.php',
     'App\\Models\\vanphonghotro' => $baseDir . '/app/Models/vanphonghotro.php',
     'App\\Models\\view\\view_bao_cao_tonghop' => $baseDir . '/app/Models/view/view_bao_cao_tonghop.php',
     'App\\Models\\view\\view_nhankhau_danhsach' => $baseDir . '/app/Models/view/view_nhankhau_danhsach.php',

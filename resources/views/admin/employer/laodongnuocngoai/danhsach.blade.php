@@ -56,7 +56,7 @@
                         </thead>
                         <tbody>
                             <?php 
-
+ 
 		foreach ($model as $key=>$ld ){
 	?>
                             <tr>

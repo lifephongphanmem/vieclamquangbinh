@@ -156,6 +156,6 @@
                         </table>
                     </div>
 				</div>
-            {{-- </div> --}}
+            </div>
         </div>
     @endsection
