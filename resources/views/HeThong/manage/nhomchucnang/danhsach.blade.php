@@ -75,7 +75,7 @@ src="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.boots
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td>{{ $tt->name }}</td>
-                                            <td>{{ $tt->username }}</td>
+                                            <td>{{ $tt->phanloaitk==1?$tt->username:$tt->email }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

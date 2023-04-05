@@ -266,7 +266,7 @@ class HethongchungController extends Controller
 			'madv' => $inputs['dkkd'],
 			'status' => 0,//0: vô hiệu,1: kích hoạt,2: khóa
 			'nhaplieu' => 1,
-			'manhomchucnang'=>1669913835
+			'manhomchucnang'=>1671467299
 		];
 		// $cty=DB::table('company')->where('name','like',$inputs['username'])->first();
 		$model = User::where('email', $inputs['email'])->first();
