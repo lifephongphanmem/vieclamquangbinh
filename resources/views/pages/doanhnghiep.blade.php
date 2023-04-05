@@ -394,9 +394,9 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <div class="col-md-3">
-                    <a href="#"><i class="fa fa-user"></i>
-                        <label> Nhập danh sách lao động ban đầu
+                <div class="col-md-3" >
+                    <a href="#" ><i class="fas fa-user" style="font-size: 2.3rem;"></i>
+                        <label type="button" class="btn btn-primary btn-sm" style="margin-bottom: 1.2rem"> Nhập danh sách lao động ban đầu
 
                             <form class="form-inline" method="POST" action="{{ URL::to('laodong-fi') }} "
                                 enctype='multipart/form-data'>
@@ -404,7 +404,8 @@
                                     style="display:none;">
                                 {{ csrf_field() }}
                             </form>
-                        </label></a>
+                        </label>
+                    </a>
                 </div>
                 <div class="col-md-3">
                     <a href="{{ URL::to('/') }}/huongdan.xlsx" download> <i style="font-size: 2.3rem ;" class="far fa-address-book"></i>

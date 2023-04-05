@@ -39,29 +39,54 @@ class AdminReport extends Controller
 			$ngay = date('d');
 			if ($ngay < 5) {
 				$tungay = Carbon::create($nam, $thang - 1, 5)->toDateString();
-				$denngay = date('Y-m-d');
 			}
 			else{
 				$tungay = Carbon::create($nam, $thang , 5)->toDateString();
-				$denngay = date('Y-m-d');
 			}
-			
+			$denngay = date('Y-m-d');
+			$denngay2 = Carbon::tomorrow();
+
 		} else {
 			$tungay = $request->tungay;
 			$denngay = $request->denngay;
+			$denngay2 = Carbon::parse($denngay)->addDays();
 		}
-		if ($type_filter != 'chuakhaibao') {
-			$reports = DB::table('report')
-			->when($type_filter, function ($query, $type_filter) {
 
-				return $query->where('type', $type_filter);
-			})
-			->when($tungay, function ($query, $tungay) {
-				return $query->where('time', '>=', $tungay);
-			})
-			->when($denngay, function ($query, $denngay) {
-				return $query->where('time', '<=', $denngay);
-			})
+
+		$reports = DB::table('report');
+		if ($type_filter == 'baotang' ) {
+			$reports = $reports->where('type', 'baotang' );
+		}
+		if ($type_filter == 'baogiam') {
+			$reports = $reports->where('type', 'baogiam');
+		}
+		if ($type_filter == 'tamdung') {
+			$reports = $reports->where('type', 'tamdung');
+		}
+		if ($type_filter == 'kethuctamdung') {
+			$reports = $reports->where('type', 'kethuctamdung');
+		}
+		if ($type_filter == 'updateinfo') {
+			$reports = $reports->where('type', 'updateinfo');
+		}
+		if($type_filter == null){
+			$reports = $reports;
+		}
+
+			$reports = $reports->where('time', '>=', $tungay)->where('time', '<=', $denngay2)->whereNotin('datatable', ['nhankhau', 'users'])->get();
+		
+			// $reports = DB::table('report')
+			// ->when($type_filter, function ($query, $type_filter) {
+
+			// 	return $query->where('type', $type_filter);
+			// })
+			// ->when($tungay, function ($query, $tungay) {
+			// 	return $query->where('time', '>=', $tungay);
+			// })
+			// ->when($denngay, function ($query, $denngay) {
+			// 	return $query->where('time', '<=', $denngay);
+			// })
+
 			// ->when($time_filter, function ($query, $time_filter) {
 			// 	$ym = explode('-', $time_filter, 2);
 			// 	$timeS = Carbon::create($ym[0], $ym[1])->startOfMonth();
@@ -71,39 +96,33 @@ class AdminReport extends Controller
 			// ->when($uid, function ($query, $uid) {
 			// 	return $query->where('user', $uid);
 			// })
-			->wherenotin('datatable',['nhankhau','users'])
-			->orderBy('id', 'desc')->get();
-			
-		}
-		else{
-			$reports = DB::table('report')->get();
-		}
+			// ->whereNotin('datatable',['nhankhau','users'])
+			// ->orderBy('id', 'desc')->get();
 		
 		$a = [];
-
 		foreach($reports as $item){
 			$item2 = Carbon::parse($item->time)->toDateString();
-			if ( $item2 == $denngay ) {
-				array_push($a,$item);
+			if ($item2 == $tungay) {
+				array_push($a, $item);
 			}
-			if ( $item2 >= $tungay && $item2 <= $denngay ) {
+			// if ( $item2 == $denngay ) {
+			// 	array_push($a,$item);
+			// }
+			if ( $item2 >= $tungay && $item2 <= $denngay2 ) {
 				array_push($a,$item);
 			}
 		}
 	
-		$b = a_unique(array_column($a, 'user'));
-		
-
+		$b = a_unique(array_column( $a , 'user'));
+	
 		// $reports = $reports->whereBetween('time',[$tungay,$denngay])->get();
 		// // dd($reports);
 		// $a = a_unique(array_column($reports->toarray(), 'user'));
-
-
-
+	
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
 				->select('company.name', 'company.user')
-				->whereNotIn('company.user', $b)
+				->whereNotin('company.user', $b)
 				->get();
 				
 		} else {
