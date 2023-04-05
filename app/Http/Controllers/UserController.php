@@ -232,6 +232,7 @@ class UserController extends Controller
 		$a_nhomchucnang=array_column(dsnhomtaikhoan::all()->toarray(),'tennhomchucnang','manhomchucnang');
 		return view('HeThong.manage.taikhoan.create')
 			->with('model', $model)
+			->with('baocao', getdulieubaocao())
 			->with('a_nhomchucnang', $a_nhomchucnang)
 			->with('model_dvbc', $model_dvbc);
 	}
@@ -426,6 +427,7 @@ class UserController extends Controller
 			$model_dvbc=User::where('tonghop',1)->get();
 			return view('HeThong.manage.taikhoan.edit')
 				->with('model', $model)
+				->with('baocao', getdulieubaocao())
 				->with('model_dvbc', $model_dvbc)
 				->with('model_dv', $model_dv);
 		}else{
@@ -433,6 +435,7 @@ class UserController extends Controller
 
 			return view('HeThong.manage.taikhoan.edit_doanhnghiep')
 					->with('model',$model)
+					->with('baocao', getdulieubaocao())
 					->with('model_cty',$model_cty);
 		}
 

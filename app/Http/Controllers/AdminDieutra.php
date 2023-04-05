@@ -724,7 +724,7 @@ class AdminDieutra extends Controller
             $tmp['madv'] = $inputs['madv'];
             $tmp['kydieutra'] = $inputs['kydieutra'];
             $tmp['ho'] = $inputs['ho'];
-            $cccd = nhankhauModel::where('cccd', $tmp['cccd'])->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
+            $cccd = nhankhauModel::where('cccd', $tmp['cccd'])->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('loaibiendong','!=',2)->first();
             if (isset($cccd)) {
                 continue;
             }

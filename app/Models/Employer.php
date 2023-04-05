@@ -572,17 +572,19 @@ class Employer extends Model
 			}
 			// check data
 		if(!$data['hoten']){ break;};
+
 		$data['cmnd']=str_replace('\'','',$data['cmnd']);	
 		
 		if(!$this->checkCmndExits($data['cmnd']))
 		{	
+
 			$data['company']= $cid;
 			
 			$unix_date = ($data['ngaysinh'] - 25569) * 86400;
 			
 			$data['ngaysinh']= date('Y-m-d',$unix_date);
-			
-			if(!$data['state']){$data['state']=1;}
+		
+			if(!$data['state']){$data['state']=1;};
 			
 			if ($data['bdbhxh']){
 			
@@ -590,14 +592,13 @@ class Employer extends Model
 			
 			$data['bdbhxh']= date('Y-m-d',$unix_date);
 				
-			}
+			};
+
 			if ($data['bdhopdong']){
-			
 			$unix_date = ($data['bdhopdong'] - 25569) * 86400;
-			
 			$data['bdhopdong']= date('Y-m-d',$unix_date);
-				
-			}
+		
+			};
 			
 			if ($data['bddochai']){
 			
@@ -605,32 +606,35 @@ class Employer extends Model
 			
 			$data['bddochai']= date('Y-m-d',$unix_date);
 				
-			}
+			};
+
 			if ($data['ktdochai']){
 			
 			$unix_date = ($data['ktdochai'] - 25569) * 86400;
 			
 			$data['ktdochai']= date('Y-m-d',$unix_date);
 				
-			}
+			};
 			if ($data['kthopdong']){
 			
 			$unix_date = ($data['kthopdong'] - 25569) * 86400;
 			
 			$data['kthopdong']= date('Y-m-d',$unix_date);
 				
-			}
+			};
+
 			if ($data['ktbhxh']){
 			
 			$unix_date = ($data['ktbhxh'] - 25569) * 86400;
 			
 			$data['ktbhxh']= date('Y-m-d',$unix_date);
 				
-			}
+			};
 			$lds[]=	$data;
 		}
 		
 		}
+
 	$num_valid_ld= count($lds);
 	if($num_valid_ld){
 		$result= DB::table('nguoilaodong')->insert($lds);
@@ -665,6 +669,7 @@ class Employer extends Model
 	public function checkCmndExits($cmnd){
 		
 		$result= DB::table('nguoilaodong')->select('id')->where('cmnd',$cmnd)->whereNotIn('state',[3])->get()->first();
+
 		if($result)
 		{return $result->id ;}else{
 			

@@ -163,7 +163,7 @@
                                         onclick="xuatexel('{{ $cty->id }}','{{ $cty->user }}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
                                         data-toggle="modal">
-                                        <i class="icon-lg flaticon-list text-success"></i>
+                                        <i class="icon-lg la flaticon2-print text-primary"></i>
                                     </button>
                                     @if ($cty->user == null)
                                         <button title="Xóa thông tin" data-toggle="modal"
@@ -233,7 +233,7 @@
                                             <option value="2">Mẫu 02 (TT 01/2022)</option>
                                         </select> --}}
                     <a href="" id='mau01' target="_blank">1. Mẫu 01/PLI (NĐ 145/2020)</a></br>
-                    <a href="">2. Mẫu 02 (TT 01/2022)</a>
+                    {{-- <a href="">2. Mẫu 02 (TT 01/2022)</a> --}}
                     <input type="hidden" name='madv' id='madonvi'>
                     <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
                 </div>
