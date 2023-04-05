@@ -74,7 +74,7 @@ class AdminTuyendung extends Controller
 			
 		}
 		$vitri = Vitrituyendung::select('id','idtuyendung','name')->get();
-	
+
 		return view ('admin.tuyendung.all')
 					->with('tds', $tds)
 					->with('baocao', getdulieubaocao())

@@ -159,7 +159,7 @@ class EmployerController extends Controller
 	public function import(){
 		
 		$request= request();
-		$uid= Auth::user()->id;
+		$uid=session('admin')->id;
 		// get company id
 		$company =$this->getCompany($uid);
 		 $model= new Employer();
