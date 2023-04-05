@@ -96,7 +96,7 @@
                                 <td><a href="{{ URL::to('tuyendung-be') . '/' . $td->id }}">{{ $td->noidung }} </a></td>
                                 <td>{{ $td->desc }}</td>
                                 <td><span
-                                        class="text-ellipsis">{{ $td->datuyentutt . '/' . $td->datuyen . '/' . $td->sltuyen }}</span>
+                                        class="text-ellipsis">{{ ($td->datuyentutt != null?$td->datuyentutt:0)  . '/' . ($td->datuyen!= null?$td->datuyen:0) . '/' . $td->sltuyen }}</span>
                                 </td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->created_at)) }}</span></td>
                                 <td><span class="text-ellipsis">{{ date('d-m-Y', strtotime($td->thoihan)) }} </span></td>

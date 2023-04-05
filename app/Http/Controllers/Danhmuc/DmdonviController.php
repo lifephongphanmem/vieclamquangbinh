@@ -167,6 +167,7 @@ class DmdonviController extends Controller
         $model=dmdonvi::where('madiaban',$id)->get();
         return view('HeThong.manage.dmdonvi.chitietdonvi')
                 ->with('model',$model)
+                ->with('baocao', getdulieubaocao())
                 ->with('donvi',$donvi);
     }
 
