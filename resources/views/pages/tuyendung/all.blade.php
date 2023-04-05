@@ -42,9 +42,9 @@
                 <div class="card-body">
                     <form class="form-inline" method="GET">
                         <div class="row ">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <label>Lọc theo tình trạng</label>
-                                <select class=" form-control" name="state_filter" onchange="this.form.submit()">
+                                <select class=" form-control" name="state_filter" onchange="this.form.submit()" style="margin-bottom: 1%">
                                     <option value="0">Tất cả</option>
                                     <option value="1" <?php if ($state_filter == 1) {
                                         echo 'selected';
@@ -99,9 +99,10 @@
                                 </td>
                                 <td> {{ $td->datuyen ? $td->datuyen : 0 }}</td>
                                 <td>
-                                    <a href="{{ URL::to('tuyendung-fr') . '/' . $td->id }}" <?php if ($td->state != 1) {
-                                        echo "class='btn disabled'";
-                                    } ?>>
+                                    <a href="{{ URL::to('tuyendung-fr') . '/' . $td->id }}"
+                                     {{-- <?php if ($td->state != 1) {
+                                        echo "class='btn disabled'"; --}}
+                                    } ?>
                                         Báo cáo kết quả
                                     </a>
                                 </td>
