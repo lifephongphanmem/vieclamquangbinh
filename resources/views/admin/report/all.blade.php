@@ -125,12 +125,12 @@
                             </tr>
                             <tr class="text-center" style="font-weight: bold">
                                 <th>Tổng</th>
-                                <th> {{ dinhdangso($model_congty->count()) }} </th>
-                                <th> {{ dinhdangso($reports->where('type','baotang')->count()) }}  </th>
-                                <th> {{dinhdangso( $reports->where('type','baogiam')->count()) }} </th>
-                                <th> {{ dinhdangso($reports->where('type','tamdung')->count()) }} </th>
-                                <th> {{ dinhdangso($reports->where('type','kethuctamdung')->count()) }} </th>
-                                <th> {{ dinhdangso($reports->where('type','nothing')->count()) }} </th>
+                                <th> {{ dinhdangso( $model_congty->count()) }} </th>
+                                <th> {{ dinhdangso($type_filter == 'chuakhaibao' ? 0 : $reports->where('type','baotang')->count()) }}  </th>
+                                <th> {{dinhdangso($type_filter == 'chuakhaibao' ? 0 : $reports->where('type','baogiam')->count()) }} </th>
+                                <th> {{ dinhdangso($type_filter == 'chuakhaibao' ? 0 :$reports->where('type','tamdung')->count()) }} </th>
+                                <th> {{ dinhdangso($type_filter == 'chuakhaibao' ? 0 :$reports->where('type','kethuctamdung')->count()) }} </th>
+                                <th> {{ dinhdangso($type_filter == 'chuakhaibao' ? 0 :$reports->where('type','nothing')->count()) }} </th>
                             </tr>
                         </thead>
                         <tbody>
