@@ -87,12 +87,22 @@
                         <div class="d-flex align-items-stretch mr-3">
                             <!--begin::Header Logo-->
                             <div class="header-logo">
-                                <a href="{{ '/dashboard' }}">
+                                @if (session('admin')->phanloaitk == 1 )
+                                    <a href="{{ '/dashboard' }}">
                                     <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}"
                                         class="logo-default max-h-40px" />
                                     <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}"
                                         class="logo-sticky max-h-40px" />
                                 </a>
+                                @else
+                                    <a href="{{ '/doanhnghieppanel' }}">
+                                    <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}"
+                                        class="logo-default max-h-40px" />
+                                    <img alt="Logo" src="{{ url('assets/media/logos/ttdvvl.png') }}"
+                                        class="logo-sticky max-h-40px" />
+                                </a>
+                                @endif
+                          
                             </div>
                             <!--end::Header Logo-->
                             <!--begin::Header Menu Wrapper-->

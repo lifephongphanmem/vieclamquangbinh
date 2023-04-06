@@ -121,17 +121,17 @@ class AdminReport extends Controller
 	
 		if ($request->type_filter == 'chuakhaibao') {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
-				->select('company.name', 'company.user')
+				->select('company.name', 'company.user', 'company.id')
 				->whereNotin('company.user', $b)
 				->get();
 				
 		} else {
 			$model_congty = Company::join('users', 'users.id', 'company.user')
-				->select('company.name', 'company.user')
+				->select('company.name','company.user', 'company.id')
 				->wherein('company.user', $b)
 				->get();
 		}
-		
+		// dd($model_congty);
 		$inputs['url'] = '/report-ba';
 		// dd($reports);
 		return view('admin.report.all')->with('model_congty', $model_congty)
