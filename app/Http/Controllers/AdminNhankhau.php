@@ -396,7 +396,7 @@ class AdminNhankhau extends Controller
     public function inchitiet(Request $request)
     {
         $inputs=$request->all();
-        $model = Nhankhau::where('madv', $request->madv)->get();
+        $model = Nhankhau::where('madv', $request->madv)->where('kydieutra',$inputs['kydieutra'])->get();
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -404,6 +404,7 @@ class AdminNhankhau extends Controller
         $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
         return view('admin.nhankhau.inchitiet', compact('model'))
             ->with('m_donvi',$m_donvi)
+            ->with('inputs',$inputs)
             ->with('pageTitle', 'Danh sách thông tin chi tiết cung lao động');
     }
 
@@ -548,18 +549,22 @@ class AdminNhankhau extends Controller
             }
             // $inputs['loaibiendong']=3;//cập nhật thông tin
             $model->update($inputs);
-            $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
+            // $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
+            // if(ckdulieuloi($id) != []){
+                $maloi=implode(';',ckdulieuloi($id));
+                $model->update(['maloailoi'=>$maloi]);
+            // }
            
-
         }
 
         if (isset($sualoi)) {
             return redirect('/dieutra/danhsachloi_chitiet?loailoi=' . $sualoi . '&madv=' . $model->madv . '&kydieutra=' . $model->kydieutra);
         } else if ($inputs['view'] == 'nhankhau') {
             return redirect('/nhankhau/danhsach?madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&mahuyen=' . $inputs['mahuyen']);
-        } else if ($inputs['view'] == 'ho') {
-            return redirect('/nhankhau/ChiTietHoGiaDinh/' . $ch->id . '?soho=' . $ch->ho . '&madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&mahuyen=' . $inputs['mahuyen']);
-        }
+        } 
+        // else if ($inputs['view'] == 'ho') {
+        //     return redirect('/nhankhau/ChiTietHoGiaDinh/' . $ch->id . '?soho=' . $ch->ho . '&madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&mahuyen=' . $inputs['mahuyen']);
+        // }
     }
 
     public function danhsach(Request $request)

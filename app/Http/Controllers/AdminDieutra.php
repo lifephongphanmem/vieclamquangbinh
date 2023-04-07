@@ -305,7 +305,7 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         // dd($inputs);
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
-            ->where('loaibiendong','!=',2)
+            ->where('loaibiendong', '!=', 2)
             ->when($inputs['madv'], function ($q, $inputs) {
                 return $q->where('madv', $inputs);
             })
@@ -376,7 +376,7 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         // dd($inputs);
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
-            ->where('loaibiendong','!=',2)
+            ->where('loaibiendong', '!=', 2)
             ->where(function ($q) use ($inputs) {
 
                 if (isset($inputs['gender'])) {
@@ -450,7 +450,7 @@ class AdminDieutra extends Controller
         $a_chuyenmon = dmtrinhdokythuat::select('tentdkt', 'stt')->get()->toarray();
         // dd($a_chuyenmon);
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
-            ->where('loaibiendong','!=',2)
+            ->where('loaibiendong', '!=', 2)
             ->where(function ($q) use ($inputs) {
 
                 if (isset($inputs['gender'])) {
@@ -471,7 +471,7 @@ class AdminDieutra extends Controller
             })
             ->get();
 
- 
+
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -724,14 +724,52 @@ class AdminDieutra extends Controller
             $tmp['madv'] = $inputs['madv'];
             $tmp['kydieutra'] = $inputs['kydieutra'];
             $tmp['ho'] = $inputs['ho'];
-            $cccd = nhankhauModel::where('cccd', $tmp['cccd'])->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('loaibiendong','!=',2)->first();
+            $cccd = nhankhauModel::where('cccd', $tmp['cccd'])->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('loaibiendong', '!=', 2)->first();
             if (isset($cccd)) {
                 continue;
             }
             $note .= $tmp['hoten'] . ' ,';
             $tmp['loaibiendong'] = 1; //0: import, 1:báo tăng
+            $maloi = array();
+            //kiểm tra lỗi
+            //check lỗi loại 2
+
+            $a_loi2 = array(
+                'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+                'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
+            );
+
+            if ($tmp['tinhtranghdkt'] == 3) {
+
+                foreach ($a_loi2 as $tentruong) {
+                    if ($tmp[$tentruong] != '') {
+                        array_push($maloi, 'LOAI2');
+                        break;
+                    }
+                }
+            }
+
+            //check lỗi loại 3
+
+            $a_loi3 = array(
+                'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+                'loaihinhnoilamviec', 'diachinoilamviec'
+            );
+            if ($tmp['tinhtranghdkt'] == 2) {
+                foreach ($a_loi3 as $tentruong) {
+                    if ($tmp[$tentruong] != '') {
+                        array_push($maloi, 'LOAI3');
+                    }
+                }
+            };
+
+            if ($maloi != []) {
+                $tmp['maloailoi'] = implode(';', $maloi);
+            }
             // dd($tmp);
             nhankhauModel::create($tmp);
+
+
             // dd($tmp);
         }
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
@@ -757,7 +795,7 @@ class AdminDieutra extends Controller
         // add to log system`
         $rm = new Report();
         $rm->report('thembangtay', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $inputs['quantity'], $note, $user, $inputs['kydieutra']);
-        return redirect('/biendong/danhsach_biendong?madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra'].'&loaibiendong=1');
+        return redirect('/biendong/danhsach_biendong?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&loaibiendong=1');
         // if ($check == '') {
         //     return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
         // } else {
@@ -768,9 +806,14 @@ class AdminDieutra extends Controller
     public function indanhsachloi(Request $request)
     {
         $inputs = $request->all();
-        // $inputs['madv']=$inputs['madv']??'';
+
         if (isset($inputs['mahuyen'])) {
-            $maxa = array_column(getMaXa($inputs['mahuyen'])->toarray(), 'madv');
+            if (!isset($inputs['maxa'])) {
+                $maxa = array_column(getMaXa($inputs['mahuyen'])->toarray(), 'madv');
+            } else {
+                // $inputs['madv']=$inputs['maxa'];
+                $maxa = [$inputs['maxa']];
+            }
         } else {
             $maxa = [];
         }
@@ -890,7 +933,7 @@ class AdminDieutra extends Controller
         $donvi = User::where('madv', $inputs['madv'])->first();
         $model = DB::table('report')->where('user', $donvi->id)->where('kydieutra', $inputs['kydieutra'])->get();
         return view('admin.dieutra.biendong.chitiet')
-        ->with('baocao', getdulieubaocao())
+            ->with('baocao', getdulieubaocao())
             ->with('model', $model);
     }
 
@@ -980,8 +1023,8 @@ class AdminDieutra extends Controller
     {
         $inputs = $request->all();
         // dd($inputs);
-        if(session('admin')->capdo == 'X'){
-            $inputs['madv']=session('admin')->madv;
+        if (session('admin')->capdo == 'X') {
+            $inputs['madv'] = session('admin')->madv;
         }
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
@@ -992,60 +1035,60 @@ class AdminDieutra extends Controller
             ->where(function ($query) use ($inputs) {
                 if ($inputs['biendong'] != 'all') {
                     $query->where('loaibiendong', $inputs['biendong']);
-                }else{
-                    $query->where('loaibiendong', '!=',0);
+                } else {
+                    $query->where('loaibiendong', '!=', 0);
                 }
 
-                if($inputs['madv'] != 'all'){
-                    $query->where('madv',$inputs['madv']);
-                }else{
-                    $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
-                    $query->wherein('madv',$a_xa);
+                if ($inputs['madv'] != 'all') {
+                    $query->where('madv', $inputs['madv']);
+                } else {
+                    $a_xa = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+                    $query->wherein('madv', $a_xa);
                 }
             })
             ->get();
-            // dd($model_biendong->take(10));
-            //Báo giảm
-            // if(in_array($inputs['biendong'],['all',4])){
-            //     $a_cccd=array_column($model_biendong->toarray(),'cccd');
-            //     $model_giam=nhankhauModel::where('kydieutra',($inputs['kydieutra']-1))
-            //                             ->where(function($query) use ($inputs){
-            //                                 if($inputs['madv'] != 'all'){
-            //                                     $query->where('madv',$inputs['madv']);
-            //                                 }else{
-            //                                     $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
-                                               
-            //                                     $query->wherein('madv',$a_xa);
-            //                                 }
-            //                             })
-            //                             ->get();
-            //                             $model_giam=$a_cccd == []?$model_giam:$model_giam->wherenotin('cccd',$a_cccd);
-                                       
-            //                             foreach($model_giam as $ct){
-            //                                 $ct->loaibiendong=4;
-            //                             }
-                                        
-            //                             $collection=new Collection([$model_biendong,$model_giam]);
-            //                             $model=$collection->collapse();
-            // }else{
-            //     $model=$model_biendong;
-            // }
+        // dd($model_biendong->take(10));
+        //Báo giảm
+        // if(in_array($inputs['biendong'],['all',4])){
+        //     $a_cccd=array_column($model_biendong->toarray(),'cccd');
+        //     $model_giam=nhankhauModel::where('kydieutra',($inputs['kydieutra']-1))
+        //                             ->where(function($query) use ($inputs){
+        //                                 if($inputs['madv'] != 'all'){
+        //                                     $query->where('madv',$inputs['madv']);
+        //                                 }else{
+        //                                     $a_xa=array_column(getMaXa(session('admin')->maquocgia)->toarray(),'madv');
 
-                                    // dd($model);
-            
+        //                                     $query->wherein('madv',$a_xa);
+        //                                 }
+        //                             })
+        //                             ->get();
+        //                             $model_giam=$a_cccd == []?$model_giam:$model_giam->wherenotin('cccd',$a_cccd);
+
+        //                             foreach($model_giam as $ct){
+        //                                 $ct->loaibiendong=4;
+        //                             }
+
+        //                             $collection=new Collection([$model_biendong,$model_giam]);
+        //                             $model=$collection->collapse();
+        // }else{
+        //     $model=$model_biendong;
+        // }
+
+        // dd($model);
+
         switch ($inputs['biendong']) {
             case 'all':
-                    $a_loaibiendong = array(
-                        // '0' => 'Nhận từ file excel',
-                        '1' => 'Tăng',
-                        '2' => 'Giảm',
-                        '3' => 'Cập nhật thông tin',
-                        // '4' => 'Báo giảm'
-                    );
-                    break;
-            // case 0:
-            //     $a_loaibiendong = array('0' => 'Nhận từ file excel');
-            //     break;
+                $a_loaibiendong = array(
+                    // '0' => 'Nhận từ file excel',
+                    '1' => 'Tăng',
+                    '2' => 'Giảm',
+                    '3' => 'Cập nhật thông tin',
+                    // '4' => 'Báo giảm'
+                );
+                break;
+                // case 0:
+                //     $a_loaibiendong = array('0' => 'Nhận từ file excel');
+                //     break;
             case 1:
                 $a_loaibiendong = array('1' => 'Tăng');
                 break;
@@ -1055,9 +1098,9 @@ class AdminDieutra extends Controller
             case 3:
                 $a_loaibiendong = array('3' => 'Cập nhật thông tin');
                 break;
-            // case 4:
-            //     $a_loaibiendong = array('4' => 'Báo giảm');
-            //     break;
+                // case 4:
+                //     $a_loaibiendong = array('4' => 'Báo giảm');
+                //     break;
         }
 
         return view('admin.dieutra.biendong.danhsach')
@@ -1067,36 +1110,37 @@ class AdminDieutra extends Controller
             ->with('pageTitle', 'Danh sách biến động');
     }
 
-    public function TaoMoi(){
-        $kydieutra_truoc=nhankhauModel::where('madv',session('admin')->madv)->max('kydieutra');    
-        $model=nhankhauModel::where('madv',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->where('loaibiendong','!=',2)->get();
-        if($model->max('kydieutra') == date('Y')){
+    public function TaoMoi()
+    {
+        $kydieutra_truoc = nhankhauModel::where('madv', session('admin')->madv)->max('kydieutra');
+        $model = nhankhauModel::where('madv', session('admin')->madv)->where('kydieutra', $kydieutra_truoc)->where('loaibiendong', '!=', 2)->get();
+        if ($model->max('kydieutra') == date('Y')) {
             return view('errors.tontai_dulieu')
-            ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
-            ->with('furl', '/dashboard');
+                ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
+                ->with('furl', '/dashboard');
         }
 
-        if(count($model) <= 0){
+        if (count($model) <= 0) {
             return view('errors.tontai_dulieu')
-            ->with('message', 'Chưa có dữ liệu nhân khẩu kỳ trước')
-            ->with('furl', '/dashboard');
+                ->with('message', 'Chưa có dữ liệu nhân khẩu kỳ trước')
+                ->with('furl', '/dashboard');
         }
-        $danhsach_kytruoc=danhsach::where('user_id',session('admin')->madv)->where('kydieutra',$kydieutra_truoc)->first();
-            $danhsach_kytruoc->soluong=0;
-            $danhsach_kytruoc->donvinhap=session('admin')->madv;
-            $danhsach_kytruoc->soho=0;
-            $danhsach_kytruoc->kydieutra=date('Y');
-        unset($danhsach_kytruoc->id,$danhsach_kytruoc->created_at);
-        $danhsach=danhsach::create($danhsach_kytruoc->toarray());
-        $count_nhankhau=0;
-        foreach($model as $ct){
-            $ct->kydieutra=date('Y');
-            $ct->danhsach_id=$danhsach->id;
+        $danhsach_kytruoc = danhsach::where('user_id', session('admin')->madv)->where('kydieutra', $kydieutra_truoc)->first();
+        $danhsach_kytruoc->soluong = 0;
+        $danhsach_kytruoc->donvinhap = session('admin')->madv;
+        $danhsach_kytruoc->soho = 0;
+        $danhsach_kytruoc->kydieutra = date('Y');
+        unset($danhsach_kytruoc->id, $danhsach_kytruoc->created_at);
+        $danhsach = danhsach::create($danhsach_kytruoc->toarray());
+        $count_nhankhau = 0;
+        foreach ($model as $ct) {
+            $ct->kydieutra = date('Y');
+            $ct->danhsach_id = $danhsach->id;
             unset($ct->id);
             nhankhauModel::create($ct->toarray());
             $count_nhankhau++;
         }
-        $danhsach->update(['soluong'=>$count_nhankhau]);
-        return redirect('/dashboard')->with('success','Tạo kỳ điều tra mới thành công');
+        $danhsach->update(['soluong' => $count_nhankhau]);
+        return redirect('/dashboard')->with('success', 'Tạo kỳ điều tra mới thành công');
     }
 }

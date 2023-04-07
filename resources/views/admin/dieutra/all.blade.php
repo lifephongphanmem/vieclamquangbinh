@@ -306,7 +306,6 @@
 
         <!--Model in-->
         <div id="in-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-            {{-- <form id="frmDanhsach" method="POST" action="{{'/nhankhau/danhsach_tinhtrang'}}" accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'> --}}
             @csrf
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -327,16 +326,8 @@
                         <input type="hidden" name='madv' id='madonvi'>
                         <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
                     </div>
-
-                    {{-- <div class="modal-footer">
-                                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                                        <button type="submit" id="submit" name="submit" value="submit"
-                                        class="btn btn-primary">Đồng
-                                            ý</button>
-                                    </div> --}}
                 </div>
             </div>
-            {{-- </form> --}}
         </div>
             <!-- modal in danh sách lỗi huyện -->
             <div id="modify-modal-dsloi" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"

@@ -26,13 +26,12 @@
             <td style="text-align: right"><i style="margin-right: 40%;">Quảng Bình, ngày .... tháng .... năm ....</i></td>
         </tr> --}}
     </table>
-    <p id='data_body' style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;margin-bottom:10px;">DANH SÁCH CHI TIẾT NHÂN KHẨU<br>
+    <p id='data_body' style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;margin-bottom:10px;">DANH SÁCH CHI TIẾT NHÂN KHẨU NĂM {{$inputs['kydieutra']}}<br>
     </p>
 
     <table id="data_body1" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th rowspan="2">TT hộ</th>
                 <th rowspan="2">TT</th>
                 <th rowspan="2">Họ và tên </th>
                 <th colspan="2"  style="width:10%">Ngày tháng năm sinh<br></th>
@@ -56,14 +55,13 @@
                 <th rowspan="2">Người thất nghiệp</th>
                 <th rowspan="2"  style="width:3%">Thời gian thất nghiệp (Ghi theo mã số từ 1-3)</th>
                 <th rowspan="2"  style="width:3%">Không tham gia HĐKT (Ghi theo mã số từ 1-5)</th>
-                <th rowspan="2">MQH</th>
             </tr>
             <tr>
                 <th>Nam</th>
                 <th>Nữ</th>
             </tr>
             <tr >
-                @for ($i=1;$i<27;$i++)
+                @for ($i=1;$i<25;$i++)
                     <td style="font-weight:bold; text-decoration: underline;font-style: italic;text-align: center">{{$i}}</td>
                 @endfor
             </tr>
@@ -74,12 +72,6 @@
         <tbody>
             @foreach ($model as $item)
                 <tr>
-                    @if ($item->mqh == 'CH')
-                        <td style="text-align: center ; vertical-align: middle">{{ $stt_ho++ }}</td>
-                    @else
-                        <td></td>
-                    @endif
-
                     <td style="text-align: center ; vertical-align: middle">{{ $stt++ }}</td>
                     <td style="vertical-align: middle">{{ $item->hoten }}</td>
 
@@ -113,15 +105,7 @@
                     <td style="vertical-align: middle">{{ $item->diachinoilamviec }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->thatnghiep }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->thoigianthatnghiep }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->khongthamgiahdkt }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->mqh }}</td>
-
-                    {{-- @if ($item->mqh == 'CH')
-                        <td style="text-align: center ; vertical-align: middle">{{ $item->mqh }}</td>
-                    @else
-                        <td></td>
-                    @endif --}}
-
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->khongthamgiahdkt }}</td> 
                 </tr>
             @endforeach
 
