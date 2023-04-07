@@ -198,7 +198,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Tình trạng tham gia HĐKT</label>
-                                            <select class="form-control {{in_array('uutien',$a_thaydoi)?'alert-danger':''}}" name="tinhtranghdkt">
+                                            <select class="form-control {{in_array('tinhtranghdkt',$a_thaydoi)?'alert-danger':''}}" name="tinhtranghdkt">
                                                 <option value="">--- Chọn tình trạng ----</option>
                                                 @foreach ($m_tinhtrangvl as $ct )
                                                     <option value="{{$ct->stt}}" {{$ld->tinhtranghdkt == $ct->stt?'selected':''}}>{{$ct->tentgkt}}</option>

@@ -32,7 +32,6 @@
     <table id="data_body1" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th rowspan="2" width='2%'>TT hộ</th>
                 <th rowspan="2" width='2%'>TT</th>
                 <th rowspan="2" width='15%'>Họ và tên </th>
                 <th colspan="2"  style="width:10%">Ngày tháng năm sinh<br></th>
@@ -46,23 +45,16 @@
                 <th>Nữ</th>
             </tr>
             <tr >
-                @for ($i=1;$i<10;$i++)
+                @for ($i=1;$i<9;$i++)
                     <td style="font-weight:bold; text-decoration: underline;font-style: italic;text-align: center">{{$i}}</td>
                 @endfor
             </tr>
 
         </thead>
-        <?php $stt = 1;
-        $stt_ho = 1; ?>
+        <?php $stt = 1; ?>
         <tbody>
             @foreach ($model as $item)
                 <tr>
-                    @if ($item->mqh == 'CH')
-                        <td style="text-align: center ; vertical-align: middle">{{ $stt_ho++ }}</td>
-                    @else
-                        <td></td>
-                    @endif
-
                     <td style="text-align: center ; vertical-align: middle">{{ $stt++ }}</td>
                     <td style="vertical-align: middle">{{ $item->hoten }}</td>
 
