@@ -533,8 +533,9 @@ class AdminNhankhau extends Controller
         if($sqty > 0){
             if($biendong){
                 $inputs['loaibiendong']=3;
-                $note= implode( " ; ",$danhsach);
+                $note= implode( ";",$danhsach);
                 $inputs['truongbiendong']=$note;
+                // dd($note);
                 //Tính xem nhân khẩu đã có cập nhật chưa
                 $nhankhau_capnhat=DB::table('report')->where('user',$user)->where('kydieutra',$model->kydieutra)->where('lastid',$model->id)->first();
                 

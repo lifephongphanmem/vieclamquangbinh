@@ -147,7 +147,6 @@ class AdminBiendong extends Controller
 		$a_thaydoi=explode(';',$ld->truongbiendong);
         // dd($inputs);
         $inputs['kydieutra']=$ld->kydieutra;
-		
 		return view('admin.biendong.cung.chitiet')
                 ->with('ld', $ld)
                 ->with('inputs', $inputs)
