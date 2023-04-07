@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class MessagesController extends Controller
 {
@@ -51,7 +52,6 @@ class MessagesController extends Controller
         return view('pages.messenger.index', compact('threads'))
         ->with('baocao', getdulieubaocao());
     }
-
     /**
      * Shows a message thread.
      *

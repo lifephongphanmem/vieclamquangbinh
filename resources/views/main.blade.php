@@ -102,7 +102,7 @@
                                         class="logo-sticky max-h-40px" />
                                 </a>
                                 @endif
-                          
+
                             </div>
                             <!--end::Header Logo-->
                             <!--begin::Header Menu Wrapper-->

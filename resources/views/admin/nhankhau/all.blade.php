@@ -46,13 +46,26 @@
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
                         @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $inputs['kydieutra'] == date('Y'))
-                        <div class="card-toolbar">
+                      
                             <a onclick="themmoi('{{$inputs['madv']}}','{{$inputs['kydieutra']}}')" class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i> &ensp;Thêm</a>
-                            
-                        </div>
+
+                        @endif
+                        @if (session('admin')->capdo == 'X')
+                            <button 
+                            class="btn btn-xs btn-success mr-3"
+                            data-target="#in-modal-confirm" data-toggle="modal" title="In">
+                            <i class="icon-lg la flaticon2-print text-primary"></i>Danh sách
+                            </button>
+                        @endif
+                        @if (session('admin')->capdo == 'H')
+                             <form  id="dsloi" method="POST" action="{{'/dieutra/indanhsachloi'}}"  accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+                                @csrf
+                            <input type="hidden" name='mahuyen' id="mahuyen" >
+                            <input type="hidden" name='kydieutra' value="{{$inputs['kydieutra'] }}">
+                            <button  type="submit" class="btn btn-xs btn-success mr-3">Danh sách lỗi</button>
+                            </form>
                         @endif
                     </div>
-
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -168,7 +181,7 @@
             </div>
         </div>
     </div>
-
+  </div>
         <!--Modal báo giảm-->
         <div id="baogiam" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
             <form id="giam" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
@@ -240,6 +253,30 @@
             </form>
         </div>
 
+        <!--Model in-->
+        <div id="in-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Danh sách</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        {{-- <select name="tinhtrang" id="" class="form-control select2basic" style="width:100%">
+                                            <option value="1">Mẫu 01/PLI (NĐ 145/2020)</option>
+                                            <option value="2">Mẫu 02 (TT 01/2022)</option>
+                                        </select> --}}
+                        <a href="{{'/nhankhau-in?madv='.$inputs['madv'].'&kydieutra='.$inputs['kydieutra']}}" id='mau01' target="_blank">1. Danh sách điều tra</a></br>
+                        <form  id="dsloi" method="POST" action="{{'/dieutra/indanhsachloi'}}"  accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+                            @csrf
+                        <input type="hidden" name='madv' id='madonvi'>
+                        <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
+                        <button  type="submit" style="border: none;background-color:transparent;color:#6993FF;margin-left: -8px" >2. Danh sách lỗi</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
         <script>
             function getxa() {
                 var madv=$('#mdv').val;
@@ -285,5 +322,9 @@
             var url='/biendong/baogiam/'+id;
             $('#giam').attr('action', url);
         }
+      function indanhsachloi() {
+                var mahuyen = $('#mahuyen').val();
+                $('#dsloi').find("[name='mahuyen']").val(mahuyen);
+            }
         </script>
     @endsection

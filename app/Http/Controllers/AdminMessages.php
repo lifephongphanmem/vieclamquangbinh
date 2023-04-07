@@ -37,7 +37,7 @@ class AdminMessages extends Controller
 		$state_filter = $request->state_filter;
         // All threads, ignore deleted/archived participants
         $threads = Thread::getAllLatest()->get();
-
+      
         // All threads that user is participating in
         // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
 

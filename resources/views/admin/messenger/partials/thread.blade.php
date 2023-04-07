@@ -16,24 +16,23 @@
 		<div class=" {{ $class }}">
 								
 				<p>
-						<?php if (isset($thread->latestMessage->body)) print_r ($thread->latestMessage->body); ?> 
+					<?php if (isset($thread->latestMessage->body)) print_r ($thread->latestMessage->body); ?> 
 				</p>
 		</div>
 	</td>
 	<td>
 		<div class=" {{ $class }}">
 			<?php if($thread->attach){ ?>	
-				<a href="../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a>
+				<a href="/../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a>
 			<?php } ?>	
 		</div>
 	</td>
 	<td>
 		<div class=" {{ $class }}">
-				
+
 				<p>
 					{{ $thread->creator()->name }}
 				</p>
-				
 		</div>
 	</td>
 </tr>

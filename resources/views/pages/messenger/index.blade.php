@@ -125,6 +125,8 @@
 									<div class=" {{ $class }}">
 										<?php if($thread->attach){ ?>	
 											<a href="../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a>
+											{{-- <a href="{{ Storage::url('app/'.$thread->attach)}}" download> Tải File đính kèm </a> --}}
+										
 										<?php } ?>	
 									</div>
 								</td>
