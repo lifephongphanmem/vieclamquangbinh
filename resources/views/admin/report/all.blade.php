@@ -148,7 +148,7 @@
                                 <td class="text-center">{{ dinhdangso($report->where('type','tamdung')->Count()) }}</td>
                                 <td class="text-center">{{ dinhdangso($report->where('type','kethuctamdung')->Count()) }}</td>
                                 <td class="text-center">{{ dinhdangso($report->where('type','nothing')->Count()) }}</td>
-                                <td class="text-center"><a onclick="intonghop('{{ $rp->id }}')" title="In báo cáo chi tiết"
+                                <td class="text-center"><a onclick="intonghop('{{ $rp->user }}')" title="In báo cáo chi tiết"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#Report_in_tonghop"
                                         data-toggle="modal">
                                         <i class="icon-lg la flaticon2-print text-primary"></i>
@@ -170,7 +170,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="{{ '/report-in-tonghop' }}" id="in_tonghop" target="_blank" id="frm_report">
-                <input id="id" name="id" hidden>
+                <input id="id" name="id" >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="card-label">
