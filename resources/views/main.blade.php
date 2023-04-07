@@ -315,7 +315,8 @@
                             <span class="navi-link p-0 pb-2">
                                 <span class="navi-icon mr-1">
                                     <span class="svg-icon svg-icon-lg svg-icon-primary">
-                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\Unlock.svg--><svg
+                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\Unlock.svg-->
+                                        <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                             viewBox="0 0 24 24" version="1.1">

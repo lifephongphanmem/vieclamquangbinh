@@ -201,13 +201,13 @@ class dsnhomtaikhoanController extends Controller
         $inputs = $request->all();
 
         $model = User::where('manhomchucnang', $inputs['manhomchucnang'])->get();
+        
         $model_phanquyen = dsnhomtaikhoan_phanquyen::where('manhomchucnang', $inputs['manhomchucnang'])->get();
-
         $a_phanquyen = [];
         foreach ($model as $taikhoan) {
             foreach ($model_phanquyen as $phanquyen) {
                 $a_phanquyen[] = [
-                    'tendangnhap' => $taikhoan->username,
+                    'tendangnhap' => $taikhoan->phanloaitk == 1?$taikhoan->username:$taikhoan->email,
                     'machucnang' => $phanquyen->machucnang,
                     'phanquyen' => $phanquyen->phanquyen,
                     'danhsach' => $phanquyen->danhsach,
