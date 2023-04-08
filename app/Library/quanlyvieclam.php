@@ -9,6 +9,7 @@ use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
 use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
+use App\Models\nhankhauModel;
 
 function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
 {
@@ -201,5 +202,54 @@ function getdulieubaocao(){
     );
 
     return $arr;
+}
+
+function ckdulieuloi($id){
+    $model=nhankhauModel::findOrFail($id);
+    $maloi=array();
+    //check lỗi loại 1
+    if($model->hoten == '' || $model->ngaysinh == '' || $model->ngaysinh == 0){
+        array_push($maloi,'LOAI1');
+    }
+
+    //check lỗi loại 2
+
+    $a_loi2 = array(
+        'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+        'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
+    );
+
+    if($model->tinhtranghdkt == 3){
+
+        foreach ($a_loi2 as $tentruong) {
+            if ($model->$tentruong != '') {
+                array_push($maloi,'LOAI2');
+                break;
+            }
+        }
+
+    }
+
+    //check lỗi loại 3
+
+    $a_loi3 = array(
+        'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+        'loaihinhnoilamviec', 'diachinoilamviec'
+    );
+    if ($model->tinhtranghdkt == 2) {
+        foreach ($a_loi3 as $tentruong) {
+            if ($model->$tentruong != '') {
+                array_push($maloi,'LOAI3');
+            }
+        }
+
+    };
+
+    //check lỗi loại 4
+    if($model->tinhtranghdkt == ''){
+       array_push($maloi,'LOAI4');
+    }
+
+return $maloi;
 }
 

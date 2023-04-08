@@ -46,15 +46,6 @@
                             <div class="row" id="1stld">
                                 <div class="col-md-12">
                                     <div class="card card-custom">
-                                        {{-- <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                                            <div class="card-title">
-                                                <h3 class="card-label text-uppercase">Thông tin người lao động</h3>
-                                            </div>
-                                            <div class="card-toolbar">
-                                                <!--begin::Button-->
-                                                <!--end::Button-->
-                                            </div>
-                                        </div> --}}
                                         <div class="card-header card-header-tabs-line">
                                             <div class="card-toolbar">
                                                 <ul class="nav nav-tabs nav-bold nav-tabs-line">
@@ -88,7 +79,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Họ và Tên</label>
+                                                                    <label>Họ và Tên <span class="text-danger">*</span></label>
                                                                     <input type="text" name="hoten[]"
                                                                          class="form-control"
                                                                         required>
@@ -96,7 +87,7 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Số CMND/CCCD</label>
+                                                                    <label>Số CMND/CCCD <span class="text-danger">*</span></label>
                                                                     <input type="text" name="cccd[]"
                                                                          class="form-control"
                                                                         required>
@@ -116,7 +107,7 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Ngày tháng năm sinh</label>
+                                                                    <label>Ngày tháng năm sinh <span class="text-danger">*</span></label>
                                                                     <input type="date" name="ngaysinh[]"
                                                                         class="form-control"
                                                                         required>
@@ -154,7 +145,7 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Nơi đăng ký thường trú</label>
+                                                                    <label>Nơi đăng ký thường trú <span class="text-danger">*</span></label>
                                                                     <input type="text" name="thuongtru[]"
                                                                         class="form-control" required>
                                                                 </div>
@@ -163,8 +154,8 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Trình độ GDPT</label>
-                                                                    <select name="trinhdogiaoduc[]" class="form-control selec2basic">
+                                                                    <label>Trình độ GDPT <span class="text-danger">*</span></label>
+                                                                    <select name="trinhdogiaoduc[]" class="form-control selec2basic" required>
                                                                         <option value="">---Chọn trình độ GDPT---</option>
                                                                         @foreach ($list_tdgd as $val)
                                                                             <option value="{{$val->stt}}">{{$val->tengdpt}}</option>
@@ -174,7 +165,7 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Trình độ CMKT</label>
+                                                                    <label>Trình độ CMKT <span class="text-danger">*</span></label>
                                                                     <select name="chuyenmonkythuat[]" class="form-control selec2basic">
                                                                         <option value="">---Chọn trình độ CMKT---</option>
                                                                         @foreach ($list_cmkt as $val)
@@ -201,7 +192,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Tình trạng tham gia hoạt động kinh tế</label>
+                                                                    <label>Tình trạng tham gia hoạt động kinh tế <span class="text-danger">*</span></label>
                                                                     <select name="tinhtranghdkt[]" class="form-control selec2basic">
                                                                         <option value="">---Chọn tình trạng HĐKT---</option>
                                                                         @foreach ($m_tinhtrangvl as $val)
@@ -365,6 +356,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script type="text/javascript">
                     var i = 0;
                     $("#add").click(function() {

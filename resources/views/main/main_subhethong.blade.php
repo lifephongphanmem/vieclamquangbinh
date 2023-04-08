@@ -57,7 +57,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Trình độ DGPT</span>
+                                <span class="menu-text">Trình độ GDPT</span>
                             </a>
                         </li>
                         @endif
