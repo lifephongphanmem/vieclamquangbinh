@@ -95,6 +95,7 @@ Route::group(['prefix' => 'messages'], function () {
     Route::post('store', [MessagesController::class,'store']);
     Route::get('/{id}', [MessagesController::class,'show'])->name('messages.show');
     Route::put('{id}', [MessagesController::class,'update'])->name('messages.update');
+    Route::get('download_url/{url1}/{url2}', [MessagesController::class, 'download_url']);
 });
 
 
