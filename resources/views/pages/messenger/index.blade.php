@@ -124,8 +124,10 @@
 								<td>
 									<div class=" {{ $class }}">
 										<?php if($thread->attach){ ?>	
-											<a href="../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a>
-											{{-- <a href="{{ Storage::url('app/'.$thread->attach)}}" download> Tải File đính kèm </a> --}}
+											{{-- <a href="../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a> --}}
+											{{-- <a href="{{ Storage::url('/CONGVAN/16809224491677317754Ba_Đồn_ok.xlsx')}}" download> Tải File đính kèm </a> --}}
+											{{-- <a href="{{ URL::to('app/'.$thread->attach) }}" download> Tải File đính kèm </a> --}}
+											<a href="{{'messages/download_url/'.$thread->attach}}">Tải File đính kèm</a>
 										
 										<?php } ?>	
 									</div>

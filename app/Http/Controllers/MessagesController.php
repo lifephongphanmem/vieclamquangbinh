@@ -52,6 +52,11 @@ class MessagesController extends Controller
         return view('pages.messenger.index', compact('threads'))
         ->with('baocao', getdulieubaocao());
     }
+    public function download_url($url1,$url2){
+        $path = 'app/'.$url1.'/'.$url2;
+        // return response()->download(Storage::get($path));
+        return response()->download(storage_path($path));
+    }
     /**
      * Shows a message thread.
      *
@@ -107,12 +112,14 @@ class MessagesController extends Controller
 		$attach =$request->File('attach');
 		if($attach){
 			$attach_path= $attach->store('CONGVAN');
+            // $attach_path= $attach->getClientOriginalName();
+            // $attach->storeAs('CONGVAN', $attach_path);
 		}
         $thread = Thread::create([
             'subject' => $input['subject'],
             'attach' => $attach_path,
         ]);
-
+    
         // Message
         Message::create([
             'thread_id' => $thread->id,
