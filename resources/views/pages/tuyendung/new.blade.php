@@ -92,7 +92,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2 text-right">
+                                        <div class="col-sm-2 ">
                                             <div class="form-group">
                                                 <label>Người đăng</label>
                                                 <input type="text" name="username" class="form-control" readonly

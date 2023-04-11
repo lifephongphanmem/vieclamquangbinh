@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -31,18 +32,18 @@ class MessagesController extends Controller
      */
     public function index()
     {
-		
+
         // All threads, ignore deleted/archived participants
         $threads = Thread::getAllLatest()->get();
 
-		$userId = session('admin')->id;
-		foreach ($threads as $key=>$th){
+        $userId = session('admin')->id;
+        foreach ($threads as $key => $th) {
             // dd($th->latestMessage->body);
-			if (!$th->hasParticipant($userId)){
-				unset( $threads[$key]);
-			}
-		}
-		// dd($threads);
+            if (!$th->hasParticipant($userId)) {
+                unset($threads[$key]);
+            }
+        }
+        // dd($threads);
         // All threads that user is participating in
         // $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
 
@@ -50,10 +51,11 @@ class MessagesController extends Controller
         // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
 
         return view('pages.messenger.index', compact('threads'))
-        ->with('baocao', getdulieubaocao());
+            ->with('baocao', getdulieubaocao());
     }
-    public function download_url($url1,$url2){
-        $path = 'app/'.$url1.'/'.$url2;
+    public function download_url($url1, $url2)
+    {
+        $path = 'app/' . $url1 . '/' . $url2;
         // return response()->download(Storage::get($path));
         return response()->download(storage_path($path));
     }
@@ -84,7 +86,7 @@ class MessagesController extends Controller
         $thread->markAsRead($userId);
 
         return view('pages.messenger.show', compact('thread', 'users'))
-        ->with('baocao', getdulieubaocao());
+            ->with('baocao', getdulieubaocao());
     }
 
     /**
@@ -97,7 +99,7 @@ class MessagesController extends Controller
         $users = User::where('id', '!=', session('admin')->id)->get();
 
         return view('pages.messenger.create', compact('users'))
-        ->with('baocao', getdulieubaocao());
+            ->with('baocao', getdulieubaocao());
     }
 
     /**
@@ -105,21 +107,21 @@ class MessagesController extends Controller
      *
      * @return mixed
      */
-    public function store(Request $request )
+    public function store(Request $request)
     {
         $input = $request->all();
-		$attach_path="";
-		$attach =$request->File('attach');
-		if($attach){
-			$attach_path= $attach->store('CONGVAN');
+        $attach_path = "";
+        $attach = $request->File('attach');
+        if ($attach) {
+            $attach_path = $attach->store('CONGVAN');
             // $attach_path= $attach->getClientOriginalName();
             // $attach->storeAs('CONGVAN', $attach_path);
-		}
+        }
         $thread = Thread::create([
             'subject' => $input['subject'],
             'attach' => $attach_path,
         ]);
-    
+
         // Message
         Message::create([
             'thread_id' => $thread->id,

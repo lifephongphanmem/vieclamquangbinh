@@ -170,7 +170,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="{{ '/report-in-tonghop' }}" id="in_tonghop" target="_blank" id="frm_report">
-                <input id="id" name="id" >
+                <input id="id" name="id" hidden >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="card-label">
