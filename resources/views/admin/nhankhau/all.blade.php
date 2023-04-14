@@ -60,7 +60,7 @@
                             <button onclick="Inchitiet('{{ session('admin')->madv }}','{{ $inputs['kydieutra'] }}')"
                                 data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                 class="btn btn-sm btn-success ml-3">
-                                <i class="icon-lg la flaticon2-print text-primary"></i>Danh sách lỗi
+                                <i class="icon-lg la flaticon2-print text-primary"></i>Xuất danh sách
                             </button>
                         @endif
                     </div>
@@ -142,8 +142,7 @@
                                             data-toggle="modal" title="Báo giảm" class="btn btn-xs btn-warning ml-3"> Giảm
                                             {{-- <i class="fa fa-arrows-down-to-people"></i> --}}
                                         </button>
-                                        {{-- <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
-                                        <i class="icon-lg la flaticon2-print text-dark"></i></a> --}}
+
                                     </td>
                                 @endif
                             </tr>
