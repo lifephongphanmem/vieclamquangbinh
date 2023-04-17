@@ -742,7 +742,7 @@ class AdminDieutra extends Controller
             if ($tmp['tinhtranghdkt'] == 3) {
 
                 foreach ($a_loi2 as $tentruong) {
-                    if ($tmp[$tentruong] != '') {
+                    if (isset($tmp[$tentruong])) {
                         array_push($maloi, 'LOAI2');
                         break;
                     }
@@ -757,8 +757,9 @@ class AdminDieutra extends Controller
             );
             if ($tmp['tinhtranghdkt'] == 2) {
                 foreach ($a_loi3 as $tentruong) {
-                    if ($tmp[$tentruong] != '') {
+                    if (isset($tmp[$tentruong])) {
                         array_push($maloi, 'LOAI3');
+                        break;
                     }
                 }
             };
@@ -766,7 +767,6 @@ class AdminDieutra extends Controller
             if ($maloi != []) {
                 $tmp['maloailoi'] = implode(';', $maloi);
             }
-            // dd($tmp);
             nhankhauModel::create($tmp);
 
 
