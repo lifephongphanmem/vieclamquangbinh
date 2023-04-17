@@ -83,7 +83,7 @@ class AdminCompany extends Controller
 		//đã khai báo và chưa khai báo
 		if ($khaibao == 'dkb' || $khaibao == 'ckb') {
 			$cid = [];
-			$report = Report::whereIn('datatable', ['nguoilaodong','notable'])->get();
+			$report = Report::whereIn('datatable', ['nguoilaodong', 'notable'])->get();
 			foreach ($report as $rp) {
 				array_push($cid, $rp);
 			}
@@ -126,42 +126,40 @@ class AdminCompany extends Controller
 				}
 			}
 			$ctys = [];
-			foreach($cty as $item){
-				if($item->chuakhaitrinh == 'yes' ){
-					array_push($ctys,$item);
+			foreach ($cty as $item) {
+				if ($item->chuakhaitrinh == 'yes') {
+					array_push($ctys, $item);
 				}
 			}
-			
 		}
 		//đã đăng ký
 		elseif ($khaibao == 'ddk') {
 			$user = User::all();
-			$user_id = array_column($user->toArray(),'id');
-			$ctys = $ctys->wherein('user',$user_id)->get();
-			
+			$user_id = array_column($user->toArray(), 'id');
+			$ctys = $ctys->wherein('user', $user_id)->get();
 		}
 		//khai báo lần đầu
-		elseif($khaibao == 'kbld'){
+		elseif ($khaibao == 'kbld') {
 			$r_user = [];
-			 $user = [];
-			$report = Report::whereIn('datatable', ['nguoilaodong','notable'])->get();
+			$user = [];
+			$report = Report::whereIn('datatable', ['nguoilaodong', 'notable'])->get();
 			foreach ($report as $rp) {
 				array_push($r_user, $rp);
 			}
 			$r_user = a_unique(array_column($r_user, 'user'));
 
-			foreach($r_user as $item){
-				$a = $report->where('user',$item);
-				
-				if($report->where('user',$item)->count() == 1){
+			foreach ($r_user as $item) {
+				$a = $report->where('user', $item);
+
+				if ($report->where('user', $item)->count() == 1) {
 					array_push($user, $item);
 				}
-				if($report->where('user',$item)->count() > 1){
+				if ($report->where('user', $item)->count() > 1) {
 					$b = $a->first();
 					$c = [];
-					$time=Carbon::parse($b->time)->toDateString();
-					foreach($a as $a1){
-						$a2=Carbon::parse($a1->time)->toDateString();
+					$time = Carbon::parse($b->time)->toDateString();
+					foreach ($a as $a1) {
+						$a2 = Carbon::parse($a1->time)->toDateString();
 						if ($a2 != $time) {
 							array_push($c, $a1);
 						}
@@ -171,9 +169,8 @@ class AdminCompany extends Controller
 					}
 				}
 			}
-			$ctys = $ctys->whereIn('user',$user)->get();
-		}
-		else {
+			$ctys = $ctys->whereIn('user', $user)->get();
+		} else {
 			$ctys = $ctys->get();
 		}
 
@@ -185,8 +182,8 @@ class AdminCompany extends Controller
 			$tenxa = isset($a_dm[$val->xa]) ? $a_dm[$val->xa] : $val->xa;
 			$tenhuyen = isset($a_dm[$val->huyen]) ? $a_dm[$val->huyen] : $val->huyen;
 			$tentinh = isset($a_dm[$val->tinh]) ? $a_dm[$val->tinh] : $val->tinh;
-			$_xa=$tenxa == ''?'':' - ';
-			$_huyen=$tenhuyen == ''?'': ' - ';
+			$_xa = $tenxa == '' ? '' : ' - ';
+			$_huyen = $tenhuyen == '' ? '' : ' - ';
 			$val->diachi = $tenxa . $_xa . $tenhuyen . $_huyen . $tentinh;
 			// try {
 			// 	$tenxa = $a_dm[$val->xa];
@@ -327,7 +324,7 @@ class AdminCompany extends Controller
 		$ctype2 = dmloaihinhhdkt::all();
 
 		$company = DB::table('company')->where('id', $request->cid)->first();
-		$info =$this->getInfo($company->user);
+		$info = $this->getInfo($company->user);
 		// dd($info);
 		//print_r($cat);
 		return view('admin.company.edit')
@@ -346,19 +343,20 @@ class AdminCompany extends Controller
 			->with('quymo_max_filter', $quymo_max_filter);
 	}
 
-	public function getInfo($uid){
-		  
-		$dn= DB::table('company')->where('user',$uid)->first();
+	public function getInfo($uid)
+	{
+
+		$dn = DB::table('company')->where('user', $uid)->first();
 		// dd($dn);
-	   $em= new Employer;
-	   $other_info=$em->getTonghop($dn->id);
-	   $dn->tonghop =$other_info;
-	   $dn->pbcmkt=$em->getPhanbo($dn->id,3);
-	   $dn->pblvdt=$em->getPhanbo($dn->id,11);
-	   $dn->pbnghenghiep=$em->getPhanbo($dn->id,9);
-	   return $dn;
-	 }
-   
+		$em = new Employer;
+		$other_info = $em->getTonghop($dn->id);
+		$dn->tonghop = $other_info;
+		$dn->pbcmkt = $em->getPhanbo($dn->id, 3);
+		$dn->pblvdt = $em->getPhanbo($dn->id, 11);
+		$dn->pbnghenghiep = $em->getPhanbo($dn->id, 9);
+		return $dn;
+	}
+
 
 
 	public function update(Request $request)
@@ -486,10 +484,10 @@ class AdminCompany extends Controller
 				->with('message', 'Doanh nghiệp đăng ký')
 				->with('furl', '/doanhnghiep-ba');
 		}
-		if(isset($model)){
+		if (isset($model)) {
 			return view('errors.tontai_dulieu')
-			->with('message', 'Doanh nghiệp đã có')
-			->with('furl', '/doanhnghiep-ba');
+				->with('message', 'Doanh nghiệp đã có')
+				->with('furl', '/doanhnghiep-ba');
 		}
 
 		unset($inputs['_token']);
@@ -528,11 +526,11 @@ class AdminCompany extends Controller
 				$a_vitrikhac[$key] = $ct->id;
 			}
 		}
-		foreach($model as $val){
-			if(in_array($val->vitri,['Giám đốc','Nhà lãnh đạo','Quản lý'])||strpos($val->vitri,'Phó')||strpos($val->vitri,'Trưởng')){
-				$val->nhaquanly=true;
-			}else{
-				$val->nhaquanly=false;
+		foreach ($model as $val) {
+			if (in_array($val->vitri, ['Giám đốc', 'Nhà lãnh đạo', 'Quản lý']) || strpos($val->vitri, 'Phó') || strpos($val->vitri, 'Trưởng')) {
+				$val->nhaquanly = true;
+			} else {
+				$val->nhaquanly = false;
 			}
 		}
 

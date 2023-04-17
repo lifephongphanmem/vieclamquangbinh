@@ -57,11 +57,19 @@
                                 <i class="icon-lg la flaticon2-print"></i> Danh sách lỗi
                             </button>
                         @endif
+
                         @if(session('admin')->capdo == 'X')
                             <button onclick="Inchitiet('{{ session('admin')->madv }}','{{ $inputs['kydieutra'] }}')"
                                 data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                 class="btn btn-sm btn-success ml-3">
                                 <i class="icon-lg la flaticon2-print text-primary"></i>Xuất danh sách
+                            </button>
+                        @endif
+                        @if (session('admin')->capdo == 'T')
+                            <button onclick="Inchitiet('{{ $inputs['madv'] }}','{{ $inputs['kydieutra'] }}')"
+                                data-target="#in-modal-confirm" data-toggle="modal" title="In"
+                                class="btn btn-sm btn-success ml-3">
+                                <i class="icon-lg la flaticon2-print text-primary"></i>Danh sách lỗi
                             </button>
                         @endif
                     </div>
@@ -348,17 +356,22 @@
         }
 
         function themmoi(madv, kydieutra) {
+            if ($('#madv').val()=='') {
+                   toastr.warning('Bạn chưa chọn xã');
+            }else{
             huyen = $('#huyen').val();
             xa = $('#xa').val();
             url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
             window.location.href = url;
+            }
+
         }
 
         function baogiam(id) {
-            console.log(1)
             var url = '/biendong/baogiam/' + id;
             $('#giam').attr('action', url);
         }
+
     </script>
 @endsection
 

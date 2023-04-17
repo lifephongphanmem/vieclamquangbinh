@@ -57,7 +57,7 @@
 
                                             <div class="form-group required">
                                                 <label>Nội dung tuyển dụng (*) </label>
-                                                <textarea name="noidung" rows=5 required class="form-control"></textarea>
+                                                <textarea name="noidung" rows=10 required class="form-control"></textarea>
                                             </div>
 
                                             <div class="form-group required">
@@ -92,7 +92,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2 text-right">
+                                        <div class="col-sm-2 ">
                                             <div class="form-group">
                                                 <label>Người đăng</label>
                                                 <input type="text" name="username" class="form-control" readonly
@@ -131,7 +131,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="color: #313444;">Số lượng tuyển (*)</td>
-                                                <td><input class="form-control" type="text" name="soluong[]" required></td>
+                                                <td><input class="form-control" type="number" name="soluong[]" required></td>
                                             </tr>
                                             <tr>
                                                 <td style="color: #313444;">Mô tả công việc (*)</td>
@@ -202,7 +202,7 @@
                                                         <input type="text" name="chungchinn2[]" class="form-control" style="width: 100%;">
                                                         </div>
                                                         </div>
-                                                        <select class="form-control " name="xeploainn1[]" style="margin-top: 0.3rem" >
+                                                        <select class="form-control " name="xeploainn2[]" style="margin-top: 0.3rem" >
                                                             <option value='Trung bình'>Trung bình</option>
                                                             <option value='Khá' selected>Khá</option>
                                                             <option value='Tốt'>Tốt</option>
@@ -392,7 +392,9 @@
                         $("#dynamicTable").append(nextld);
                     });
                     $("#remove").click(function() {
+                        if($("#quantity").val() >1 ){
                         document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) - 1;
+                        }
 
                         delrowid = "row" + i;
                         document.getElementById(delrowid).remove();
@@ -400,6 +402,7 @@
                     });
 
                     $(document).on('click', 'form input[type=submit]', function(e) {
+                    
                         var quantity = $("#quantity").val();
                         for (i = 0; i < quantity; i++) {
 
@@ -421,7 +424,7 @@
                                 varsphucloi = varsphucloi.concat("; ", $(rowid).find("#phucloikhac").first().val());
 
                             };
-
+                           
                             $(rowid).find(".phucloival").first().val(varsphucloi);
 
                             // combine data - uu tien-

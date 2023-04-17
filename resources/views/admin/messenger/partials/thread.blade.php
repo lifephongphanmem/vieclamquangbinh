@@ -23,7 +23,8 @@
 	<td>
 		<div class=" {{ $class }}">
 			<?php if($thread->attach){ ?>	
-				<a href="/../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a>
+				{{-- <a href="/../storage/app/{{$thread->attach}} " download> Tải File đính kèm </a> --}}
+				<a href="{{'messages/download_url/'.$thread->attach}}">Tải File đính kèm</a>
 			<?php } ?>	
 		</div>
 	</td>

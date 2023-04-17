@@ -382,11 +382,14 @@
                     $("#dynamicTable").append(nextld);
                 });
                 $("#remove").click(function() {
+                    if ($("#quantity").val() >1 ) {
                     document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) - 1;
+                        
+                    }
 
                     delrowid = "row" + i;
                     document.getElementById(delrowid).remove();
                     --i;
                 });
             </script>
-        @endsection
+ @endsection

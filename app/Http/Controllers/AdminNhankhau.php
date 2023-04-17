@@ -109,7 +109,7 @@ class AdminNhankhau extends Controller
                 $ct->noilamviec = $ct->tenxa . ', ' . $ct->tenhuyen;
             }
         }
-
+ 
         $m_diaban = danhmuchanhchinh::all();
         $inputs['url'] = '/nhankhau/danhsach';
         // dd($inputs['madv']);
@@ -401,7 +401,7 @@ class AdminNhankhau extends Controller
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
         $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
-        $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first();
         return view('admin.nhankhau.inchitiet', compact('model'))
             ->with('m_donvi',$m_donvi)
             ->with('inputs',$inputs)
