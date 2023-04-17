@@ -56,7 +56,8 @@
                                 data-target="#modify-modal-dsloi" data-toggle="modal">
                                 <i class="icon-lg la flaticon2-print"></i> Danh sách lỗi
                             </button>
-                        @else
+                        @endif
+                        @if(session('admin')->capdo == 'X')
                             <button onclick="Inchitiet('{{ session('admin')->madv }}','{{ $inputs['kydieutra'] }}')"
                                 data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                 class="btn btn-sm btn-success ml-3">
