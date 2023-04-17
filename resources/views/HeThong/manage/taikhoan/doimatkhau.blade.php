@@ -37,7 +37,7 @@
         <div class="form-group row">
             <div class="col-lg-4">
                 <label>Đơn vị quản lý</label>
-                {!! Form::select('madv', $a_donvi, null, ['class' => 'form-control select2basic', 'disabled']) !!}
+                {!! Form::select('madv', $a_donvi, null, ['class' => 'form-control', 'disabled']) !!}
             </div>
 
             <div class="col-lg-4">
