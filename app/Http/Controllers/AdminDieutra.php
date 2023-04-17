@@ -699,6 +699,7 @@ class AdminDieutra extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $inputs = $request->all();
         // dd($inputs);
         // nhankhauModel::create($inputs);

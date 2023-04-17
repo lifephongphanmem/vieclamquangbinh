@@ -102,6 +102,7 @@
                 </div>
             </div>
         </div>
+          </div>
         <!--Model delete-->
         <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
             <form id="frmDelete" method="POST" action="#" accept-charset="UTF-8" enctype="multipart/form-data">

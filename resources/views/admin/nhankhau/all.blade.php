@@ -56,49 +56,24 @@
                                 data-target="#modify-modal-dsloi" data-toggle="modal">
                                 <i class="icon-lg la flaticon2-print"></i> Danh sách lỗi
                             </button>
-                        @else
+                        @endif
+                        @if (session('admin')->capdo == 'X')
                             <button onclick="Inchitiet('{{ session('admin')->madv }}','{{ $inputs['kydieutra'] }}')"
                                 data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                 class="btn btn-sm btn-success ml-3">
                                 <i class="icon-lg la flaticon2-print text-primary"></i>Danh sách lỗi
                             </button>
-
+                        @endif
+                        @if (session('admin')->capdo == 'T')
+                            <button onclick="Inchitiet('{{ $inputs['madv'] }}','{{ $inputs['kydieutra'] }}')"
+                                data-target="#in-modal-confirm" data-toggle="modal" title="In"
+                                class="btn btn-sm btn-success ml-3">
+                                <i class="icon-lg la flaticon2-print text-primary"></i>Danh sách lỗi
+                            </button>
                         @endif
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-group row">
-                        {{-- <div class="col-md-4">
-                            <label style="font-weight: bold">Đơn vị</label>
-                            <select class="form-control select2basic" id="madv">
-                                @foreach ($m_diaban->where('capdo', 'H') as $diaban)
-                                    <optgroup label="{{ $diaban->name }}">
-                                        <?php $a_xa = array_column($m_diaban->where('parent', $diaban->maquocgia)->toarray(), 'id'); ?>
-                                        <?php $donvi = $m_donvi->wherein('madiaban', $a_xa); ?>
-                                        @foreach ($donvi as $ct)
-                                            <option {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}
-                                                value="{{ $ct->madv }}">{{ $ct->tendv }}</option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
-                        </div> --}}
-                        {{-- <div class="col-md-4">
-                            <label style="font-weight: bold">Kỳ điều tra</label>
-
-                            <select name="kydieutra" id="kydieutra" onchange="kydieutra()" class="form-control select2basic">
-                                @foreach ($a_kydieutra as $key => $ct)
-                                    <option value="{{$key}}" {{$key == $inputs['kydieutra']?'selected':''}}>{{$ct}}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
-                        {{-- <div class="col-md-4 float-right" style="margin-left: 97%;margin-top: -2%">
-                            <a href="#" title="In báo cáo chi tiết" data-target="#cungld-modal" data-toggle="modal"
-                                class="btn btn-sm btn-clean btn-icon">
-                                <i class="icon-lg la flaticon2-print text-primary"></i>
-                            </a>
-                        </div> --}}
-                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
@@ -260,7 +235,6 @@
         </form>
     </div>
 
-
     <!--Model in danh sách lỗi xã-->
     <div id="in-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         @csrf
@@ -382,14 +356,18 @@
         }
 
         function themmoi(madv, kydieutra) {
+            if ($('#madv').val()=='') {
+                   toastr.warning('Bạn chưa chọn xã');
+            }else{
             huyen = $('#huyen').val();
             xa = $('#xa').val();
             url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
             window.location.href = url;
+            }
+
         }
 
         function baogiam(id) {
-            console.log(1)
             var url = '/biendong/baogiam/' + id;
             $('#giam').attr('action', url);
         }

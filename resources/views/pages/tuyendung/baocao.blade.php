@@ -11,7 +11,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Xem tin tuyển dụng</h3>
+                        <h3 class="card-label text-uppercase">Báo cáo tuyển dụng</h3>
                     </div>
 
   </div>

@@ -106,7 +106,7 @@
                                             @if ($ct->trangthai != 'DAGUI' && $ct->dvnhan == null)
                                             <button title="Xóa thông tin" type="button"
                                             onclick="cfDel('{{'/hopthu/delete/'.$ct->id}}')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm-"
                                             data-toggle="modal">
                                             <i class="icon-lg flaticon-delete text-danger"></i>
                                             </button>
@@ -173,7 +173,7 @@
                     </div>
 
                             <!--Model delete-->
-        <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <div id="delete-modal-confirm-" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
             <form id="frmDelete" method="GET" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-dialog">
