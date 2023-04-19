@@ -15,17 +15,7 @@ session_start();
 
 class AdminTuyendung extends Controller
 {
-	// public function __construct() {
-	// 	$this->middleware(function ($request, $next) {
-    //         if(!Auth::check()){ 
-	// 			return redirect('admin');
-	// 			};
-	// 		if(Auth::user()->level>=3){
-	// 			return redirect('admin'); 
-	// 			}
-	// 		return $next($request);
-    //     });
-	// }
+
 	public function __construct()
     {
         $this->middleware(function ($request, $next) {
