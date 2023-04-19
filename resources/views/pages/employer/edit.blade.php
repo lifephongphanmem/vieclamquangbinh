@@ -37,6 +37,7 @@
                     <div class="card-toolbar">
                     </div>
                 </div>
+                
                 <div class="card-body">
 
                     <form role="form" method="POST" action="{{ URL::to('laodong-fu') }}" enctype='multipart/form-data'>
@@ -476,4 +477,6 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+       
+@endsection

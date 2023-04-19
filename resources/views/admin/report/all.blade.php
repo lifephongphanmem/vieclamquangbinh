@@ -170,7 +170,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="{{ '/report-in-tonghop' }}" id="in_tonghop" target="_blank" id="frm_report">
-                <input id="id" name="id" >
+                <input id="id" name="id" hidden >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="card-label">
@@ -205,12 +205,13 @@
                         </div>
                         <div id="option1">
                             <div class="row">
-                                <div class="col-xl-12 thang">
+                                <div class="col-xl-12">
                                     <div class="form-group">
                                         <label><b>Chọn tháng</b></label>
+                                          <?php $thang = date('m') ?>
                                         <select class="form-control" name="thang" id="thang">
                                             @for ($month = 1; $month <= 12; $month++)
-                                                <option value="{{ $month }}">Tháng {{ $month }}</option>
+                                                <option value="{{ $month }}" {{$month == date('m') ? 'selected' : ''}}>Tháng {{ $month }}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -219,33 +220,21 @@
                         </div>
                         <div id="option2" style="display: none">
                             <div class="row">
-                                <div class="col-xl-12 thang">
+                                <div class="col-xl-12">
                                     <div class="form-group">
                                         <label><b>Chọn quý</b></label>
                                         <select class="form-control" name="quy" id="quy">
-                                            @for ($quarter = 1; $quarter <= 4; $quarter++)
-                                                <option value="{{ $quarter }}">Quý {{ $quarter }}
-                                                    <?php if ($quarter == 1) {
-                                                        echo ' ( Tháng 1,2,3 )';
-                                                    }
-                                                    if ($quarter == 2) {
-                                                        echo ' ( Tháng 4,5,6 )';
-                                                    }
-                                                    if ($quarter == 3) {
-                                                        echo ' ( Tháng 7,8,9 )';
-                                                    }
-                                                    if ($quarter == 4) {
-                                                        echo ' ( Tháng 10,11,12 )';
-                                                    }
-                                                    ?>
-                                                </option>
-                                            @endfor
+                                            <option value="1" {{$thang==1 || $thang ==2 || $thang == 3 ? 'selected' : ''}}>Quý 1 ( Tháng 1,2,3 ) </option>
+                                            <option value="2" {{$thang==4 || $thang ==5 || $thang == 6 ? 'selected' : ''}}>Quý 2 ( Tháng 4,5,6 ) </option>
+                                            <option value="3" {{$thang==7 || $thang ==8 || $thang == 9 ? 'selected' : ''}}>Quý 3 ( Tháng 7,8,9 ) </option>
+                                            <option value="4" {{$thang==10 || $thang ==11 || $thang == 12 ? 'selected' : ''}}>Quý 4 ( Tháng 10,11,12 ) </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div id="option3">
+                             <div class="row">
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label><b>Chọn năm</b></label>
@@ -263,7 +252,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy

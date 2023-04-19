@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form action="{{ route('admessages.store') }}" method="post">
+                    <form action="{{ route('admessages.store') }}" method="post"  enctype='multipart/form-data'>
                         {{ csrf_field() }}
                         <div class="col-md-8 mt-3">
                             <!-- Subject Form Input -->
