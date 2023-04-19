@@ -151,7 +151,6 @@ class TuyendungController extends Controller
 	
 	public function save( Request $request)
 	{
-		dd($request->all());
 		// $uid= Auth::user()->id;
 		$uid= session('admin')->id;
 		
