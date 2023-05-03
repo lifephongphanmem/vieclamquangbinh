@@ -56,8 +56,8 @@
                     <div class="card-body">
                         <div class="row ">
                             <div class="text-center" style="margin: 0 auto">
-                                <h3 class="text-center">BÁO CÁO </h3><br>
-                                <h3>TÌNH HÌNH SỬ DỤNG LAO ĐỘNG </h3>
+                                {{-- <h3 class="text-center">BÁO CÁO </h3><br> --}}
+                                <h5>TÌNH HÌNH SỬ DỤNG LAO ĐỘNG </h5>
                                 <br>
                             </div>
                         </div>

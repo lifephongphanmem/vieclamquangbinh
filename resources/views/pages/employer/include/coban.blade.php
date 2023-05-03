@@ -24,7 +24,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Giới tính</label>
-                <select class="form-control input-sm m-bot5 select2basic" name="gioitinh[]">
+                <select class="form-control input-sm m-bot5 " name="gioitinh[]">
                     <option value='Nam' {{isset($model)?($model->gioitinh=='Nam'?'selected':''):''}}>Nam</option>
                     <option value='Nữ'{{isset($model)?($model->gioitinh=='Nữ'?'selected':''):''}}>Nữ</option>
                 </select>
@@ -66,7 +66,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Trình độ giáo dục </label>
-                <select class="form-control input-sm m-bot15 select2basic" name="trinhdogiaoduc[]">
+                <select class="form-control input-sm m-bot15 " name="trinhdogiaoduc[]">
                     <?php foreach ( $list_tdgd as $td){ ?>
                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
                         <?php } ?>
@@ -76,7 +76,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Trình độ CMKT </label>
-                <select class="form-control input-sm m-bot15 select2basic" name="trinhdocmkt[]">
+                <select class="form-control input-sm m-bot15 " name="trinhdocmkt[]">
                     <?php foreach ( $list_cmkt as $td){ ?>
                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
                         <?php } ?>
@@ -97,7 +97,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Lĩnh vực đào tạo</label>
-                <select class="form-control input-sm m-bot15 select2basic" name="linhvucdaotao[]">
+                <select class="form-control input-sm m-bot15 " name="linhvucdaotao[]">
                     <option value=''>-- Chọn lĩnh vực --</option>
                     <?php foreach ( $list_linhvuc as $td){ ?>
                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
@@ -108,7 +108,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Nghề nghiệp</label>
-                <select class="form-control input-sm m-bot15 select2basic" name="nghenghiep[]">
+                <select class="form-control input-sm m-bot15 " name="nghenghiep[]">
                     <option value=''>----Chọn nghề nghiệp----</option>
                     <?php foreach ( $list_nghe as $td){ ?>
                         <option value='{{ $td->name }}'>{{ $td->name }}</option>
@@ -149,3 +149,4 @@
     </div>
 </div>
 <input type="hidden" name='nation' value="VN">
+

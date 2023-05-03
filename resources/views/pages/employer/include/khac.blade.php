@@ -86,8 +86,6 @@
                 </select>
             </div>
         </div>
-
-        <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Số sổ BHXH </label>
@@ -107,18 +105,19 @@
                 </div>
             </div>
             <div class="col-md-3">
-
+                <div class="form-group">
                 <label class="control-label">Mức lương đóng BHXH </label>
                 <input type="text" name="luongbhxh[]" id="luongbhxh" class="form-control">
+                </div>
             </div>
-        </div>
-        <div  class=" col-md-5">
+            <div  class=" col-md-6">
             <div class="form-group">
                 <label>Ghi chú</label>
                 <textarea name="ghichu[]" class="form-control "rows='2'> </textarea>
             </div>
         </div>
-    </div>
+        </div>
 
+    </div>
 </div>
-</div>
+

@@ -44,24 +44,24 @@ class AdminTuyendung extends Controller
 		$public_filter = $request->public_filter;
 		$dm_filter = $request->dm_filter;
 		
-
-		$tds= DB::table('tuyendung')->join('company', 'tuyendung.user', '=', 'company.user')
-					->when($search, function ($query, $search) {
-							return $query->where('tuyendung.noidung', 'like', '%'.$search.'%')
-										 ->orwhere('company.name', 'like', '%'.$search.'%');
-						})
-					->when($public_filter, function ($query, $public_filter) {
-                    return $query->where('tuyendung.state', $public_filter);
-					})
-					->when($dm_filter, function ($query, $dm_filter) {
-                    return $query->where('company.huyen', $dm_filter);
-					})
-					->when($cid, function ($query, $cid) {
-                    return $query->where('company.id', $cid);
-					})
-				 ->select('tuyendung.*', 'company.name')
-				 ->orderBy('tuyendung.id','desc')
+			$tds = DB::table('tuyendung')->join('company', 'tuyendung.user', '=', 'company.user')
+			->when($search, function ($query, $search) {
+				return $query->where('tuyendung.noidung', 'like', '%' . $search . '%')
+					->orwhere('company.name', 'like', '%' . $search . '%');
+			})
+				->when($public_filter, function ($query, $public_filter) {
+					return $query->where('tuyendung.state', $public_filter);
+				})
+				->when($dm_filter, function ($query, $dm_filter) {
+					return $query->where('company.huyen', $dm_filter);
+				})
+				->when($cid, function ($query, $cid) {
+					return $query->where('company.id', $cid);
+				})
+				->select('tuyendung.*', 'company.name')
+				->orderBy('tuyendung.id', 'desc')
 				->get();
+
 		$vtmodel = new Vitrituyendung;
 		foreach($tds as $td){
 			$vitris= $vtmodel->getVitris($td->id);

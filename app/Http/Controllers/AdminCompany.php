@@ -231,7 +231,7 @@ class AdminCompany extends Controller
 		$info = DB::table('company')->where('id', $cid)->first();
 		$em = new Employer;
 		$einfo = $em->getEmployerState($cid);
-		return view('admin.company.sudunglaodong')
+		return view('admin.company.sudunglaodong')->with('baocao', getdulieubaocao())
 			->with('einfo', $einfo)
 			->with('info', $info);
 	}
@@ -310,7 +310,7 @@ class AdminCompany extends Controller
 
 	public function edit(Request $request)
 	{
-
+		
 		$dm_filter = $request->dm_filter;
 		$public_filter = $request->public_filter;
 		$khaibao = $request->khaibao;

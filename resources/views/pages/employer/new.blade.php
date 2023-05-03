@@ -284,7 +284,7 @@
 									<div class="card card-custom">
 										<div class="card-header flex-wrap border-0 pt-6 pb-0">
 											<div class="card-title">
-												<h3 class="card-label text-uppercase">Thông tin người lao động</h3>
+												<h3 class="card-label text-uppercase" id="nld">Thông tin người lao động 1</h3>
 											</div>
 											<div class="card-toolbar">
 												<!--begin::Button-->
@@ -295,7 +295,7 @@
 											<div class="card-toolbar">
 												<ul class="nav nav-tabs nav-bold nav-tabs-line">
 													<li class="nav-item">
-														<a class="nav-link active" data-toggle="tab" href="#thongtincoban">
+														<a class="nav-link active" data-toggle="tab" href="#thongtincoban" id="ttcb">
 															<span class="nav-icon">
 																<i class="fas fa-users"></i>
 															</span>
@@ -303,7 +303,7 @@
 														</a>
 													</li>
 													<li class="nav-item">
-														<a class="nav-link" data-toggle="tab" href="#khac">
+														<a class="nav-link" data-toggle="tab" href="#khac"  id="k">
 															<span class="nav-icon">
 																<i class="far fa-user"></i>
 															</span>
@@ -375,21 +375,30 @@
                 var i = 0;
 
                 $("#add").click(function() {
-                    document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) + 1;
-                    ++i;
-                    firstld = document.getElementById("1stld").innerHTML + '';
-                    nextld = "<div class='row' id ='row" + i + "' >" + firstld + "</div>"
-                    $("#dynamicTable").append(nextld);
+
+                        document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) + 1;
+                        ++i;
+                        firstld = document.getElementById("1stld").innerHTML + '';
+                        nextld = "<div class='row' id ='row" + i + "' >" + firstld + "</div>"
+                        $("#dynamicTable").append(nextld);
+
+                         $("#row" + i ).first().find("#nld").html("Thông tin người lao động " + (i + 1) );
+
+                        $("#row" + i ).first().find("#thongtincoban").attr("id","thongtincoban" + i );
+                        $("#row" + i ).first().find("#ttcb").attr("href","#thongtincoban" + i );
+
+                        $("#row" + i ).first().find("#khac").attr("id","khac" + i );
+                        $("#row" + i ).first().find("#k").attr("href","#khac" + i );
+
                 });
                 $("#remove").click(function() {
                     if ($("#quantity").val() >1 ) {
-                    document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) - 1;
-                        
+                        document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) - 1;
+                        delrowid = "row" + i;
+                        document.getElementById(delrowid).remove();
+                        --i;
                     }
 
-                    delrowid = "row" + i;
-                    document.getElementById(delrowid).remove();
-                    --i;
                 });
             </script>
  @endsection
