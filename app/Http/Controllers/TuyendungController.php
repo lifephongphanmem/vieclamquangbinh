@@ -14,18 +14,7 @@ use App\Models\Report;
 
 class TuyendungController extends Controller
 {
-	
-	// public function __construct() {
-	// 	$this->middleware(function ($request, $next) {
-    //         if(!Auth::check()){ 
-	// 		return redirect('home');
-	// 		};
-	// 		if(Auth::user()->level!=3){
-	// 			return redirect('home'); 
-	// 			}
-	// 		return $next($request);
-    //     });
-	// }   
+	   
 	public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -162,7 +151,10 @@ class TuyendungController extends Controller
 	
 	public function save( Request $request)
 	{
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6dd0aaa375796937ce7f939b5ccb8fca79560921
 		// $uid= Auth::user()->id;
 		$uid= session('admin')->id;
 		
