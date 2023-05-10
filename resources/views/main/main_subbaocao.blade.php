@@ -84,6 +84,16 @@
                             </a>
                         </li>
                     @endif
+                    @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+                    <li class="menu-item" aria-haspopup="true">
+                        <a data-target="#modify-modal-xa" data-toggle="modal" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span>
+                        </a>
+                    </li>
+                @endif
                     </ul>
                 </div>
             </li>
