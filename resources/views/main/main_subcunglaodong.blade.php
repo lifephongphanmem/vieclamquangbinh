@@ -98,7 +98,7 @@
                     </li>
                 @endif
 
-                <li class="menu-item" aria-haspopup="true">
+                {{-- <li class="menu-item" aria-haspopup="true">
                     <a href="{{'/kybaocao'}}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21"  stroke="currentColor">
@@ -107,7 +107,7 @@
                     </span>
                         <span class="menu-text">Xét duyệt báo cáo kỳ</span>
                     </a>
-                </li>
+                </li> --}}
 
             </ul>
         </div>
