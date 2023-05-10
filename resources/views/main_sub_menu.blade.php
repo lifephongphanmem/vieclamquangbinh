@@ -48,7 +48,7 @@
                 </ul>
 
                 @elseif (session('admin')->sadmin == 'SSA')
-                <ul class="menu-nav"> 
+                    <ul class="menu-nav"> 
                     @include('main.main_subhethong')
                     @include('main.mai_subvanphonghotro')
                     </ul>

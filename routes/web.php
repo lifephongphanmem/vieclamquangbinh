@@ -39,6 +39,7 @@ use App\Http\Controllers\Baocao\baocaotonghopController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HopThuController;
+use App\Http\Controllers\kybaocaoController;
 use App\Http\Controllers\vanbanController;
 use App\Http\Controllers\vanphonghotroController;
 
@@ -359,4 +360,15 @@ Route::prefix('vanban_tailieu')->group(function () {
     Route::post('store', [vanbanController::class, 'store']);
     Route::get('edit', [vanbanController::class, 'edit']);
     Route::post('delete', [vanbanController::class, 'destroy']);
+});
+Route::get('kybaocao', [kybaocaoController::class, 'all']);
+
+Route::group(['prefix' => 'kybaocao'], function () {
+    Route::get('/', [kybaocaoController::class, 'index']);
+    Route::post('/store', [kybaocaoController::class, 'store']);
+    Route::get('/delete/{id}', [kybaocaoController::class, 'delete']);
+    Route::post('/gui', [kybaocaoController::class, 'gui']);
+    Route::post('/tralai', [kybaocaoController::class, 'tralai']);
+    Route::post('/duyet', [kybaocaoController::class, 'duyet']);
+    Route::post('/huyduyet', [kybaocaoController::class, 'huyduyet']);
 });
