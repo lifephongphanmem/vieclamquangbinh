@@ -21,6 +21,9 @@ class dangkytimviecController extends Controller
 {
    public function index(Request $request)
    {
+      if (!chkPhanQuyen('danhsachdangkytimviec', 'danhsach')) {
+         return view('errors.noperm')->with('machucnang', 'dangkytimviec');
+      }
       $input = $request->all();
       if (!isset($input['tungay'])) {
          $nam = date('Y');
@@ -59,6 +62,9 @@ class dangkytimviecController extends Controller
 
    public function create(Request $request)
    {
+      if (!chkPhanQuyen('danhsachdangkytimviec', 'thaydoi')) {
+         return view('errors.noperm')->with('machucnang', 'dangkytimviec');
+      }
       $input = $request->all();
       $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
       $dmtrinhdogdpt = dmtrinhdogdpt::all();
@@ -79,6 +85,9 @@ class dangkytimviecController extends Controller
 
    public function edit(Request $request)
    {
+      if (!chkPhanQuyen('danhsachdangkytimviec', 'thaydoi')) {
+         return view('errors.noperm')->with('machucnang', 'dangkytimviec');
+      }
       $input = $request->all();
       $model = dangkytimviec::find($input['id']);
       $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
@@ -216,7 +225,9 @@ class dangkytimviecController extends Controller
 
    public function delete($id,$tungay,$denngay, $gioitinh_filter,$age_filter)
    {
-
+      if (!chkPhanQuyen('danhsachdangkytimviec', 'thaydoi')) {
+         return view('errors.noperm')->with('machucnang', 'dangkytimviec');
+      }
       dangkytimviec::find($id)->delete();
       return redirect('/dangkytimviec?tungay='. $tungay. '&denngay='. $denngay. '&gioitinh_filter='. $gioitinh_filter. '&age_filter='. $age_filter);
    }
