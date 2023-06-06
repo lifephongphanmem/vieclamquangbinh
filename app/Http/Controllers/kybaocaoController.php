@@ -60,6 +60,7 @@ class kybaocaoController extends Controller
     {
         $input = $request;
         kybaocao::create([
+            'noidung' => $request->noidung,
             'kydieutra' => $input['kydieutra'],
             'madv_x' => $input['madv'],
             'trangthai_x' => 'cc',
@@ -80,12 +81,12 @@ class kybaocaoController extends Controller
         $maqg = danhmuchanhchinh::find($madb->madiaban);
         $id_cqtiepnhan = danhmuchanhchinh::where('maquocgia',$maqg->parent)->first();
         $cqtiepnhan = dmdonvi::where('madiaban',$id_cqtiepnhan->id)->first();
-        $capdo = $id_cqtiepnhan->capdo;
+        $capdo = $input['capdo'];
         
         $thoidiem = date('Y-m-d H:i:s');
-        if ($capdo == 'H') {
+        if ($capdo == 'X') {
             kybaocao::find($request->id)->Update([
-                'noidung' => $request->noidung,
+                'noidung' => $input['noidung'],
                 'trangthai_x' => 'dc',
                 'trangthai_h' => 'cc',
                 'cqtiepnhan_x' => $cqtiepnhan->madv,
@@ -93,7 +94,7 @@ class kybaocaoController extends Controller
                 'thoidiem_x' => $thoidiem,
             ]);
         }
-        if ($capdo == 'T') {
+        if ($capdo == 'H') {
             kybaocao::find($request->id)->Update([
                 // 'noidung' => $request->noidung,
                 'trangthai_t' => 'cd',

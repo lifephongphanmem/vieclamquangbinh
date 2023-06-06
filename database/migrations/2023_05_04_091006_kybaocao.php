@@ -33,7 +33,7 @@ class Kybaocao extends Migration
             $table->string('madv_t')->nullable();
             $table->string('trangthai_t')->nullable();
             $table->dateTime('thoidiem_t')->nullable();
-            $table->string('lydo_t')->nullable();
+
 
             $table->timestamps();
         });

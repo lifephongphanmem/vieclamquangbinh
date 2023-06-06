@@ -327,7 +327,11 @@
                                         {{ $ct }}</option>
                                 @endforeach
                             </select>
-                            
+
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-check-label" >Nội dung</label>
+                            <textarea id="noidung_themmoi" name="noidung" type="text" class="form-control" ></textarea>
                         </div>
                     </div>
 
@@ -501,9 +505,10 @@
                     <input id="id_gui"  name="id" hidden>
                     <input id="madv_gui" name="madv" hidden>
                     <input name="madiaban" value="{{$inputs['madiaban']}}" hidden>
+                    <input name="capdo" value="{{$capdo}}" hidden>
                     <input name="kdt" value="{{$inputs['kydieutra']}}" hidden>
                     @if ($capdo == 'X')
-                        <label class="form-check-label" for="gioitinh_xa">Nội dung</label>
+                        <label class="form-check-label" >Nội dung</label>
                         <textarea id="noidung_gui" name="noidung" type="text" class="form-control" ></textarea>
                     @endif
                 </div>
@@ -617,7 +622,7 @@
         function gui(id,madv,noidung) {
             $('#id_gui').val(id);
             $('#madv_gui').val(madv);
-             $('#noidung_gui').val(noidung);
+            $('#noidung_gui').val(noidung);
         }
         function tralai(id,madv) {
             $('#id_tralai').val(id);

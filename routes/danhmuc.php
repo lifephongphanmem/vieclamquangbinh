@@ -17,7 +17,7 @@ use App\Http\Controllers\Danhmuc\dmtrinhdokythuatController;
 use App\Http\Controllers\Danhmuc\dsdiabanController;
 use App\Http\Controllers\Danhmuc\dsdonviController;
 use App\Http\Controllers\Danhmuc\nghecongviecController;
-
+use App\Http\Controllers\Danhmuc\nguyennhanthatnghiepController;
 
 Route::prefix('danh_muc')->group(function () {
     // đối tượng ưu tiên
@@ -150,4 +150,11 @@ Route::prefix('danh_muc')->group(function () {
     //     Route::post('/store',[dsdonviController::class,'store']);
     //     Route::get('/delete/{id}',[dsdonviController::class,'destroy']);
     // });
+
+    Route::prefix('nguyen_nhan_that_nghiep')->group(function () {
+        Route::get('/', [nguyennhanthatnghiepController::class, 'index']);
+        Route::post('/store', [nguyennhanthatnghiepController::class, 'store']);
+        Route::post('/update/{id}', [nguyennhanthatnghiepController::class, 'update']);
+        Route::get('/delete/{id}', [nguyennhanthatnghiepController::class, 'destroy']);
+    });
 });
