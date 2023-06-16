@@ -151,6 +151,16 @@
                             </a>
                         </li>
                         @endif
+                        {{-- @if (chkPhanQuyen('nghecongviec', 'phanquyen')) --}}
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{ url('/danh_muc/nguyen_nhan_that_nghiep') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Nghyên nhân thất nghiệp</span>
+                            </a>
+                        </li>
+                        {{-- @endif --}}
                         @if (chkPhanQuyen('hinhthuclamviec', 'phanquyen'))
                         <li class="menu-item" aria-haspopup="true">
                             <a href="{{ url('/danh_muc/dm_hinh_thuc_cong_viec') }}" class="menu-link">

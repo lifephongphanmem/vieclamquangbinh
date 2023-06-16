@@ -147,8 +147,7 @@
 
                                         </select>
                                     </div>
-                                    <div class="col-md-12">
-                                    </div>
+                            
                                 </div>
                             </div>
 						</div>
@@ -168,22 +167,22 @@
                                         <input type="text" name="soluong[]" class="form-control" size=10
                                             value="{{ $vitri->soluong }}" required>
                                     </div>
-                                    <div class="col-sm-4 ">
+                                    <div class="col-sm-8 ">
                                         <label> Mô tả công việc </label>
-                                        <textarea rows=6 cols=30 name="description[]" class="form-control" required> {{ $vitri->description }} </textarea>
+                                        <textarea rows=5 cols=30 name="description[]" class="form-control" required> {{ $vitri->description }} </textarea>
                                     </div>
                                 </div>
 								<hr>
-                            </div>
+                           
                             <?php } ?>
+                             </div>
                         </div>
 
                     </form>
                 </div>
             </div>
-        
+        </div>
          </div>
         </div>
-            {{-- </section>					 --}}
-
-        @endsection
+     </div>         {{-- </section>					 --}}
+ @endsection

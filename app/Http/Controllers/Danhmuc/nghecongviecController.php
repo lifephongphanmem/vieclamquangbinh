@@ -44,12 +44,13 @@ class nghecongviecController extends Controller
      */
     public function store(Request $request)
     {
+ 
         if (!chkPhanQuyen('nghecongviec', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'nghecongviec');
         }
         $inputs=$request->all();
         nghecongviec::create($inputs);
-        return redirect('/nghe_cong_viec')
+        return redirect('danh_muc/nghe_cong_viec')
                 ->with('success','Thêm mới thành công');
     }
 
@@ -69,7 +70,7 @@ class nghecongviecController extends Controller
         $inputs=$request->all();
         $model=nghecongviec::findOrFail($id);
         $model->update($inputs);
-        return redirect('/nghe_cong_viec')
+        return redirect('danh_muc/nghe_cong_viec')
                 ->with('success','Cập nhật thành công');
     }
 
@@ -86,7 +87,7 @@ class nghecongviecController extends Controller
         }
         $model=nghecongviec::findOrFail($id);
         $model->delete();
-        return redirect('/nghe_cong_viec')
+        return redirect('danh_muc/nghe_cong_viec')
                 ->with('success','Xóa thành công');
     }
 }

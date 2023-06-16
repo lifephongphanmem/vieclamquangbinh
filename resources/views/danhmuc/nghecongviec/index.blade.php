@@ -107,13 +107,13 @@
     <script>
         function add()
         {
-            var url='/nghe_cong_viec/store'
+            var url='nghe_cong_viec/store'
             $('#frm_modify').attr('action',url);
         }
 
         function edit(e,id)
         {
-            var url='/nghe_cong_viec/update/'+ id;
+            var url='nghe_cong_viec/update/'+ id;
             var tr = $(e).closest('tr');
             $('#tendm').val($(tr).find('td[name=tendanhmuc]').text());
             $('#frm_modify').attr('action',url);

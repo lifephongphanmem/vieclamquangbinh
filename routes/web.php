@@ -37,8 +37,11 @@ use App\Http\Controllers\AdminDieutra;
 use App\Http\Controllers\AdminNhankhau;
 use App\Http\Controllers\Baocao\baocaotonghopController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\dangkytimviecController;
+use App\Http\Controllers\dsthatnghiepController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HopThuController;
+use App\Http\Controllers\kybaocaoController;
 use App\Http\Controllers\vanbanController;
 use App\Http\Controllers\vanphonghotroController;
 
@@ -77,6 +80,8 @@ Route::get('laodong-ex/', [EmployerController::class, 'export']);
 Route::get('laodong-fnothing/', [EmployerController::class, 'noreport']);
 
 // bao cao
+
+
 Route::get('/report-fa', [ReportController::class, 'show_all']);
 Route::get('/report-fa-delete/{id}', [ReportController::class, 'deleteReport']);
 //tuyen dung
@@ -359,4 +364,37 @@ Route::prefix('vanban_tailieu')->group(function () {
     Route::post('store', [vanbanController::class, 'store']);
     Route::get('edit', [vanbanController::class, 'edit']);
     Route::post('delete', [vanbanController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'kybaocao'], function () {
+    Route::get('/', [kybaocaoController::class, 'index']);
+    Route::post('/store', [kybaocaoController::class, 'store']);
+    Route::get('/delete/{id}', [kybaocaoController::class, 'delete']);
+    Route::post('/gui', [kybaocaoController::class, 'gui']);
+    Route::post('/tralai', [kybaocaoController::class, 'tralai']);
+    Route::post('/duyet', [kybaocaoController::class, 'duyet']);
+    Route::post('/huyduyet', [kybaocaoController::class, 'huyduyet']);
+});
+
+Route::group(['prefix' => 'dsthatnghiep'], function () {
+    Route::get('/', [dsthatnghiepController::class, 'index']);
+    Route::get('/create', [dsthatnghiepController::class, 'create']);
+    Route::post('/store', [dsthatnghiepController::class, 'store']);
+    Route::get('/edit', [dsthatnghiepController::class, 'edit']);
+    Route::post('/update', [dsthatnghiepController::class, 'update']);
+    Route::get('/delete/{id}', [dsthatnghiepController::class, 'delete']);
+    Route::get('/bcchitiet', [dsthatnghiepController::class, 'bcchitiet']);
+    Route::get('/bctonghop', [dsthatnghiepController::class, 'bctonghop']);
+});
+
+Route::group(['prefix' => 'dangkytimviec'], function () {
+    Route::get('/', [dangkytimviecController::class, 'index']);
+    Route::get('/create', [dangkytimviecController::class, 'create']);
+    Route::get('/store', [dangkytimviecController::class, 'store']);
+    Route::get('/edit', [dangkytimviecController::class, 'edit']);
+    Route::post('/update', [dangkytimviecController::class, 'update']);
+    Route::get('/delete/{id}/{tungay}/{denngay}/{gioitinh_filter}/{age_filter}/{phien}', [dangkytimviecController::class, 'delete']);
+    Route::get('/bcchitiet', [dangkytimviecController::class, 'bcchitiet']);
+    Route::get('/bctonghop', [dangkytimviecController::class, 'bctonghop']);
+    Route::post('/importexcel', [dangkytimviecController::class, 'importexcel']);
 });

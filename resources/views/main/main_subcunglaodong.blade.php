@@ -85,7 +85,7 @@
                             <span class="svg-icon menu-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                                    <path
+                                    <path  fill-rule="evenodd"
                                         d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                 </svg>
                             </span>
@@ -97,7 +97,34 @@
                         </a>
                     </li>
                 @endif
+
+                {{-- <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/dsthatnghiep'}}" class="menu-link">
+
+                        <span class="menu-text">Danh sách thất nghiệp </span>
+                    </a>
+                </li> --}}
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{'/dangkytimviec'}}" class="menu-link">
+                        <span class="svg-icon menu-icon" >
+                            <i class="fas fa-briefcase-medical" style="font-size: 20px"></i>
+                          
+                        </span>
+                        {{-- <span class="svg-icon menu-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-clipboard-pulse" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1H3a1 1 0 0 0-1 1V14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5a1 1 0 0 0-1-1h-1v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Zm6.979 3.856a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.895-.133L4.232 10H3.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 .416-.223l1.41-2.115 1.195 3.982a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h1.5a.5.5 0 0 0 0-1h-1.128L9.979 5.356Z" />
+                            </svg>
+                        </span> --}}
+                        <span class="menu-text">Danh sách đăng ký tìm việc </span>
+                    </a>
+                </li>
+
+
+                
             </ul>
         </div>
     </li>
 @endif
+

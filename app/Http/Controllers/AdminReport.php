@@ -149,28 +149,31 @@ class AdminReport extends Controller
 	public function detail(Request $request)
 	{
 		$inputs = $request->all();
-	
 		// $reports = Report::where('user', $request->user)->where(function ($q) use ($inputs) {
 		// 	if (isset($inputs['tungay'])) {
 		// 		$q->where('time', '>=', $inputs['tungay'])->where('time', '<=', $inputs['denngay']);
 		// 	}
 		// })->get();
 		$reports = Report::where('user', $inputs['user'])->get();
-	
-		$a = [];
-		foreach($reports as $rp){
-			$rp2 = Carbon::parse($rp->time)->toDateString();
-			
-			if ($rp2 >= $inputs['tungay'] && $rp2 <= $inputs['denngay']) {
-				array_push($a,$rp);
+
+		if (!isset($inputs['tungay'])) {
+			$inputs['tungay'] = null;
+			$inputs['denngay'] = null;
+		}else{
+			$a = [];
+			foreach ($reports as $rp) {
+				$rp2 = Carbon::parse($rp->time)->toDateString();
+
+				if ($rp2 >= $inputs['tungay'] && $rp2 <= $inputs['denngay']) {
+					array_push($a, $rp);
+				}
+				if ($rp2 == $inputs['denngay']) {
+					array_push($a, $rp);
+				}
 			}
-			if ($rp2 == $inputs['denngay']) {
-				array_push($a,$rp);
-			}
+			$reports = $a;
 		}
 
-		$reports = $a;
-		
 		foreach ($reports as $report) {
 			$ct = DB::table('company')->where('user', $report->user)->first();
 			if ($ct) {
@@ -179,6 +182,7 @@ class AdminReport extends Controller
 				$report->ctyname = "";
 			}
 		}
+
 		$url = '/report-ba?type_filter=' . $request->type_filter . '&tungay=' . $inputs['tungay'] . '&denngay=' . $inputs['denngay'];
 		return view('admin.report.detail')->with('reports', $reports)->with('url', $url)->with('user_id', $inputs['user'])
 		->with('tungay', $inputs['tungay'])->with('denngay', $inputs['denngay'])

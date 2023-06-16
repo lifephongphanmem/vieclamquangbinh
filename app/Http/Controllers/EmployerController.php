@@ -184,6 +184,7 @@ class EmployerController extends Controller
 	}
 	public function save( Request $request)
 	{
+
 		$uid= session('admin')->id;
 		// get company id
 		$company =$this->getCompany($uid);

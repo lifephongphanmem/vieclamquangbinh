@@ -210,6 +210,8 @@ class AdminDieutra extends Controller
         $data['kydieutra'] = $request->kydieutra;
         $data['ghichu'] = $request->ghichu;
 
+
+        
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         if (isset($model)) {
             return view('errors.tontai_dulieu')

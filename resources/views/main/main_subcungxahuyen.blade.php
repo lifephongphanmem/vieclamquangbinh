@@ -2,7 +2,7 @@
     @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
     <li class="menu-item menu-item-submenu menu-item-rel"
         data-menu-toggle="click" aria-haspopup="true">
-        <a data-target="#delete-modal-confirm" data-toggle="modal" class="menu-link">
+        <a data-target="#taomoi_kydieutra" data-toggle="modal" class="menu-link">
             <span class="menu-text">Tạo kỳ điều tra mới</span>
             <span class="menu-desc"></span>
             <i class="menu-arrow"></i>
@@ -209,4 +209,6 @@
             </a>
         </li>
     @endif
+
+
 </ul>

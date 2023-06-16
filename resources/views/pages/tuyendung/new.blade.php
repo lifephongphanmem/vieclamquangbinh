@@ -44,7 +44,7 @@
                 </div>
                 <div class="card-body">
                     <form role="form" method="POST" action="{{ URL::to('tuyendung-fs') }}"
-                        enctype='multipart/form-data'>
+                        enctype='multipart/form-data' id="form_td">
                         {{ csrf_field() }}
 
 
@@ -240,8 +240,7 @@
                                             <tr>
                                                 <td style="color: #313444;">Kỹ năng mềm</td>
                                                 <td>
-
-                                                    <select class="form-control select2basic" style="width: 100%;"  multiple  name="kynangmem[]" >
+                                                    {{-- <select class="form-control select2basic" style="width: 100%;"  multiple  name="kynangmem[]" >
                                                         <option value='Giao tiếp' >Giao tiếp</option>
                                                         <option value='Thuyết trình'>Thuyết trình</option>
                                                         <option value='Quản lý thời gian'>Quản lý thời gian</option>
@@ -254,7 +253,23 @@
                                                         <option value='Theo dõi giám sát'>Theo dõi giám sát</option>
                                                         <option value='Tư duy phản biện'>Tư duy phản biện</option>
                                                         <option value='Khác'>Khác</option>
-                                                    </select>
+                                                    </select> --}}
+
+                                                    <input type="hidden" name="kynangmem[]" class="kynangmemval" value="">
+                                                    <input type="checkbox" class="kynangmem" value="Giao tiếp" >Giao tiếp
+                                                    <input type="checkbox" class="kynangmem" value="Thuyết trình" >Thuyết trình
+                                                    <input type="checkbox" class="kynangmem" value="Quản lý thời gian" >Quản lý thời gian
+                                                    <input type="checkbox" class="kynangmem" value="Quản lý nhân sự" >Quản lý nhân sự
+                                                    <input type="checkbox" class="kynangmem" value="Tổng hợp báo cáo" >Tổng hợp báo cáo
+                                                    <input type="checkbox" class="kynangmem" value="Thích ứng" >Thích ứng <br>
+                                                    <input type="checkbox" class="kynangmem" value="Làm việc nhóm" >Làm việc nhóm
+                                                    <input type="checkbox" class="kynangmem" value="Làm việc độc lập" >Làm việc độc lập
+                                                    <input type="checkbox" class="kynangmem" value="Chịu áp lực" >Chịu áp lực
+                                                    <input type="checkbox" class="kynangmem" value="Theo dõi giám sát" >Theo dõi giám sát
+                                                    <input type="checkbox" class="kynangmem" value="Tư duy phản biện" >Tư duy phản biện
+                                                     <br>
+                                                    <input type="checkbox" id="checkkynangmemkhac"> Khác <input
+                                                    class="form-control "  type="text" id="kynangmemkhac" value="" size=30 >
                                                 </td>
                                             </tr>
                                             <tr>
@@ -331,28 +346,27 @@
                                             <tr>
                                                 <td style="color: #313444;">Phúc lợi khác</td>
                                                 <td>
-                                                    <input type="hidden" name="phucloi[]" class="phucloival"
-                                                        value="">
-                                                    <input type="checkbox" class="phucloi" value="Đóng BHXH, BHYT, BHTN">
+                                                    <input type="hidden" name="phucloi[]" class="phucloival" value="">
+                                                    <input type="checkbox" class="phucloi" value="Đóng BHXH, BHYT, BHTN"  >
                                                     Đóng BHXH, BHYT, BHTN
-                                                    <input type="checkbox" class="phucloi" value="Đóng BHNT"> Đóng BHNT
-                                                    <input type="checkbox" class="phucloi" value="Trợ cấp thôi việc"> Trợ
+                                                    <input type="checkbox" class="phucloi" value="Đóng BHNT"  > Đóng BHNT
+                                                    <input type="checkbox" class="phucloi" value="Trợ cấp thôi việc"  > Trợ
                                                     cấp thôi việc
-                                                    <input type="checkbox" class="phucloi" value="Nhà trẻ"> Nhà trẻ
-                                                    <input type="checkbox" class="phucloi" value="Xe đưa đón"> Xe đưa đón
-                                                    <input type="checkbox" class="phucloi" value="Hỗ trợ đi lại"> Hỗ trợ
-                                                    đi lại
-                                                    <input type="checkbox" class="phucloi" value="Hỗ trợ nhà ở"> Hỗ trợ
+                                                    <input type="checkbox" class="phucloi" value="Nhà trẻ"  > Nhà trẻ
+                                                    <input type="checkbox" class="phucloi" value="Xe đưa đón"  > Xe đưa đón
+                                                    <input type="checkbox" class="phucloi" value="Hỗ trợ đi lại"  > Hỗ trợ
+                                                    đi lại &emsp; 
+                                                    <input type="checkbox" class="phucloi" value="Hỗ trợ nhà ở"  > Hỗ trợ
                                                     nhà ở
-                                                    <input type="checkbox" class="phucloi" value="Ký túc xá"> Ký túc xá
-                                                    <input type="checkbox" class="phucloi" value="Đào tạo"> Đào tạo
+                                                    <input type="checkbox" class="phucloi" value="Ký túc xá"  > Ký túc xá
+                                                    <input type="checkbox" class="phucloi" value="Đào tạo"  > Đào tạo
                                                     <input type="checkbox" class="phucloi"
-                                                        value="Lối đi người khuyết tật"> Lối đi người khuyết tật
-                                                    <input type="checkbox" class="phucloi" value="Cơ hội thăng tiến"> Cơ
+                                                        value="Lối đi người khuyết tật"  > Lối đi người khuyết tật
+                                                    <input type="checkbox" class="phucloi" value="Cơ hội thăng tiến"  > Cơ
                                                     hội thăng tiến
                                                     <br>
                                                     <input type="checkbox" id="checkphucloikhac"> Khác <input
-                                                    class="form-control "   type="text" id="phucloikhac" value="" size=30>
+                                                    class="form-control "   type="text" id="phucloikhac" value="" size=30 >
 
 
                                                 </td>
@@ -369,11 +383,12 @@
                     <button type="button" name="add" id="add" class="btn btn-success"> Thêm vị trí</button>
                     <button type="button" class="btn btn-danger" id='remove'>Giảm vị trí</button>
                 </div>
-            </legend>
-                <div class=" col-sm-12" style="text-align: center;margin-bottom: 1%">
-                    <button  type='submit' class="btn btn-warning btn-lg pull-right"> Đăng tuyển dụng </button>
+                    <div class=" col-sm-12" style="text-align: center;margin-bottom: 1%">
+                    {{-- <button   class="btn btn-warning btn-lg pull-right" >Đăng tuyển dụng</button> --}}
+                     <input onclick="submit_td()" type="submit"  class="btn btn-warning btn-lg pull-right" value="Đăng tuyển dụng">
                 </div>
-               
+            </legend>
+     
             </form>
         </div>
     </div>        
@@ -385,25 +400,29 @@
                     var i = 0;
 
                     $("#add").click(function() {
+                        console.log("#row" + 1);
                         document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) + 1;
                         ++i;
                         firstld = document.getElementById("1stld").innerHTML + '';
                         nextld = "<div class='row' id ='row" + i + "' >" + firstld + "</div>"
                         $("#dynamicTable").append(nextld);
+
+                        // $("#row" + i).find(".phucloi").checked = false;
                     });
                     $("#remove").click(function() {
                         if($("#quantity").val() >1 ){
                         document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) - 1;
-                        }
-
                         delrowid = "row" + i;
                         document.getElementById(delrowid).remove();
                         --i;
-                    });
+                        }
 
-                    $(document).on('click', 'form input[type=submit]', function(e) {
-                    
-                        var quantity = $("#quantity").val();
+                    });
+                  
+                    function submit_td() {
+
+                    // $(document).on('click', 'form input[type=submit]', function(e) {
+                        var quantity = $("#quantity").val();  
                         for (i = 0; i < quantity; i++) {
 
                             if (i == 0) {
@@ -412,46 +431,57 @@
 
                                 rowid = "#row" + i;
                             }
+                            
                             // combine data - phuc loi-
+
                             var varsphucloi = $('.phucloi:checked').map(function() {
                                 if ($(this).parents(rowid).length == 1) {
                                     return $(this).val();
                                 }
                             }).get().join("; ");
-
                             if ($(rowid).find("#checkphucloikhac").first().prop('checked') == true) {
-
                                 varsphucloi = varsphucloi.concat("; ", $(rowid).find("#phucloikhac").first().val());
-
                             };
-                           
                             $(rowid).find(".phucloival").first().val(varsphucloi);
 
-                            // combine data - uu tien-
-                            var varsuutien = $('.uutien:checked').map(function() {
+                            // combine data - ky nang mem-
+                            var varskynangmem = $('.kynangmem:checked').map(function() {
                                 if ($(this).parents(rowid).length == 1) {
                                     return $(this).val();
                                 }
                             }).get().join("; ");
-
-                            if ($(rowid).find("#checkuutienkhac").first().prop('checked') == true) {
-
-                                varsuutien = varsuutien.concat("; ", $(rowid).find("#uutienkhac").first().val());
-
+                            if ($(rowid).find("#checkkynangmemkhac").first().prop('checked') == true) {
+                                varskynangmem = varskynangmem.concat("; ", $(rowid).find("#kynangmemkhac").first().val());
                             };
-                            $(rowid).find(".uutienval").first().val(varsuutien);
+                            $(rowid).find(".kynangmemval").first().val(varskynangmem);
+                            // var phuclois = document.getElementsByName('phucloi');
+                            //     var phucloi = '';
+                            //     for (let i = 0; i < phuclois.length; i++) {
+                            //         if (phuclois[i].checked == true) {
+                            //         phucloi += phuclois[i].value + '; ';
+                            //         } 
+                            //     }
 
-                            // combine data - kynangmem- 
-                            var varskn = $(rowid).find('select.kynang option:selected').map(function() {
+                            // // combine data - uu tien-
+                            // var varsuutien = $('.uutien:checked').map(function() {
+                            //     if ($(this).parents(rowid).length == 1) {
+                            //         return $(this).val();
+                            //     }
+                            // }).get().join("; ");
+                            // if ($(rowid).find("#checkuutienkhac").first().prop('checked') == true) {
+                            //     varsuutien = varsuutien.concat("; ", $(rowid).find("#uutienkhac").first().val());
+                            // };
+                            // $(rowid).find(".uutienval").first().val(varsuutien);
 
-                                return $(this).val();
-
-                            }).get().join("; ");
-
-                            $(rowid).find(".kynangmem").first().val(varskn);
-
-
+                            // // combine data - kynangmem- 
+                            // var varskn = $(rowid).find('select.kynang option:selected').map(function() {
+                            //     return $(this).val();
+                            // }).get().join("; ");
+                            // $(rowid).find(".kynangmem").first().val(varskn);
                         }
-                    });
+
+                    // });
+                    //  $('#form_td').submit();
+                    }
                 </script>
             @endsection

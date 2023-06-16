@@ -5,6 +5,8 @@ use App\Http\Controllers\Cunglaodong\cunglaodong_huyenController;
 use App\Http\Controllers\Cunglaodong\cunglaodong_tinhController;
 use App\Http\Controllers\Cunglaodong\cunglaodongController;
 use App\Http\Controllers\Cunglaodong\messageCotroller;
+use App\Http\Controllers\kybaocao;
+use App\Http\Controllers\kybaocaoController;
 
 Route::prefix('cungld')->group(function () {
     Route::prefix('thongbao')->group(function () {
@@ -53,3 +55,8 @@ Route::prefix('cungld')->group(function () {
         });
     });
 });
+
+// Route::prefix('kybaocao')->group(function () {
+//     Route::get('/', [kybaocaoController::class, 'index']);
+
+// });

@@ -89,7 +89,8 @@ class dmtinhtrangthamgiahdktController extends Controller
 		$tennhom = dmtinhtrangthamgiahdkt::select('tentgkt','madmtgkt')->Where('madmtgkt', $request->manhom)->first();
 		$count = Count($model);
 		
-		return view('danhmuc.tinhtrangthamgiahoatdongkinhte.tinhtrangthamgiahdktct', compact('model', 'count', 'tennhom'));
+		return view('danhmuc.tinhtrangthamgiahoatdongkinhte.tinhtrangthamgiahdktct', compact('model', 'count', 'tennhom'))
+		->with('baocao', getdulieubaocao());
 	}
 
 	public function store_update_ct(Request $request)
@@ -155,7 +156,8 @@ class dmtinhtrangthamgiahdktController extends Controller
 			$nhom = $tennhom->manhom;
 		
 			$count = Count($model);
-			return view('danhmuc.tinhtrangthamgiahoatdongkinhte.tinhtrangthamgiahdktct2', compact('model', 'count', 'tennhom','nhom'));
+			return view('danhmuc.tinhtrangthamgiahoatdongkinhte.tinhtrangthamgiahdktct2', compact('model', 'count', 'tennhom','nhom'))
+			->with('baocao', getdulieubaocao());
 		}
 	
 		public function store_update_ct2(Request $request)

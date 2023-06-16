@@ -52,8 +52,10 @@
                             <br>
                             <br>
                             <?php if($thread->attach){ ?>
-                            <a href="../storage/app/{{ $thread->attach }}" download class="text-lg"> <i
-                                    class="fa fa-file"></i> Tải File đính kèm </a>
+                            {{-- <a href="../storage/app/{{ $thread->attach }}" download class="text-lg"> <i
+                                    class="fa fa-file"></i> Tải File đính kèm </a> --}}
+                            <a href="{{'/messages/download_url/'.$thread->attach}}"><i
+                                    class="fa fa-file"></i>Tải File đính kèm</a>
                             <?php } ?>
                         </div>
                     </div>
@@ -63,5 +65,5 @@
                         </div>
                     </div>
 				</div>
-
+</div></div></div>
                 @endsection

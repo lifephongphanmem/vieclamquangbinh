@@ -67,7 +67,7 @@ class MessagesController extends Controller
      */
     public function show($id)
     {
-
+        
         try {
             $thread = Thread::findOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -152,6 +152,7 @@ class MessagesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         try {
             $thread = Thread::findOrFail($id);
         } catch (ModelNotFoundException $e) {
