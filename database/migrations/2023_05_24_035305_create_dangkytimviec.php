@@ -51,8 +51,12 @@ class CreateDangkytimviec extends Migration
             $table->string('luong')->nullable();
             $table->string('hotroan')->nullable();
             $table->string('phucloi')->nullable();
+            $table->string('maphien')->nullable();
             $table->string('phiengd')->nullable();
+            $table->string('linhvuc')->nullable();
 
+            $table->string('tendn')->nullable();
+            $table->string('madkkd')->nullable();
             $table->timestamps();
         });
     }

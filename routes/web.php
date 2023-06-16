@@ -393,7 +393,7 @@ Route::group(['prefix' => 'dangkytimviec'], function () {
     Route::get('/store', [dangkytimviecController::class, 'store']);
     Route::get('/edit', [dangkytimviecController::class, 'edit']);
     Route::post('/update', [dangkytimviecController::class, 'update']);
-    Route::get('/delete/{id}/{tungay}/{denngay}/{gioitinh_filter}/{age_filter}', [dangkytimviecController::class, 'delete']);
+    Route::get('/delete/{id}/{tungay}/{denngay}/{gioitinh_filter}/{age_filter}/{phien}', [dangkytimviecController::class, 'delete']);
     Route::get('/bcchitiet', [dangkytimviecController::class, 'bcchitiet']);
     Route::get('/bctonghop', [dangkytimviecController::class, 'bctonghop']);
     Route::post('/importexcel', [dangkytimviecController::class, 'importexcel']);

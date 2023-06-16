@@ -45,6 +45,11 @@ class dangkytimviec extends Model
         'luong',
         'hotroan',
         'phucloi',
+        'maphien',
         'phiengd',
+        'linhvuc',
+
+        'tendn',
+        'madkkd',
     ];
 }

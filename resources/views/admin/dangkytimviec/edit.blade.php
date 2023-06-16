@@ -40,6 +40,27 @@
             <div class="card-body">
                 <form role="form" method="post" action="{{ '/dangkytimviec/update' }}" enctype='multipart/form-data'>
                     @csrf
+                       <div class="card card-custom">
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-offset-1 ">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border text-info">Thông tin phiên giao dịch</legend>
+                                    <div class="row">
+
+                                        <div class="col-sm-4 col-sm-offset-0 ">
+                                            <label>Phiên giao dịch(*)</label>
+                                            <select name="phiengd" class="form-control" disabled>
+                                                <option {{ isset($model)?($model->phiengd == "Phiên định kỳ" ? 'selected' : ''):'' }}>Phiên định kỳ</option>
+                                                <option {{ isset($model)?($model->phiengd == "Phiên đột xuất" ? 'selected' : ''):'' }}>Phiên đột xuất</option>
+                                                <option {{ isset($model)?($model->phiengd == "Phiên online" ? 'selected' : ''):'' }}>Phiên online</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel-body" id='dynamicTable'>
                         <div class="row" id="1stld">
                             <div class="col-md-12">
@@ -122,7 +143,8 @@
                     <input type="hidden" name="denngay"  value="{{$input['denngay']}}">
                     <input type="hidden" name="gioitinh_filter"  value="{{$input['gioitinh_filter']}}">
                     <input type="hidden" name="age_filter"  value="{{$input['age_filter']}}">
-                    
+                    <input type="hidden" name="phien"  value="{{$input['phien']}}">
+
                     <div class="row text-center">
                         <div class="col-lg-12">
                             <a onclick="history.back()" class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>

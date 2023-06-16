@@ -199,4 +199,19 @@
  
     </div>
 
+    <div class="row">
+        <div class="col-sm-3" >
+            <div class="form-group">
+                <span>Tên doanh nghiệp (*)</span>
+                <input type="text" class="form-control" name="tendn[]" value="{{isset($model)?$model->tendn:''}}" required>
+            </div>
+         </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <span>Mã DKKD (*)</span> 
+                <input type="text" name="madkkd[]" class="form-control" value="{{isset($model)?$model->madkkd:''}}" required>
+            </div>
+        </div>
+    </div>
+
 </div>

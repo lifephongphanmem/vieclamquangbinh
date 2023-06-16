@@ -21,6 +21,7 @@ class dangkytimviecController extends Controller
 {
    public function index(Request $request)
    {
+     
       if (!chkPhanQuyen('danhsachdangkytimviec', 'danhsach')) {
          return view('errors.noperm')->with('machucnang', 'dangkytimviec');
       }
@@ -39,6 +40,7 @@ class dangkytimviecController extends Controller
          $input['denngay'] = Carbon::create($nam, $thang, $ngay)->toDateString();
          $input['gioitinh_filter'] = '0';
          $input['age_filter'] = '0';
+         $input['phien'] = '0';
       }
       $denngay2 = Carbon::parse($input['denngay'])->addDays();
 
@@ -53,6 +55,10 @@ class dangkytimviecController extends Controller
          $tuoitren35 = Carbon::create(date('Y')-35,date('m'),date('d'));
          $model = $model->where('ngaysinh','<=',$tuoitren35);
       }
+      if ($input['phien'] != '0') {
+         $model = $model->where('phiengd', $input['phien']);
+      }
+      
       return view('admin.dangkytimviec.index')
       ->with('model', $model)
       ->with('input', $input)
@@ -62,6 +68,7 @@ class dangkytimviecController extends Controller
 
    public function create(Request $request)
    {
+     
       if (!chkPhanQuyen('danhsachdangkytimviec', 'thaydoi')) {
          return view('errors.noperm')->with('machucnang', 'dangkytimviec');
       }
@@ -85,6 +92,7 @@ class dangkytimviecController extends Controller
 
    public function edit(Request $request)
    {
+     
       if (!chkPhanQuyen('danhsachdangkytimviec', 'thaydoi')) {
          return view('errors.noperm')->with('machucnang', 'dangkytimviec');
       }
@@ -111,10 +119,14 @@ class dangkytimviecController extends Controller
    public function store(Request $request)
    {
       $input = $request->all();
-
+      $maphien = date('YmdHis');
+   
       for ($i = 0; $i < $input['quantity']; $i++) {
          dangkytimviec::create([
             // 'kydieutra' => $input['kydieutra'],
+            'maphien' => $maphien,
+            'phiengd' => $input['phiengd'],
+
             'hoten' => $input['hoten'][$i],
             'ngaysinh' => $input['ngaysinh'][$i],
             'gioitinh' => $input['gioitinh'][$i],
@@ -149,21 +161,25 @@ class dangkytimviecController extends Controller
             'luong' => $input['luong'][$i],
             'hotroan' => $input['hotroan'][$i],
             'phucloi' => $input['phucloi'][$i],
-            'phiengd' => $input['phiengd'][$i],
+            'linhvuc' => $input['linhvuc'][$i],
+
+            'tendn' => $input['tendn'][$i],
+            'madkkd' => $input['madkkd'][$i],
          ]);
       }
 
       return redirect('/dangkytimviec?tungay='. $input['tungay'] . '&denngay=' . $input['denngay'] .
-       '&gioitinh_filter='. $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter']);
+       '&gioitinh_filter='. $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'].'&phien='.$input['phien']);
    }
    public function update(Request $request)
    {
-
+     
       $input = $request->all();
-
+ 
       for ($i = 0; $i < $input['quantity']; $i++) {
          dangkytimviec::find($request->id)->update([
             // 'kydieutra' => $input['kydieutra'],
+            // 'phiengd' => $input['phiengd'],
             'hoten' => $input['hoten'][$i],
             'ngaysinh' => $input['ngaysinh'][$i],
             'gioitinh' => $input['gioitinh'][$i],
@@ -198,38 +214,85 @@ class dangkytimviecController extends Controller
             'luong' => $input['luong'][$i],
             'hotroan' => $input['hotroan'][$i],
             'phucloi' => $input['phucloi'][$i],
-            'phiengd' => $input['phiengd'][$i],
+            'linhvuc' => $input['linhvuc'][$i],
+
+            'tendn' => $input['tendn'][$i],
+            'madkkd' => $input['madkkd'][$i],
          ]);
       }
+  
       return redirect('/dangkytimviec?tungay=' . $input['tungay'] . '&denngay=' . $input['denngay'] .
-      '&gioitinh_filter=' . $input['gioitinh_filter'] . '&age_filter=' . $input['age_filter']);
+      '&gioitinh_filter=' . $input['gioitinh_filter'] . '&age_filter=' . $input['age_filter'] . '&phien=' . $input['phien']);
    }
 
 
-   public function bcchitiet()
+   public function bcchitiet(Request $request)
    {
-
+      $input = $request->all();
       $model = dangkytimviec::leftJoin('dmtrinhdokythuat', 'dmtrinhdokythuat.stt', 'dangkytimviec.trinhdocmkt')
       ->leftJoin('dmtrinhdogdpt', 'dmtrinhdogdpt.stt', 'dangkytimviec.trinhdogiaoduc')
       ->select('dangkytimviec.*', 'dmtrinhdokythuat.tentdkt', 'dmtrinhdogdpt.tengdpt')
       ->get();
+      $denngay2 = Carbon::parse($input['denngay'])->addDays();
 
+      $model = $model->where('created_at', '>=', $input['tungay'])->where('created_at', '<=', $denngay2);
+      if ($input['gioitinh_filter'] != '0') {
+         $model = $model->where('gioitinh', $input['gioitinh_filter']);
+      }
+
+      if ($input['age_filter'] != '0') {
+
+         // $tuoitren35 = date('Y') - 35;
+         $tuoitren35 = Carbon::create(date('Y') - 35, date('m'), date('d'));
+         $model = $model->where('ngaysinh', '<=', $tuoitren35);
+      }
+      
       return view('admin.dangkytimviec.bcchitiet')
       ->with('model',$model)
       ->with('baocao', getdulieubaocao())
       ->with('pageTitle', 'Báo cáo chi tiết danh sách đăng ký tìm việc');;
    }
 
-
-
-
-   public function delete($id,$tungay,$denngay, $gioitinh_filter,$age_filter)
+   public function bctonghop(Request $request)
    {
+      $input = $request->all();
+      $model = dangkytimviec::leftJoin('dmtrinhdokythuat', 'dmtrinhdokythuat.stt', 'dangkytimviec.trinhdocmkt')
+      ->leftJoin('dmtrinhdogdpt', 'dmtrinhdogdpt.stt', 'dangkytimviec.trinhdogiaoduc')
+      ->select('dangkytimviec.*', 'dmtrinhdokythuat.tentdkt', 'dmtrinhdogdpt.tengdpt')
+      ->get();
+      $denngay2 = Carbon::parse($input['denngay'])->addDays();
+
+      $model = $model->where('created_at', '>=', $input['tungay'])->where('created_at', '<=', $denngay2);
+      if ($input['gioitinh_filter'] != '0') {
+         $model = $model->where('gioitinh', $input['gioitinh_filter']);
+      }
+
+      if ($input['age_filter'] != '0') {
+
+         // $tuoitren35 = date('Y') - 35;
+         $tuoitren35 = Carbon::create(date('Y') - 35, date('m'), date('d'));
+         $model = $model->where('ngaysinh', '<=', $tuoitren35);
+      }
+      
+      $dmtrinhdokythuat = dmtrinhdokythuat::all();
+      return view('admin.dangkytimviec.bctonghop')
+         ->with('model', $model)
+         ->with('input', $input)
+         ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+         ->with('baocao', getdulieubaocao())
+         ->with('pageTitle', 'Báo cáo Tổng hợp danh sách đăng ký tìm việc');;
+   }
+
+
+   public function delete($id,$tungay,$denngay, $gioitinh_filter,$age_filter,$phien)
+   {
+     
       if (!chkPhanQuyen('danhsachdangkytimviec', 'thaydoi')) {
          return view('errors.noperm')->with('machucnang', 'dangkytimviec');
       }
       dangkytimviec::find($id)->delete();
-      return redirect('/dangkytimviec?tungay='. $tungay. '&denngay='. $denngay. '&gioitinh_filter='. $gioitinh_filter. '&age_filter='. $age_filter);
+      return redirect('/dangkytimviec?tungay='. $tungay. '&denngay='. $denngay. '&gioitinh_filter='. $gioitinh_filter.
+       '&age_filter='. $age_filter. '&phien=' . $phien);
    }
 
    public function importexcel(Request $request)
@@ -246,6 +309,8 @@ class dangkytimviecController extends Controller
 
       return redirect('/dangkytimviec');
      
+
+      
    }
    public function getParamsByNametype($paramtype)
    {

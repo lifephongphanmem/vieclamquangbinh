@@ -31,7 +31,7 @@
         <div class="card card-custom">
             <div class="card-header card-header-tabs-line">
                 <div class="card-title">
-                    <h3 class="card-label text-uppercase">Báo tăng lao động</h3>
+                    <h3 class="card-label text-uppercase">Thông tin đăng ký tìm việc làm</h3>
                 </div>
                 <div class="card-toolbar">
                 </div>
@@ -40,6 +40,28 @@
             <div class="card-body">
                 <form role="form" method="get" action="{{ '/dangkytimviec/store' }}" enctype='multipart/form-data'>
                     @csrf
+                    <div class="card card-custom">
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-offset-1 ">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border text-info">Thông tin phiên giao dịch</legend>
+                                    <div class="row">
+
+                                        <div class="col-sm-4 col-sm-offset-0 ">
+                                            <label>Phiên giao dịch(*)</label>
+                                            <select name="phiengd" class="form-control">
+                                                <option {{ $input['phien'] == "Phiên định kỳ" ? 'selected' : '' }}>Phiên định kỳ</option>
+                                                <option {{ $input['phien'] == "Phiên đột xuất" ? 'selected' : '' }}>Phiên đột xuất</option>
+                                                <option {{ $input['phien'] == "Phiên online" ? 'selected' : '' }}>Phiên online</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="panel-body" id='dynamicTable'>
                         <div class="row" id="1stld">
                             <div class="col-md-12">
@@ -107,7 +129,8 @@
                     <input type="hidden" name="denngay"  value="{{$input['denngay']}}">
                     <input type="hidden" name="gioitinh_filter"  value="{{$input['gioitinh_filter']}}">
                     <input type="hidden" name="age_filter"  value="{{$input['age_filter']}}">
-                    
+                     <input type="hidden" name="phien"  value="{{$input['phien']}}">
+
                     <div class="row text-center">
                         <div class="col-lg-12 text-left">
                             <button type="button" name="add" id="add" class="btn btn-sm btn-success">

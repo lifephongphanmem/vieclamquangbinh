@@ -25,26 +25,25 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
-            $('#tungay').change(function() {
-                window.location.href = 'dangkytimviec?tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val()
-               + '&gioitinh_filter=' + $('#gioitinh_filter').val() + '&age_filter=' + $('#age_filter').val();
-            });
-            $('#denngay').change(function() {
-                window.location.href = 'dangkytimviec?tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val()
-               + '&gioitinh_filter=' + $('#gioitinh_filter').val() + '&age_filter=' + $('#age_filter').val();
-            });
-            $('#gioitinh_filter').change(function() {
-                window.location.href = 'dangkytimviec?tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val()
-                + '&gioitinh_filter=' + $('#gioitinh_filter').val() + '&age_filter=' + $('#age_filter').val();
-            });
-            $('#age_filter').change(function() {
-                window.location.href = 'dangkytimviec?tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val()
-                + '&gioitinh_filter=' + $('#gioitinh_filter').val() + '&age_filter=' + $('#age_filter').val();
-            });
             function loc() {
-                window.location.href = 'dangkytimviec?tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val()
-                + '&gioitinh_filter=' + $('#gioitinh_filter').val() + '&age_filter=' + $('#age_filter').val();
+                 $url = 'dangkytimviec?tungay=' + $('#tungay').val() + '&denngay=' + $('#denngay').val()
+               + '&gioitinh_filter=' + $('#gioitinh_filter').val() + '&age_filter=' + $('#age_filter').val() + '&phien=' + $('#phien').val();
             }
+            $('#tungay').change(function () { loc();
+                window.location.href =  $url;
+            });
+            $('#denngay').change(function() { loc();
+                window.location.href =  $url;
+            });
+            $('#gioitinh_filter').change(function() { loc();
+                window.location.href =  $url;
+            });
+            $('#age_filter').change(function() { loc();
+                window.location.href =  $url;
+            });
+            $('#phien').change(function() { loc();
+                window.location.href = $url;
+            });
         });
     </script>
 @stop
@@ -58,59 +57,70 @@
                     </div>
                     <div class="card-toolbar">
                         <a href="{{'/dangkytimviec/create?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='
-                        .$input['gioitinh_filter'].'&age_filter='.$input['age_filter'] }}" class="btn btn-xs btn-success mr-3">
+                        .$input['gioitinh_filter'].'&age_filter='.$input['age_filter'].'&phien='.$input['phien'] }}" class="btn btn-xs btn-success mr-3">
                         <i class="fa fa-plus"></i> &ensp;Tạo mới</a>
 
                         <a data-toggle="modal" data-target="#dangkytimviec_import" class="btn btn-xs btn-success mr-3">
                         <i class="fa fa-plus"></i> &ensp;Nhập excel</a>
 
-                        <a href="{{'/dangkytimviec/bcchitiet'}}"  class="btn btn-xs btn-success mr-3" target="_bank">
+                        <a  data-toggle="modal" data-target="#modal-baocao" class="btn btn-xs btn-success mr-3" target="_bank">
                             <i class="icon-lg la flaticon2-print"></i> &ensp;In Báo cáo</a>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>Từ ngày</label>
                             <input type="date" class="form-control" name='tungay' id="tungay"
                                 value="{{ $input['tungay']}}">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="">Đến ngày</label>
                             <input type="date" class="form-control" name='denngay' id="denngay"
                                 value="{{$input['denngay'] }}">
                         </div>
-                        <div class="col-sm-3 " >
+                        <div class="col-sm-2 " >
                              <label for="">Giới tính</label>
                             <select name="gioitinh_filter" id="gioitinh_filter" class=" form-control">
                                 <option value="0"> ---Chọn giới tính--- </option>
-                                <option value="Nam" {{  $input['gioitinh_filter'] == 'Nam'?'selected':''}}>Nam</option>
+                                <option value="Nam" {{ $input['gioitinh_filter'] == 'Nam'?'selected':''}}>Nam</option>
                                 <option value="Nữ" {{ $input['gioitinh_filter'] == 'Nữ'?'selected':''}} >Nữ</option>
                             </select>
                         </div>
 
-                        <div class="col-sm-3" >
+                        <div class="col-sm-2" >
                             <label for="">Lọc theo độ tuổi</label>
                             <select name="age_filter" id="age_filter"  class=" form-control">
-                                <option value="0"> ---Chon lọc theo độ tuổi--- </option>
+                                <option value="0"> ---Chọn lọc theo độ tuổi--- </option>
                                 <option value="35" {{ $input['age_filter'] == '35'?'selected':''}}> 35 tuổi trở lên </option>
 
                             </select>
                         </div>
                         
-                        
+                        <div class="col-sm-2" >
+                            <label for="">Phiên giao dịch</label>
+                            <select name="phien" id="phien"  class=" form-control">
+                                <option value="0" onclick="loc()"> ---Chọn phiên--- </option>
+                                <option {{ $input['phien'] == 'Phiên định kỳ'?'selected':'' }}>Phiên định kỳ</option>
+                                <option {{ $input['phien'] == "Phiên đột xuất" ? 'selected' : '' }}>Phiên đột xuất</option>
+                                <option {{ $input['phien'] == "Phiên online" ? 'selected' : '' }}>Phiên online</option>
+                            </select>
+                        </div>
                     </div>
 
 
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
                             <tr>
-                                <th width="5%"> STT </th>
+                                <th width="1%"> STT </th>
                                 <th>Họ tên</th>
                                 <th>CMND/CCCD</th>
                                 <th>Ngày sinh</th>
                                 <th>Địa chỉ thường trú</th>
-                                <th>Thao tác</th>
+                                <th>Phiên</th>
+                                <th>Ví trí </th>
+                                <th>Doanh nghiệp ứng tuyển</th>
+                                <th width="6%" >Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,13 +128,16 @@
                                 <tr>
                                     <td>{{  ++$key }}</td>
                                     <td><a href="{{'/dangkytimviec/edit?id='.$item->id.'&tungay='.$input['tungay'] .'&denngay='.$input['denngay'].
-                                    '&gioitinh_filter='.$input['gioitinh_filter'].'&age_filter='.$input['age_filter'] }}">{{$item->hoten}}</a></td>
+                                    '&gioitinh_filter='.$input['gioitinh_filter'].'&age_filter='.$input['age_filter'].'&phien='.$input['phien'] }}">{{$item->hoten}}</a></td>
                                     <td>{{  $item->cccd }}</td>
                                     <td>{{  getDayVn($item->ngaysinh) }}</td>
                                     <td>{{  $item->thuongtru }}</td>
+                                    <td>{{  $item->phiengd }}</td>
+                                    <td>{{  $item->tencongviec }}</td>
+                                    <td>{{  $item->tendn }}</td>
                                     <td> 
                                         <button title="Xóa thông tin" data-toggle="modal" data-target="#delete-modal-confirm" type="button"
-                                         onclick="cfDel('/dangkytimviec/delete/{{$item->id}}/{{$input['tungay']}}/{{$input['denngay']}}/{{$input['gioitinh_filter']}}/{{$input['age_filter']}}')"
+                                         onclick="cfDel('/dangkytimviec/delete/{{$item->id}}/{{$input['tungay']}}/{{$input['denngay']}}/{{$input['gioitinh_filter']}}/{{$input['age_filter']}}/{{$input['phien']}}')"
                                           class="btn btn-sm btn-clean btn-icon" fdprocessedid="q2u7ei"> <i class="icon-lg flaticon-delete text-danger"></i>
                                         </button>
                                     </td>
@@ -139,7 +152,33 @@
 
     @include('includes.delete')
 
-
+    <div id="modal-baocao" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmbaocao" method="GET" action="#" accept-charset="UTF-8">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>
+                                <a href="{{'/dangkytimviec/bctonghop?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
+                                 $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo tổng hợp</a>
+                            </li>
+                            <li>
+                                <a href="{{'/dangkytimviec/bcchitiet?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
+                                 $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo chi tiết</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <div id="dangkytimviec_import" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="dangkytimviecImport" method="post" action="{{'dangkytimviec/importexcel'}}" accept-charset="UTF-8" enctype="multipart/form-data">
             @csrf
