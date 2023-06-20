@@ -17,6 +17,8 @@
                 <th>Trình độ CMKT</th>
                 <th>Công việc mong muốn</th>
             </tr>
+
+            
         </thead>
 
         <tbody>
