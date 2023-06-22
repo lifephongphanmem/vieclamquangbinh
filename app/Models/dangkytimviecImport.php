@@ -95,7 +95,7 @@ class dangkytimviecImport extends Model
 
             for ($j = 0; $j < $nfield; $j++) {
 
-                $data[$arr_col[$j]] = $arr[$i][$j + 0] ?? '';
+                $data[$arr_col[$j]] = $arr[$i][$j + 1] ?? '';
             }
 
             dangkytimviec::create($data);

@@ -64,7 +64,7 @@
                         <i class="fa fa-plus"></i> &ensp;Nhập excel</a>
 
                         <a  data-toggle="modal" data-target="#modal-baocao" class="btn btn-xs btn-success mr-3" target="_bank">
-                            <i class="icon-lg la flaticon2-print"></i> &ensp;In Báo cáo</a>
+                            <i class="icon-lg la flaticon2-print"></i> &ensp;Tổng hợp</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -157,23 +157,54 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4>
+                        <h4 id="modal-header-primary-label" class="modal-title">Tổng hợp</h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <ul>
                             <li>
-                                <a href="{{'/dangkytimviec/bctonghop?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
-                                 $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo tổng hợp</a>
+                                <div class="form-group">
+                                    <a href="#" data-toggle="modal" data-target="#moda-tonghopdulieu"> Tổng hợp dữ liệu</a>
+                                 </div>
                             </li>
                             <li>
-                                <a href="{{'/dangkytimviec/bcchitiet?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
-                                 $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo chi tiết</a>
+                                <div class="form-group">
+                                    <a href="{{'/dangkytimviec/bcchitiet?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
+                                    $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo chi tiết</a>
+                                 </div>
                             </li>
                         </ul>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="moda-tonghopdulieu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmtonghopdulieu" method="get" action="{{'dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Tổng hợp dữ liệu</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true"
+                                class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Từ ngày</label>
+                            <input type="date" name="tungay" value="{{$input['tungay']}}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Từ ngày</label>
+                            <input type="date" name="denngay" value="{{$input['denngay']}}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary">Đồng ý</button>
                     </div>
                 </div>
             </div>
@@ -200,5 +231,4 @@
             </div>
         </form>
     </div>
-
 @endsection
