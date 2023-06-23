@@ -24,7 +24,7 @@
                 <select name="chucvu[]" class="form-control ">
                     <option value="">---Chọn chức vụ</option>
                     @foreach ($dmchucvu as $val)
-                        <option value="{{$val->stt}}" {{isset($model)?($model->chucvu==$val->stt?'selected':''):''}}>{{$val->tencv}}</option>
+                        <option value="{{$val->id}}" {{isset($model)?($model->chucvu==$val->id?'selected':''):''}}>{{$val->tencv}}</option>
                     @endforeach
                 </select>
             </div>

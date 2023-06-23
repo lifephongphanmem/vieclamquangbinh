@@ -201,6 +201,7 @@
                             <label for="">Từ ngày</label>
                             <input type="date" name="denngay" value="{{$input['denngay']}}" class="form-control">
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
@@ -221,7 +222,12 @@
                                 class="close">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <input type="file" name="import_file" accept=".xlsx,.xls,.csv"  required>
+                        <div class="form-group">
+                            <input type="file" name="import_file" accept=".xlsx,.xls,.csv"  required>
+                        </div>
+                        <div class="form-group">
+                            <a href="{{'uploads/maudangkytimviec/Mau-danh-sach-dang-ky-tim-viec.xlsx'}}" download >Tải bản mẫu</a>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>

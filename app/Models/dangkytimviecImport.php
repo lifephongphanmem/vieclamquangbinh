@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Imports\ColectionImport;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -46,9 +47,11 @@ class dangkytimviecImport extends Model
         $file = $input['import_file'];
         $dataObj = new ColectionImport();
         $theArray = Excel::toArray($dataObj, $file);
+ 
         $arr = $theArray[0];
         // dd($arr);
         $arr_col = array(
+            'phiengd',
             'hoten',
             'cccd',
             'ngaysinh',
@@ -58,8 +61,8 @@ class dangkytimviecImport extends Model
             'thuongtru',
             'tamtru',
 
-            'trinhdogiaoduc',
-            'trinhdocmkt',
+            'tentrinhdogiaoduc', 'trinhdogiaoduc',
+            'tentrinhdocmkt',  'trinhdocmkt',
             'loaithvp',
             'tinhockhac',
             'loaithk',
@@ -69,13 +72,13 @@ class dangkytimviecImport extends Model
             'ngoaingu2',
             'chungchinn2',
             'xeploainn2',
-            'kynangmem',
             'kinhnghiem',
-            
-            'tencongviec',
-            'manghe',
-            'chucvu',
-            'loaihinhkt',
+            'kynangmem',
+
+          
+            'tenmanghe', 'manghe',
+            'tenchucvu',  'chucvu',
+            'tenloaihinhkt','loaihinhkt',
             'loaihdld',
             'khanangcongtac',
             'hinhthuclv',
@@ -83,12 +86,17 @@ class dangkytimviecImport extends Model
             'luong',
             'hotroan',
             'phucloi',
+            'linhvuc',
+
+            'tencongviec',
+            'tendn',
+            'madkkd',
         );
         
         // check file excel
 
         $nfield = sizeof($arr_col);
-
+        $maphien = date('YmdHis');
         for ($i = 1; $i < count($arr); $i++) {
 
             $data = array();
@@ -97,8 +105,18 @@ class dangkytimviecImport extends Model
 
                 $data[$arr_col[$j]] = $arr[$i][$j + 1] ?? '';
             }
+            // $data['ngaysinh'] = Carbon::parse($data['ngaysinh']);
+            // $date = Carbon::parse($data['ngaysinh']);
+            // $data['ngaysinh'] = Carbon::create($date->year , $date->month, $date->day,);
 
-            dangkytimviec::create($data);
+            //  dd($data['ngaysinh']);
+            if ($data['hoten'] == '' && $data['cccd'] == '' &&$data['phiengd'] == '' ) {
+               break;
+            }else{
+                $data['maphien'] = $maphien;
+                dangkytimviec::create($data);
+            }
+           
 
         }
     }

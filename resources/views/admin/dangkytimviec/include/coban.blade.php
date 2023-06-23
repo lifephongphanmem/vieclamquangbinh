@@ -18,7 +18,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Ngày sinh (*)</label>
-                <input type="date" name="ngaysinh[]" class="form-control" value="{{isset($model)?$model->ngaysinh:''}}" required>
+                <input type="date" name="ngaysinh[]" class="form-control" value="{{isset($model)? $model->ngaysinh:''}}" required>
             </div>
         </div>
         <div class="col-md-3">

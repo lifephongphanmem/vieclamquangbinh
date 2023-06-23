@@ -97,6 +97,7 @@ class dangkytimviecController extends Controller
          return view('errors.noperm')->with('machucnang', 'dangkytimviec');
       }
       $input = $request->all();
+      
       $model = dangkytimviec::find($input['id']);
       $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
       $dmtrinhdogdpt = dmtrinhdogdpt::all();
@@ -175,7 +176,7 @@ class dangkytimviecController extends Controller
    {
      
       $input = $request->all();
- 
+        
       for ($i = 0; $i < $input['quantity']; $i++) {
          dangkytimviec::find($request->id)->update([
             // 'kydieutra' => $input['kydieutra'],
