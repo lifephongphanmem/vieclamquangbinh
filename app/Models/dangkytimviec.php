@@ -51,5 +51,6 @@ class dangkytimviec extends Model
 
         'tendn',
         'madkkd',
+        'thoidiem',
     ];
 }

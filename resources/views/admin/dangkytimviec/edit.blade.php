@@ -85,28 +85,8 @@
                                                         <span class="nav-text">Thông tin cơ bản</span>
                                                     </a>
                                                 </li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="card-body">
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade active show" id="thongtincoban" role="tabpanel" aria-labelledby="thongtincoban">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        @include('admin.dangkytimviec.include.coban')
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-header card-header-tabs-line">
-                                        <div class="card-toolbar">
-                                            <ul class="nav nav-tabs nav-bold nav-tabs-line">
                                                 <li class="nav-item">
-                                                    <a class="nav-link active" data-toggle="tab" href="#" id="k">
+                                                    <a class="nav-link" data-toggle="tab" href="#khac" id="k">
                                                         <span class="nav-icon">
                                                             <i class="far fa-user"></i>
                                                         </span>
@@ -117,11 +97,17 @@
                                         </div>
 
                                     </div>
-
                                     <div class="card-body">
                                         <div class="tab-content">
-                                            {{-- <div class="tab-pane fade" id="khac" role="tabpanel" aria-labelledby="khac"> --}}
-                                            <div  id="khac" role="tabpanel" aria-labelledby="khac">
+                                            <div class="tab-pane fade active show" id="thongtincoban" role="tabpanel" aria-labelledby="thongtincoban">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @include('admin.dangkytimviec.include.coban')
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="khac" role="tabpanel" aria-labelledby="khac">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         @include('admin.dangkytimviec.include.timviec')

@@ -237,16 +237,16 @@ class dangkytimviecController extends Controller
       $denngay2 = Carbon::parse($input['denngay'])->addDays();
 
       $model = $model->where('created_at', '>=', $input['tungay'])->where('created_at', '<=', $denngay2);
-      if ($input['gioitinh_filter'] != '0') {
-         $model = $model->where('gioitinh', $input['gioitinh_filter']);
-      }
+      // if ($input['gioitinh_filter'] != '0') {
+      //    $model = $model->where('gioitinh', $input['gioitinh_filter']);
+      // }
 
-      if ($input['age_filter'] != '0') {
+      // if ($input['age_filter'] != '0') {
 
-         // $tuoitren35 = date('Y') - 35;
-         $tuoitren35 = Carbon::create(date('Y') - 35, date('m'), date('d'));
-         $model = $model->where('ngaysinh', '<=', $tuoitren35);
-      }
+      //    // $tuoitren35 = date('Y') - 35;
+      //    $tuoitren35 = Carbon::create(date('Y') - 35, date('m'), date('d'));
+      //    $model = $model->where('ngaysinh', '<=', $tuoitren35);
+      // }
       
       return view('admin.dangkytimviec.bcchitiet')
       ->with('model',$model)
