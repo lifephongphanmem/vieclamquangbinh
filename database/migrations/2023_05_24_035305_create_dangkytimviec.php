@@ -57,6 +57,7 @@ class CreateDangkytimviec extends Migration
 
             $table->string('tendn')->nullable();
             $table->string('madkkd')->nullable();
+            $table->string('thoidiem')->nullable();
             $table->timestamps();
         });
     }

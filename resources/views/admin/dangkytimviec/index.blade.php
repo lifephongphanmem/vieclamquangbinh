@@ -115,9 +115,10 @@
                                 <th width="1%"> STT </th>
                                 <th>Họ tên</th>
                                 <th>CMND/CCCD</th>
-                                <th>Ngày sinh</th>
+                                {{-- <th>Ngày sinh</th> --}}
                                 <th>Địa chỉ thường trú</th>
                                 <th>Phiên</th>
+                                <th>Ngày tạo</th>
                                 <th>Ví trí </th>
                                 <th>Doanh nghiệp ứng tuyển</th>
                                 <th width="6%" >Thao tác</th>
@@ -130,9 +131,10 @@
                                     <td><a href="{{'/dangkytimviec/edit?id='.$item->id.'&tungay='.$input['tungay'] .'&denngay='.$input['denngay'].
                                     '&gioitinh_filter='.$input['gioitinh_filter'].'&age_filter='.$input['age_filter'].'&phien='.$input['phien'] }}">{{$item->hoten}}</a></td>
                                     <td>{{  $item->cccd }}</td>
-                                    <td>{{  getDayVn($item->ngaysinh) }}</td>
+                                    {{-- <td>{{  getDayVn($item->ngaysinh) }}</td> --}}
                                     <td>{{  $item->thuongtru }}</td>
                                     <td>{{  $item->phiengd }}</td>
+                                    <td>{{  getDayVn($item->created_at) }}</td>
                                     <td>{{  $item->tencongviec }}</td>
                                     <td>{{  $item->tendn }}</td>
                                     <td> 
@@ -169,10 +171,15 @@
                             </li>
                             <li>
                                 <div class="form-group">
+                                    <a href="#" data-toggle="modal" data-target="#moda-bcchitiet"> Báo cáo chi tiết</a>
+                                 </div>
+                            </li>
+                            {{-- <li>
+                                <div class="form-group">
                                     <a href="{{'/dangkytimviec/bcchitiet?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
                                     $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo chi tiết</a>
                                  </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                     <div class="modal-footer">
@@ -184,6 +191,35 @@
     </div>
     <div id="moda-tonghopdulieu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmtonghopdulieu" method="get" action="{{'dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Báo cáo chi tiết</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true"
+                                class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Từ ngày</label>
+                            <input type="date" name="tungay" value="{{$input['tungay']}}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Từ ngày</label>
+                            <input type="date" name="denngay" value="{{$input['denngay']}}" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="moda-bcchitiet" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmbcchitiet" method="get" action="{{'dangkytimviec/bcchitiet'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
             @csrf
             <div class="modal-dialog">
                 <div class="modal-content">

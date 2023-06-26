@@ -20,7 +20,7 @@
             <td style="text-align: right"><i style="margin-right: 30%;">Quảng Bình, ngày .... tháng .... năm ....</i></td>
         </tr>
     </table>
-    <p id='data_body' style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO TÌNH HÌNH HOẠT ĐỘNG DỊCH VỤ VIỆC LÀM</p>
+    <p id='data_body' style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">TỔNG HỢP TÌNH HÌNH HOẠT ĐỘNG DỊCH VỤ VIỆC LÀM</p>
     <p id='data_body1' style="text-align: center;font-style: italic;"> Từ ngày {{getDayVn($input['tungay'])}} đến ngày {{getDayVn($input['denngay'])}} </p>
 
     <table id='data_body2' cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;">
