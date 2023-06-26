@@ -1,5 +1,5 @@
 {{-- @extends ('admin.layout') --}}
-@extends ('main')
+@extends('main')
 @section('custom-style')
     <link rel="stylesheet" type="text/css"
         href="{{ url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') }}" />
@@ -83,7 +83,7 @@
                              <label for="">Giới tính</label>
                             <select name="gioitinh_filter" id="gioitinh_filter" class=" form-control">
                                 <option value="0"> ---Chọn giới tính--- </option>
-                                <option value="Nam" {{ $input['gioitinh_filter'] == 'Nam'?'selected':''}}>Nam</option>
+                                <option value="Nam" {{ $input['gioitinh_filter'] == 'Nam'?'selected':''}} >Nam</option>
                                 <option value="Nữ" {{ $input['gioitinh_filter'] == 'Nữ'?'selected':''}} >Nữ</option>
                             </select>
                         </div>
@@ -102,8 +102,8 @@
                             <select name="phien" id="phien"  class=" form-control">
                                 <option value="0" onclick="loc()"> ---Chọn phiên--- </option>
                                 <option {{ $input['phien'] == 'Phiên định kỳ'?'selected':'' }}>Phiên định kỳ</option>
-                                <option {{ $input['phien'] == "Phiên đột xuất" ? 'selected' : '' }}>Phiên đột xuất</option>
-                                <option {{ $input['phien'] == "Phiên online" ? 'selected' : '' }}>Phiên online</option>
+                                <option {{ $input['phien'] == 'Phiên đột xuất' ? 'selected' : '' }}>Phiên đột xuất</option>
+                                <option {{ $input['phien'] == 'Phiên online' ? 'selected' : '' }}>Phiên online</option>
                             </select>
                         </div>
                     </div>
@@ -166,6 +166,7 @@
                         <ul>
                             <li>
                                 <div class="form-group">
+<<<<<<< HEAD
                                     <a href="#" data-toggle="modal" data-target="#moda-tonghopdulieu"> Tổng hợp dữ liệu</a>
                                  </div>
                             </li>
@@ -173,6 +174,16 @@
                                 <div class="form-group">
                                     <a href="#" data-toggle="modal" data-target="#moda-bcchitiet"> Báo cáo chi tiết</a>
                                  </div>
+=======
+                                    <a href="#" data-toggle="modal" data-target="#moda-bcchitiet" > Tổng hợp dữ liệu</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <a href="{{'/dangkytimviec/bcchitiet?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
+                                    $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo chi tiết</a>
+                                </div>
+>>>>>>> 82ce1b2663e3cce106ecff44d87626a848bd43d7
                             </li>
                             {{-- <li>
                                 <div class="form-group">
@@ -189,6 +200,7 @@
             </div>
         </form>
     </div>
+<<<<<<< HEAD
     <div id="moda-tonghopdulieu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmtonghopdulieu" method="get" action="{{'dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
             @csrf
@@ -247,6 +259,9 @@
             </div>
         </form>
     </div>
+=======
+
+>>>>>>> 82ce1b2663e3cce106ecff44d87626a848bd43d7
     <div id="dangkytimviec_import" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="dangkytimviecImport" method="post" action="{{'dangkytimviec/importexcel'}}" accept-charset="UTF-8" enctype="multipart/form-data">
             @csrf
@@ -273,4 +288,36 @@
             </div>
         </form>
     </div>
+<<<<<<< HEAD
+=======
+
+    <div id="moda-bcchitiet" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmbcchitiet" method="get" action="{{'/dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
+            @csrf
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Tổng hợp dữ liệu</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true"
+                                class="close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for=""> Từ ngày</label>
+                            <input type="date" name="tungay" value="{{ $input['tungay']}}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Đến ngày</label>
+                            <input type="date" name="denngay" value="{{ $input['denngay']}}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" class="btn btn-primary">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+>>>>>>> 82ce1b2663e3cce106ecff44d87626a848bd43d7
 @endsection
