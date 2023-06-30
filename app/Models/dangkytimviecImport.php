@@ -74,6 +74,7 @@ class dangkytimviecImport extends Model
             'xeploainn2',
             'kinhnghiem',
             'kynangmem',
+            'nguoikhuyettat',
 
           
             'tenmanghe', 'manghe',
@@ -91,6 +92,8 @@ class dangkytimviecImport extends Model
             'tencongviec',
             'tendn',
             'madkkd',
+            'datsotuyen',
+            'nhanduocviec',
         );
         
         // check file excel
