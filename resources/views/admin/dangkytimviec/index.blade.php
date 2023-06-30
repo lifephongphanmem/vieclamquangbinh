@@ -134,7 +134,7 @@
                                     {{-- <td>{{  getDayVn($item->ngaysinh) }}</td> --}}
                                     <td>{{  $item->thuongtru }}</td>
                                     <td>{{  $item->phiengd }}</td>
-                                    <td>{{  getDayVn($item->created_at) }}</td>
+                                    <td>{{  getDayVn($item->thoidiem) }}</td>
                                     <td>{{  $item->tencongviec }}</td>
                                     <td>{{  $item->tendn }}</td>
                                     <td> 
@@ -189,7 +189,7 @@
             </div>
         </form>
     </div>
-    
+
     <div id="moda-tonghopdulieu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmtonghopdulieu" method="get" action="{{'dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
             @csrf

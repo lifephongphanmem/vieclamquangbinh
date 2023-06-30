@@ -33,6 +33,7 @@ class dangkytimviec extends Model
         'xeploainn2',
         'kinhnghiem',
         'kynangmem',
+        'nguoikhuyettat',
 
         'tencongviec',
         'manghe',
@@ -48,6 +49,8 @@ class dangkytimviec extends Model
         'maphien',
         'phiengd',
         'linhvuc',
+        'datsotuyen',
+        'nhanduocviec',
 
         'tendn',
         'madkkd',
