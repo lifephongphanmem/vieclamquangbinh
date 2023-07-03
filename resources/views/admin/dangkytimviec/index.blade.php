@@ -196,7 +196,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Báo cáo chi tiết</h4>
+                        <h4 id="modal-header-primary-label" class="modal-title">Tổng hợp dữ liệu</h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true"
                                 class="close">&times;</button>
                     </div>
@@ -220,12 +220,12 @@
         </form>
     </div>
     <div id="moda-bcchitiet" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        <form id="frmbcchitiet" method="get" action="{{'dangkytimviec/bcchitiet'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
+        <form id="frmbcchitiet" method="get" action="{{'dangkytimviec/bcchitiet'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank2">
             @csrf
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Tổng hợp dữ liệu</h4>
+                        <h4 id="modal-header-primary-label" class="modal-title">Báo cáo chi tiết</h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true"
                                 class="close">&times;</button>
                     </div>

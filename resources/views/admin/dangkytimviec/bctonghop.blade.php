@@ -52,6 +52,9 @@
                 <td  style="font-weight: bold">2</td>
                 <td style="font-weight: bold">Số phiên tổ chức tại sàn GDVL đã thực hiện tại Sàn GDVL</td>
                 <th>Phiên</th>
+                <?php  
+
+                ?>
                 <th style="text-align: center;">{{ count(a_unique(array_column($model->toarray(),'maphien')))}}</th>
             </tr>
             <tr>

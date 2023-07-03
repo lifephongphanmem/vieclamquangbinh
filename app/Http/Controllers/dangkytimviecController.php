@@ -119,62 +119,76 @@ class dangkytimviecController extends Controller
 
    public function store(Request $request)
    {
-   //   dd($request->all());
+      //  dd($request->all());
 
 
       $input = $request->all();
-      $maphien = date('YmdHis');
+      if ($input['phiengd'] == 'Phiên định kỳ') {
+         $maphien = date('Ymd') . '-dk';
+      }
+      if ($input['phiengd'] == 'Phiên đột xuất') {
+         $maphien = date('Ymd') .'-dx';
+      }
+      if ($input['phiengd'] == 'Phiên online') {
+         $maphien = date('Ymd') . '-ol';
+      }
+      // $maphien = date('YmdHis');
       $thoidiem = date('Y-m-d');
       for ($i = 0; $i < $input['quantity']; $i++) {
-         
-         dangkytimviec::create([
-            // 'kydieutra' => $input['kydieutra'],
-            'maphien' => $maphien,
-            'phiengd' => $input['phiengd'],
+       
+         $model = dangkytimviec::where('thoidiem',  $thoidiem )->where('phiengd',$input['phiengd'])->where('cccd',$input['cccd'][$i])->where('madkkd',$input['madkkd'])->get();
 
-            'hoten' => $input['hoten'][$i],
-            'ngaysinh' => $input['ngaysinh'][$i],
-            'gioitinh' => $input['gioitinh'][$i],
-            'phone' => $input['phone'][$i],
-            'cccd' => $input['cccd'][$i],
-            'dantoc' => $input['dantoc'][$i],
-            'thuongtru' => $input['thuongtru'][$i],
-            'tamtru' => $input['tamtru'][$i],
-            
-            'trinhdogiaoduc' => $input['trinhdogiaoduc'][$i],
-            'trinhdocmkt' => $input['trinhdocmkt'][$i],
-            'loaithvp' => $input['loaithvp'][$i],
-            'tinhockhac' => $input['tinhockhac'][$i],
-            'loaithk' => $input['loaithk'][$i],
-            'ngoaingu1' => $input['ngoaingu1'][$i],
-            'chungchinn1' => $input['chungchinn1'][$i],
-            'xeploainn1' => $input['xeploainn1'][$i],
-            'ngoaingu2' => $input['ngoaingu2'][$i],
-            'chungchinn2' => $input['chungchinn2'][$i],
-            'xeploainn2' => $input['xeploainn2'][$i],
-            'kinhnghiem' => $input['kinhnghiem'][$i],
-            'kynangmem' => $input['kynangmem'][$i],
-            'nguoikhuyettat' => $input['nguoikhuyettat'][$i],
 
-            'tencongviec' => $input['tencongviec'][$i],
-            'manghe' => $input['manghe'][$i],
-            'chucvu' => $input['chucvu'][$i],
-            'loaihinhkt' => $input['loaihinhkt'][$i],
-            'loaihdld' => $input['loaihdld'][$i],
-            'khanangcongtac' => $input['khanangcongtac'][$i],
-            'hinhthuclv' => $input['hinhthuclv'][$i],
-            'mucdichlv' => $input['mucdichlv'][$i],
-            'luong' => $input['luong'][$i],
-            'hotroan' => $input['hotroan'][$i],
-            'phucloi' => $input['phucloi'][$i],
-            'linhvuc' => $input['linhvuc'][$i],
-            'thoidiem' => $thoidiem,
-
-            'tendn' => $input['tendn'][$i],
-            'madkkd' => $input['madkkd'][$i],
-            'datsotuyen' => $input['datsotuyen'][$i],
-            'nhanduocviec' => $input['nhanduocviec'][$i],
-         ]);
+         if (count($model) == 0) {
+            dangkytimviec::create([
+               // 'kydieutra' => $input['kydieutra'],
+               'maphien' => $maphien,
+               'phiengd' => $input['phiengd'],
+   
+               'hoten' => $input['hoten'][$i],
+               'ngaysinh' => $input['ngaysinh'][$i],
+               'gioitinh' => $input['gioitinh'][$i],
+               'phone' => $input['phone'][$i],
+               'cccd' => $input['cccd'][$i],
+               'dantoc' => $input['dantoc'][$i],
+               'thuongtru' => $input['thuongtru'][$i],
+               'tamtru' => $input['tamtru'][$i],
+               
+               'trinhdogiaoduc' => $input['trinhdogiaoduc'][$i],
+               'trinhdocmkt' => $input['trinhdocmkt'][$i],
+               'loaithvp' => $input['loaithvp'][$i],
+               'tinhockhac' => $input['tinhockhac'][$i],
+               'loaithk' => $input['loaithk'][$i],
+               'ngoaingu1' => $input['ngoaingu1'][$i],
+               'chungchinn1' => $input['chungchinn1'][$i],
+               'xeploainn1' => $input['xeploainn1'][$i],
+               'ngoaingu2' => $input['ngoaingu2'][$i],
+               'chungchinn2' => $input['chungchinn2'][$i],
+               'xeploainn2' => $input['xeploainn2'][$i],
+               'kinhnghiem' => $input['kinhnghiem'][$i],
+               'kynangmem' => $input['kynangmem'][$i],
+               'nguoikhuyettat' => $input['nguoikhuyettat'][$i],
+   
+               'tencongviec' => $input['tencongviec'][$i],
+               'manghe' => $input['manghe'][$i],
+               'chucvu' => $input['chucvu'][$i],
+               'loaihinhkt' => $input['loaihinhkt'][$i],
+               'loaihdld' => $input['loaihdld'][$i],
+               'khanangcongtac' => $input['khanangcongtac'][$i],
+               'hinhthuclv' => $input['hinhthuclv'][$i],
+               'mucdichlv' => $input['mucdichlv'][$i],
+               'luong' => $input['luong'][$i],
+               'hotroan' => $input['hotroan'][$i],
+               'phucloi' => $input['phucloi'][$i],
+               'linhvuc' => $input['linhvuc'][$i],
+               'thoidiem' => $thoidiem,
+   
+               'tendn' => $input['tendn'][$i],
+               'madkkd' => $input['madkkd'][$i],
+               'datsotuyen' => $input['datsotuyen'][$i],
+               'nhanduocviec' => $input['nhanduocviec'][$i],
+            ]);
+         } 
         
       }
 
@@ -263,12 +277,14 @@ class dangkytimviecController extends Controller
       
       return view('admin.dangkytimviec.bcchitiet')
       ->with('model',$model)
+      ->with('input', $input)
       ->with('baocao', getdulieubaocao())
       ->with('pageTitle', 'Báo cáo chi tiết danh sách đăng ký tìm việc');;
    }
 
    public function bctonghop(Request $request)
    {
+
       $input = $request->all();
       $model = dangkytimviec::leftJoin('dmtrinhdokythuat', 'dmtrinhdokythuat.stt', 'dangkytimviec.trinhdocmkt')
       ->leftJoin('dmtrinhdogdpt', 'dmtrinhdogdpt.stt', 'dangkytimviec.trinhdogiaoduc')
@@ -281,20 +297,15 @@ class dangkytimviecController extends Controller
       //    $model = $model->where('gioitinh', $input['gioitinh_filter']);
       // }
 
-      // if ($input['age_filter'] != '0') {
-
-      //    // $tuoitren35 = date('Y') - 35;
-      //    $tuoitren35 = Carbon::create(date('Y') - 35, date('m'), date('d'));
-      //    $model = $model->where('ngaysinh', '<=', $tuoitren35);
-      // }
 
       $dmtrinhdokythuat = dmtrinhdokythuat::all();
+
       return view('admin.dangkytimviec.bctonghop')
          ->with('model', $model)
          ->with('input', $input)
          ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
          ->with('baocao', getdulieubaocao())
-         ->with('pageTitle', 'Báo cáo Tổng hợp danh sách đăng ký tìm việc');;
+         ->with('pageTitle', 'Tổng hợp dữ liệu tình hình hoạt động dịch vụ việc làm');;
    }
 
 

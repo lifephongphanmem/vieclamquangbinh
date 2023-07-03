@@ -100,8 +100,10 @@ class dangkytimviecImport extends Model
 
         $nfield = sizeof($arr_col);
         $thoidiem =  date('Y-m-d');
-        $maphien = date('YmdHis');
 
+
+       
+        // $maphien = date('YmdHis');
         for ($i = 1; $i < count($arr); $i++) {
 
             $data = array();
@@ -118,11 +120,21 @@ class dangkytimviecImport extends Model
             if ($data['hoten'] == '' && $data['cccd'] == '' &&$data['phiengd'] == '' ) {
                break;
             }else{
-                $model = dangkytimviec::where('thoidiem', date('Y-m-d') )->where('phiengd',$data['phiengd'])->where('cccd',$data['cccd'])->get();
+                $model = dangkytimviec::where('thoidiem',  $thoidiem )->where('phiengd',$data['phiengd'])->where('cccd',$data['cccd'])->where('madkkd',$data['madkkd'])->get();
                 
                 if (count($model) == 0) {
                     $data['thoidiem'] =  $thoidiem;
-                    $data['maphien'] = $maphien;
+
+                    if ($data['phiengd'] == 'Phiên định kỳ') {
+                        $data['maphien'] = date('Ymd') . '-dk';
+                    }
+                    if ($data['phiengd'] == 'Phiên đột xuất') {
+                        $data['maphien'] = date('Ymd') . '-dx';
+                    }
+                    if ($data['phiengd'] == 'Phiên online') {
+                        $data['maphien'] = date('Ymd') . '-ol';
+                    }
+
                     dangkytimviec::create($data);
                 }
             }
