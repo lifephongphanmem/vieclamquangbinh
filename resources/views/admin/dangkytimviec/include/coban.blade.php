@@ -151,7 +151,15 @@
                 </select>
             </div>
         </div>
-  
+        <div class="col-sm-3">
+            <div class="form-group">
+                <span >Thuộc đối tượng người khuyết tật</span>
+                <select class="form-control " name="nguoikhuyettat[]">
+                    <option value='Không' {{isset($model)?($model->nguoikhuyettat=='Không'?'selected':''):''}}>Không</option>
+                    <option value='Có' {{isset($model)?($model->nguoikhuyettat=='Có'?'selected':''):''}}>Có</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -210,6 +218,26 @@
             <div class="form-group">
                 <span>Mã DKKD (*)</span> 
                 <input type="text" name="madkkd[]" class="form-control" value="{{isset($model)?$model->madkkd:''}}" required>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <span>Đạt sơ tuyển sau phỏng vấn (*)</span> 
+                <select name="datsotuyen[]" id="datsotuyen" class="form-control" >
+                    <option value="">---Chưa chọn---</option>
+                    <option value='Đạt' {{isset($model)?($model->datsotuyen=='Đạt'?'selected':''):''}}>Đạt</option>
+                    <option value='Không đạt' {{isset($model)?($model->datsotuyen=='Không đạt'?'selected':''):''}}>Không đạt</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <span>Nhận được việc sau phỏng vấn (*)</span> 
+                <select name="nhanduocviec[]" id="nhanduocviec" class="form-control" >
+                    <option value="">---Chưa chọn---</option>
+                    <option value='Có' {{isset($model)?($model->datsotuyen=='Có'?'selected':''):''}}>Có</option>
+                    <option value='Không' {{isset($model)?($model->datsotuyen=='Không'?'selected':''):''}}>Không</option>
+                </select>
             </div>
         </div>
     </div>

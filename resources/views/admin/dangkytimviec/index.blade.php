@@ -134,7 +134,7 @@
                                     {{-- <td>{{  getDayVn($item->ngaysinh) }}</td> --}}
                                     <td>{{  $item->thuongtru }}</td>
                                     <td>{{  $item->phiengd }}</td>
-                                    <td>{{  getDayVn($item->created_at) }}</td>
+                                    <td>{{  getDayVn($item->thoidiem) }}</td>
                                     <td>{{  $item->tencongviec }}</td>
                                     <td>{{  $item->tendn }}</td>
                                     <td> 
@@ -166,7 +166,6 @@
                         <ul>
                             <li>
                                 <div class="form-group">
-<<<<<<< HEAD
                                     <a href="#" data-toggle="modal" data-target="#moda-tonghopdulieu"> Tổng hợp dữ liệu</a>
                                  </div>
                             </li>
@@ -174,16 +173,6 @@
                                 <div class="form-group">
                                     <a href="#" data-toggle="modal" data-target="#moda-bcchitiet"> Báo cáo chi tiết</a>
                                  </div>
-=======
-                                    <a href="#" data-toggle="modal" data-target="#moda-bcchitiet" > Tổng hợp dữ liệu</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-group">
-                                    <a href="{{'/dangkytimviec/bcchitiet?tungay='.$input['tungay'].'&denngay='.$input['denngay'].'&gioitinh_filter='.
-                                    $input['gioitinh_filter'] . '&age_filter=' .$input['age_filter'] }}"  target="_bank"> Báo cáo chi tiết</a>
-                                </div>
->>>>>>> 82ce1b2663e3cce106ecff44d87626a848bd43d7
                             </li>
                             {{-- <li>
                                 <div class="form-group">
@@ -200,7 +189,7 @@
             </div>
         </form>
     </div>
-<<<<<<< HEAD
+
     <div id="moda-tonghopdulieu" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmtonghopdulieu" method="get" action="{{'dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
             @csrf
@@ -259,9 +248,7 @@
             </div>
         </form>
     </div>
-=======
 
->>>>>>> 82ce1b2663e3cce106ecff44d87626a848bd43d7
     <div id="dangkytimviec_import" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="dangkytimviecImport" method="post" action="{{'dangkytimviec/importexcel'}}" accept-charset="UTF-8" enctype="multipart/form-data">
             @csrf
@@ -288,8 +275,6 @@
             </div>
         </form>
     </div>
-<<<<<<< HEAD
-=======
 
     <div id="moda-bcchitiet" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmbcchitiet" method="get" action="{{'/dangkytimviec/bctonghop'}}" accept-charset="UTF-8" enctype="multipart/form-data"  target="_bank">
@@ -319,5 +304,4 @@
             </div>
         </form>
     </div>
->>>>>>> 82ce1b2663e3cce106ecff44d87626a848bd43d7
 @endsection

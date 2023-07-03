@@ -42,9 +42,9 @@ class dangkytimviecController extends Controller
          $input['age_filter'] = '0';
          $input['phien'] = '0';
       }
-      $denngay2 = Carbon::parse($input['denngay'])->addDays();
+      // $denngay2 = Carbon::parse($input['denngay'])->addDays();
 
-      $model = dangkytimviec::where('created_at', '>=', $input['tungay'])->where('created_at', '<=', $denngay2)->get();
+      $model = dangkytimviec::where('thoidiem', '>=', $input['tungay'])->where('thoidiem', '<=', $input['denngay'])->get();
       if ($input['gioitinh_filter'] != '0') {
          $model = $model->where('gioitinh', $input['gioitinh_filter']);
       }
@@ -119,10 +119,14 @@ class dangkytimviecController extends Controller
 
    public function store(Request $request)
    {
+   //   dd($request->all());
+
+
       $input = $request->all();
       $maphien = date('YmdHis');
-   
+      $thoidiem = date('Y-m-d');
       for ($i = 0; $i < $input['quantity']; $i++) {
+         
          dangkytimviec::create([
             // 'kydieutra' => $input['kydieutra'],
             'maphien' => $maphien,
@@ -136,7 +140,7 @@ class dangkytimviecController extends Controller
             'dantoc' => $input['dantoc'][$i],
             'thuongtru' => $input['thuongtru'][$i],
             'tamtru' => $input['tamtru'][$i],
-           
+            
             'trinhdogiaoduc' => $input['trinhdogiaoduc'][$i],
             'trinhdocmkt' => $input['trinhdocmkt'][$i],
             'loaithvp' => $input['loaithvp'][$i],
@@ -150,6 +154,7 @@ class dangkytimviecController extends Controller
             'xeploainn2' => $input['xeploainn2'][$i],
             'kinhnghiem' => $input['kinhnghiem'][$i],
             'kynangmem' => $input['kynangmem'][$i],
+            'nguoikhuyettat' => $input['nguoikhuyettat'][$i],
 
             'tencongviec' => $input['tencongviec'][$i],
             'manghe' => $input['manghe'][$i],
@@ -163,10 +168,14 @@ class dangkytimviecController extends Controller
             'hotroan' => $input['hotroan'][$i],
             'phucloi' => $input['phucloi'][$i],
             'linhvuc' => $input['linhvuc'][$i],
+            'thoidiem' => $thoidiem,
 
             'tendn' => $input['tendn'][$i],
             'madkkd' => $input['madkkd'][$i],
+            'datsotuyen' => $input['datsotuyen'][$i],
+            'nhanduocviec' => $input['nhanduocviec'][$i],
          ]);
+        
       }
 
       return redirect('/dangkytimviec?tungay='. $input['tungay'] . '&denngay=' . $input['denngay'] .
@@ -203,6 +212,7 @@ class dangkytimviecController extends Controller
             'xeploainn2' => $input['xeploainn2'][$i],
             'kinhnghiem' => $input['kinhnghiem'][$i],
             'kynangmem' => $input['kynangmem'][$i],
+            'nguoikhuyettat' => $input['nguoikhuyettat'][$i],
 
             'tencongviec' => $input['tencongviec'][$i],
             'manghe' => $input['manghe'][$i],
@@ -216,9 +226,12 @@ class dangkytimviecController extends Controller
             'hotroan' => $input['hotroan'][$i],
             'phucloi' => $input['phucloi'][$i],
             'linhvuc' => $input['linhvuc'][$i],
+            // 'thoidiem' => $thoidiem,
 
             'tendn' => $input['tendn'][$i],
             'madkkd' => $input['madkkd'][$i],
+            'datsotuyen' => $input['datsotuyen'][$i],
+            'nhanduocviec' => $input['nhanduocviec'][$i],
          ]);
       }
   
@@ -274,7 +287,7 @@ class dangkytimviecController extends Controller
       //    $tuoitren35 = Carbon::create(date('Y') - 35, date('m'), date('d'));
       //    $model = $model->where('ngaysinh', '<=', $tuoitren35);
       // }
-      
+
       $dmtrinhdokythuat = dmtrinhdokythuat::all();
       return view('admin.dangkytimviec.bctonghop')
          ->with('model', $model)

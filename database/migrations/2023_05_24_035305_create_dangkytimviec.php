@@ -39,6 +39,7 @@ class CreateDangkytimviec extends Migration
             $table->string('xeploainn2')->nullable();
             $table->string('kinhnghiem')->nullable();            
             $table->string('kynangmem')->nullable();
+            $table->string('nguoikhuyettat')->nullable();
 
             $table->string('tencongviec')->nullable();
             $table->string('manghe')->nullable();
@@ -54,7 +55,9 @@ class CreateDangkytimviec extends Migration
             $table->string('maphien')->nullable();
             $table->string('phiengd')->nullable();
             $table->string('linhvuc')->nullable();
-
+            $table->string('datsotuyen')->nullable();
+            $table->string('nhanduocviec')->nullable();
+            
             $table->string('tendn')->nullable();
             $table->string('madkkd')->nullable();
             $table->string('thoidiem')->nullable();
