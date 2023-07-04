@@ -32,11 +32,11 @@
                                 </form>
                             </li> --}}
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="{{'/baocao_tonghop/mau02PLI'}}" class="menu-link" target="_blank">
+                                <a href="#" data-toggle="modal" data-target="#moda-mau02pli" class="menu-link" >
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Mẫu 02/PLI</span>
+                                    <span class="menu-text">Mẫu 02/PLI1</span>
                                 </a>
                             </li>
 
@@ -101,3 +101,4 @@
     </div>
 </li>
 @endif
+

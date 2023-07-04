@@ -206,7 +206,7 @@
                             <input type="date" name="tungay" value="{{$input['tungay']}}" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="">Từ ngày</label>
+                            <label for="">Đến ngày</label>
                             <input type="date" name="denngay" value="{{$input['denngay']}}" class="form-control">
                         </div>
 
@@ -235,7 +235,7 @@
                             <input type="date" name="tungay" value="{{$input['tungay']}}" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="">Từ ngày</label>
+                            <label for="">Đến ngày</label>
                             <input type="date" name="denngay" value="{{$input['denngay']}}" class="form-control">
                         </div>
 
