@@ -351,6 +351,8 @@ class baocaotonghopController extends Controller
 
         //Cầu lao động
         $doanhnghiep = Company::where('dkkd', '!=', null)->get();
+        // $doanhnghiep = Company::all();
+
 
         $a_doanhnghiep = ['namtruoc' => 0, 'namhientai' => 0];
         foreach ($doanhnghiep as $ct) {
@@ -804,13 +806,18 @@ class baocaotonghopController extends Controller
             ->with('pageTitle', 'Báo cáo về thông tin thị trường cung lao động');
     }
 
-    public function mau02(){
+    public function mau02(Request $request){
+        $tungay = $request->tungay;
+        $denngay = $request->denngay;
+        $denngay2 = Carbon::parse($denngay)->addDays();
+
+        $reports = DB::table('report')->where('time', '>=', $tungay)->where('time', '<=', $denngay2)->whereNotin('datatable', ['nhankhau', 'users'])->get();
         $emodel= new Employer();
 		$htxinfo=$emodel->getTypeCompanyInfo('Hợp tác xã');
 		$hkdinfo=$emodel->getTypeCompanyInfo('Hộ kinh doanh');
 		$tcinfo=$emodel->getTypeCompanyInfo('Cơ quan tổ chức khác');
 		$einfo=$emodel->getEmployerState();
-        $ctys=DB::table('company')->where('user',null)->get();
+        $ctys=DB::table('company')->where('user',null)->where('user',array_column($reports->toArray() ,'user'))->get();
         $einfo['tong']+=$ctys->sum('sld');
         $einfo['bhxh']+=$ctys->sum('sld');
         $einfo['hdcothoihan']+=$ctys->sum('sld');
