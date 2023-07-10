@@ -78,7 +78,7 @@ class dangkytimviecImport extends Model
 
           
             'tenmanghe', 'manghe',
-            'tenchucvu',  'chucvu',
+            // 'tenchucvu',  'chucvu',
             'tenloaihinhkt','loaihinhkt',
             'loaihdld',
             'khanangcongtac',
@@ -134,7 +134,6 @@ class dangkytimviecImport extends Model
                     if ($data['phiengd'] == 'Phiên online') {
                         $data['maphien'] = date('Ymd') . '-ol';
                     }
-
                     dangkytimviec::create($data);
                 }
             }

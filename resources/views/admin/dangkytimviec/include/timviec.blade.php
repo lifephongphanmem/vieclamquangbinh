@@ -18,7 +18,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Chức vụ</label>
                 <select name="chucvu[]" class="form-control ">
@@ -28,7 +28,8 @@
                     @endforeach
                 </select>
             </div>
-        </div>
+        </div> --}}
+
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Loại hình kinh tế</label>
@@ -39,6 +40,18 @@
                     @endforeach
                 </select>
             </div>
+        </div>
+        <div class="col-sm-3" >
+            <label>Nhóm ngành nghề</label>
+            <select name="linhvuc[]" class="form-control">
+                <option {{ isset($model)?($model->linhvuc == "Lĩnh vực xây dựng" ? 'selected' : ''):'' }}>Lĩnh vực xây dựng</option>
+                <option {{ isset($model)?($model->linhvuc == "Lĩnh vực kinh tế" ? 'selected' : ''):'' }}>Lĩnh vực kinh tế</option>
+                <option {{ isset($model)?($model->linhvuc == "Lĩnh vực dịch vụ" ? 'selected' : ''):'' }}>Lĩnh vực dịch vụ</option>
+                <option {{ isset($model)?($model->linhvuc == "Lĩnh vực kỹ thuật" ? 'selected' : ''):'' }}>Lĩnh vực kỹ thuật</option>
+                <option {{ isset($model)?($model->linhvuc == "Lĩnh vực LDPT" ? 'selected' : ''):'' }}>Lĩnh vực LDPT</option>
+                <option {{ isset($model)?($model->linhvuc == "Lĩnh vực khác" ? 'selected' : ''):'' }}>Lĩnh vực khác</option>
+ 
+            </select>
         </div>
     </div>
 
@@ -144,7 +157,7 @@
         </div>
  
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-sm-3" >
             <label>Nhóm ngành nghề</label>
             <select name="linhvuc[]" class="form-control">
@@ -157,7 +170,7 @@
  
             </select>
         </div>
-    </div>
+    </div> --}}
     {{-- <div class="row">
         <div class="col-sm-3" >
             <label>Phiên giao dịch</label>
