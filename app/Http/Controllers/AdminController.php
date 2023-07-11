@@ -73,6 +73,9 @@ class AdminController extends Controller
 					tonghopcunglaodong::create($data);
 				}
 			}
+
+
+			
 		}
 		if (tonghopcunglaodong::where('kydieutra', 2023)->first() == null) {
 			$nhankhau = DB::table('nhankhau')->where('kydieutra', 2023)->where('loaibiendong', '!=', '2')->get();
