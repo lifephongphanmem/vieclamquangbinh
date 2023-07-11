@@ -165,8 +165,10 @@ class AdminController extends Controller
 		$ldkhongthamgia = array('kytruoc' => 0, 'kyhientai' => 0);
 
 		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
-			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
+			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai]);
+			
 			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->get();
+			// dd($model);
 			if (count($model_truoc) > 0) {
 				foreach ($model_truoc as $m_truoc) {
 					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
@@ -185,7 +187,7 @@ class AdminController extends Controller
 				}
 			}
 		} else if (session('admin')->capdo == 'H') {
-			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
+			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai]);
 			// $madv_huyen = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
 			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
 				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
