@@ -42,74 +42,6 @@ class AdminController extends Controller
 	}
 	public function dashboard()
 	{
-		if (tonghopcunglaodong::where('kydieutra', 2022)->first() == null) {
-			$nhankhau = DB::table('nhankhau')->where('kydieutra', 2022)->where('loaibiendong', '!=', '2')->get();
-			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
-				->get();
-			// $tonghopcunglaodong = tonghopcunglaodong::where('kydieutra', 2022)->get();
-			foreach ($dmdonvi as $item) {
-				if ($item->capdo == 'X') {
-					$data = array();
-					$model = $nhankhau->where('madv', $item->madv);
-					$data['kydieutra'] = 2022;
-					$data['madv'] = $item->madv;
-					$data['capdo'] = $item->capdo;
-					$data['tendv'] = $item->tendv;
-					// $data['nam'] = count($model->where('gioitinh', 'Nam'));
-					// $data['nu'] = count($model->where('gioitinh', 'Nữ'));
-					$data['ldtren15'] = count($model);
-					$data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
-					$data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
-					$data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
-					// if ($item->level == 'Thị trấn' || $item->level == 'Phường') {
-					// 	$data['thanhthi'] = count($model);
-					// 	$data['nongthon'] = 0;
-					// } else {
-					// 	$data['thanhthi'] = 0;
-					// 	$data['nongthon'] = count($model);
-					// }
-
-					tonghopcunglaodong::create($data);
-				}
-			}
-
-
-			
-		}
-		if (tonghopcunglaodong::where('kydieutra', 2023)->first() == null) {
-			$nhankhau = DB::table('nhankhau')->where('kydieutra', 2023)->where('loaibiendong', '!=', '2')->get();
-			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
-				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
-				->get();
-			// $tonghopcunglaodong = tonghopcunglaodong::where('kydieutra', 2023)->get();
-			foreach ($dmdonvi as $item) {
-				if ($item->capdo == 'X') {
-					$data = array();
-					$model = $nhankhau->where('madv', $item->madv);
-					$data['kydieutra'] = 2023;
-					$data['madv'] = $item->madv;
-					$data['capdo'] = $item->capdo;
-					$data['tendv'] = $item->tendv;
-					// $data['nam'] = count($model->where('gioitinh', 'Nam'));
-					// $data['nu'] = count($model->where('gioitinh', 'Nữ'));
-					$data['ldtren15'] = count($model);
-					$data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
-					$data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
-					$data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
-					// if ($item->level == 'Thị trấn' || $item->level == 'Phường') {
-					// 	$data['thanhthi'] = count($model);
-					// 	$data['nongthon'] = 0;
-					// } else {
-					// 	$data['thanhthi'] = 0;
-					// 	$data['nongthon'] = count($model);
-					// }
-
-					tonghopcunglaodong::create($data);
-				}
-			}
-		}
-
 
 		//chạy đơn vị huyện
 		// foreach ($dmdonvi as $item) {
@@ -233,8 +165,9 @@ class AdminController extends Controller
 		$ldkhongthamgia = array('kytruoc' => 0, 'kyhientai' => 0);
 
 		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
-			$model_truoc = tonghopcunglaodong::where('kydieutra', $kydieutra_truoc)->get();
-			if ($model_truoc != null) {
+			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->get();
+			if (count($model_truoc) > 0) {
 				foreach ($model_truoc as $m_truoc) {
 					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
 					$ldcovieclam['kytruoc'] += $m_truoc['ldcovieclam'];
@@ -242,8 +175,8 @@ class AdminController extends Controller
 					$ldkhongthamgia['kytruoc'] += $m_truoc['ldkhongthamgia'];
 				}
 			}
-			$model_hientai = tonghopcunglaodong::where('kydieutra', $kydieutra_hientai)->get();
-			if ($model_hientai != null) {
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->get();
+			if (count($model_hientai) > 0) {
 				foreach ($model_hientai as $m_hientai) {
 					$tongsonhankhau['kyhientai'] += $m_hientai['ldtren15'];
 					$ldcovieclam['kyhientai'] += $m_hientai['ldcovieclam'];
@@ -252,14 +185,15 @@ class AdminController extends Controller
 				}
 			}
 		} else if (session('admin')->capdo == 'H') {
+			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
 			// $madv_huyen = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
 			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
 				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
 				->get();
 			$maquocgia = $dmdonvi->where('madv', session('admin')->madv)->first()->maquocgia;
 			$ds_madv_xa = array_column($dmdonvi->where('parent', $maquocgia)->toarray(), 'madv');
-			$model_truoc = tonghopcunglaodong::where('kydieutra', $kydieutra_truoc)->whereIn('madv', $ds_madv_xa)->get();
-			if ($model_truoc != null) {
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->whereIn('madv', $ds_madv_xa)->get();
+			if (count($model_truoc) > 0) {
 				foreach ($model_truoc as $m_truoc) {
 					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
 					$ldcovieclam['kytruoc'] += $m_truoc['ldcovieclam'];
@@ -267,8 +201,8 @@ class AdminController extends Controller
 					$ldkhongthamgia['kytruoc'] += $m_truoc['ldkhongthamgia'];
 				}
 			}
-			$model_hientai = tonghopcunglaodong::where('kydieutra', $kydieutra_hientai)->whereIn('madv', $ds_madv_xa)->get();
-			if ($model_hientai != null) {
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->whereIn('madv', $ds_madv_xa)->get();
+			if (count($model_hientai) > 0) {
 				foreach ($model_hientai as $m_hientai) {
 					$tongsonhankhau['kyhientai'] += $m_hientai['ldtren15'];
 					$ldcovieclam['kyhientai'] += $m_hientai['ldcovieclam'];
@@ -282,13 +216,13 @@ class AdminController extends Controller
 
 			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->first();
 			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->first();
-			if ($model_truoc != null) {
+			if (isset($model_truoc)) {
 				$tongsonhankhau['kytruoc'] = $model_truoc->ldtren15;
 				$ldcovieclam['kytruoc'] = $model_truoc->ldcovieclam;
 				$ldthatnghiep['kytruoc'] = $model_truoc->ldthatnghiep;
 				$ldkhongthamgia['kytruoc'] = $model_truoc->ldkhongthamgia;
 			}
-			if ($model_hientai != null) {
+			if (isset($model_hientai)) {
 				$tongsonhankhau['kyhientai'] =  $model_hientai->ldtren15;
 				$ldcovieclam['kyhientai'] = $model_hientai->ldcovieclam;
 				$ldthatnghiep['kyhientai'] = $model_hientai->ldthatnghiep;

@@ -18,6 +18,7 @@ use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use App\Models\tonghopcunglaodong;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -167,6 +168,71 @@ class HethongchungController extends Controller
 			//$ttuser->chucnang = array('SSA');
 			$user->capdo = "SSA";
 			//$ttuser->phanquyen = [];
+			
+		if (tonghopcunglaodong::where('kydieutra', 2022)->first() == null) {
+			$nhankhau = DB::table('nhankhau')->where('kydieutra', 2022)->where('loaibiendong', '!=', '2')->get();
+			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
+				->get();
+			// $tonghopcunglaodong = tonghopcunglaodong::where('kydieutra', 2022)->get();
+			foreach ($dmdonvi as $item) {
+				if ($item->capdo == 'X') {
+					$data = array();
+					$model = $nhankhau->where('madv', $item->madv);
+					$data['kydieutra'] = 2022;
+					$data['madv'] = $item->madv;
+					$data['capdo'] = $item->capdo;
+					$data['tendv'] = $item->tendv;
+					// $data['nam'] = count($model->where('gioitinh', 'Nam'));
+					// $data['nu'] = count($model->where('gioitinh', 'Nữ'));
+					$data['ldtren15'] = count($model);
+					$data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
+					$data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
+					$data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
+					// if ($item->level == 'Thị trấn' || $item->level == 'Phường') {
+					// 	$data['thanhthi'] = count($model);
+					// 	$data['nongthon'] = 0;
+					// } else {
+					// 	$data['thanhthi'] = 0;
+					// 	$data['nongthon'] = count($model);
+					// }
+
+					tonghopcunglaodong::create($data);
+				}
+			}
+		}
+		if (tonghopcunglaodong::where('kydieutra', 2023)->first() == null) {
+			$nhankhau = DB::table('nhankhau')->where('kydieutra', 2023)->where('loaibiendong', '!=', '2')->get();
+			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
+				->get();
+			// $tonghopcunglaodong = tonghopcunglaodong::where('kydieutra', 2023)->get();
+			foreach ($dmdonvi as $item) {
+				if ($item->capdo == 'X') {
+					$data = array();
+					$model = $nhankhau->where('madv', $item->madv);
+					$data['kydieutra'] = 2023;
+					$data['madv'] = $item->madv;
+					$data['capdo'] = $item->capdo;
+					$data['tendv'] = $item->tendv;
+					// $data['nam'] = count($model->where('gioitinh', 'Nam'));
+					// $data['nu'] = count($model->where('gioitinh', 'Nữ'));
+					$data['ldtren15'] = count($model);
+					$data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
+					$data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
+					$data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
+					// if ($item->level == 'Thị trấn' || $item->level == 'Phường') {
+					// 	$data['thanhthi'] = count($model);
+					// 	$data['nongthon'] = 0;
+					// } else {
+					// 	$data['thanhthi'] = 0;
+					// 	$data['nongthon'] = count($model);
+					// }
+
+					tonghopcunglaodong::create($data);
+				}
+			}
+		}
 		}
 
 		Session::put('admin', $user);
