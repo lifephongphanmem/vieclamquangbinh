@@ -166,7 +166,8 @@ class AdminController extends Controller
 
 		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
 			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
-			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->get();
+
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc);
 			if (count($model_truoc) > 0) {
 				foreach ($model_truoc as $m_truoc) {
 					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
@@ -175,7 +176,7 @@ class AdminController extends Controller
 					$ldkhongthamgia['kytruoc'] += $m_truoc['ldkhongthamgia'];
 				}
 			}
-			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->get();
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai);
 			if (count($model_hientai) > 0) {
 				foreach ($model_hientai as $m_hientai) {
 					$tongsonhankhau['kyhientai'] += $m_hientai['ldtren15'];
@@ -192,7 +193,7 @@ class AdminController extends Controller
 				->get();
 			$maquocgia = $dmdonvi->where('madv', session('admin')->madv)->first()->maquocgia;
 			$ds_madv_xa = array_column($dmdonvi->where('parent', $maquocgia)->toarray(), 'madv');
-			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->whereIn('madv', $ds_madv_xa)->get();
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->whereIn('madv', $ds_madv_xa);
 			if (count($model_truoc) > 0) {
 				foreach ($model_truoc as $m_truoc) {
 					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
@@ -201,7 +202,7 @@ class AdminController extends Controller
 					$ldkhongthamgia['kytruoc'] += $m_truoc['ldkhongthamgia'];
 				}
 			}
-			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->whereIn('madv', $ds_madv_xa)->get();
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->whereIn('madv', $ds_madv_xa);
 			if (count($model_hientai) > 0) {
 				foreach ($model_hientai as $m_hientai) {
 					$tongsonhankhau['kyhientai'] += $m_hientai['ldtren15'];
