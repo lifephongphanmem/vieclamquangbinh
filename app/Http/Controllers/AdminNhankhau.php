@@ -22,6 +22,7 @@ use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\nhankhauModel;
 use App\Models\Report;
+use App\Models\tonghopcunglaodong;
 use App\Models\User;
 use App\Models\view\view_nhankhau_danhsach;
 use Carbon\Carbon;
@@ -467,6 +468,7 @@ class AdminNhankhau extends Controller
     }
     public function update(Request $request, $id)
     {
+        // dd(1);
         $inputs = $request->all();
         $loailoi = $inputs['loailoi'] ?? '';
         $kydieutra=$inputs['kydieutra'];
@@ -549,6 +551,50 @@ class AdminNhankhau extends Controller
                 }
             }
             // $inputs['loaibiendong']=3;//cập nhật thông tin
+            $tonghopcld = tonghopcunglaodong::where('madv',$model->madv)->where('kydieutra',$model->kydieutra)->first();
+            
+            if ($model->tinhtranghdkt == '1' ) {
+                if ($inputs['tinhtranghdkt'] == '2') {
+                    $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
+                }
+                if ($inputs['tinhtranghdkt'] =='3') {
+                    $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
+                }
+                $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
+            }
+            if ($model->tinhtranghdkt == '2') {
+                if ($inputs['tinhtranghdkt'] == '1') {
+                    $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
+                }
+                if ($inputs['tinhtranghdkt'] == '3') {
+                    $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
+                }
+                $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
+            } 
+            if ($model->tinhtranghdkt == '3') {
+                if ($inputs['tinhtranghdkt'] == '1') {
+                    $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
+                }
+                if ($inputs['tinhtranghdkt'] == '2') {
+                    $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
+                }
+                $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
+            } 
+            if ($model->tinhtranghdkt == null) {
+                if ($inputs['tinhtranghdkt'] == '1') {
+                    $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
+                }
+                if ($inputs['tinhtranghdkt'] == '2') {
+                    $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
+                }
+                if ($inputs['tinhtranghdkt'] == '3') {
+                    $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
+                }
+            } 
+            if ($inputs['tinhtranghdkt'] != null) {
+                $tonghopcld->update($xa);
+            }
+          
             $model->update($inputs);
             // $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
             // if(ckdulieuloi($id) != []){
@@ -688,10 +734,22 @@ class AdminNhankhau extends Controller
             return view('errors.noperm')->with('machucnang', 'nhankhau');
         }
         $model=nhankhauModel::findOrFail($id);
-
         $danhsach=danhsach::where('user_id',$model->madv)->where('kydieutra',$model->kydieutra)->first();
         $soluong=$danhsach->soluong -1;
-
+        $tonghopcld = tonghopcunglaodong::where('madv',$model->madv)->where('kydieutra',$model->kydieutra )->first();
+        if ($model->tinhtranghdkt == '1') {
+            $xa['ldcovieclam'] = $tonghopcld->ldcovieclam -1;
+        }
+        if ($model->tinhtranghdkt == '2') {
+            $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep -1;
+        }
+        if ($model->tinhtranghdkt == '3') {
+            $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia -1;
+        }
+        if ($model->tinhtranghdkt != null) {
+            $tonghopcld->update($xa);
+        }
+       
         $model->update(['loaibiendong'=>2]);
         $danhsach->update(['soluong'=>$soluong]);
 

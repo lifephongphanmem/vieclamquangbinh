@@ -76,6 +76,11 @@ class Nhankhau extends Model
 		$loi_loai3=0;
 		$loi_loai4=0;
 
+		$model = tonghopcunglaodong::where('madv',$inputs['madv'])->where('kydieutra',$inputs['kydieutra'])->first();
+		$xa['ldtren15'] = $model->ldtren15;
+		$xa['ldcovieclam'] = $model->ldcovieclam;
+		$xa['ldthatnghiep'] = $model->ldthatnghiep;
+		$xa['ldkhongthamgia'] =$model->ldkhongthamgia;
 		for ($i = 11; $i < count($arr); $i++) {
 			//  dd($arr[$i]);
 
@@ -253,11 +258,23 @@ class Nhankhau extends Model
 			$data['loaibiendong']=0; //0: import, 1:thêm bằng tay, 2: báo tăng
 			// dd($data);
 			DB::table('nhankhau')->insert($data);
+			$xa['ldtren15'] +=1;
+			if ($data['tinhtranghdkt'] == '1') {
+				$xa['ldcovieclam'] += 1 ;
+			}elseif($data['tinhtranghdkt'] == '2'){
+				$xa['ldthatnghiep'] += 1 ;
+			}elseif($data['tinhtranghdkt'] == '3'){
+				$xa['ldkhongthamgia'] += 1 ;
+			}
+		
+			
+			// dd($data);
 			//  $lds[] = ['2'=>$data['hoten'],'3'=>$data['ngaysinh'],'5'=>$data['cccd']];
 			 $lds[] = ['5'=>$data['cccd']];
 			$y++;
 		}
 
+		$model->update($xa);
 
 		//  dd($lds);
 		$num_valid_ld = $y;

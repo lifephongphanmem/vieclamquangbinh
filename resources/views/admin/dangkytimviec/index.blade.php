@@ -264,7 +264,7 @@
                             <input type="file" name="import_file" accept=".xlsx,.xls,.csv"  required>
                         </div>
                         <div class="form-group">
-                            <a href="{{'uploads/maudangkytimviec/Mau-danh-sach-dang-ky-tim-viec.xlsx'}}" download >Tải bản mẫu</a>
+                            <a href="{{'uploads/maudangkytimviec/Mau-danh-sach-dang-ky-tim-viec.xlsx'}}" download >Tải xuống bản mẫu</a>
                         </div>
                     </div>
                     <div class="modal-footer">

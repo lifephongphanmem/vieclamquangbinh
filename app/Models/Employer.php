@@ -94,6 +94,7 @@ class Employer extends Model
 	// Lấy danh sách người lao động duoc su dụng
 	public function getEmployerState($cid=null)
 	{ 
+		
 		$info= array();
 	  	// Tổng số lao động đang hoạt động tại DN
 		$info['tong']= DB::table('nguoilaodong')
@@ -131,7 +132,6 @@ class Employer extends Model
 			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count()	;
 		// số lượng Nhà quản lý	
-		
 		$quanlys=DB::table('nguoilaodong')
 			->when($cid, function ($query, $cid) {
                     return $query->where('nguoilaodong.company', $cid);

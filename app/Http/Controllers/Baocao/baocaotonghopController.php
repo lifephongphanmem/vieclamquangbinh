@@ -812,6 +812,7 @@ class baocaotonghopController extends Controller
         $denngay2 = Carbon::parse($denngay)->addDays();
 
         $reports = DB::table('report')->where('time', '>=', $tungay)->where('time', '<=', $denngay2)->whereNotin('datatable', ['nhankhau', 'users'])->get();
+
         $emodel= new Employer();
 		$htxinfo=$emodel->getTypeCompanyInfo('Hợp tác xã');
 		$hkdinfo=$emodel->getTypeCompanyInfo('Hộ kinh doanh');
@@ -831,3 +832,6 @@ class baocaotonghopController extends Controller
     }
 
 }
+
+
+
