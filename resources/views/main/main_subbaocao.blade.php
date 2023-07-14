@@ -71,7 +71,8 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span>
+                                {{-- <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span> --}}
+                                <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
                             </a>
                         </li>
                         @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
@@ -80,7 +81,8 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Huyện)</span>
+                                {{-- <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Huyện)</span> --}}
+                                <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b (huyện)</span>
                             </a>
                         </li>
                     @endif
@@ -90,7 +92,8 @@
                             <i class="menu-bullet menu-bullet-dot">
                                 <span></span>
                             </i>
-                            <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span>
+                            {{-- <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span> --}}
+                            <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b (xã)</span>
                         </a>
                     </li>
                 @endif

@@ -1,5 +1,3 @@
-
-
 <!--Model báo cáo tình hình sử dụng ld mẫu 02pli -->
 <div id="moda-mau02pli" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
     <form id="frmmau02pli" method="get" action="{{ '/baocao_tonghop/mau02PLI' }}" accept-charset="UTF-8"
@@ -14,7 +12,8 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">Từ ngày</label>
-                        <?php use Carbon\Carbon; $tungay = Carbon::create(date('Y'), 1, 1)->toDateString(); ?>
+                        <?php use Carbon\Carbon;
+                        $tungay = Carbon::create(date('Y'), 1, 1)->toDateString(); ?>
                         <input type="date" name="tungay" value="{{ $tungay }}" class="form-control">
                     </div>
                     <div class="form-group">
@@ -63,16 +62,17 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">In báo
-                        cáo</h4>
+                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b (xã)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-
                         <select name="madv" id="" class="form-control select2basic" style="width:100%">
-                            <option value="">Tất cả</option>
+                            @if (session('admin')->capdo == 'T')
+                                <option value="">Tất cả</option>
+                            @endif
                             @foreach ($baocao['m_xa'] as $key => $ct)
                                 <option
                                     value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
@@ -198,15 +198,17 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">In báo
-                        cáo</h4>
+                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b (huyện)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
                         <select name="madv" id="" class="form-control select2basic" style="width:100%">
-                            <option value="">Tất cả</option>
+                            @if (session('admin')->capdo == 'T')
+                                <option value="">Tất cả</option>
+                            @endif
                             @foreach ($baocao['m_huyen'] as $key => $ct)
                                 <option value="{{ $ct->madv }}"
                                     {{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
@@ -331,7 +333,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4>
+                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">

@@ -364,6 +364,7 @@ class AdminDieutra extends Controller
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
         $a_gdpt = array_column( dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
+        $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
         if (isset( $inputs['madv'] )) {
             $m_xa = $m_danhmuc->where('madv', $inputs['madv'] )->first();
             $m_huyen =  $m_danhmuc->where('maquocgia' , $m_xa->parent)->first();
@@ -373,6 +374,7 @@ class AdminDieutra extends Controller
             $m_huyen = null;
             $m_tinh =  null;
         }
+
         // return view('admin.dieutra.tonghop')
         return view('admin.dieutra.mau01bxa')
             ->with('model', $model)
@@ -384,6 +386,7 @@ class AdminDieutra extends Controller
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
             ->with('pageTitle', 'Tổng hợp cung lao động')
             ->with('a_gdpt', $a_gdpt)
+            ->with('a_dtut', $a_dtut)
             ->with('m_xa', $m_xa)
             ->with('m_huyen', $m_huyen)
             ->with('m_tinh', $m_tinh)
@@ -452,6 +455,7 @@ class AdminDieutra extends Controller
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
         $a_gdpt = array_column( dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
+        $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
         if (isset( $inputs['madv'] )) {
             $m_huyen = $m_danhmuc->where('madv', $inputs['madv'] )->first();
             $m_tinh =  $m_danhmuc->where('maquocgia' , $m_huyen->parent)->first();
@@ -472,6 +476,7 @@ class AdminDieutra extends Controller
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
             ->with('pageTitle', 'Tổng hợp cung lao động')
             ->with('a_gdpt', $a_gdpt)
+            ->with('a_dtut', $a_dtut)
             ->with('m_huyen', $m_huyen)
             ->with('m_tinh', $m_tinh)
             ;
@@ -520,7 +525,7 @@ class AdminDieutra extends Controller
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
         $a_gdpt = array_column( dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
- 
+        $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
 
         $a_ketqua = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
         $a_covl = ['thanhthi' => 0, 'nongthon' => 0];
@@ -588,6 +593,7 @@ class AdminDieutra extends Controller
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
             ->with('pageTitle', 'Tổng hợp cung lao động')
             ->with('a_gdpt', $a_gdpt)
+            ->with('a_dtut', $a_dtut)
             ;
     }
 
