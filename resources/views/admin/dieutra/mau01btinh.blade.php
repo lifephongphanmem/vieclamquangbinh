@@ -25,7 +25,7 @@
                 <td rowspan="3"> Số điện thoại (5) </td>
                 <td rowspan="3"> Nơi ở hiện tại (6) </td> --}}
                 <td colspan="2"> Khu vực(7) </td>
-                <td colspan="4"> ĐốI tượng ưu tiên (8)</td>
+                <td colspan="5"> ĐốI tượng ưu tiên (8)</td>
                 <td colspan="4"> Trình độ GDPT cao nhất đạt được (9)</td>
                 <td colspan="8"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
                 <td colspan="4"> Nhu cầu tìm kiếm việc làm (11) </td>
@@ -78,7 +78,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr style="text-align: center">
                 <td> {{ $a_ketqua['nam'] }} </td>
                 <td> {{ $a_ketqua['nu'] }} </td>
                 <td> {{ $a_ketqua['thanhthi'] }} </td>

@@ -65,8 +65,8 @@
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        {{-- <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span> --}}
-                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span>
+
                                     </a>
                                 </li>
                             @endif
@@ -76,11 +76,33 @@
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        {{-- <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span> --}}
-                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span>
+
                                     </a>
                                 </li>
                             @endif
+
+                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+                            <li class="menu-item" aria-haspopup="true">
+                                <a data-target="#modify-modal-xa-mau01b" data-toggle="modal" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+
+                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                </a>
+                            </li>
+                        @endif
+                        @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                            <li class="menu-item" aria-haspopup="true">
+                                <a data-target="#modify-modal-huyen-mau01b" data-toggle="modal" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                </a>
+                            </li>
+                        @endif
                             <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#thitruongld-cung-modal" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
