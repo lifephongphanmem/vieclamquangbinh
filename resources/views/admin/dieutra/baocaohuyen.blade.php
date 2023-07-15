@@ -10,7 +10,7 @@
 
                 <p>Tỉnh: Quảng Bình</p>
                 {{-- <p>{{$m_donvi->huyen}}</p> --}}
-                <p>{{$m_donvi->name}}</p>
+                <p>{{isset($m_donvi) ? $m_donvi->name : ''}}</p>
                 <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
 
             </td>

@@ -9,8 +9,8 @@
             <td width="40%" style="vertical-align: top;">
 
                 <p>Tỉnh: Quảng Bình</p>
-                <p>{{$m_donvi->huyen}}</p>
-                <p>{{$m_donvi->name}}</p>
+                <p>{{ isset($m_donvi) ? $m_donvi->huyen :''}}</p>
+                <p>{{ isset($m_donvi) ? $m_donvi->name :''}}</p>
                 <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
 
             </td>
@@ -27,7 +27,7 @@
     </table>
     <p id="data_body1" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO <br>VỀ THÔNG TIN
         CUNG LAO ĐỘNG NĂM {{$inputs['kydieutra']}}</p>
-    <p id="data_body2" style="text-align: center;font-style: italic;">Kính gửi: Ủy Ban nhân dân {{$m_donvi->huyen}}</p>
+    <p id="data_body2" style="text-align: center;font-style: italic;">Kính gửi: Ủy Ban nhân dân {{ isset($m_donvi) ? $m_donvi->huyen :''}}</p>
 
     <table id="data_body3" cellspacing="0" cellpadding="0" border="1"
         style="margin: 20px auto; border-collapse: collapse;" id="data">

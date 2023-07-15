@@ -356,12 +356,27 @@ class AdminDieutra extends Controller
         }
 
         $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
-        $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        if (isset($m_donvi)) {
+            $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        }
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
-        return view('admin.dieutra.tonghop')
+        $a_gdpt = array_column( dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
+        $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
+        if (isset( $inputs['madv'] )) {
+            $m_xa = $m_danhmuc->where('madv', $inputs['madv'] )->first();
+            $m_huyen =  $m_danhmuc->where('maquocgia' , $m_xa->parent)->first();
+            $m_tinh = $m_danhmuc->where('maquocgia' , $m_huyen->parent)->first();
+        }else{
+            $m_xa = null;
+            $m_huyen = null;
+            $m_tinh =  null;
+        }
+
+        // return view('admin.dieutra.tonghop')
+        return view('admin.dieutra.mau01bxa')
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('m_donvi', $m_donvi)
@@ -369,7 +384,13 @@ class AdminDieutra extends Controller
             ->with('a_khongthamgia', $a_khongthamgia)
             ->with('a_vithevl', $a_vithevl)
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
-            ->with('pageTitle', 'Tổng hợp cung lao động');
+            ->with('pageTitle', 'Tổng hợp cung lao động')
+            ->with('a_gdpt', $a_gdpt)
+            ->with('a_dtut', $a_dtut)
+            ->with('m_xa', $m_xa)
+            ->with('m_huyen', $m_huyen)
+            ->with('m_tinh', $m_tinh)
+            ;
     }
     public function inbaocaohuyen(Request $request)
     {
@@ -377,7 +398,7 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
-        // dd($inputs);
+
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
             ->where(function ($q) use ($inputs) {
@@ -401,6 +422,7 @@ class AdminDieutra extends Controller
             ->get();
 
         // dd($model);
+
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -426,13 +448,25 @@ class AdminDieutra extends Controller
                 $ct->gioitinh = 'Nam';
             }
         }
-
-
+ 
+        $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
-        return view('admin.dieutra.baocaohuyen')
+        $a_gdpt = array_column( dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
+        $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
+        if (isset( $inputs['madv'] )) {
+            $m_huyen = $m_danhmuc->where('madv', $inputs['madv'] )->first();
+            $m_tinh =  $m_danhmuc->where('maquocgia' , $m_huyen->parent)->first();
+        }else{
+            $m_huyen = null;
+            $m_tinh =  null;
+        }
+        
+        // dd($m_tinh->name);
+        // return view('admin.dieutra.baocaohuyen')
+        return view('admin.dieutra.mau01bhuyen')
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('m_donvi', $m_donvi)
@@ -440,7 +474,12 @@ class AdminDieutra extends Controller
             ->with('a_khongthamgia', $a_khongthamgia)
             ->with('a_vithevl', $a_vithevl)
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
-            ->with('pageTitle', 'Tổng hợp cung lao động');
+            ->with('pageTitle', 'Tổng hợp cung lao động')
+            ->with('a_gdpt', $a_gdpt)
+            ->with('a_dtut', $a_dtut)
+            ->with('m_huyen', $m_huyen)
+            ->with('m_tinh', $m_tinh)
+            ;
     }
 
     public function inbaocaotinh(Request $request)
@@ -485,8 +524,8 @@ class AdminDieutra extends Controller
         $a_vithevl = array_column(dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get()->toarray(), 'tentgktct2', 'stt');
         $a_khongthamgia = array_column(dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get()->toarray(), 'tentgktct', 'stt');
         $a_thoigianthatnghiep = array_column(dmthoigianthatnghiep::all()->toarray(), 'tentgtn', 'stt');
-
-
+        $a_gdpt = array_column( dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
+        $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
 
         $a_ketqua = ['thanhthi' => 0, 'nongthon' => 0, 'nam' => 0, 'nu' => 0];
         $a_covl = ['thanhthi' => 0, 'nongthon' => 0];
@@ -537,7 +576,11 @@ class AdminDieutra extends Controller
 
 
         // dd($model);
-        return view('admin.dieutra.baocaotinh')
+        // return view('admin.dieutra.baocaotinh')
+
+
+        // dd($a_cmkt);
+        return view('admin.dieutra.mau01btinh')
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('a_ketqua', $a_ketqua)
@@ -548,7 +591,10 @@ class AdminDieutra extends Controller
             ->with('a_khongthamgia', $a_khongthamgia)
             ->with('a_vithevl', $a_vithevl)
             ->with('a_thoigianthatnghiep', $a_thoigianthatnghiep)
-            ->with('pageTitle', 'Tổng hợp cung lao động');
+            ->with('pageTitle', 'Tổng hợp cung lao động')
+            ->with('a_gdpt', $a_gdpt)
+            ->with('a_dtut', $a_dtut)
+            ;
     }
 
     public function XoaDanhSach(Request $request, $id)
@@ -1198,34 +1244,49 @@ class AdminDieutra extends Controller
     {
 
         $kydieutra_truoc = nhankhauModel::where('madv', session('admin')->madv)->max('kydieutra');
-        $model = nhankhauModel::where('madv', session('admin')->madv)->where('kydieutra', $kydieutra_truoc)->where('loaibiendong', '!=', 2)->get();
-        if ($model->max('kydieutra') == date('Y')) {
-            return view('errors.tontai_dulieu')
-                ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
-                ->with('furl', '/dashboard');
-        }
+        // $model = nhankhauModel::where('madv', session('admin')->madv)->where('kydieutra', $kydieutra_truoc)->where('loaibiendong', '!=', 2)->get();
+        // if ($model->max('kydieutra') == date('Y')) {
+        //     return view('errors.tontai_dulieu')
+        //         ->with('message', 'Đơn vị đã khai báo trong kỳ điều tra này')
+        //         ->with('furl', '/dashboard');
+        // }
 
-        if (count($model) <= 0) {
-            return view('errors.tontai_dulieu')
-                ->with('message', 'Chưa có dữ liệu nhân khẩu kỳ trước')
-                ->with('furl', '/dashboard');
+        // if (count($model) <= 0) {
+        //     return view('errors.tontai_dulieu')
+        //         ->with('message', 'Chưa có dữ liệu nhân khẩu kỳ trước')
+        //         ->with('furl', '/dashboard');
+        // }
+        // $danhsach_kytruoc = danhsach::where('user_id', session('admin')->madv)->where('kydieutra', $kydieutra_truoc)->first();
+        // $danhsach_kytruoc->soluong = 0;
+        // $danhsach_kytruoc->donvinhap = session('admin')->madv;
+        // $danhsach_kytruoc->soho = 0;
+        // $danhsach_kytruoc->kydieutra = date('Y');
+        // unset($danhsach_kytruoc->id, $danhsach_kytruoc->created_at);
+        // $danhsach = danhsach::create($danhsach_kytruoc->toarray());
+        // $count_nhankhau = 0;
+        // foreach ($model as $ct) {
+        //     $ct->kydieutra = date('Y');
+        //     $ct->danhsach_id = $danhsach->id;
+        //     unset($ct->id);
+        //     nhankhauModel::create($ct->toarray());
+        //     $count_nhankhau++;
+        // }
+        // $danhsach->update(['soluong' => $count_nhankhau]);
+
+        $tonghopcld_truoc = tonghopcunglaodong::where('madv' , session('admin')->madv)->where('kydieutra', date('Y'))->get();
+        $tonghopcld_hientai = tonghopcunglaodong::where('madv' , session('admin')->madv)->where('kydieutra', $kydieutra_truoc->kydieutra)->first();
+        if (count($tonghopcld_truoc) <= 0) {
+            tonghopcunglaodong::create([
+                'kydieutra' => date('Y'),
+                'madv' => $tonghopcld_hientai->madv,
+                'tendv' => $tonghopcld_hientai->tendv,
+                'ldtren15' => $tonghopcld_hientai->ldtren15,
+                'ldcovieclam' => $tonghopcld_hientai->ldcovieclam,
+                'ldthatnghiep' => $tonghopcld_hientai->ldthatnghiep,
+                'ldkhongthamgia' =>$tonghopcld_hientai->ldkhongthamgia,
+                'capdo' => $tonghopcld_hientai->capdo,
+            ]);
         }
-        $danhsach_kytruoc = danhsach::where('user_id', session('admin')->madv)->where('kydieutra', $kydieutra_truoc)->first();
-        $danhsach_kytruoc->soluong = 0;
-        $danhsach_kytruoc->donvinhap = session('admin')->madv;
-        $danhsach_kytruoc->soho = 0;
-        $danhsach_kytruoc->kydieutra = date('Y');
-        unset($danhsach_kytruoc->id, $danhsach_kytruoc->created_at);
-        $danhsach = danhsach::create($danhsach_kytruoc->toarray());
-        $count_nhankhau = 0;
-        foreach ($model as $ct) {
-            $ct->kydieutra = date('Y');
-            $ct->danhsach_id = $danhsach->id;
-            unset($ct->id);
-            nhankhauModel::create($ct->toarray());
-            $count_nhankhau++;
-        }
-        $danhsach->update(['soluong' => $count_nhankhau]);
         return redirect('/dashboard')->with('success', 'Tạo kỳ điều tra mới thành công');
     }
 }

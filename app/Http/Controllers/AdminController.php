@@ -165,6 +165,7 @@ class AdminController extends Controller
 		$ldkhongthamgia = array('kytruoc' => 0, 'kyhientai' => 0);
 
 		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
+			
 			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
 
 			$model_truoc = $model->where('kydieutra', $kydieutra_truoc);
