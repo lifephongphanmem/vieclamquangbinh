@@ -13,21 +13,22 @@
         </tr>
     </table>
 
-    <p id="data_body" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">TỔNG HỢP NGƯỜI
+    <p id="data_body" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">DANH SÁCH NGƯỜI
         LAO ĐỘNG NĂM {{ $inputs['kydieutra'] }}</p>
 
     <table id="data_body1" cellspacing="0" cellpadding="0" border="1"
         style="margin: 20px auto; border-collapse: collapse;" id="data">
         <thead>
             <tr>
-                {{-- <td rowspan="3">Họ và tên (1)</td>
-                <td rowspan="3"> Ngày tháng năm sinh (2)</td> --}}
+                <td rowspan="3">STT</td>
+                <td rowspan="3">Họ và tên (1)</td>
+                <td rowspan="3"> Ngày tháng năm sinh (2)</td>
                 <td colspan="2"> Giới tính (3) </td>
-                {{-- <td rowspan="3"> Số CCCD (4) </td>
+                <td rowspan="3"> Số CCCD (4) </td>
                 <td rowspan="3"> Số điện thoại (5) </td>
-                <td rowspan="3"> Nơi ở hiện tại (6) </td> --}}
+                <td rowspan="3"> Nơi ở hiện tại (6) </td>
                 <td colspan="2"> Khu vực(7) </td>
-                <td colspan="4"> ĐốI tượng ưu tiên (8)</td>
+                <td colspan="5"> ĐốI tượng ưu tiên (8)</td>
                 <td colspan="4"> Trình độ GDPT cao nhất đạt được (9)</td>
                 <td colspan="8"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
                 <td colspan="4"> Nhu cầu tìm kiếm việc làm (11) </td>
@@ -43,30 +44,14 @@
                 @foreach ($a_dtut as $key => $item)
                     <td rowspan="2">{{ $item . ' (8.' . $key . ')' }}</td>
                 @endforeach
-                {{-- <td rowspan="2"> Người khuyết tật (8.1) </td>
-                <td rowspan="2"> Hộ nghèo (8.2) </td>
-                <td rowspan="2"> Hộ cận nghèo (8.3) </td>
-                <td rowspan="2"> Dân tộc thiểu số (8.4) ( Ghi rõ tên dân tộc) </td> --}}
 
                 @foreach ($a_gdpt as $key => $item)
                     <td rowspan="2">{{ $item . ' (9.' . $key . ')' }}</td>
                 @endforeach
-                {{-- <td rowspan="2"> Chưa học xong TH (9.1) </td>
-                <td rowspan="2"> Tốt nghiệp TH (9.2) </td>
-                <td rowspan="2"> Tốt nghiệp THCS (9.3) </td>
-                <td rowspan="2"> Tốt nghiệp THPT (9.4) </td> --}}
 
                 @foreach ($a_cmkt as $key => $item)
                     <td rowspan="2">{{ $item . ' (10.' . $key . ')' }}</td>
                 @endforeach
-                {{-- <td rowspan="2"> Chưa qua đào tạo (10.1) </td>
-                <td rowspan="2"> CNKT không bằng (10.2) </td>
-                <td rowspan="2"> CC nghề dưới 3 tháng (10.3) </td>
-                <td rowspan="2"> Sơ cấp (10.4) </td>
-                <td rowspan="2"> Trung cấp (10.5)</td>
-                <td rowspan="2"> Cao đẳng (10.6) </td>
-                <td rowspan="2"> Đại học (10.7) </td>
-                <td rowspan="2"> Trên đại học (10.8) </td> --}}
                 <td colspan="2"> Đối tượng (11.1)</td>
                 <td colspan="2"> Việc làm mong muốn (11.2) (Ghi rõ ngành nghề )</td>
                 <td rowspan="2"> Ngành nghề muốn học (12.1) ( Ghi rõ ngành nghề ) </td>
@@ -80,12 +65,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr style="text-align: center">
+                <td> </td>
+                <td> </td>
+                <td> </td>
                 <td> {{ count($model->wherein('gioitinh', ['nam', 'Nam'])) }} </td>
                 <td> {{ count($model->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }} </td>
                 <td> {{ count($model->where('khuvuc', 'thanhthi')) }} </td>
                 <td> {{ count($model->where('khuvuc', 'nongthon')) }} </td>
-
+                <td> </td>
+                <td> </td>
+                <td> </td>
                 @foreach ($a_dtut as $key => $item)
                     <td>{{ count($model->where('uutien', $key)) }}</td>
                 @endforeach
@@ -106,6 +96,47 @@
                 <td> </td>
                 <td> </td>
             </tr>
+
+
+            @foreach ($model as $key => $item)
+                <tr style="text-align: center">
+                    <td>{{ ++$key }}</td>
+                    <td>{{ $item->hoten }}</td>
+                    <td>{{ $item->ngaysinh }}</td>
+                    <td>{{ $item->gioitinh == 'nam' || $item->gioitinh == 'Nam' ? 'x' : '' }}</td>
+                    <td>{{ $item->gioitinh == 'nu' || $item->gioitinh == 'Nu' || $item->gioitinh == 'nữ' || $item->gioitinh == 'Nữ' ? 'x' : '' }}
+                    </td>
+                    <td>{{ $item->cccd }}</td>
+                    <td></td>
+                    <td>{{ $item->thuongtru }}</td>
+                    <td>
+                        @foreach ($ds_danhmuc as $madv => $level)
+                            {{ $item->madv == $madv ? ($level == 'Xã' ? '' : 'x') : '' }}
+                        @endforeach
+                    </td>
+
+                    @foreach ($a_dtut as $key => $val)
+                        <td>{{ $item->uutien == $key ? 'x' : '' }}</td>
+                    @endforeach
+
+                    @foreach ($a_gdpt as $key => $val)
+                        <td>{{ $item->trinhdogiaoduc == $key ? 'x' : '' }}</td>
+                    @endforeach
+
+                    @foreach ($a_cmkt as $key => $val)
+                        <td>{{ $item->chuyenmonkythuat == $key ? 'x' : '' }}</td>
+                    @endforeach
+
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
     <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0"

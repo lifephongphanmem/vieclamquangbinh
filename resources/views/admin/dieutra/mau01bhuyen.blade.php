@@ -3,8 +3,9 @@
     <table id="data_header" width="96%" cellspacing="0" cellpadding="8" style="margin:0 auto 20px;">
         <tr>
             <td width="40%" style="vertical-align: top; text-align: left">
-                <P>Tỉnh, thành phố  {{isset($m_tinh) ? $m_tinh->name :'Quảng Bình'}}</P>
-                <p>Quận, huyện, thị xã {{ isset($m_huyen) ? $m_huyen->name :' ........................................'}}</p>
+                <P>Tỉnh, thành phố {{ isset($m_tinh) ? $m_tinh->name : 'Quảng Bình' }}</P>
+                <p>Quận, huyện, thị xã {{ isset($m_huyen) ? $m_huyen->name : ' ........................................' }}
+                </p>
                 <p>Xã, phường, thị trấn ........................................</p>
             </td>
             <td style="vertical-align: top;text-align: right">
@@ -13,11 +14,14 @@
         </tr>
     </table>
 
-    <p id="data_body" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">TỔNG HỢP NGƯỜI LAO ĐỘNG NĂM {{$inputs['kydieutra']}}</p>
+    <p id="data_body" style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">TỔNG HỢP NGƯỜI
+        LAO ĐỘNG NĂM {{ $inputs['kydieutra'] }}</p>
 
-    <table id="data_body1" cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;" id="data">
+    <table id="data_body1" cellspacing="0" cellpadding="0" border="1"
+        style="margin: 20px auto; border-collapse: collapse;" id="data">
         <thead>
             <tr>
+                <td  rowspan="3">Địa bàn</td>
                 {{-- <td rowspan="3">Họ và tên (1)</td>
                 <td rowspan="3"> Ngày tháng năm sinh (2)</td> --}}
                 <td colspan="2"> Giới tính (3) </td>
@@ -25,7 +29,7 @@
                 <td rowspan="3"> Số điện thoại (5) </td>
                 <td rowspan="3"> Nơi ở hiện tại (6) </td> --}}
                 <td colspan="2"> Khu vực(7) </td>
-                <td colspan="4"> ĐốI tượng ưu tiên (8)</td>
+                <td colspan="5"> ĐốI tượng ưu tiên (8)</td>
                 <td colspan="4"> Trình độ GDPT cao nhất đạt được (9)</td>
                 <td colspan="8"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
                 <td colspan="4"> Nhu cầu tìm kiếm việc làm (11) </td>
@@ -78,35 +82,81 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td> {{count($model->wherein('gioitinh', ['nam', 'Nam'])) }} </td>
-                <td> {{count($model->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }} </td>
-                <td> {{ count($model->where('khuvuc', 'thanhthi')) }} </td>
-                <td> {{ count($model->where('khuvuc', 'nongthon')) }} </td>
 
-                @foreach ($a_dtut as $key => $item)
-                    <td>{{ count($model->where('uutien', $key)) }}</td>
-                @endforeach
+            @foreach ($ds_danhmuc as $key => $dm)
+                <tr style="text-align: center">
+                    <?php
+               
+                    $gioitinh = ['nam' => 0, 'nu' => 0];
+                    $khuvuc = ['thanhthi' => 0, 'nongthon' => 0];
+                    $uutien = [];
+                    foreach ($a_dtut as $key_2 => $value) {
+                        array_push($uutien,$key_2 = 0);
+                    }
+                    $trinhdogiaoduc = [];
+                    foreach ($a_gdpt as $key_2 => $value) {
+                        array_push($trinhdogiaoduc,$key_2 = 0);
+                    }
+                    $chuyenmonkythuat = [];
+                    foreach ($a_cmkt as $key_2 => $value) {
+                        array_push($chuyenmonkythuat,$key_2 = 0);
+                    }
 
-                @foreach ($a_gdpt as $key => $item)
-                    <td>{{ count($model->where('trinhdogiaoduc',$key)) }}</td>
-                @endforeach
+                    $dm_xa = $m_danhmuc->where('parent', $dm->maquocgia);
+                    foreach ($dm_xa as $xa) {
+                        $model_x = $model->where('madv', $xa->madv);
+                        if (count($model_x) > 0) {
+                            $gioitinh['nam'] += count($model_x->wherein('gioitinh', ['nam', 'Nam']));
+                            $gioitinh['nu'] += count($model_x->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']));
+                            if ($xa->level == 'Xã') {
+                                $khuvuc['nongthon'] += count($model_x->where('khuvuc', 'nongthon'));
+                            } else {
+                                $khuvuc['thanhthi'] += count($model_x->where('khuvuc', 'thanhthi'));
+                            }
 
-                @foreach ($a_cmkt as $key => $item)
-                    <td>{{ count($model->where('chuyenmonkythuat',$key)) }}</td>
-                @endforeach
-           
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                 <td>  </td>
-            </tr>
+                            foreach ($a_dtut as $key_2 => $value) {
+                                $uutien[$key_2-1] += count($model_x->where('uutien',$key_2-1));
+                            }
+                            foreach ($a_gdpt as $key_2 => $value) {
+                                $trinhdogiaoduc[$key_2-1] += count($model_x->where('trinhdogiaoduc',$key_2-1));
+                            }
+                            foreach ($a_cmkt as $key_2 => $value) {
+                                $chuyenmonkythuat[$key_2-1] += count($model_x->where('trinhdogiaoduc',$key_2-1));
+                            }
+                        }
+                    }
+                    ?>
+                    <td>{{$dm->name}}</td>
+                    <td>{{ $gioitinh['nam'] }}</td>
+                    <td>{{ $gioitinh['nu'] }}</td>
+                    <td>{{ $khuvuc['thanhthi'] }}</td>
+                    <td>{{ $khuvuc['nongthon'] }}</td>
+
+                    @foreach ($a_dtut as $key => $item)
+                        <td>{{ $uutien[$key-1]}}</td>
+                    @endforeach
+
+                    @foreach ($a_gdpt as $key => $value)
+                        <td>{{ $trinhdogiaoduc[$key-1]}}</td>
+                    @endforeach
+
+                    @foreach ($a_cmkt as $key => $item)
+                        <td>{{  $chuyenmonkythuat[$key-1] }}</td>
+                    @endforeach
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            @endforeach
+
         </tbody>
     </table>
-    <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+    <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0"
+        style="margin: 20px auto;text-align: center; height:200px">
         <tr>
             <td width="40%" style="text-align: left; vertical-align: top;">
             </td>

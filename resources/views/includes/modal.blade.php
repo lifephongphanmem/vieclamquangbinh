@@ -54,7 +54,7 @@
     </form>
 </div>
 
-<!-- modal in báo cáo xã -->
+<!-- modal in báo cáo xã mẫu 03-->
 <form method="POST" action="{{ '/dieutra/intonghop' }}" accept-charset="UTF-8" id="frm_modify_xa" target="_blank">
     @csrf
     <div id="modify-modal-xa" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
@@ -63,6 +63,392 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (xã)</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 mb-2">
+                        <label class="control-label">Đơn vị</label>
+                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                            @if (session('admin')->capdo == 'T')
+                                <option value="">Tất cả</option>
+                            @endif
+                            @foreach ($baocao['m_xa'] as $key => $ct)
+                                <option
+                                    value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                    {{ $ct->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label class="control-label">Kỳ điều tra</label>
+                        <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
+                            @foreach ($baocao['a_kydieutra'] as $key => $ct)
+                                <option value="{{ $key }}">
+                                    {{ $ct }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-12 mt-3">
+                        <label class="control-label">Chọn tùy biến</label>
+                    </div>
+                    <div class="row mt-1 ml-5" id="1stld">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="gioitinh_xa" name=gender
+                                value="gender">
+                            <label class="form-check-label" for="gioitinh_xa">Giới
+                                tính</label>
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="tthdkt" id="tthdkt_xa"
+                                value="tthdkt">
+                            <label class="form-check-label" for="tthdkt_xa">Tình
+                                trạng HĐKT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="dtut" id="dtut_xa"
+                                value="dtut">
+                            <label class="form-check-label" for="dtut_xa">Đối tượng
+                                UT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="trinhdogdpt" id="trinhdogdpt_xa"
+                                value="trinhdogdpt">
+                            <label class="form-check-label" for="trinhdogdpt_xa">Trình độ GDPT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="trinhdocmkt" id="trinhdocmkt_xa"
+                                value="trinhdocmkt">
+                            <label class="form-check-label" for="trinhdocmkt_xa">Trình độ CMKT</label>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-10 d-none mt-2" id='gt_xa'>
+                            <label class="control-label">Giới tính</label>
+                            <select name="gioitinh" id="" class="form-control select2basic"
+                                style="width:100%">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='hdkt_xa'>
+                            <label class="control-label">Tình trạng HĐKT</label>
+                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['dmtinhtranghdkt'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tentgkt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='ut_xa'>
+                            <label class="control-label">Đối tượng UT</label>
+                            <select name="uutien" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['dmuutien'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tendoituong }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='gdpt_xa'>
+                            <label class="control-label">Trình độ DGPT</label>
+                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['trinhdoGDPT'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tengdpt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='cmkt_xa'>
+                            <label class="control-label">Trình độ CMKT</label>
+                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['trinhdocmkt'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tentdkt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- modal in bao cáo huyện mẫu 03-->
+<form method="POST" action="{{ '/dieutra/inbaocaohuyen' }}" accept-charset="UTF-8" id="frm_modify_huyen"
+    target="_blank">
+    @csrf
+    <div id="modify-modal-huyen" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (huyện)</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 mb-2">
+                        <label class="control-label">Đơn vị</label>
+                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                            @if (session('admin')->capdo == 'T')
+                                <option value="">Tất cả</option>
+                            @endif
+                            @foreach ($baocao['m_huyen'] as $key => $ct)
+                                <option value="{{ $ct->madv }}"
+                                    {{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                    {{ $ct->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label class="control-label">Kỳ điều tra</label>
+                        <select name="kydieutra" id="" class="form-control select2basic"
+                            style="width:100%">
+                            @foreach ($baocao['a_kydieutra'] as $key => $ct)
+                                <option value="{{ $key }}">
+                                    {{ $ct }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12 mt-3">
+                        <label class="control-label">Chọn tùy biến</label>
+                    </div>
+                    <div class="row mt-1 ml-5" id="1stld">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="gioitinh_huyen" name=gender
+                                value="gender">
+                            <label class="form-check-label" for="gioitinh_huyen">Giới tính</label>
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="tthdkt" id="tthdkt_huyen"
+                                value="tthdkt">
+                            <label class="form-check-label" for="tthdkt_huyen">Tình trạng HĐKT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="dtut" id="dtut_huyen"
+                                value="dtut">
+                            <label class="form-check-label" for="dtut_huyen">Đối
+                                tượng UT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="trinhdogdpt"
+                                id="trinhdogdpt_huyen" value="trinhdogdpt">
+                            <label class="form-check-label" for="trinhdogdpt_huyen">Trình độ GDPT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="trinhdocmkt"
+                                id="trinhdocmkt_huyen" value="trinhdocmkt">
+                            <label class="form-check-label" for="trinhdocmkt_huyen">Trình độ CMKT</label>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-10 d-none mt-2" id='gt_huyen'>
+                            <label class="control-label">Giới tính</label>
+                            <select name="gioitinh" id="" class="form-control select2basic"
+                                style="width:100%">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='hdkt_huyen'>
+                            <label class="control-label">Tình trạng HĐKT</label>
+                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['dmtinhtranghdkt'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tentgkt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='ut_huyen'>
+                            <label class="control-label">Đối tượng UT</label>
+                            <select name="uutien" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['dmuutien'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tendoituong }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='gdpt_huyen'>
+                            <label class="control-label">Trình độ DGPT</label>
+                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['trinhdoGDPT'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tengdpt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='cmkt_huyen'>
+                            <label class="control-label">Trình độ CMKT</label>
+                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['trinhdocmkt'] as $val)
+                                    <option value="{{ $val->stt }}">
+                                        {{ $val->tentdkt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- modal in báo cáo tỉnh mẫu 03-->
+<form method="POST" action="{{ '/dieutra/inbaocaotinh' }}" accept-charset="UTF-8" id="frm_modify_tinh"
+    target="_blank">
+    @csrf
+    <div id="modify-modal-tinh" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <label class="control-label">Kỳ điều tra</label>
+                        <select name="kydieutra" id="" class="form-control select2basic"
+                            style="width:100%">
+                            @foreach ($baocao['a_kydieutra'] as $key => $ct)
+                                <option value="{{ $key }}">{{ $ct }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label class="control-label mt-3">Chọn tùy biến</label>
+                    </div>
+                    <div class="row mt-1 ml-5" id="1stld">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="gioitinh" name=gender
+                                value="gender">
+                            <label class="form-check-label" for="gioitinh">Giới tính</label>
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="tthdkt" id="tthdkt"
+                                value="tthdkt">
+                            <label class="form-check-label" for="tthdkt">Tình trạng HĐKT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="dtut" id="dtut"
+                                value="dtut">
+                            <label class="form-check-label" for="dtut">Đối tượng UT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="trinhdogdpt" id="trinhdogdpt"
+                                value="trinhdogdpt">
+                            <label class="form-check-label" for="trinhdogdpt">Trình độ GDPT</label>
+
+                        </div>
+                        <div class="form-check form-check-inline ml-5">
+                            <input class="form-check-input" type="checkbox" name="trinhdocmkt" id="trinhdocmkt"
+                                value="trinhdocmkt">
+                            <label class="form-check-label" for="trinhdocmkt">Trình độ CMKT</label>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-10 d-none mt-2" id='gt'>
+                            <label class="control-label">Giới tính</label>
+                            <select name="gioitinh" id="" class="form-control select2basic"
+                                style="width:100%">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='hdkt'>
+                            <label class="control-label">Tình trạng HĐKT</label>
+                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['dmtinhtranghdkt'] as $val)
+                                    <option value="{{ $val->stt }}">{{ $val->tentgkt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='ut'>
+                            <label class="control-label">Đối tượng UT</label>
+                            <select name="uutien" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['dmuutien'] as $val)
+                                    <option value="{{ $val->stt }}">{{ $val->tendoituong }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='gdpt'>
+                            <label class="control-label">Trình độ DGPT</label>
+                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['trinhdoGDPT'] as $val)
+                                    <option value="{{ $val->stt }}">{{ $val->tengdpt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='cmkt'>
+                            <label class="control-label">Trình độ CMKT</label>
+                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @foreach ($baocao['trinhdocmkt'] as $val)
+                                    <option value="{{ $val->stt }}">{{ $val->tentdkt }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- modal in báo cáo xã mẫu 01b-->
+<form method="POST" action="{{ '/dieutra/intonghop-mau01b' }}" accept-charset="UTF-8" id="frm_modify_xa" target="_blank">
+    @csrf
+    <div id="modify-modal-xa-mau01b" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+
                     <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b (xã)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
@@ -189,16 +575,15 @@
     </div>
 </form>
 
-<!-- modal in bao cáo huyện -->
-<form method="POST" action="{{ '/dieutra/inbaocaohuyen' }}" accept-charset="UTF-8" id="frm_modify_huyen"
+<!-- modal in bao cáo huyện mẫu 01b-->
+<form method="POST" action="{{ '/dieutra/inbaocaohuyen-mau01b' }}" accept-charset="UTF-8" id="frm_modify_huyen"
     target="_blank">
     @csrf
-    <div id="modify-modal-huyen" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+    <div id="modify-modal-huyen-mau01b" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
                     <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b (huyện)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
@@ -324,16 +709,15 @@
         </div>
     </div>
 </form>
-<!-- modal in báo cáo tỉnh -->
-<form method="POST" action="{{ '/dieutra/inbaocaotinh' }}" accept-charset="UTF-8" id="frm_modify_tinh"
+<!-- modal in báo cáo tỉnh mẫu 01b-->
+<form method="POST" action="{{ '/dieutra/inbaocaotinh-mau01b' }}" accept-charset="UTF-8" id="frm_modify_tinh"
     target="_blank">
     @csrf
-    <div id="modify-modal-tinh" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+    <div id="modify-modal-tinh-mau01b" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
                     <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
