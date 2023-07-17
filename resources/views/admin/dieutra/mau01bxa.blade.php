@@ -103,7 +103,7 @@
                     <td>{{ ++$stt }}</td>
                     {{-- <td>{{ ++$key }}</td> --}}
                     <td>{{ $item->hoten }}</td>
-                    <td>{{ $item->ngaysinh }}</td>
+                    <td>{{ getDayVn($item->ngaysinh) }}</td>
                     <td>{{ $item->gioitinh == 'nam' || $item->gioitinh == 'Nam' ? 'x' : '' }}</td>
                     <td>{{ $item->gioitinh == 'nu' || $item->gioitinh == 'Nu' || $item->gioitinh == 'nữ' || $item->gioitinh == 'Nữ' ? 'x' : '' }}
                     </td>

@@ -136,21 +136,21 @@
                     ?>
                     <td>{{++$stt}}</td>
                     <td>{{$dm->name}}</td>
-                    <td>{{ $gioitinh['nam'] }}</td>
-                    <td>{{ $gioitinh['nu'] }}</td>
-                    <td>{{ $khuvuc['thanhthi'] }}</td>
-                    <td>{{ $khuvuc['nongthon'] }}</td>
+                    <td>{{ $gioitinh['nam'] > 0 ? $gioitinh['nam']: ''}}</td>
+                    <td>{{ $gioitinh['nu'] > 0 ? $gioitinh['nu']: ''}}</td>
+                    <td>{{ $khuvuc['thanhthi'] > 0 ? $khuvuc['thanhthi']: '' }}</td>
+                    <td>{{ $khuvuc['nongthon']  > 0 ? $khuvuc['nongthon']: ''}}</td>
 
                     @foreach ($a_dtut as $key => $item)
-                        <td>{{ $uutien[$key-1]}}</td>
+                        <td>{{ $uutien[$key-1] > 0 ?  $uutien[$key-1] :'' }}</td>
                     @endforeach
 
                     @foreach ($a_gdpt as $key => $value)
-                        <td>{{ $trinhdogiaoduc[$key-1]}}</td>
+                        <td>{{ $trinhdogiaoduc[$key-1]  > 0 ?  $trinhdogiaoduc[$key-1] :'' }}</td>
                     @endforeach
 
                     @foreach ($a_cmkt as $key => $item)
-                        <td>{{  $chuyenmonkythuat[$key-1] }}</td>
+                        <td>{{  $chuyenmonkythuat[$key-1]  > 0 ?  $chuyenmonkythuat[$key-1] :'' }}</td>
                     @endforeach
                     <td> </td>
                     <td> </td>
