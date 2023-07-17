@@ -18,6 +18,8 @@
     <table id="data_body1" cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;" id="data">
         <thead>
             <tr>
+                <td  rowspan="3">STT</td>
+                <td  rowspan="3">Địa bàn</td>
                 {{-- <td rowspan="3">Họ và tên (1)</td>
                 <td rowspan="3"> Ngày tháng năm sinh (2)</td> --}}
                 <td colspan="2"> Giới tính (3) </td>
@@ -25,9 +27,9 @@
                 <td rowspan="3"> Số điện thoại (5) </td>
                 <td rowspan="3"> Nơi ở hiện tại (6) </td> --}}
                 <td colspan="2"> Khu vực(7) </td>
-                <td colspan="5"> ĐốI tượng ưu tiên (8)</td>
-                <td colspan="4"> Trình độ GDPT cao nhất đạt được (9)</td>
-                <td colspan="8"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
+                <td colspan="{{ count($a_dtut) }}"> ĐốI tượng ưu tiên (8)</td>
+                <td colspan="{{ count($a_gdpt) }}"> Trình độ GDPT cao nhất đạt được (9)</td>
+                <td colspan="{{ count($a_cmkt) }}"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
                 <td colspan="4"> Nhu cầu tìm kiếm việc làm (11) </td>
                 <td colspan="2"> Nhu cầu học nghề (12) </td>
                 <td rowspan="3"> Ghi chú </td>
@@ -78,32 +80,81 @@
             </tr>
         </thead>
         <tbody>
-            <tr style="text-align: center">
-                <td> {{ $a_ketqua['nam'] }} </td>
-                <td> {{ $a_ketqua['nu'] }} </td>
-                <td> {{ $a_ketqua['thanhthi'] }} </td>
-                <td> {{ $a_ketqua['nongthon'] }} </td>
+            <?php  $stt =0; ?>
+            @foreach ($ds_danhmuc as $key => $dm)
+                <tr style="text-align: center">
+                    <?php
+                   
+                    $gioitinh = ['nam' => 0, 'nu' => 0];
+                    $khuvuc = ['thanhthi' => 0, 'nongthon' => 0];
+                    $uutien = [];
+                    foreach ($a_dtut as $key_2 => $value) {
+                        array_push($uutien,$key_2 = 0);
+                    }
+                    $trinhdogiaoduc = [];
+                    foreach ($a_gdpt as $key_2 => $value) {
+                        array_push($trinhdogiaoduc,$key_2 = 0);
+                    }
+                    $chuyenmonkythuat = [];
+                    foreach ($a_cmkt as $key_2 => $value) {
+                        array_push($chuyenmonkythuat,$key_2 = 0);
+                    }
 
-                @foreach ($a_dtut as $key => $item)
-                    <td>{{ count($model->where('uutien', $key)) }}</td>
-                @endforeach
+                    $dm_xa = $m_danhmuc->where('parent', $dm->maquocgia);
+                    $a = array_column($dm_xa->toarray(),'madv');
+                    $model_x = $model->wherein('madv',$a );
+                    
+                    $thanhthi = array_column($m_danhmuc->where('level','!=', 'Xã')->toarray(),'madv');
+                    $nongthon = array_column($m_danhmuc->where('level', 'Xã')->toarray(),'madv');
+                 
+                    // foreach ($dm_xa as $xa) {
+                    //     $model_x = $model->where('madv', $xa->madv);
+                        if (count($model_x) > 0) {
+                            $gioitinh['nam'] = count($model_x->whereIn('gioitinh', ['nam', 'Nam']));
+                            $gioitinh['nu'] = count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']));
+                            $khuvuc['thanhthi'] = count($model_x->whereIn('madv', $thanhthi));
+                            $khuvuc['nongthon'] = count($model_x->whereIn('madv', $nongthon ));
 
-                @foreach ($a_gdpt as $key => $item)
-                    <td>{{ count($model->where('trinhdogiaoduc',$key)) }}</td>
-                @endforeach
+                            foreach ($a_dtut as $key_2 => $value) {
+                                $uutien[$key_2-1] = count($model_x->where('uutien',$key_2-1));
+                            }
+                            foreach ($a_gdpt as $key_2 => $value) {
+                                $trinhdogiaoduc[$key_2-1] = count($model_x->where('trinhdogiaoduc',$key_2-1));
+                            }
+                            foreach ($a_cmkt as $key_2 => $value) {
+                                $chuyenmonkythuat[$key_2-1] = count($model_x->where('chuyenmonkythuat',$key_2-1));
+                            }
+                        }
+                    // }
+                    ?>
+                    <td>{{++$stt}}</td>
+                    <td>{{$dm->name}}</td>
+                    <td>{{ $gioitinh['nam'] }}</td>
+                    <td>{{ $gioitinh['nu'] }}</td>
+                    <td>{{ $khuvuc['thanhthi'] }}</td>
+                    <td>{{ $khuvuc['nongthon'] }}</td>
 
-                @foreach ($a_cmkt as $key => $item)
-                    <td>{{ count($model->where('chuyenmonkythuat',$key)) }}</td>
-                @endforeach
-           
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                <td>  </td>
-                 <td>  </td>
-            </tr>
+                    @foreach ($a_dtut as $key => $item)
+                        <td>{{ $uutien[$key-1]}}</td>
+                    @endforeach
+
+                    @foreach ($a_gdpt as $key => $value)
+                        <td>{{ $trinhdogiaoduc[$key-1]}}</td>
+                    @endforeach
+
+                    @foreach ($a_cmkt as $key => $item)
+                        <td>{{  $chuyenmonkythuat[$key-1] }}</td>
+                    @endforeach
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+            @endforeach
+
         </tbody>
     </table>
     <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
