@@ -28,9 +28,9 @@
                 <td rowspan="3"> Số điện thoại (5) </td>
                 <td rowspan="3"> Nơi ở hiện tại (6) </td>
                 <td colspan="2"> Khu vực(7) </td>
-                <td colspan="5"> ĐốI tượng ưu tiên (8)</td>
-                <td colspan="4"> Trình độ GDPT cao nhất đạt được (9)</td>
-                <td colspan="8"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
+                <td colspan="{{ count($a_dtut) }}"> ĐốI tượng ưu tiên (8)</td>
+                <td colspan="{{ count($a_gdpt) }}"> Trình độ GDPT cao nhất đạt được (9)</td>
+                <td colspan="{{ count($a_cmkt) }}"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
                 <td colspan="4"> Nhu cầu tìm kiếm việc làm (11) </td>
                 <td colspan="2"> Nhu cầu học nghề (12) </td>
                 <td rowspan="3"> Ghi chú </td>
@@ -97,12 +97,13 @@
                 <td> </td>
             </tr>
 
-
+            <?php  $stt =0; ?>
             @foreach ($model as $key => $item)
                 <tr style="text-align: center">
-                    <td>{{ ++$key }}</td>
+                    <td>{{ ++$stt }}</td>
+                    {{-- <td>{{ ++$key }}</td> --}}
                     <td>{{ $item->hoten }}</td>
-                    <td>{{ $item->ngaysinh }}</td>
+                    <td>{{ getDayVn($item->ngaysinh) }}</td>
                     <td>{{ $item->gioitinh == 'nam' || $item->gioitinh == 'Nam' ? 'x' : '' }}</td>
                     <td>{{ $item->gioitinh == 'nu' || $item->gioitinh == 'Nu' || $item->gioitinh == 'nữ' || $item->gioitinh == 'Nữ' ? 'x' : '' }}
                     </td>

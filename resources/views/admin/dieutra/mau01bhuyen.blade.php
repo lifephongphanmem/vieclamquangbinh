@@ -21,6 +21,7 @@
         style="margin: 20px auto; border-collapse: collapse;" id="data">
         <thead>
             <tr>
+                <td  rowspan="3">STT</td>
                 <td  rowspan="3">Địa bàn</td>
                 {{-- <td rowspan="3">Họ và tên (1)</td>
                 <td rowspan="3"> Ngày tháng năm sinh (2)</td> --}}
@@ -29,9 +30,9 @@
                 <td rowspan="3"> Số điện thoại (5) </td>
                 <td rowspan="3"> Nơi ở hiện tại (6) </td> --}}
                 <td colspan="2"> Khu vực(7) </td>
-                <td colspan="5"> ĐốI tượng ưu tiên (8)</td>
-                <td colspan="4"> Trình độ GDPT cao nhất đạt được (9)</td>
-                <td colspan="8"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
+                <td colspan="{{ count($a_dtut) }}"> ĐốI tượng ưu tiên (8)</td>
+                <td colspan="{{ count($a_gdpt) }}"> Trình độ GDPT cao nhất đạt được (9)</td>
+                <td colspan="{{ count($a_cmkt) }}"> Trình độ CMKT cao nhất đạt được (Ghi rõ chuyên ngành đào tạo) (10) </td>
                 <td colspan="4"> Nhu cầu tìm kiếm việc làm (11) </td>
                 <td colspan="2"> Nhu cầu học nghề (12) </td>
                 <td rowspan="3"> Ghi chú </td>
@@ -82,7 +83,7 @@
             </tr>
         </thead>
         <tbody>
-
+            <?php  $stt =0; ?>
             @foreach ($ds_danhmuc as $key => $dm)
                 <tr style="text-align: center">
                     <?php
@@ -102,46 +103,54 @@
                         array_push($chuyenmonkythuat,$key_2 = 0);
                     }
 
-                    $dm_xa = $m_danhmuc->where('parent', $dm->maquocgia);
-                    foreach ($dm_xa as $xa) {
-                        $model_x = $model->where('madv', $xa->madv);
+                    $model_x = $model->where('madv',$dm->madv);
+
+                 
+                    // foreach ($dm_xa as $xa) {
+                    //     $model_x = $model->where('madv', $xa->madv);
                         if (count($model_x) > 0) {
-                            $gioitinh['nam'] += count($model_x->wherein('gioitinh', ['nam', 'Nam']));
-                            $gioitinh['nu'] += count($model_x->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']));
-                            if ($xa->level == 'Xã') {
-                                $khuvuc['nongthon'] += count($model_x->where('khuvuc', 'nongthon'));
-                            } else {
-                                $khuvuc['thanhthi'] += count($model_x->where('khuvuc', 'thanhthi'));
+                            $gioitinh['nam'] = count($model_x->whereIn('gioitinh', ['nam', 'Nam']));
+                            $gioitinh['nu'] = count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']));
+
+                            // $thanhthi = array_column($m_danhmuc->where('level','!=', 'Xã')->toarray(),'madv');
+                            // $nongthon = array_column($m_danhmuc->where('level', 'Xã')->toarray(),'madv');
+                            if ($dm->level == 'Xã') {
+                                $khuvuc['nongthon'] = count($model_x);
+                            }else {
+                                $khuvuc['thanhthi'] = count($model_x);
                             }
+                 
+                          
 
                             foreach ($a_dtut as $key_2 => $value) {
-                                $uutien[$key_2-1] += count($model_x->where('uutien',$key_2-1));
+                                $uutien[$key_2-1] = count($model_x->where('uutien',$key_2-1));
                             }
                             foreach ($a_gdpt as $key_2 => $value) {
-                                $trinhdogiaoduc[$key_2-1] += count($model_x->where('trinhdogiaoduc',$key_2-1));
+                                $trinhdogiaoduc[$key_2-1] = count($model_x->where('trinhdogiaoduc',$key_2-1));
                             }
                             foreach ($a_cmkt as $key_2 => $value) {
-                                $chuyenmonkythuat[$key_2-1] += count($model_x->where('trinhdogiaoduc',$key_2-1));
+                                $chuyenmonkythuat[$key_2-1] = count($model_x->where('chuyenmonkythuat',$key_2-1));
                             }
                         }
-                    }
+                    // }
                     ?>
+                    <td>{{++$stt}}</td>
                     <td>{{$dm->name}}</td>
-                    <td>{{ $gioitinh['nam'] }}</td>
-                    <td>{{ $gioitinh['nu'] }}</td>
-                    <td>{{ $khuvuc['thanhthi'] }}</td>
-                    <td>{{ $khuvuc['nongthon'] }}</td>
+                    <td>{{ $gioitinh['nam'] > 0 ? $gioitinh['nam']: ''}}</td>
+                    <td>{{ $gioitinh['nu'] > 0 ? $gioitinh['nu']: ''}}</td>
+                    <td>{{ $khuvuc['thanhthi'] > 0 ? $khuvuc['thanhthi']: '' }}</td>
+                    <td>{{ $khuvuc['nongthon']  > 0 ? $khuvuc['nongthon']: ''}}</td>
 
                     @foreach ($a_dtut as $key => $item)
-                        <td>{{ $uutien[$key-1]}}</td>
+                        <td>{{ $uutien[$key-1] > 0 ?  $uutien[$key-1] :'' }}</td>
                     @endforeach
 
                     @foreach ($a_gdpt as $key => $value)
-                        <td>{{ $trinhdogiaoduc[$key-1]}}</td>
+                        <td>{{ $trinhdogiaoduc[$key-1]  > 0 ?  $trinhdogiaoduc[$key-1] :'' }}</td>
                     @endforeach
 
                     @foreach ($a_cmkt as $key => $item)
-                        <td>{{  $chuyenmonkythuat[$key-1] }}</td>
+                        <td>{{  $chuyenmonkythuat[$key-1]  > 0 ?  $chuyenmonkythuat[$key-1] :'' }}</td>
                     @endforeach
                     <td> </td>
                     <td> </td>
