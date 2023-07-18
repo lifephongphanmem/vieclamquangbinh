@@ -124,9 +124,7 @@
                                 <th>Địa chỉ</th>
                                 <th>Tình trạng việc làm</th>
                                 <th>Nơi làm việc</th>
-                                @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $inputs['kydieutra'] == date('Y'))
-                                    <th>Thao tác</th>
-                                @endif
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -153,8 +151,8 @@
                                         </button>
                                     @endif
 
-                                    <a href="{{ '/nhankhau-innguoilaodong?id=' . $ld->id }}"
-                                        title="In thông tin" target="_blank" class="btn btn-xs btn-primary ml-3">
+                                    <a href="{{ '/nhankhau-innguoilaodong?id=' . $ld->id }}" title="In thông tin"
+                                        target="_blank" class="btn btn-xs btn-primary ml-3">
                                         <i class="icon-lg la flaticon2-print text-dark"></i></a>
                                 </td>
                             </tr>
@@ -289,7 +287,8 @@
                             <select name="kydieutra" id="kydieutra_dsloi" class="form-control" style="width:100%">
                                 <option value="">Tất cả</option>
                                 @foreach ($a_kydieutra as $key => $ct)
-                                    <option value="{{ $key }}" {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
+                                    <option value="{{ $key }}"
+                                        {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
                                         {{ $ct }}</option>
                                 @endforeach
                             </select>
