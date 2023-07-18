@@ -45,6 +45,7 @@ class AdminNhankhau extends Controller
 
     public function show_all(Request $request)
     {
+ 
         if (!chkPhanQuyen('danhsachnhankhau', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'nhankhau');
         }
@@ -443,26 +444,38 @@ class AdminNhankhau extends Controller
         $uutien = dmdoituonguutien::all();
         $trinhdogdpt = dmtrinhdogdpt::all();
         $trinhdocmkt = dmtrinhdokythuat::all();
-        $dmtinhtrangthamgiahdkt = dmtinhtrangthamgiahdkt::all();
-        $dmvithevieclam = dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get();
-        $dmthatnggiep = dmtinhtrangthamgiahdktct::where('manhom', '20221220175720')->get();
-        $tgthatnghiep = dmthoigianthatnghiep::all();
-        $khongthamgiahdkt = dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get();
-        $hdld = dmloaihieuluchdld::all();
-        $bhxh = [1 => 'Bắt buộc', 2 => 'Tự nguyện', 3 => 'Không tham gia'];
+        // $dmtinhtrangthamgiahdkt = dmtinhtrangthamgiahdkt::all();
+        // $dmvithevieclam = dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get();
+        // $dmthatnggiep = dmtinhtrangthamgiahdktct::where('manhom', '20221220175720')->get();
+        // $tgthatnghiep = dmthoigianthatnghiep::all();
+        // $khongthamgiahdkt = dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get();
+        // $hdld = dmloaihieuluchdld::all();
+        // $bhxh = [1 => 'Bắt buộc', 2 => 'Tự nguyện', 3 => 'Không tham gia'];
+
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+        ->where('capdo','X')
+        ->where('level','Xã')
+        ->get();
+        if (count($m_danhmuc) > 0) {
+            $khuvuc = 'nongthon';
+        }else{
+            $khuvuc = 'thanhthi';
+        }
 
         return view('admin.nhankhau.innguoilaodong', compact(
             'model',
             'uutien',
             'trinhdogdpt',
             'trinhdocmkt',
-            'dmtinhtrangthamgiahdkt',
-            'dmvithevieclam',
-            'dmthatnggiep',
-            'tgthatnghiep',
-            'khongthamgiahdkt',
-            'hdld',
-            'bhxh'
+            // 'dmtinhtrangthamgiahdkt',
+            // 'dmvithevieclam',
+            // 'dmthatnggiep',
+            // 'tgthatnghiep',
+            // 'khongthamgiahdkt',
+            // 'hdld',
+            // 'bhxh',
+            'khuvuc',
         ))
             ->with('pageTitle', 'Thông tin chi tiết người lao động');
     }
