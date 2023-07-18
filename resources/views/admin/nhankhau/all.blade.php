@@ -58,7 +58,7 @@
                             </button>
                         @endif
 
-                        @if(session('admin')->capdo == 'X')
+                        @if (session('admin')->capdo == 'X')
                             <button onclick="Inchitiet('{{ session('admin')->madv }}','{{ $inputs['kydieutra'] }}')"
                                 data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                 class="btn btn-sm btn-success ml-3">
@@ -145,15 +145,18 @@
                                     </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
                                 </td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
-                                @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $ld->kydieutra == date('Y'))
-                                    <td class="text-ellipsis">
+                                <td class="text-ellipsis">
+                                    @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $ld->kydieutra == date('Y'))
                                         <button onclick="baogiam('{{ $ld->id }}')" data-target="#baogiam"
                                             data-toggle="modal" title="Báo giảm" class="btn btn-xs btn-warning ml-3"> Giảm
                                             {{-- <i class="fa fa-arrows-down-to-people"></i> --}}
                                         </button>
+                                    @endif
 
-                                    </td>
-                                @endif
+                                    <a href="{{ '/nhankhau-innguoilaodong?id=' . $ld->id }}"
+                                        title="In thông tin" target="_blank" class="btn btn-xs btn-primary ml-3">
+                                        <i class="icon-lg la flaticon2-print text-dark"></i></a>
+                                </td>
                             </tr>
                             <?php } ?>
                         </tbody>
@@ -286,7 +289,8 @@
                             <select name="kydieutra" id="kydieutra_dsloi" class="form-control" style="width:100%">
                                 <option value="">Tất cả</option>
                                 @foreach ($a_kydieutra as $key => $ct)
-                                    <option value="{{ $key }}" {{$key==$inputs['kydieutra']?'selected':''}}>{{ $ct }}</option>
+                                    <option value="{{ $key }}" {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
+                                        {{ $ct }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -313,15 +317,15 @@
         }
 
         function indanhsachloi() {
-                var mahuyen = $('#mahuyen').val();
-                var kydieutra = $('#kydieutra').val();
+            var mahuyen = $('#mahuyen').val();
+            var kydieutra = $('#kydieutra').val();
 
-                $('#kydieutra_dsloi option[value=' + kydieutra + ' ]').attr('selected', 'selected');
-                var kydieutra_dsloi = $('#kydieutra_dsloi').val();
-                var url = '/dieutra/indanhsachloi?mahuyen=' + mahuyen + '&kydieutra=' + kydieutra_dsloi;
-                $('#frm_modify_dsloi').attr('action', url);
+            $('#kydieutra_dsloi option[value=' + kydieutra + ' ]').attr('selected', 'selected');
+            var kydieutra_dsloi = $('#kydieutra_dsloi').val();
+            var url = '/dieutra/indanhsachloi?mahuyen=' + mahuyen + '&kydieutra=' + kydieutra_dsloi;
+            $('#frm_modify_dsloi').attr('action', url);
 
-            }
+        }
 
         function getxa() {
             var madv = $('#mdv').val;
@@ -356,13 +360,13 @@
         }
 
         function themmoi(madv, kydieutra) {
-            if ($('#madv').val()=='') {
-                   toastr.warning('Bạn chưa chọn xã');
-            }else{
-            huyen = $('#huyen').val();
-            xa = $('#xa').val();
-            url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
-            window.location.href = url;
+            if ($('#madv').val() == '') {
+                toastr.warning('Bạn chưa chọn xã');
+            } else {
+                huyen = $('#huyen').val();
+                xa = $('#xa').val();
+                url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
+                window.location.href = url;
             }
 
         }
@@ -371,7 +375,5 @@
             var url = '/biendong/baogiam/' + id;
             $('#giam').attr('action', url);
         }
-
     </script>
 @endsection
-
