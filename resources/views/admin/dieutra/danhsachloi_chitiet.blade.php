@@ -70,7 +70,7 @@
                                 </td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
                                 <td class="text-ellipsis">
-                                    <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
+                                    <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In thông tin" target="_blank">
                                         <i class="icon-lg la flaticon2-print text-dark"></i></a>
                                 </td>
                             </tr>

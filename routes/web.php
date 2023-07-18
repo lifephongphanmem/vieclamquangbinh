@@ -77,6 +77,8 @@ Route::get('/laodong-fe/{eid?}/{action?}', [EmployerController::class, 'edit']);
 Route::post('/laodong-fu', [EmployerController::class, 'update']);
 Route::post('/laodong-fi', [EmployerController::class, 'import']);
 Route::get('laodong-ex/', [EmployerController::class, 'export']);
+
+
 Route::get('laodong-fnothing/', [EmployerController::class, 'noreport']);
 
 // bao cao
