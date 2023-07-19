@@ -171,7 +171,7 @@ class dangkytimviecController extends Controller
    
                'tencongviec' => $input['tencongviec'][$i],
                'manghe' => $input['manghe'][$i],
-               'chucvu' => $input['chucvu'][$i],
+               // 'chucvu' => $input['chucvu'][$i],
                'loaihinhkt' => $input['loaihinhkt'][$i],
                'loaihdld' => $input['loaihdld'][$i],
                'khanangcongtac' => $input['khanangcongtac'][$i],
@@ -230,7 +230,7 @@ class dangkytimviecController extends Controller
 
             'tencongviec' => $input['tencongviec'][$i],
             'manghe' => $input['manghe'][$i],
-            'chucvu' => $input['chucvu'][$i],
+            // 'chucvu' => $input['chucvu'][$i],
             'loaihinhkt' => $input['loaihinhkt'][$i],
             'loaihdld' => $input['loaihdld'][$i],
             'khanangcongtac' => $input['khanangcongtac'][$i],
