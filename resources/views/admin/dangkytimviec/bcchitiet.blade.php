@@ -11,7 +11,7 @@
                 <th>Stt</th>
                 <th>Họ tên</th>
                 <th>Ngày sinh</th>
-                <th>Số cmnd/cccd</th>
+                <th>Số CMND/CCCD</th>
                 <th>Địa chỉ đăng ký thường trú</th>
                 <th>Trình độ giáo dục</th>
                 <th>Trình độ CMKT</th>
