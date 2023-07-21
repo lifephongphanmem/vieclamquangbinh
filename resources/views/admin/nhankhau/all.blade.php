@@ -41,7 +41,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3>
+                        <h3 class="card-label text-uppercase">Danh sách người tìm việc</h3>
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
@@ -121,9 +121,10 @@
                                 <th>Tên</th>
                                 <th>CMND/CCCD</th>
                                 <th>Ngày sinh</th>
+                                <th>Điện thoại</th>
                                 <th>Địa chỉ</th>
-                                <th>Tình trạng việc làm</th>
-                                <th>Nơi làm việc</th>
+                                {{-- <th>Tình trạng việc làm</th>
+                                <th>Nơi làm việc</th> --}}
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -136,14 +137,15 @@
                                 <td><a
                                         href="{{ URL::to('/nhankhau/ChiTiet/' . $ld->id . '?mahuyen=' . $inputs['mahuyen'] . '&view=nhankhau') }}">{{ $ld->hoten }}</a>
                                 </td>
-                                <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->thuongtru }}</td>
-                                <td><span class="text-ellipsis">
+                                <td><span class="text-center"> </span> {{ $ld->cccd }}</td>
+                                <td><span class="text-center"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
+                                <td><span class="text-center"> </span>{{ $ld->sdt }}</td>
+                                <td><span class="text-center"> </span>{{ $ld->diachi }}</td>
+                                {{-- <td><span class="text-ellipsis">
                                     </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
                                 </td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td>
-                                <td class="text-ellipsis">
+                                <td><span class="text-ellipsis"> </span>{{ $ld->noilamviec }}</td> --}}
+                                <td class="text-center">
                                     @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $ld->kydieutra == date('Y'))
                                         <button onclick="baogiam('{{ $ld->id }}')" data-target="#baogiam"
                                             data-toggle="modal" title="Báo giảm" class="btn btn-xs btn-warning ml-3"> Giảm
@@ -362,8 +364,8 @@
             if ($('#madv').val() == '') {
                 toastr.warning('Bạn chưa chọn xã');
             } else {
-                huyen = $('#huyen').val();
-                xa = $('#xa').val();
+                huyen = $('#mahuyen').val();
+                xa = $('#madv').val();
                 url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
                 window.location.href = url;
             }

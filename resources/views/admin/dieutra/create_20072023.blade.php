@@ -117,35 +117,8 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Số điện thoại</label>
-                                                                    <input type="text" name="sdt[]"
-                                                                        class="form-control">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label>Khu vực</label>
-                                                                    <select class="form-control"
-                                                                        name="khuvuc[]">
-                                                                        <option value="1">Thành thị</option>
-                                                                        <option value="2">Nông thôn</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>Nơi ở hiện nay</label>
-                                                                    <input type="text" name="diachi[]"
-                                                                         class="form-control">
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
                                                                     <label>Đối tượng ưu tiên</label>
-                                                                    <select class="form-control"
+                                                                    <select class="form-control select2basic"
                                                                         name="uutien[]">
                                                                         <option value="">--- Chọn đối tượng ưu tiên ---</option>
                                                                         @foreach ($m_uutien as $val)
@@ -162,6 +135,23 @@
                                                                         >
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Bảo hiểm xã hội</label>
+                                                                    <input type="text" name="bhxh[]"
+                                                                         class="form-control"
+                                                                        >
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Nơi đăng ký thường trú <span class="text-danger">*</span></label>
+                                                                    <input type="text" name="thuongtru[]"
+                                                                        class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Trình độ GDPT <span class="text-danger">*</span></label>
@@ -184,76 +174,155 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label>Chuyên ngành</label>
-                                                                         <select name="chuyennganh[]" class="form-control selec2basic">
-                                                                            <option value="">---Chọn chuyên ngành đào tạo---</option>
-                                                                            @foreach ($m_nganhnghe as $val)
-                                                                                <option value="{{$val->madm}}">{{$val->tendm}}</option>
-                                                                            @endforeach
-                                                                        </select>
+                                                                    <input type="text" name="chuyennganh[]"
+                                                                         class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Đối tượng tìm kiếm việc làm <span class="text-danger">*</span></label>
-                                                                    <select name="doituongtimvieclam[]" class="form-control selec2basic" required>
-                                                                        <option value="">---Chọn đối tượng tìm kiếm việc làm---</option>
-                                                                        <option value="1">Chưa từng làm việc</option>
-                                                                        <option value="2">Đã từng làm việc</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label>Việc làm mong muốn <span class="text-danger">*</span></label>
-                                                                    <select name="vieclammongmuon[]" class="form-control selec2basic">
-                                                                        <option value="">---Chọn việc làm mong muốn---</option>
-                                                                        <option value="1">Trong tỉnh, trong nước</option>
-                                                                        <option value="2">Đi làm việc ở nước ngoài</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label>Ngành nghề mong muốn <span class="text-danger">*</span></label>
-                                                                    <select name="nganhnghemongmuon[]" class="form-control selec2basic">
-                                                                        <option value="">---Chọn ngành nghề mong muốn---</option>
-                                                                        @foreach ($m_nganhnghe as $val)
-                                                                            <option value="{{$val->madm}}">{{$val->tendm}}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    <label>Nơi ở hiện nay</label>
+                                                                    <input type="text" name="diachi[]"
+                                                                         class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Ngành nghề muốn học <span class="text-danger">*</span></label>
-                                                                    <select name="nganhnghemuonhoc[]" class="form-control selec2basic">
-                                                                        <option value="">---Chọn ngành nghề muốn học---</option>
-                                                                        @foreach ($m_nganhnghe as $val)
-                                                                            <option value="{{$val->madm}}">{{$val->tendm}}</option>
+                                                                    <label>Tình trạng tham gia hoạt động kinh tế <span class="text-danger">*</span></label>
+                                                                    <select name="tinhtranghdkt[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn tình trạng HĐKT---</option>
+                                                                        @foreach ($m_tinhtrangvl as $val)
+                                                                            <option value="{{$val->stt}}">{{$val->tentgkt}}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Trình độ chuyên môn muốn học <span class="text-danger">*</span></label>
-                                                                    <select name="trinhdochuyenmonmuonhoc[]" class="form-control selec2basic">
-                                                                        <option value="">---Chọn trình độ chuyên môn muốn học---</option>
-                                                                        <option value="1">Sơ cấp</option>
-                                                                        <option value="2">Trung cấp</option>
-                                                                        <option value="3">Cao đẳng</option>
+                                                                    <label>Người có việc làm</label>
+                                                                    <select name="nguoicovieclam[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn---</option>
+                                                                        @foreach ($m_vithevl as $val)
+                                                                            <option value="{{$val->stt}}">{{$val->tentgktct2}}</option>
+                                                                        @endforeach
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Công việc cụ thể đang làm</label>
+                                                                    <input type="text" name="congvieccuthe[]"
+                                                                    class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Tham gia BHXH</label>
+                                                                    <select name="bhxh[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn---</option>
+                                                                        @foreach ($a_thamgiabaohiem as $key=>$val)
+                                                                            <option value="{{$key}}">{{$val}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+    
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>HĐLĐ </label>
+                                                                    <select name="hdld[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn HĐLĐ---</option>
+                                                                        @foreach ($m_hopdongld as $key=>$val)
+                                                                            <option value="{{$val->stt}}">{{$val->tenlhl}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Nơi làm việc </label>
+                                                                    <input type="text" name="noilamviec[]"
+                                                                    class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Loại hình nơi làm việc</label>
+                                                                    <select name="loaihinhnoilamviec[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn HĐLĐ---</option>
+                                                                        @foreach ($m_loaihinhkt as $key=>$val)
+                                                                            <option value="{{$val->stt}}">{{$val->tenlhkt}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Địa chỉ nơi làm việc</label>
+                                                                    <input type="text" name="diachinoilamviec[]"
+                                                                   class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Người thất nghiệp</label>
+                                                                    <select name="thatnghiep[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn người thất nghiệp---</option>
+                                                                        @foreach ($m_nguoithatnghiep as $key=>$val)
+                                                                            <option value="{{$val->stt}}">{{$val->tentgktct}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Thời gian thất nghiệp</label>
+                                                                    <select name="thoigianthatnghiep[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn thời gian thất nghiệp---</option>
+                                                                        @foreach ($m_thoigianthatnghiep as $key=>$val)
+                                                                            <option value="{{$val->stt}}">{{$val->tentgtn}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Không tham gia HĐKT</label>
+                                                                    <select name="khongthamgiahdkt[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn lý do không tham gia---</option>
+                                                                        @foreach ($lydo as $key=>$val)
+                                                                            <option value="{{$val->stt}}">{{$val->tentgktct}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            {{-- <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Mối quan hệ</label>
+                                                                    <select name="mqh[]" class="form-control selec2basic">
+                                                                        <option value="CH">Chủ hộ</option>
+                                                                        <option value="Vợ">Vợ</option>
+                                                                        <option value="Chồng">Chồng</option>
+                                                                        <option value="Con">Con</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div> --}}
+                                                        </div>
+
                                                 </div>
+                                                {{-- <div class="tab-pane fade" id="khac" role="tabpanel"
+                                                    aria-labelledby="khac">
+
+
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>

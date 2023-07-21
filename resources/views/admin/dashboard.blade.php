@@ -313,7 +313,7 @@
                     <!-- Kỳ điều tra hiện tại -->
                     <div class="card-header card-header-tabs-line" style="border-bottom: none">
                         <div class="card-title">
-                            <h6 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_hientai }}</h6>
+                            <h6 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_hientai??date('Y') }}</h6>
                         </div>
                     </div>
                     <div class="row" style="width:100%;margin: 0 auto">

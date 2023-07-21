@@ -7,6 +7,7 @@ use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Danhmuc\dmloaihieuluchdld;
 use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmnganhnghe;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
@@ -143,7 +144,7 @@ class AdminBiendong extends Controller
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
         $model = new Nhankhau();
         $ld = $model::find($nkid);
-
+        $m_nganhnghe=dmnganhnghe::all();
 		$a_thaydoi=explode(';',$ld->truongbiendong);
         // dd($inputs);
         $inputs['kydieutra']=$ld->kydieutra;
@@ -153,6 +154,7 @@ class AdminBiendong extends Controller
                 ->with('baocao', getdulieubaocao())
                 ->with('a_thaydoi', $a_thaydoi)
                 ->with('m_uutien', $m_uutien)
+                ->with('m_nganhnghe', $m_nganhnghe)
                 ->with('m_tinhtrangvl', $m_tinhtrangvl)
                 ->with('m_vithevl', $m_vithevl)
                 ->with('lydo', $lydo)

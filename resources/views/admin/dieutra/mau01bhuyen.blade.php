@@ -6,7 +6,7 @@
                 <P>Tỉnh, thành phố {{ isset($m_tinh) ? $m_tinh->name : 'Quảng Bình' }}</P>
                 <p>Quận, huyện, thị xã {{ isset($m_huyen) ? $m_huyen->name : ' ........................................' }}
                 </p>
-                <p>Xã, phường, thị trấn ........................................</p>
+                {{-- <p>Xã, phường, thị trấn ........................................</p> --}}
             </td>
             <td style="vertical-align: top;text-align: right">
                 <b>Mẫu số 01b</b>
@@ -89,11 +89,11 @@
             $stt = 0;
             ?>
             <tr style="text-align: center">
-                <th colspan="2">Tổng</th>
+                <th colspan="2">TỔNG</th>
                 <th>{{ count($model->whereIn('gioitinh', ['nam', 'Nam'])) }}</th>
                 <th>{{ count($model->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</th>
                 <th>{{ count($model->whereIn('madv', $thanhthi)) }}</th>
-                <th>{{ count($model->whereIn('madv', $nongthon)) }}</th>
+                <th>{{ count($model->whereIn('madv', $nongthon))==0?'':count($model->whereIn('madv', $nongthon)) }}</th>
 
                 @foreach ($a_dtut as $key => $item)
                     <th>{{ count($model->where('uutien', $key)) }}</th>
@@ -119,10 +119,10 @@
                     <?php  $model_x = $model->where('madv', $dm->madv); ?>
                     <td>{{ ++$stt }}</td>
                     <td>{{ $dm->name }}</td>
-                    <td>{{ count($model_x->whereIn('gioitinh', ['nam', 'Nam'])) }}</td>
-                    <td>{{ count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
-                    <td>{{ count($model_x->whereIn('madv', $thanhthi)) }}</td>
-                    <td>{{ count($model_x->whereIn('madv', $nongthon)) }}</td>
+                    <td>{{ count($model_x->whereIn('gioitinh', ['nam', 'Nam']))==0?'':count($model_x->whereIn('gioitinh', ['nam', 'Nam'])) }}</td>
+                    <td>{{ count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))==0?'':count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+                    <td>{{ count($model_x->where('khuvuc', $thanhthi))==0?'':count($model_x->where('khuvuc', $thanhthi)) }}</td>
+                    <td>{{ count($model_x->whereIn('madv', $nongthon))==0?'':count($model_x->whereIn('madv', $nongthon)) }}</td>
 
                     @foreach ($a_dtut as $key => $item)
                         <?php $uutien = count($model_x->where('uutien', $key)); ?>
@@ -138,11 +138,11 @@
                         <?php $chuyenmonkythuat = count($model_x->where('chuyenmonkythuat', $key)); ?>
                         <td>{{ $chuyenmonkythuat > 0 ? $chuyenmonkythuat : '' }}</td>
                     @endforeach
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>{{count($model_x->where('doituongtimvieclam',1))==0?'':count($model_x->where('doituongtimvieclam',1))}}</td>
+                    <td>{{count($model_x->where('doituongtimvieclam',2))==0?'':count($model_x->where('doituongtimvieclam',2))}}</td>
+                    <td>{{count($model_x->where('vieclammongmuon',1))==0?'':count($model_x->where('vieclammongmuon',1))}}</td>
+                    <td>{{count($model_x->where('vieclammongmuon',2))==0?'':count($model_x->where('vieclammongmuon',2))}}</td>
+                    <td></td>
                     <td> </td>
                     <td> </td>
                 </tr>

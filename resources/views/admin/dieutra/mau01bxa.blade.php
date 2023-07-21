@@ -65,38 +65,6 @@
             </tr>
         </thead>
         <tbody>
-            {{-- <tr style="text-align: center">
-                <td> {{ count($model->wherein('hoten', ['nam', 'Nam'])) }} </td>
-                <td> </td>
-                <td> </td>
-                <td> {{ count($model->wherein('gioitinh', ['nam', 'Nam'])) }} </td>
-                <td> {{ count($model->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }} </td>
-                <td> {{ count($model->where('khuvuc', 'thanhthi')) }} </td>
-                <td> {{ count($model->where('khuvuc', 'nongthon')) }} </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                @foreach ($a_dtut as $key => $item)
-                    <td>{{ count($model->where('uutien', $key)) }}</td>
-                @endforeach
-
-                @foreach ($a_gdpt as $key => $item)
-                    <td>{{ count($model->where('trinhdogiaoduc', $key)) }}</td>
-                @endforeach
-
-                @foreach ($a_cmkt as $key => $item)
-                    <td>{{ count($model->where('chuyenmonkythuat', $key)) }}</td>
-                @endforeach
-
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-            </tr> --}}
-
             <?php  $stt =0; ?>
             @foreach ($model as $key => $item)
                 <tr style="text-align: center">
@@ -108,14 +76,14 @@
                     <td>{{ $item->gioitinh == 'nu' || $item->gioitinh == 'Nu' || $item->gioitinh == 'nữ' || $item->gioitinh == 'Nữ' ? 'x' : '' }}
                     </td>
                     <td>{{ $item->cccd }}</td>
-                    <td></td>
-                    <td>{{ $item->thuongtru }}</td>
+                    <td>{{ $item->sdt }}</td>
+                    <td>{{ $item->diachi }}</td>
                     <td>
-                        @foreach ($ds_danhmuc as $madv => $level)
-                            {{ $item->madv == $madv ? ($level == 'Xã' ? '' : 'x') : '' }}
-                        @endforeach
+                        {{$item->khuvuc ==1?'x':''}}
                     </td>
-
+                    <td>
+                        {{$item->khuvuc ==2?'x':''}}
+                    </td>
                     @foreach ($a_dtut as $key => $val)
                         <td>{{ $item->uutien == $key ? 'x' : '' }}</td>
                     @endforeach
@@ -128,14 +96,15 @@
                         <td>{{ $item->chuyenmonkythuat == $key ? 'x' : '' }}</td>
                     @endforeach
 
+                    <td>{{$item->doituongtimvieclam==1?'x':''}}</td>
+                    <td>{{$item->doituongtimvieclam==2?'x':''}} </td>
+                    <td>{{$item->vieclammongmuon==1?'x':''}}</td>
+                    <td>{{$item->vieclammongmuon==2?'x':''}}</td>
+                    {{-- <td> {{isset($item->nganhnghemuonhoc)?$a_nganhnghe[$item->nganhnghemuonhoc]:''}}</td> --}}
+                    <td> {{$item->nganhnghemuonhoc}}</td>
+                    <td> {{isset($item->trinhdochuyenmonmuonhoc)?$a_trinhdocm[$item->trinhdochuyenmonmuonhoc]:''}}</td>
                     <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    {{-- <td> </td> --}}
                 </tr>
             @endforeach
         </tbody>
