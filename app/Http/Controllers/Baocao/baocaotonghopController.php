@@ -28,6 +28,7 @@ use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Employer;
 use App\Models\nguoilaodong as ModelsNguoilaodong;
 use App\Models\nhankhauModel;
+use App\Models\Report;
 use App\Models\Tuyendung;
 use App\Models\tuyendungModel;
 use App\Models\Vitrituyendung;
@@ -829,6 +830,25 @@ class baocaotonghopController extends Controller
             'tcinfo' => $tcinfo ,
             'pageTitle'=>'Báo cáo thông tin thị trường lao động'
         ]);
+    }
+
+    public function mau_03lpi(Request $request)
+    {
+        $tuyendung = tuyendungModel::find($request->id);
+        $company =Company::where('user',$tuyendung->user)->first();
+        $kcn = $this->getParamsByNametype("Khu công nghiệp");// lấy danh mục khu công nghiệp
+		// $ctype = $this->getParamsByNametype("Loại hình doanh nghiệp");// lấy loại hình doanh nghiệp
+		$ctype=dmloaihinhhdkt::all();
+		$nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp");// lấy ngành nghề doanh nghiệp
+
+        // dd($kcn);
+        return view('admin.baocao.mau03pli')
+        ->with('tuyendung' ,$tuyendung  )
+        ->with('company' ,$company  )
+        ->with('kcn' ,$kcn  )
+        ->with('ctype' ,$ctype  )
+        ->with('nganhnghe' ,$nganhnghe  )
+        ->with(  'pageTitle','Báo cáo thông tin thị trường lao động');
     }
 
 }
