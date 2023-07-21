@@ -4,8 +4,8 @@
         <tr>
             <td width="40%" style="vertical-align: top; text-align: left">
                 <P>Tỉnh, thành phố {{ $m_donvi->name }}</P>
-                <p>Quận, huyện, thị xã .........................................</p>
-                <p>Xã, phường, thị trấn ........................................</p>
+                {{-- <p>Quận, huyện, thị xã .........................................</p>
+                <p>Xã, phường, thị trấn ........................................</p> --}}
             </td>
             <td style="vertical-align: top;text-align: right">
                 <b>Mẫu số 01b</b>
@@ -88,7 +88,7 @@
             $stt = 0;
             ?>
             <tr style="text-align: center">
-                <th colspan="2">Tổng</th>
+                <th colspan="2">TỔNG</th>
                 <th>{{ count($model->whereIn('gioitinh', ['nam', 'Nam'])) }}</th>
                 <th>{{ count($model->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</th>
                 <th>{{ count($model->whereIn('madv', $thanhthi)) }}</th>
@@ -125,10 +125,10 @@
                     ?>
                     <td>{{ ++$stt }}</td>
                     <td>{{ $dm->name }}</td>
-                    <td>{{ count($model_x->whereIn('gioitinh', ['nam', 'Nam'])) }}</td>
-                    <td>{{ count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
-                    <td>{{ count($model_x->whereIn('madv', $thanhthi)) }}</td>
-                    <td>{{ count($model_x->whereIn('madv', $nongthon)) }}</td>
+                    <td>{{ count($model_x->whereIn('gioitinh', ['nam', 'Nam']))==0?'':count($model_x->whereIn('gioitinh', ['nam', 'Nam'])) }}</td>
+                    <td>{{ count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))==0?'':count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+                    <td>{{ count($model_x->wherein('madv', $thanhthi))==0?'':count($model_x->wherein('madv', $thanhthi)) }}</td>
+                    <td>{{ count($model_x->whereIn('madv', $nongthon))==0?'':count($model_x->whereIn('madv', $nongthon)) }}</td>
 
                     @foreach ($a_dtut as $key => $item)
                         <?php $uutien = count($model_x->where('uutien', $key)); ?>
@@ -144,10 +144,10 @@
                         <?php $chuyenmonkythuat = count($model_x->where('chuyenmonkythuat', $key)); ?>
                         <td>{{ $chuyenmonkythuat > 0 ? $chuyenmonkythuat : '' }}</td>
                     @endforeach
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
-                    <td> </td>
+                    <td>{{count($model_x->where('doituongtimvieclam',1))==0?'':count($model_x->where('doituongtimvieclam',1))}}</td>
+                    <td>{{count($model_x->where('doituongtimvieclam',2))==0?'':count($model_x->where('doituongtimvieclam',2))}}</td>
+                    <td>{{count($model_x->where('vieclammongmuon',1))==0?'':count($model_x->where('vieclammongmuon',1))}}</td>
+                    <td>{{count($model_x->where('vieclammongmuon',2))==0?'':count($model_x->where('vieclammongmuon',2))}}</td>
                     <td> </td>
                     <td> </td>
                     <td> </td>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Danhmuc\dmloaihieuluchdldController;
 use App\Http\Controllers\Danhmuc\dmloaihinhhdktController;
 use App\Http\Controllers\Danhmuc\dmloailaodongController;
 use App\Http\Controllers\Danhmuc\dmmanghetrinhdoController;
+use App\Http\Controllers\Danhmuc\dmnganhngheController;
 use App\Http\Controllers\Danhmuc\dmnganhsxkdController;
 use App\Http\Controllers\Danhmuc\dmthoigianthatnghiepController;
 use App\Http\Controllers\Danhmuc\dmtinhtrangthamgiahdktController;
@@ -156,5 +157,12 @@ Route::prefix('danh_muc')->group(function () {
         Route::post('/store', [nguyennhanthatnghiepController::class, 'store']);
         Route::post('/update/{id}', [nguyennhanthatnghiepController::class, 'update']);
         Route::get('/delete/{id}', [nguyennhanthatnghiepController::class, 'destroy']);
+    });
+
+    Route::prefix('dmnganhnghe')->group(function(){
+        Route::get('', [dmnganhngheController::class, 'index']);
+        Route::post('/store_update', [dmnganhngheController::class, 'store_update']);
+        Route::get('/delete/{id}', [dmnganhngheController::class, 'delete']);
+        Route::get('/edit/{id}', [dmnganhngheController::class, 'edit']);
     });
 });

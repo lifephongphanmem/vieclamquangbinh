@@ -113,7 +113,7 @@
                                 <th>CMND/CCCD</th>
                                 <th>Ngày sinh</th>
                                 <th>Địa chỉ</th>
-                                <th>Tình trạng việc làm</th>
+                                {{-- <th>Tình trạng việc làm</th> --}}
                                 <th>Thời gian bắt đầu</th>
                                 <th>Thời gian cập nhật</th>
                                 {{-- <th>Thao tác</th> --}}
@@ -131,10 +131,10 @@
                                 </td>
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cccd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->thuongtru }}</td>
-                                <td><span class="text-ellipsis">
+                                <td><span class="text-ellipsis"> </span>{{ $ld->diachi }}</td>
+                                {{-- <td><span class="text-ellipsis">
                                     </span>{{ $danhsachtinhtrangvl[$ld->tinhtranghdkt] ?? '' }}
-                                </td>
+                                </td> --}}
                                 <td><span class="text-ellipsis">
                                     </span>{{ \Carbon\Carbon::parse($ld->created_at)->format('d/m/Y') }}</td>
                                 <td><span class="text-ellipsis">

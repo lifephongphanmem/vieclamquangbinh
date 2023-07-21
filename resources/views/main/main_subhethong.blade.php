@@ -157,7 +157,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Nghyên nhân thất nghiệp</span>
+                                <span class="menu-text">Nguyên nhân thất nghiệp</span>
                             </a>
                         </li>
                         {{-- @endif --}}
@@ -168,6 +168,16 @@
                                     <span></span>
                                 </i>
                                 <span class="menu-text">Hình thức làm việc</span>
+                            </a>
+                        </li>
+                        @endif
+                        @if (chkPhanQuyen('nganhnghe', 'phanquyen'))
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{ url('/danh_muc/dmnganhnghe') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Ngành nghề</span>
                             </a>
                         </li>
                         @endif
