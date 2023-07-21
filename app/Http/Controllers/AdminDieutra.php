@@ -1259,30 +1259,30 @@ class AdminDieutra extends Controller
         }
         $inputs = $request->all();
 
-        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+        $model = nhankhauModel::select('madv', 'hoten','ngaysinh','cccd','gioitinh','diachi', 'uutien', 'trinhdogiaoduc', 'chuyenmonkythuat','doituongtimvieclam','vieclammongmuon','nganhnghemongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','sdt','khuvuc')
+            ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
             ->when($inputs['madv'], function ($q, $inputs) {
                 return $q->where('madv', $inputs);
             })
-            ->where(function ($q) use ($inputs) {
+            // ->where(function ($q) use ($inputs) {
 
-                if (isset($inputs['gender'])) {
-                    $q->where('gioitinh', 'like', '%' . $inputs['gioitinh'] . '%');
-                }
-                if (isset($inputs['tthdkt'])) {
-                    $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
-                }
-                if (isset($inputs['dtut'])) {
-                    $q->where('uutien', $inputs['uutien']);
-                }
-                if (isset($inputs['trinhdogdpt'])) {
-                    $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
-                }
-                if (isset($inputs['trinhdocmkt'])) {
-                    $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
-                }
-            })
-            ->select('madv', 'hoten','ngaysinh','cccd','gioitinh','diachi', 'uutien', 'trinhdogiaoduc', 'chuyenmonkythuat','doituongtimvieclam','vieclammongmuon','nganhnghemongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','sdt','khuvuc')
+            //     if (isset($inputs['gender'])) {
+            //         $q->where('gioitinh', 'like', '%' . $inputs['gioitinh'] . '%');
+            //     }
+            //     if (isset($inputs['tthdkt'])) {
+            //         $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
+            //     }
+            //     if (isset($inputs['dtut'])) {
+            //         $q->where('uutien', $inputs['uutien']);
+            //     }
+            //     if (isset($inputs['trinhdogdpt'])) {
+            //         $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
+            //     }
+            //     if (isset($inputs['trinhdocmkt'])) {
+            //         $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
+            //     }
+            // })
             ->get();
 
 
@@ -1345,6 +1345,8 @@ class AdminDieutra extends Controller
         } else {
             $ds_danhmuc = $m_danhmuc->where('capdo', 'H');
         }
+        $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
+        $a_donvi = array_column($m_danhmuc->where('parent', $m_donvi->maquocgia)->toarray(), 'madv');
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $a_gdpt = array_column(dmtrinhdogdpt::all()->toArray(), 'tengdpt', 'stt');
         $a_dtut = array_column(dmdoituonguutien::all()->toArray(), 'tendoituong', 'stt');
@@ -1352,24 +1354,26 @@ class AdminDieutra extends Controller
         $model = nhankhauModel::select('madv', 'hoten','ngaysinh','cccd','gioitinh','diachi', 'uutien', 'trinhdogiaoduc', 'chuyenmonkythuat','doituongtimvieclam','vieclammongmuon','nganhnghemongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','sdt','khuvuc')
             ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
-            ->where(function ($q) use ($inputs) {
+            ->wherein('madv',$a_donvi)
+            // ->where(function ($q) use ($inputs) {
 
-                if (isset($inputs['gender'])) {
-                    $q->where('gioitinh', 'like', '%' . $inputs['gioitinh'] . '%');
-                }
-                if (isset($inputs['tthdkt'])) {
-                    $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
-                }
-                if (isset($inputs['dtut'])) {
-                    $q->where('uutien', $inputs['uutien']);
-                }
-                if (isset($inputs['trinhdogdpt'])) {
-                    $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
-                }
-                if (isset($inputs['trinhdocmkt'])) {
-                    $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
-                }
-            })->get();
+            //     if (isset($inputs['gender'])) {
+            //         $q->where('gioitinh', 'like', '%' . $inputs['gioitinh'] . '%');
+            //     }
+            //     if (isset($inputs['tthdkt'])) {
+            //         $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
+            //     }
+            //     if (isset($inputs['dtut'])) {
+            //         $q->where('uutien', $inputs['uutien']);
+            //     }
+            //     if (isset($inputs['trinhdogdpt'])) {
+            //         $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
+            //     }
+            //     if (isset($inputs['trinhdocmkt'])) {
+            //         $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
+            //     }
+            // })
+            ->get();
 
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
              ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
@@ -1383,12 +1387,12 @@ class AdminDieutra extends Controller
             $ds_danhmuc = $m_danhmuc->where('capdo', 'X');
         }
         // dd($ds_danhmuc);
-        $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
 
-        if (isset($inputs['madv'])) {
-            $a_donvi = array_column($m_danhmuc->where('parent', $m_donvi->maquocgia)->toarray(), 'madv');
-            $model = $model->wherein('madv', $a_donvi);
-        }
+
+        // if (isset($inputs['madv'])) {
+        //     $a_donvi = array_column($m_danhmuc->where('parent', $m_donvi->maquocgia)->toarray(), 'madv');
+        //     $model = $model->wherein('madv', $a_donvi);
+        // }
 
 
         $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
@@ -1429,24 +1433,24 @@ class AdminDieutra extends Controller
         $model = nhankhauModel::select('madv', 'hoten','ngaysinh','cccd','gioitinh','diachi', 'uutien', 'trinhdogiaoduc', 'chuyenmonkythuat','doituongtimvieclam','vieclammongmuon','nganhnghemongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','sdt','khuvuc')
             ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
-            ->where(function ($q) use ($inputs) {
+            // ->where(function ($q) use ($inputs) {
 
-                if (isset($inputs['gender'])) {
-                    $q->where('gioitinh', $inputs['gioitinh']);
-                }
-                if (isset($inputs['tthdkt'])) {
-                    $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
-                }
-                if (isset($inputs['dtut'])) {
-                    $q->where('uutien', $inputs['uutien']);
-                }
-                if (isset($inputs['trinhdogdpt'])) {
-                    $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
-                }
-                if (isset($inputs['trinhdocmkt'])) {
-                    $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
-                }
-            })
+            //     if (isset($inputs['gender'])) {
+            //         $q->where('gioitinh', $inputs['gioitinh']);
+            //     }
+            //     if (isset($inputs['tthdkt'])) {
+            //         $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
+            //     }
+            //     if (isset($inputs['dtut'])) {
+            //         $q->where('uutien', $inputs['uutien']);
+            //     }
+            //     if (isset($inputs['trinhdogdpt'])) {
+            //         $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
+            //     }
+            //     if (isset($inputs['trinhdocmkt'])) {
+            //         $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
+            //     }
+            // })
             ->get();
 
 
