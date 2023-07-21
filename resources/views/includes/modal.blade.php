@@ -475,7 +475,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-lg-12 mt-3">
+                    {{-- <div class="col-lg-12 mt-3">
                         <label class="control-label">Chọn tùy biến</label>
                     </div>
                     <div class="row mt-1 ml-5" id="1stld">
@@ -561,7 +561,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div class="modal-footer">
@@ -613,7 +613,7 @@
                         </select>
                     </div>
 
-                    <div class="col-lg-12 mt-3">
+                    {{-- <div class="col-lg-12 mt-3">
                         <label class="control-label">Chọn tùy biến</label>
                     </div>
                     <div class="row mt-1 ml-5" id="1stld">
@@ -697,7 +697,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
@@ -732,7 +732,7 @@
                         </select>
                     </div>
 
-                    <div class="col-lg-12">
+                    {{-- <div class="col-lg-12">
                         <label class="control-label mt-3">Chọn tùy biến</label>
                     </div>
                     <div class="row mt-1 ml-5" id="1stld">
@@ -811,7 +811,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div class="modal-footer">

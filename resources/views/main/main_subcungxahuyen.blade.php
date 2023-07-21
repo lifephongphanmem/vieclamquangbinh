@@ -10,6 +10,14 @@
     </li>
     @endif
     @if (chkPhanQuyen('nhankhau', 'phanquyen'))
+    {{-- <li class="menu-item menu-item-submenu menu-item-rel">
+        <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
+            <span class="menu-text">Người tìm việc</span>
+            <span class="menu-desc"></span>
+            <i class="menu-arrow"></i>
+        </a>
+
+    </li> --}}
     <li class="menu-item menu-item-submenu menu-item-rel">
         <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
             <span class="menu-text">Người tìm việc</span>
@@ -69,8 +77,8 @@
 
                                     </a>
                                 </li>
-                            @endif
-                            @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                            @endif --}}
+                            {{-- @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
                                     <a data-target="#modify-modal-huyen" data-toggle="modal" class="menu-link">
                                         <i class="menu-bullet menu-bullet-dot">

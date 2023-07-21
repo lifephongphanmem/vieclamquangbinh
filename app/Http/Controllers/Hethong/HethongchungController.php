@@ -152,6 +152,11 @@ class HethongchungController extends Controller
 				$user->huyen = $diaban->parent;
 				$user->maquocgia = $diaban->maquocgia;
 				$user->capdodiaban = $diaban->capdo;
+				if($diaban->level == 'Xã'){
+					$user->capdohanhchinh= 'nongthon';
+				}else{
+					$user->capdohanhchinh= 'thanhthi';
+				}
 				$user->phanquyen = json_decode($user->phanquyen, true);
 				// dd($user);
 			} else {

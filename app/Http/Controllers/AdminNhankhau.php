@@ -13,6 +13,7 @@ use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Danhmuc\dmloaihieuluchdld;
 use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmnganhnghe;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
@@ -324,6 +325,7 @@ class AdminNhankhau extends Controller
         $m_thoigianthatnghiep = dmthoigianthatnghiep::all();
         $model = new Nhankhau();
         $ld = $model::find($nkid);
+        $m_nganhnghe=dmnganhnghe::all();
         // dd($inputs);
         $inputs['kydieutra']=$ld->kydieutra;
         if (isset($inputs['loailoi'])) {
@@ -355,19 +357,20 @@ class AdminNhankhau extends Controller
                 ->with('baocao', getdulieubaocao())
                 ->with('inputs', $inputs)
                 ->with('m_uutien', $m_uutien)
-                ->with('m_tinhtrangvl', $m_tinhtrangvl)
-                ->with('m_vithevl', $m_vithevl)
-                ->with('lydo', $lydo)
-                ->with('m_hopdongld', $m_hopdongld)
-                ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
-                ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
-                ->with('m_loaihinhkt', $m_loaihinhkt)
-                ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
+                // ->with('m_tinhtrangvl', $m_tinhtrangvl)
+                // ->with('m_vithevl', $m_vithevl)
+                // ->with('lydo', $lydo)
+                // ->with('m_hopdongld', $m_hopdongld)
+                // ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
+                // ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
+                // ->with('m_loaihinhkt', $m_loaihinhkt)
+                // ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
                 ->with('countries_list', $countries_list)
                 ->with('dmhc', $dmhc)
                 ->with('list_cmkt', $list_cmkt)
                 ->with('list_tdgd', $list_tdgd)
                 ->with('list_nghe', $list_nghe)
+                ->with('m_nganhnghe', $m_nganhnghe)
                 // ->with('list_vithe', $list_vithe)
                 // ->with('list_linhvuc', $list_linhvuc)
                 ->with('list_hdld', $list_hdld);
@@ -462,7 +465,8 @@ class AdminNhankhau extends Controller
         }else{
             $khuvuc = 'thanhthi';
         }
-
+$m_nganhnghe=dmnganhnghe::all();
+$a_nganhnghe=array_column($m_nganhnghe->toarray(),'tendm','madm');
         return view('admin.nhankhau.innguoilaodong', compact(
             'model',
             'uutien',
@@ -476,6 +480,7 @@ class AdminNhankhau extends Controller
             // 'hdld',
             // 'bhxh',
             'khuvuc',
+            'a_nganhnghe'
         ))
             ->with('pageTitle', 'Thông tin chi tiết người lao động');
     }
@@ -564,49 +569,49 @@ class AdminNhankhau extends Controller
                 }
             }
             // $inputs['loaibiendong']=3;//cập nhật thông tin
-            $tonghopcld = tonghopcunglaodong::where('madv',$model->madv)->where('kydieutra',$model->kydieutra)->first();
+            // $tonghopcld = tonghopcunglaodong::where('madv',$model->madv)->where('kydieutra',$model->kydieutra)->first();
             
-            if ($model->tinhtranghdkt == '1' ) {
-                if ($inputs['tinhtranghdkt'] == '2') {
-                    $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
-                }
-                if ($inputs['tinhtranghdkt'] =='3') {
-                    $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
-                }
-                $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
-            }
-            if ($model->tinhtranghdkt == '2') {
-                if ($inputs['tinhtranghdkt'] == '1') {
-                    $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
-                }
-                if ($inputs['tinhtranghdkt'] == '3') {
-                    $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
-                }
-                $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
-            } 
-            if ($model->tinhtranghdkt == '3') {
-                if ($inputs['tinhtranghdkt'] == '1') {
-                    $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
-                }
-                if ($inputs['tinhtranghdkt'] == '2') {
-                    $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
-                }
-                $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
-            } 
-            if ($model->tinhtranghdkt == null) {
-                if ($inputs['tinhtranghdkt'] == '1') {
-                    $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
-                }
-                if ($inputs['tinhtranghdkt'] == '2') {
-                    $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
-                }
-                if ($inputs['tinhtranghdkt'] == '3') {
-                    $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
-                }
-            } 
-            if ($inputs['tinhtranghdkt'] != null) {
-                $tonghopcld->update($xa);
-            }
+            // if ($model->tinhtranghdkt == '1' ) {
+            //     if ($inputs['tinhtranghdkt'] == '2') {
+            //         $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
+            //     }
+            //     if ($inputs['tinhtranghdkt'] =='3') {
+            //         $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
+            //     }
+            //     $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
+            // }
+            // if ($model->tinhtranghdkt == '2') {
+            //     if ($inputs['tinhtranghdkt'] == '1') {
+            //         $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
+            //     }
+            //     if ($inputs['tinhtranghdkt'] == '3') {
+            //         $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
+            //     }
+            //     $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
+            // } 
+            // if ($model->tinhtranghdkt == '3') {
+            //     if ($inputs['tinhtranghdkt'] == '1') {
+            //         $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
+            //     }
+            //     if ($inputs['tinhtranghdkt'] == '2') {
+            //         $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
+            //     }
+            //     $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
+            // } 
+            // if ($model->tinhtranghdkt == null) {
+            //     if ($inputs['tinhtranghdkt'] == '1') {
+            //         $xa['ldcovieclam'] = $tonghopcld->ldcovieclam + 1;
+            //     }
+            //     if ($inputs['tinhtranghdkt'] == '2') {
+            //         $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep + 1;
+            //     }
+            //     if ($inputs['tinhtranghdkt'] == '3') {
+            //         $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia + 1;
+            //     }
+            // } 
+            // if ($inputs['tinhtranghdkt'] != null) {
+            //     $tonghopcld->update($xa);
+            // }
           
             $model->update($inputs);
             // $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();

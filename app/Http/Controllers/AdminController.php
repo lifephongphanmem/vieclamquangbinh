@@ -43,74 +43,6 @@ class AdminController extends Controller
 	public function dashboard()
 	{
 
-		//chạy đơn vị huyện
-		// foreach ($dmdonvi as $item) {
-		// 	if ($item->capdo == 'H') {
-		// 		$data = array();
-		// 		$data['kydieutra'] = $nam;
-		// 		$data['madv'] = $item->madv;
-		// 		$data['capdo'] = $item->capdo;
-		// 		$data['tendv'] = $item->tendv;
-		// 		$data['nam'] = 0;
-		// 		$data['nu'] = 0;
-		// 		$data['ldtren15'] = 0;
-		// 		$data['ldcovieclam'] = 0;
-		// 		$data['ldthatnghiep'] = 0;
-		// 		$data['ldkhongthamgia'] = 0;
-		// 		$data['thanhthi'] = 0;
-		// 		$data['nongthon'] = 0;
-		// 		foreach($dmdonvi as $item2){
-		// 			if ($item->maquocgia == $item2->parent) {
-		// 				$cungld = $tonghopcunglaodong->where('madv',$item2->madv)->first();
-		// 				// dd($item2->madv);
-		// 				$data['nam'] += $cungld->nam; 
-		// 				$data['nu'] += $cungld->nu;
-		// 				$data['ldtren15'] += $cungld->ldtren15;
-		// 				$data['ldcovieclam'] += $cungld->ldcovieclam;
-		// 				$data['ldthatnghiep'] += $cungld->ldthatnghiep;
-		// 				$data['ldkhongthamgia'] += $cungld->ldkhongthamgia;
-		// 				$data['thanhthi'] += $cungld->thanhthi;
-		// 				$data['nongthon'] += $cungld->nongthon;
-		// 			}
-		// 		}
-		// 		tonghopcunglaodong::create($data);
-		// 	}
-		// }
-		//chạy đơn vị tỉnh
-		// foreach ($dmdonvi as $item) {
-		// 	if ($item->capdo == 'T') {
-		// 		$data = array();
-		// 		$data['kydieutra'] = $nam;
-		// 		$data['madv'] = $item->madv;
-		// 		$data['capdo'] = $item->capdo;
-		// 		$data['tendv'] = $item->tendv;
-		// 		$data['nam'] = 0;
-		// 		$data['nu'] = 0;
-		// 		$data['ldtren15'] = 0;
-		// 		$data['ldcovieclam'] = 0;
-		// 		$data['ldthatnghiep'] = 0;
-		// 		$data['ldkhongthamgia'] = 0;
-		// 		$data['thanhthi'] = 0;
-		// 		$data['nongthon'] = 0;
-		// 		foreach($dmdonvi as $item2){
-		// 			if ($item->maquocgia == $item2->parent) {
-		// 				$cungld = $tonghopcunglaodong->where('madv',$item2->madv)->first();
-		// 				// dd($item2->madv);
-		// 				$data['nam'] += $cungld->nam; 
-		// 				$data['nu'] += $cungld->nu;
-		// 				$data['ldtren15'] += $cungld->ldtren15;
-		// 				$data['ldcovieclam'] += $cungld->ldcovieclam;
-		// 				$data['ldthatnghiep'] += $cungld->ldthatnghiep;
-		// 				$data['ldkhongthamgia'] += $cungld->ldkhongthamgia;
-		// 				$data['thanhthi'] += $cungld->thanhthi;
-		// 				$data['nongthon'] += $cungld->nongthon;
-		// 			}
-		// 		}
-		// 		 tonghopcunglaodong::create($data);
-		// 	}
-		// }
-		//  dd(tonghopcunglaodong::all());
-
 		$ctys = DB::table('company')->where('user', null)->get();
 		$dinfo = $this->getDashboard();
 		$dinfo['laodong'] += $ctys->sum('sld');
@@ -158,7 +90,6 @@ class AdminController extends Controller
 			$kydieutra_truoc = '';
 			$kydieutra_hientai = $kydieutra;
 		}
-
 		$tongsonhankhau = array('kytruoc' => 0, 'kyhientai' => 0);
 		$ldcovieclam = array('kytruoc' => 0, 'kyhientai' => 0);
 		$ldthatnghiep = array('kytruoc' => 0, 'kyhientai' => 0);
