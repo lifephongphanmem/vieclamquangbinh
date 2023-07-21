@@ -96,7 +96,7 @@ class AdminTuyendung extends Controller
 		$dm_filter = $request->dm_filter;
 	
 		$ds_ma_xa = array_column($m_danhmuc->where('parent', $dm_filter)->toarray(),'madv');
-
+		// dd($ds_ma_xa);
 		$tds = DB::table('tuyendung')->join('company', 'tuyendung.user', '=', 'company.user')
 			->when($search, function ($query, $search) {
 				return $query->where('tuyendung.noidung', 'like', '%' . $search . '%')
@@ -113,10 +113,10 @@ class AdminTuyendung extends Controller
 			})
 
 			->where('state','1')
-			->select('tuyendung.*', 'company.name')
+			->select('tuyendung.*', 'company.name','company.madv')
 			->orderBy('tuyendung.id', 'desc')
 			->get();
-		
+		// dd($tds);
 		$vtmodel = new Vitrituyendung;
 		foreach ($tds as $td) {
 			$vitris = $vtmodel->getVitris($td->id);

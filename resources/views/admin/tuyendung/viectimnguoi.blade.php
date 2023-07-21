@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <form class="form-inline" method="GET">
                         <div class="row col-xl-4" style="margin-bottom: 1%">
-                            <div class="col-xl-2 ">
+                            {{-- <div class="col-xl-2 ">
                                 <select class="form-control select2basic" name="dm_filter" onchange="this.form.submit()">
                                     <option value="0">Chọn huyện</option>
                                     <?php foreach ($dmhc_list as $dm) {?>
@@ -50,7 +50,7 @@
                                     <?php } ?>
 
                                 </select>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="col-xl-2 " style="margin-left: 30%">
                                 <select class=" form-control select2basic" name="public_filter"
