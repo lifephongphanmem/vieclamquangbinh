@@ -112,7 +112,7 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align: left"><b>10.1 Chuyên ngành đào tạo: </b>{{ isset($model->chuyennganh)?$a_nganhnghe[$model->chuyennganh]:'' }}</td>
+            <td style="text-align: left"><b>10.1 Chuyên ngành đào tạo: </b>{{ isset($model)?$model->chuyennganh:'' }}</td>
         </tr>
         <tr>
             <td style="text-align: left"><b>11. Nhu cầu tìm kiếm việc làm: </b> </td>
