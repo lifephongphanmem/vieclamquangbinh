@@ -41,7 +41,11 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
+<<<<<<< HEAD
+                        <h3 class="card-label text-uppercase">Người tìm việc</h3>
+=======
                         <h3 class="card-label text-uppercase">Danh sách người tìm việc</h3>
+>>>>>>> aeefb904a535e68400b6ff76eac28927db1348c7
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}

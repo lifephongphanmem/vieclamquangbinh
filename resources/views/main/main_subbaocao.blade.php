@@ -72,7 +72,7 @@
                     <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                         <ul class="menu-subnav">
 
-                            <li class="menu-item" aria-haspopup="true">
+                            {{-- <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#modify-modal-tinh" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
@@ -100,7 +100,7 @@
                                         <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span>
                                     </a>
                                 </li>
-                            @endif
+                            @endif --}}
 
                             <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#modify-modal-tinh-mau01b" data-toggle="modal" class="menu-link">

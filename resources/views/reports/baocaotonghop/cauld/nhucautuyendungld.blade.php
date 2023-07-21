@@ -15,7 +15,7 @@
         <tr>
             <td colspan="4">
                 <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">
-                    THÔNG TIN NHU CẦU TUYỂN DỤNG LAO ĐỘNG CỦA NGƯỜI SỬ DỤNG LAO ĐỘNG<br>
+                    THÔNG TIN NHU CẦU TUYỂN DỤNG LAO ĐỘNG CỦA NGƯỜI SỬ DỤNG LAO ĐỘNG <br>
                 </p>
             </td>
         </tr>

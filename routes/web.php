@@ -166,7 +166,7 @@ Route::get('/tuyendung-get_vitri', [AdminTuyendung::class, 'get_vitri']); //get 
 Route::get('/tuyendung-bu/{tdid}', [AdminTuyendung::class, 'duyet']); // duyet
 
 Route::get('/tuyendung-be/{tdid}', [AdminTuyendung::class, 'edit']); // edit
-
+Route::get('/tuyendung-viectimnguoi/{cid?}', [AdminTuyendung::class, 'viectimnguoi']); // việc tìm người
 
 // Dieu tra
 
