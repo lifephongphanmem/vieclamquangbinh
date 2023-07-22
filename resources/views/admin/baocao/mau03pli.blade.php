@@ -36,7 +36,7 @@
                 {{ isset($company)
                     ? $company->name
                     : '  ............................................................................................................
-                                     ...............................................................................................................................................' }}
+                                                     ...............................................................................................................................................' }}
 
             </td>
         </tr>
@@ -64,12 +64,10 @@
                 {{ isset($company) ? $company->xa : 'Xã .................................' }}
                 <br>Địa chỉ cụ thể*:
                 {{ isset($company) ? $company->adress : '.................................' }}
-                <br >[ ] KCN: 
-                @foreach ($kcn as $item)
-                    @if ($item->id == $company->khucn)
-                     {{ $item->name }}
-                    @endif
-                @endforeach
+                <br>[ ] KCN:
+                @if (isset($kcn))
+                    {{ $kcn->name }}
+                @endif
             </td>
         </tr>
         <tr>
@@ -85,12 +83,8 @@
         <tr>
             <td colspan="5" style="text-align:left;border-right: none">
                 Ngành kinh doanh chính*:
-                @if (isset($company->nganhnghe))
-                    @foreach ($nganhnghe as $item)
-                        @if ($company->nganhnghe == $item->id)
-                            {{ $item->name }}
-                        @endif
-                    @endforeach
+                @if (isset($nganhnghe))
+                    {{ $nganhnghe->name }}
                 @else
                     <br>[ ] Nông, lâm nghiệp và thủy sản
                     <br> [ ] Công nghiệp, chế biến, chế tạo
@@ -108,8 +102,8 @@
                 @endif
 
             </td>
-            <td colspan="5"  style="border-left: none">
-                @if (!isset($company->nganhnghe))
+            <td colspan="5" style="border-left: none">
+                @if (!isset($nganhnghe))
                     <br> [ ] Khai khoáng
                     <br> [ ] Xây dựng
                     <br> [ ] Cung cấp nước, hoạt động quản lý và xử lý nước và

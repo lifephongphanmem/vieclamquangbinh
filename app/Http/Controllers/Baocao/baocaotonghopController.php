@@ -214,13 +214,16 @@ class baocaotonghopController extends Controller
         $company = Company::where('user', $tuyendung->user)->first();
         $manghe = dmmanghetrinhdo::where('trangthai', 'kh')->get();
         $kcn = $this->getParamsByNametype("Khu công nghiệp")->where('id', $tuyendung->khucn)->first();
+        $nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp")->where('id', $tuyendung->nganhnghe)->first();// lấy ngành nghề doanh nghiệp
 
+        // dd($nganhnghe);
         return view('reports.baocaotonghop.cauld.nhucautuyendungld')
             ->with('kcn', $kcn)
             ->with('vitritd', $vitritd)
             ->with('tuyendung', $tuyendung)
             ->with('company', $company)
             ->with('manghe', $manghe)
+            ->with('nganhnghe', $nganhnghe)
             ->with('pageTitle', 'Thông tin nhu cầu tuyển dụng lao động');
     }
     public function cungldcapxahuyen(Request $request)
@@ -836,12 +839,12 @@ class baocaotonghopController extends Controller
     {
         $tuyendung = tuyendungModel::find($request->id);
         $company =Company::where('user',$tuyendung->user)->first();
-        $kcn = $this->getParamsByNametype("Khu công nghiệp");// lấy danh mục khu công nghiệp
+        $kcn = $this->getParamsByNametype("Khu công nghiệp")->where('id',$company->khucn)->first();// lấy danh mục khu công nghiệp
 		// $ctype = $this->getParamsByNametype("Loại hình doanh nghiệp");// lấy loại hình doanh nghiệp
 		$ctype=dmloaihinhhdkt::all();
-		$nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp");// lấy ngành nghề doanh nghiệp
+		$nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp")->where('id',$company->nganhnghe)->first();// lấy ngành nghề doanh nghiệp
 
-        // dd($kcn);
+        // dd($nganhnghe);
         return view('admin.baocao.mau03pli')
         ->with('tuyendung' ,$tuyendung  )
         ->with('company' ,$company  )

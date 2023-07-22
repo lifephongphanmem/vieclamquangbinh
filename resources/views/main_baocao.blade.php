@@ -56,11 +56,14 @@
             padding-top: 0px;
             padding-bottom: 5px;
         }        */
-
+        
         table tr td:first-child {
             text-align: center;
+            /* font-size: 25px; */
         }
-
+        /* table  {
+            font-size: 12px;
+        } */
         table,
         p {
             width: 90%;

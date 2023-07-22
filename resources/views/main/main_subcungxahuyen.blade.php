@@ -1,16 +1,15 @@
 <ul class="menu-nav">
     @if (chkPhanQuyen('danhsachdieutra', 'thaydoi'))
-    <li class="menu-item menu-item-submenu menu-item-rel"
-        data-menu-toggle="click" aria-haspopup="true">
-        <a data-target="#taomoi_kydieutra" data-toggle="modal" class="menu-link">
-            <span class="menu-text">Tạo kỳ điều tra mới</span>
-            <span class="menu-desc"></span>
-            <i class="menu-arrow"></i>
-        </a>
-    </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a data-target="#taomoi_kydieutra" data-toggle="modal" class="menu-link">
+                <span class="menu-text">Tạo kỳ điều tra mới</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+        </li>
     @endif
     @if (chkPhanQuyen('nhankhau', 'phanquyen'))
-    {{-- <li class="menu-item menu-item-submenu menu-item-rel">
+        {{-- <li class="menu-item menu-item-submenu menu-item-rel">
         <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
             <span class="menu-text">Người tìm việc</span>
             <span class="menu-desc"></span>
@@ -18,23 +17,68 @@
         </a>
 
     </li> --}}
-    <li class="menu-item menu-item-submenu menu-item-rel">
-        <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
-            <span class="menu-text">Người tìm việc</span>
-            <span class="menu-desc"></span>
-            <i class="menu-arrow"></i>
-        </a>
+        @if (session('admin')->capdo == 'X')
+            <li class="menu-item menu-item-submenu menu-item-rel">
+                <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
+                    <span class="menu-text">Người tìm việc</span>
+                    <span class="menu-desc"></span>
+                    <i class="menu-arrow"></i>
+                </a>
+            </li>
+        @endif
+        @if (session('admin')->capdo == 'H')
+            <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="menu-text">Người tìm việc - Việc tìm người</span>
+                    <span class="menu-desc"></span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                    <ul class="menu-subnav">
+                        {{-- @if (chkPhanQuyen('nhankhau', 'phanquyen')) --}}
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link">
+                                <span class="svg-icon menu-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                    </svg>
+                                </span>
+                                <span class="menu-text">Người tìm việc</span>
+                            </a>
+                        </li>
+                        {{-- @endif --}}
 
-    </li>
+                        <li class="menu-item" aria-haspopup="true">
+                            {{-- <a href="{{ URL::to('tuyendung-viectimnguoi') }}" class="menu-link"> --}}
+                                <a class="menu-link">
+                                <span class="svg-icon menu-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-phone-landscape" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 4.5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-6zm-1 6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v6z" />
+                                        <path d="M14 7.5a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
+                                    </svg>
+                                </span>
+                                <span class="menu-text">Việc tìm người</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+        @endif
+
     @endif
     @if (chkPhanQuyen('biendongxa', 'phanquyen'))
-    <li class="menu-item menu-item-submenu menu-item-rel">
-        <a href="{{ '/biendong/danhsach_biendong' }}" class="menu-link" >
-            <span class="menu-text">Biến động</span>
-            <span class="menu-desc"></span>
-            <i class="menu-arrow"></i>
-        </a>
-    </li>
+        <li class="menu-item menu-item-submenu menu-item-rel">
+            <a href="{{ '/biendong/danhsach_biendong' }}" class="menu-link">
+                <span class="menu-text">Biến động</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+        </li>
     @endif
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
@@ -91,26 +135,27 @@
                             @endif --}}
 
                             @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
-                            <li class="menu-item" aria-haspopup="true">
-                                <a data-target="#modify-modal-xa-mau01b" data-toggle="modal" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#modify-modal-xa-mau01b" data-toggle="modal" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
 
-                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
-                                </a>
-                            </li>
-                        @endif
-                        @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
-                            <li class="menu-item" aria-haspopup="true">
-                                <a data-target="#modify-modal-huyen-mau01b" data-toggle="modal" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
-                                </a>
-                            </li>
-                        @endif
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                    </a>
+                                </li>
+                            @endif
+                            @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#modify-modal-huyen-mau01b" data-toggle="modal"
+                                        class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                    </a>
+                                </li>
+                            @endif
                             <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#thitruongld-cung-modal" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -228,14 +273,17 @@
             <a href="{{ '/hopthu/xa' }}" class="menu-link">
                 <span class="menu-text">Hộp thư
                     @if ($model_ttdvvl > 0)
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-exclamation-fill ml-2 text-warning" viewBox="0 0 16 16">
-                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207L16 4.697Z"/>
-                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1.5a.5.5 0 0 1-1 0V11a.5.5 0 0 1 1 0Zm0 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
-                      </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-envelope-exclamation-fill ml-2 text-warning" viewBox="0 0 16 16">
+                            <path
+                                d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207L16 4.697Z" />
+                            <path
+                                d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1.5a.5.5 0 0 1-1 0V11a.5.5 0 0 1 1 0Zm0 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+                        </svg>
                     @endif
                 </span>
                 @if ($model_ttdvvl > 0)
-                <span class="text-warning ml-1">{{ $model_ttdvvl + $model_tralai }}</span>
+                    <span class="text-warning ml-1">{{ $model_ttdvvl + $model_tralai }}</span>
                 @endif
                 <i class="menu-arrow"></i>
             </a>
