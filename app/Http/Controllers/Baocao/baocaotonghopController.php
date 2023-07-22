@@ -855,7 +855,7 @@ class baocaotonghopController extends Controller
                 ->with('m_nganhnghe',$m_nganhnghe)
                 ->with('a_cmkt',$a_cmkt)
                 ->with('pageTitle','Thông tin cung lao động');
-
+    }
     public function mau_03lpi(Request $request)
     {
         $tuyendung = tuyendungModel::find($request->id);
