@@ -12,7 +12,7 @@
     @if (chkPhanQuyen('nhankhau', 'phanquyen'))
     {{-- <li class="menu-item menu-item-submenu menu-item-rel">
         <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
-            <span class="menu-text">Nhân khẩu</span>
+            <span class="menu-text">Người tìm việc</span>
             <span class="menu-desc"></span>
             <i class="menu-arrow"></i>
         </a>
