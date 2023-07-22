@@ -22,6 +22,7 @@ use App\Models\danhsach;
 use Illuminate\Support\Facades\Session;
 use App\Exports\BaocaoExport;
 use App\Models\Danhmuc\dmdoituonguutien;
+use App\Models\Danhmuc\dmnganhnghe;
 use App\Models\Danhmuc\dmthoigianthatnghiep;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
 use App\Models\Danhmuc\dmtrinhdogdpt;
@@ -835,6 +836,29 @@ class baocaotonghopController extends Controller
         ]);
     }
 
+
+    public function mau03_xa(Request $request){
+
+        $inputs=$request->all();
+
+        $kybaocao=$inputs['kydieutra'];
+        $kytruoc=$kybaocao-1;
+        $model=nhankhauModel::select('madv','kydieutra','hoten','gioitinh','chuyenmonkythuat','nganhnghemuonhoc','khuvuc')
+                            ->where('madv',session('admin')->madv)
+                            ->wherein('kydieutra',[$kybaocao,$kytruoc])
+                            ->get();
+
+        $m_nganhnghe=dmnganhnghe::all();
+        $a_cmkt=array_column(dmtrinhdokythuat::all()->toarray(),'tentdkt', 'stt');
+
+        return view('admin.baocao.mau03_xa')
+                ->with('model',$model)
+                ->with('kybaocao',$kybaocao)
+                ->with('kytruoc',$kytruoc)
+                ->with('m_nganhnghe',$m_nganhnghe)
+                ->with('a_cmkt',$a_cmkt)
+                ->with('pageTitle','Thông tin cung lao động');
+    }
     public function mau_03lpi(Request $request)
     {
         $tuyendung = tuyendungModel::find($request->id);
@@ -852,6 +876,7 @@ class baocaotonghopController extends Controller
         ->with('ctype' ,$ctype  )
         ->with('nganhnghe' ,$nganhnghe  )
         ->with(  'pageTitle','Báo cáo thông tin thị trường lao động');
+
     }
 
 }
