@@ -27,3 +27,4 @@ Route::prefix('vanban')->group(function(){
 });
 
 Route::post('/baocaotuybien',[AdminDieutra::class,'baocaotuybien']);
+Route::post('mau03_xa',[baocaotonghopController::class,'mau03_xa']);

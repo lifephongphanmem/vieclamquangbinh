@@ -111,12 +111,20 @@
                                 </a>
                             </li>
                         @endif
-                            <li class="menu-item" aria-haspopup="true">
+                            {{-- <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#thitruongld-cung-modal" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
                                     <span class="menu-text">Báo cáo thông tin thị trường cung lao động</span>
+                                </a>
+                            </li> --}}
+                            <li class="menu-item" aria-haspopup="true">
+                                <a data-target="#thongtin-cung-modal" data-toggle="modal" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Báo cáo về thông tin cung lao động</span>
                                 </a>
                             </li>
 

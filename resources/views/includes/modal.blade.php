@@ -874,6 +874,42 @@
         </div>
     </form>
 </div>
+<!--Model về thông tin cung lao động-->
+<div id="thongtin-cung-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+    <form id="frmDanhsach" method="POST" action="{{ '/mau03_xa' }}"
+        accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+        @csrf
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Thông tin thị trường cung lao động
+                    </h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 mb-2">
+                        <label class="control-label">Năm điều tra</label>
+                        <select class="form-control select2basic" id="nam" name="kydieutra" style="width:100%">
+                            <?php $nam_start = date('Y') - 5;
+                            $nam_stop = date('Y'); ?>
+                            @for ($i = $nam_start; $i <= $nam_stop; $i++)
+                                <option value="{{ $i }}" {{ $i == $nam_stop ? 'selected' : '' }}>Năm
+                                    {{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <!--Model thị trường lao động-->
 <div id="thitruongld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
     <form id="frmDanhsach" method="GET" action="{{ '/bao_cao_tong_hop/thong_tin_thi_truong_ld' }}"
