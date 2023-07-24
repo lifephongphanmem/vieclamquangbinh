@@ -48,7 +48,7 @@
                         </div>
                     </li>
                 @endif
-                {{-- @if (chkPhanQuyen('nhankhau', 'phanquyen'))
+                @if (chkPhanQuyen('nhankhau', 'phanquyen'))
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link">
                             <span class="svg-icon menu-icon">
@@ -61,7 +61,7 @@
                             <span class="menu-text">Nhân khẩu</span>
                         </a>
                     </li>
-                @endif --}}
+                @endif
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ '/biendong?madv=' . '&kydieutra=' . $baocao['kydieutra'] }}" class="menu-link">
                         <span class="svg-icon menu-icon">

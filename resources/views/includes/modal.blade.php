@@ -470,7 +470,7 @@
                         <label class="control-label">Kỳ điều tra</label>
                         <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
-                                <option value="{{ $key }}">
+                                <option value="{{ $key }}" {{$key==date('Y')?'selected':''}}>
                                     {{ $ct }}</option>
                             @endforeach
                         </select>
@@ -607,7 +607,7 @@
                         <select name="kydieutra" id="" class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
-                                <option value="{{ $key }}">
+                                <option value="{{ $key }}" {{$key==date('Y')?'selected':''}}>
                                     {{ $ct }}</option>
                             @endforeach
                         </select>
@@ -727,7 +727,7 @@
                         <select name="kydieutra" id="" class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
-                                <option value="{{ $key }}">{{ $ct }}</option>
+                                <option value="{{ $key }}" {{$key==date('Y')?'selected':''}}>{{ $ct }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -890,10 +890,10 @@
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Năm điều tra</label>
                         <select class="form-control select2basic" id="nam" name="kydieutra" style="width:100%">
-                            <?php $nam_start = date('Y') - 5;
-                            $nam_stop = date('Y'); ?>
+                            <?php $nam_start = date('Y') - 2;
+                            $nam_stop = date('Y')+2; ?>
                             @for ($i = $nam_start; $i <= $nam_stop; $i++)
-                                <option value="{{ $i }}" {{ $i == $nam_stop ? 'selected' : '' }}>Năm
+                                <option value="{{ $i }}" {{ $i == date('Y') ? 'selected' : '' }}>Năm
                                     {{ $i }}</option>
                             @endfor
                         </select>
