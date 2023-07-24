@@ -86,10 +86,14 @@ class AdminController extends Controller
 		if ($kydieutra == date(('Y'))) {
 			$kydieutra_truoc = $kydieutra - 1;
 			$kydieutra_hientai = date('Y');
-		} else {
+		} else if($kydieutra == 2022) {
+			$kydieutra_truoc = '';
+			$kydieutra_hientai = date('Y');
+		}else{
 			$kydieutra_truoc = '';
 			$kydieutra_hientai = $kydieutra;
 		}
+		// dd($kydieutra_hientai);
 		$tongsonhankhau = array('kytruoc' => 0, 'kyhientai' => 0);
 		$ldcovieclam = array('kytruoc' => 0, 'kyhientai' => 0);
 		$ldthatnghiep = array('kytruoc' => 0, 'kyhientai' => 0);

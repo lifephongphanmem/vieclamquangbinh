@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <!-- Kỳ điều tra trước -->
-                    @if ($kydieutra_truoc != null)
+                    @if ($kydieutra_truoc != null && $kydieutra_truoc != 2022)
                         <div class="card-header card-header-tabs-line" style="border-bottom: none">
                             <div class="card-title">
                                 <h6 class="card-label text-uppercase">Kỳ điều tra năm {{ $kydieutra_truoc }}</h6>
@@ -422,7 +422,7 @@
                             </div>
                         </div>
                     </div>
-                    @if ($kydieutra_truoc != null)
+                    @if ($kydieutra_truoc != null && $kydieutra_truoc != 2022)
                         <!-- Biến động -->
                         <div class="card-header card-header-tabs-line" style="border-bottom: none">
                             <div class="card-title">
