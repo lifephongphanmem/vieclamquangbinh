@@ -19,7 +19,7 @@
 
     </li> --}}
     <li class="menu-item menu-item-submenu menu-item-rel">
-        <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
+        <a href="{{ URL::to('/nguoitimviec/danhsach') }}" class="menu-link ">
             <span class="menu-text">Người tìm việc</span>
             <span class="menu-desc"></span>
             <i class="menu-arrow"></i>

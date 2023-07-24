@@ -208,7 +208,7 @@ class AdminNhankhau extends Controller
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
         $danhsach = danhsach::all();
-        return view('admin.nhankhau.all', compact('danhsach', 'dmdonvi'))
+        return view('admin.nguoitimviec.index', compact('danhsach', 'dmdonvi'))
             ->with('lds', $lds)
             ->with('baocao', getdulieubaocao())
             ->with('a_huyen', $a_huyen)

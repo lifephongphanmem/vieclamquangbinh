@@ -365,7 +365,9 @@
                 toastr.warning('Bạn chưa chọn xã');
             } else {
                 huyen = $('#mahuyen').val();
+                
                 xa = $('#madv').val();
+                console.log(madv);
                 url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
                 window.location.href = url;
             }
