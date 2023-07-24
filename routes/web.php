@@ -50,6 +50,7 @@ use App\Http\Controllers\vanphonghotroController;
 include('hethongchung.php');
 include('danhmuc.php');
 include('baocao.php');
+include('nguoitimviec.php');
 // include('doanhnghiep.php');
 // Route::get('/', [UserController::class, 'show_login' ]);
 
