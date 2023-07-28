@@ -9,7 +9,7 @@
             <ul class="menu-subnav">
                 {{-- @if (chkPhanQuyen('nhankhau', 'phanquyen')) --}}
                     <li class="menu-item" aria-haspopup="true">
-                        <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link">
+                        <a href="{{ URL::to('/nguoitimviec/danhsach') }}" class="menu-link">
                             <span class="svg-icon menu-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">

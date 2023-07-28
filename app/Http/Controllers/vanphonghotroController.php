@@ -75,4 +75,8 @@ class vanphonghotroController extends Controller
             vanphonghotro::where('maso', $inputs['maso'])->first()->delete();
             return redirect('/van_phong/danh_sach');
     }
+
+    public function hdsd(){
+        
+    }
 }

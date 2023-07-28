@@ -17,15 +17,7 @@
         </a>
 
     </li> --}}
-        @if (session('admin')->capdo == 'X')
-            <li class="menu-item menu-item-submenu menu-item-rel">
-                <a href="{{ URL::to('/nhankhau/danhsach') }}" class="menu-link ">
-                    <span class="menu-text">Người tìm việc</span>
-                    <span class="menu-desc"></span>
-                    <i class="menu-arrow"></i>
-                </a>
-            </li>
-        @endif
+
         @if (session('admin')->capdo == 'H')
             <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
                 <a href="javascript:;" class="menu-link menu-toggle">
@@ -52,7 +44,7 @@
 
                         <li class="menu-item" aria-haspopup="true">
                             {{-- <a href="{{ URL::to('tuyendung-viectimnguoi') }}" class="menu-link"> --}}
-                                <a class="menu-link">
+                            <a class="menu-link">
                                 <span class="svg-icon menu-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-phone-landscape" viewBox="0 0 16 16">
@@ -69,6 +61,14 @@
                 </div>
             </li>
         @endif
+
+        <li class="menu-item menu-item-submenu menu-item-rel">
+            <a href="{{ URL::to('/nguoitimviec/danhsach') }}" class="menu-link ">
+                <span class="menu-text">Người tìm việc</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+        </li>
 
     @endif
     @if (chkPhanQuyen('biendongxa', 'phanquyen'))
@@ -141,20 +141,21 @@
                                             <span></span>
                                         </i>
 
-                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
-                                </a>
-                            </li>
-                        @endif
-                        @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
-                            <li class="menu-item" aria-haspopup="true">
-                                <a data-target="#modify-modal-huyen-mau01b" data-toggle="modal" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
-                                </a>
-                            </li>
-                        @endif
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                    </a>
+                                </li>
+                            @endif
+                            @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#modify-modal-huyen-mau01b" data-toggle="modal"
+                                        class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 01b</span>
+                                    </a>
+                                </li>
+                            @endif
                             {{-- <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#thitruongld-cung-modal" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
@@ -163,14 +164,16 @@
                                     <span class="menu-text">Báo cáo thông tin thị trường cung lao động</span>
                                 </a>
                             </li> --}}
-                            <li class="menu-item" aria-haspopup="true">
-                                <a data-target="#thongtin-cung-modal" data-toggle="modal" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Báo cáo về thông tin cung lao động</span>
-                                </a>
-                            </li>
+                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#thongtin-cung-modal" data-toggle="modal" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Báo cáo về thông tin cung lao động</span>
+                                    </a>
+                                </li>
+                            @endif
 
                         </ul>
                     </div>

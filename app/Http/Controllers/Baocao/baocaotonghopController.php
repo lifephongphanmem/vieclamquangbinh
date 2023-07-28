@@ -846,6 +846,7 @@ class baocaotonghopController extends Controller
         $model=nhankhauModel::select('madv','kydieutra','hoten','gioitinh','chuyenmonkythuat','nganhnghemuonhoc','khuvuc')
                             ->where('madv',session('admin')->madv)
                             ->wherein('kydieutra',[$kybaocao,$kytruoc])
+                            ->where('kydieutra','!=',2022)
                             ->get();
 
         $m_nganhnghe=dmnganhnghe::all();

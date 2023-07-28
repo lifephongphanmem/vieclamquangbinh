@@ -265,7 +265,7 @@
                         <input type="hidden" name="madv" value="{{$inputs['madv']}}">
                         <input type="hidden" name="kydieutra" value="{{$inputs['kydieutra']}}">
                         <input type="hidden" name="quantity" id="quantity" value="1">
-                        <input type="hidden" name="huyen" id="huyen" value="{{$inputs['mahuyen']??''}}">
+                        <input type="hidden" name="huyen" id="huyen" value="{{$inputs['huyen']??''}}">
                         <input type="hidden" name="xa" id="xa" value="{{$inputs['xa']??''}}">
                         <input type="hidden" name="tinh" id="tinh" value="44">
                         <input type="hidden" name="ho" id="ho" value="{{$inputs['soho']??''}}">

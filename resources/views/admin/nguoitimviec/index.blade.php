@@ -41,7 +41,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3>
+                        <h3 class="card-label text-uppercase">Danh sách người tìm việc</h3>
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
@@ -364,11 +364,8 @@
             if ($('#madv').val() == '') {
                 toastr.warning('Bạn chưa chọn xã');
             } else {
-                huyen = $('#mahuyen').val();
-                
-                xa = $('#madv').val();
-                console.log(madv);
-                url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
+                huyen = $('#mahuyen').val();                
+                url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen;
                 window.location.href = url;
             }
 

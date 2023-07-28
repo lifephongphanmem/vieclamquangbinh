@@ -69,7 +69,7 @@ class AdminNhankhau extends Controller
         }
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-        $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
+        $a_kydieutra = array_column(danhsach::where('kydieutra',2022)->get()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
         $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
@@ -119,6 +119,96 @@ class AdminNhankhau extends Controller
         $dmdonvi = dmdonvi::all();
         $danhsach = danhsach::all();
         return view('admin.nhankhau.all', compact('danhsach', 'dmdonvi'))
+            ->with('lds', $lds)
+            ->with('baocao', getdulieubaocao())
+            ->with('a_huyen', $a_huyen)
+            ->with('a_xa', $a_xa)
+            ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
+            ->with('inputs', $inputs)
+            ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
+            ->with('a_kydieutra', $a_kydieutra)
+            ->with('m_diaban', $m_diaban)
+            ->with('m_donvi', $m_donvi)
+            ->with('dmhc', $dmhc_list)
+            ->with('search', $search)
+            ->with('gioitinh_filter', $gioitinh_filter)
+            ->with('age_filter', $age_filter);
+    }
+    public function nguoitimviec(Request $request)
+    {
+
+        if (!chkPhanQuyen('danhsachnhankhau', 'danhsach')) {
+            return view('errors.noperm')->with('machucnang', 'nhankhau');
+        }
+        $request = request();
+        $inputs = $request->all();
+        //filter
+        $search = $request->search;
+        $gioitinh_filter = $request->gioitinh_filter;
+        $age_filter = $request->age_filter;
+
+        $dmhc_list
+            = $this->getdanhmuc();
+
+        $dm_filter = $request->dm_filter;
+
+        $export = $request->export;
+        if ($export) {
+
+            return Excel::download(new AdminNhankhausExport, 'danhsachnhankhau.xlsx');
+        }
+        $m_donvi = getDonVi(session('admin')->sadmin);
+        $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
+        $a_kydieutra = array_column(danhsach::where('kydieutra','!=',2022)->get()->toarray(), 'kydieutra', 'kydieutra');
+        $kydieutra = danhsach::where('kydieutra','!=',2022)->orderBy('id', 'desc')->first();
+        $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
+        $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+            ->where('madv', $inputs['madv'])->where('loaibiendong', '!=', 2)->get();
+        $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
+        $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
+        $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
+        if (in_array(session('admin')->sadmin, ['SSA', 'ssa', 'ADMIN'])) {
+
+
+            // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+            $model_huyen = danhmuchanhchinh::where('capdo', 'H')->get();
+            $inputs['mahuyen'] = $inputs['mahuyen'] ?? $model_huyen->first()->maquocgia;
+            $a_huyen = array_column($model_huyen->toarray(), 'name', 'maquocgia');
+            $a_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
+                ->where('parent', $inputs['mahuyen'])->get();
+        } elseif (session('admin')->capdo == 'X') {
+            // $m_xa=danhmuchanhchinh::where('id',$model_dv->madiaban)->first();
+            // $m_huyen=danhmuchanhchinh::where('maquocgia',$m_xa->parent)->first();       
+            $inputs['mahuyen'] = $inputs['mahuyen'] ?? $m_huyen->maquocgia;
+            $a_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'danhmuchanhchinh.parent')
+                ->where('madv', $inputs['madv'])->get();
+            $a_huyen = array_column(danhmuchanhchinh::where('maquocgia', $a_xa->first()->parent)->get()->toarray(), 'name', 'maquocgia');
+        } elseif (session('admin')->capdo == 'H') {
+            $model_huyen = danhmuchanhchinh::where('maquocgia', session('admin')->maquocgia)->get();
+            $a_huyen = array_column($model_huyen->toarray(), 'name', 'maquocgia');
+            $inputs['mahuyen'] = $inputs['mahuyen'] ?? $model_huyen->first()->maquocgia;
+            $a_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+                ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
+                ->where('parent', $inputs['mahuyen'])->get();
+        }
+        // dd($inputs);
+        foreach ($lds as $ct) {
+            $ct->tenxa = ucwords($m_xa->name);
+            $ct->tenhuyen = ucwords($m_huyen->name);
+
+            if ($ct->tinhtranghdkt == 1) {
+                $ct->noilamviec = $ct->tenxa . ', ' . $ct->tenhuyen;
+            }
+        }
+
+        $m_diaban = danhmuchanhchinh::all();
+        $inputs['url'] = '/nguoitimviec/danhsach';
+        // dd($inputs['madv']);
+        $dmdonvi = dmdonvi::all();
+        $danhsach = danhsach::all();
+        return view('admin.nguoitimviec.index', compact('danhsach', 'dmdonvi'))
             ->with('lds', $lds)
             ->with('baocao', getdulieubaocao())
             ->with('a_huyen', $a_huyen)
