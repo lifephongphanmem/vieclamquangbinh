@@ -202,7 +202,6 @@ class AdminNhankhau extends Controller
                 $ct->noilamviec = $ct->tenxa . ', ' . $ct->tenhuyen;
             }
         }
-
         $m_diaban = danhmuchanhchinh::all();
         $inputs['url'] = '/nguoitimviec/danhsach';
         // dd($inputs['madv']);
