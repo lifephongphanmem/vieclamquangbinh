@@ -609,8 +609,8 @@ class baocaotonghopController extends Controller
                 if (isset($inputs['gender'])) {
                     $q->where('gioitinh', $inputs['gioitinh']);
                 }
-                if (isset($inputs['tthdkt'])) {
-                    $q->where('tinhtranghdkt', $inputs['tinhtranghdkt']);
+                if (isset($inputs['dttkvl'])) {
+                    $q->where('doituongtimvieclam', $inputs['doituongtimvieclam']);
                 }
                 if (isset($inputs['dtut'])) {
                     $q->where('uutien', $inputs['uutien']);
@@ -621,14 +621,17 @@ class baocaotonghopController extends Controller
                 if (isset($inputs['trinhdocmkt'])) {
                     $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
                 }
-                if (isset($inputs['loaihinh'])) {
-                    $q->where('loaihinhnoilamviec', $inputs['loaihinhnoilamviec']);
+                if (isset($inputs['chuyennganhdaotao'])) {
+                    $q->where('chuyennganh', $inputs['chuyennganh']);
                 }
-                if (isset($inputs['thatnghiep_th'])) {
-                    $q->where('thatnghiep', $inputs['thatnghiep']);
+                if (isset($inputs['vlmongmuon'])) {
+                    $q->where('vieclammongmuon', $inputs['vieclammongmuon']);
                 }
-                if (isset($inputs['ktghdkt'])) {
-                    $q->where('khongthamgiahdkt', $inputs['khongthamgiahdkt']);
+                if (isset($inputs['nghemuonhoc'])) {
+                    $q->where('nganhnghemuonhoc', $inputs['nganhnghemuonhoc']);
+                }
+                if (isset($inputs['tdmcmh'])) {
+                    $q->where('trinhdochuyenmonmuonhoc', $inputs['trinhdochuyenmonmuonhoc']);
                 }
             })
             // ->when($inputs['tuoitu'],function($query,$tuoitu){
@@ -636,7 +639,7 @@ class baocaotonghopController extends Controller
             // })
             ->wherein('madv', $madv)
             ->get();
-
+// dd($model->take(10));
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -840,12 +843,12 @@ class baocaotonghopController extends Controller
 
         $kybaocao=$inputs['kydieutra'];
         $kytruoc=$kybaocao-1;
-        $model=nhankhauModel::select('madv','kydieutra','hoten','gioitinh','chuyenmonkythuat','nganhnghemuonhoc','khuvuc')
+        $model=nhankhauModel::select('madv','kydieutra','hoten','gioitinh','chuyenmonkythuat','nganhnghemuonhoc','khuvuc','thitruonglamviec')
                             ->where('madv',session('admin')->madv)
                             ->wherein('kydieutra',[$kybaocao,$kytruoc])
                             ->where('kydieutra','!=',2022)
                             ->get();
-
+        $a_thitruong=array_column($model->toarray(),'thitruonglamviec');
         $m_nganhnghe=dmnganhnghe::all();
         $a_cmkt=array_column(dmtrinhdokythuat::all()->toarray(),'tentdkt', 'stt');
 
@@ -853,6 +856,7 @@ class baocaotonghopController extends Controller
                 ->with('model',$model)
                 ->with('kybaocao',$kybaocao)
                 ->with('kytruoc',$kytruoc)
+                ->with('a_thitruong',$a_thitruong)
                 ->with('m_nganhnghe',$m_nganhnghe)
                 ->with('a_cmkt',$a_cmkt)
                 ->with('pageTitle','Thông tin cung lao động');

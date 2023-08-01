@@ -64,10 +64,6 @@
             <td style="text-align: center;">{{ dinhdangso(count($tuoi_kytruoc)) }}</td>
             <td style="text-align: center;"> {{ dinhdangso(count($tuoi)) }} </td>
         </tr>
-<tr>
-    <td style="font-weight: bold;">1.1</td>
-    <td colspan="4">Trong tỉnh, trong nước</td>
-</tr>
         <tr>
             <td>a</td>
             <td colspan="4">Chia theo khu vực</td>
@@ -192,20 +188,15 @@
             <td style="text-align: center;"></td>
             <td style="text-align: center;"></td>
         </tr>
-        {{-- <tr class="text-center">
-
+        <tr class="text-center">
+            <?php $nhucau_kytruoc = $model->where('kydieutra', $kytruoc)->where('nganhnghemuonhoc','!=',null);
+            $nhucau_kybaocao = $model->where('kydieutra', $kybaocao)->where('nganhnghemuonhoc','!=',null);
+            ?>
             <td style="font-weight: bold;">2</td>
             <td style="font-weight: bold;" class="text-left">Số người từ 15 tuổi trở lên nhu cầu học nghề</td>
             <td style="text-align: center;"></td>
             <td style="text-align: center;"></td>
             <td style="text-align: center;"> </td>
-        </tr> --}}
-        <?php $nhucau_kytruoc = $model->where('kydieutra', $kytruoc)->where('nganhnghemuonhoc','!=',null);
-        $nhucau_kybaocao = $model->where('kydieutra', $kybaocao)->where('nganhnghemuonhoc','!=',null);
-        ?>
-        <tr>
-            <td style="font-weight: bold;">1.2</td>
-            <td colspan="4">Đi làm việc ở nước ngoài</td>
         </tr>
         <tr>
             <td>a</td>
@@ -248,21 +239,6 @@
         </tr>
         <tr>
             <td>c</td>
-            <td colspan="4">Chia theo thị trường</td>
-        </tr>
-        <tr>
-            @foreach (getthitruong() as $k=>$val )
-                @if (in_array($k,$a_thitruong))
-                    <td></td>
-                    <td>{{$val}}</td>
-                    <td>Người</td>
-                    <td></td>
-                    <td></td>
-                @endif
-            @endforeach
-        </tr>
-        <tr>
-            <td>d</td>
             <td colspan="4">Chia theo ngành nghề</td>
         </tr>
         @foreach ($m_nganhnghe as $ct)
