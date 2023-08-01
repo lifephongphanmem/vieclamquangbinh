@@ -4,6 +4,7 @@ use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdoituonguutien;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Danhmuc\dmloaihinhhdkt;
+use App\Models\Danhmuc\dmnganhnghe;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdkt;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
 use App\Models\Danhmuc\dmtrinhdogdpt;
@@ -155,6 +156,7 @@ function getdulieubaocao(){
     $a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
     $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
     $loaihinh = dmloaihinhhdkt::all();
+    $nganhnghe=dmnganhnghe::all();
     // Session::put('trinhdoGDPT', $trinhdoGDPT);
     // Session::put('trinhdocmkt', $trinhdocmkt);
     // Session::put('dmuutien', $dmuutien);
@@ -197,7 +199,8 @@ function getdulieubaocao(){
         'dmtinhtranghdkt'=>$dmtinhtranghdkt,
         'a_khongthamgia'=>$a_khongthamgia,
         'a_thatnghiep'=>$a_thatnghiep,
-        'loaihinh'=>$loaihinh
+        'loaihinh'=>$loaihinh,
+        'nganhnghe'=>$nganhnghe
         
     );
 
