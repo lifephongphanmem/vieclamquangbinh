@@ -145,19 +145,21 @@
                     &#x2611;
                 @else
                     &#x2610;
-                @endif Trong tỉnh, trong nước &nbsp;
+                @endif Trong tỉnh, trong nước &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                Ngành
+                nghề: {{ isset($model->nganhnghemongmuon)?$a_nganhnghe[$model->nganhnghemongmuon]:'' }}
+                
+            </td>
+
+        </tr>
+        <tr>
+            <td style="text-align: left">
                 12.2.2
                 @if ($model->vieclammongmuon == 2)
                     &#x2611;
                 @else
                     &#x2610;
-                @endif Đi làm việc ở nước ngoài
-            </td>
-
-        </tr>
-        <tr>
-            <td style="text-align: left">Ngành
-                nghề: {{ isset($model->nganhnghemongmuon)?$a_nganhnghe[$model->nganhnghemongmuon]:'' }}
+                @endif Đi làm việc ở nước ngoài &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;Thị trường: {{isset($model->thitruonglamviec)?getCountries()[$model->thitruonglamviec]:''}}
             </td>
         </tr>
 

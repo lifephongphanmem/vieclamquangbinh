@@ -73,5 +73,13 @@ $('#ktghdkt').on('click', function() {
         $('#khongthamgiahdkt').addClass('d-none');
     }
 });
+$('#tdmcmh').on('click', function() {
+    var check = $('#tdmcmh').is(':checked');
+    if (check) {
+        $('#trinhdochuyenmonmuonhoc').removeClass('d-none');
+    } else {
+        $('#trinhdochuyenmonmuonhoc').addClass('d-none');
+    }
+});
 
 

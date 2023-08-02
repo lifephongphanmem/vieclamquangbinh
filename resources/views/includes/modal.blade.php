@@ -1035,15 +1035,15 @@
                                 <label class="form-check-label" for="gioitinh">Độ tuổi</label>
                             </div> --}}
                         <div class=" col-md-4">
-                            <input class="form-check-input" type="checkbox" name="tthdkt" id="tthdkt_th"
-                                value="tthdkt">
-                            <label class="form-check-label" for="tthdkt_th">Tình trạng HĐKT</label>
-
-                        </div>
-                        <div class=" col-md-4">
                             <input class="form-check-input" type="checkbox" name="dtut" id="dtut_th"
                                 value="dtut">
                             <label class="form-check-label" for="dtut_th">Đối tượng UT</label>
+
+                        </div>
+                        <div class=" col-md-4">
+                            <input class="form-check-input" type="checkbox" name="dttkvl" id="tthdkt_th"
+                                value="dttkvl">
+                            <label class="form-check-label" for="tthdkt_th">Đối tượng tìm kiếm việc làm</label>
 
                         </div>
                     </div>
@@ -1061,22 +1061,27 @@
 
                         </div>
                         <div class="col-md-4">
-                            <input class="form-check-input" type="checkbox" name="loaihinh" id="loaihinh"
-                                value="loaihinh">
-                            <label class="form-check-label" for="loaihinh">Loại hình nơi làm việc</label>
+                            <input class="form-check-input" type="checkbox" name="chuyennganhdaotao" id="loaihinh"
+                                value="chuyennganhdaotao">
+                            <label class="form-check-label" for="loaihinh">Chuyên ngành đào tạo</label>
                         </div>
 
                     </div>
                     <div class="row mt-1 ml-5" id="1stld">
                         <div class="col-md-4">
-                            <input class="form-check-input" type="checkbox" name="thatnghiep_th" id="thatnghiep"
-                                value="thatnghiep">
-                            <label class="form-check-label" for="thatnghiep">Thất nghiệp</label>
+                            <input class="form-check-input" type="checkbox" name="vlmongmuon" id="thatnghiep"
+                                value="vlmongmuon">
+                            <label class="form-check-label" for="thatnghiep">Việc làm mong muốn</label>
                         </div>
                         <div class="col-md-4">
-                            <input class="form-check-input" type="checkbox" name="ktghdkt" id="ktghdkt"
-                                value="ktghdkt">
-                            <label class="form-check-label" for="ktghdkt">Không tham gia HĐKT</label>
+                            <input class="form-check-input" type="checkbox" name="nghemuonhoc" id="ktghdkt"
+                                value="nghemuonhoc">
+                            <label class="form-check-label" for="ktghdkt">Ngành nghề muốn học</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-check-input" type="checkbox" name="tdmcmh" id="tdmcmh"
+                                value="tdmcmh">
+                            <label class="form-check-label" for="tdmcmh">Trình độ chuyên môn muốn học</label>
                         </div>
                     </div>
 
@@ -1098,11 +1103,11 @@
                                
                             </div> --}}
                         <div class="col-lg-10 d-none mt-2" id='hdkt_th'>
-                            <label class="control-label" style="font-weight: bold">Tình trạng HĐKT</label>
-                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                            <label class="control-label" style="font-weight: bold">Đối tượng tìm kiếm việc làm</label>
+                            <select name="doituongtimvieclam" id="" class="form-control select2basic"
                                 style="width:100%">
-                                @foreach ($baocao['dmtinhtranghdkt'] as $val)
-                                    <option value="{{ $val->stt }}">{{ $val->tentgkt }}</option>
+                                @foreach ($baocao['a_thatnghiep'] as $val)
+                                    <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -1134,31 +1139,39 @@
                             </select>
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='lh'>
-                            <label class="control-label" style="font-weight: bold">Loại hình nơi làm việc</label>
-                            <select name="loaihinhnoilamviec" id="" class="form-control select2basic"
+                            <label class="control-label" style="font-weight: bold">Chuyên ngành đào tạo</label>
+                            <select name="chuyennganh" id="" class="form-control select2basic"
                                 style="width:100%">
-                                @foreach ($baocao['loaihinh'] as $val)
-                                    <option value="{{ $val->stt }}">{{ $val->tenlhkt }}</option>
+                                @foreach ($baocao['nganhnghe'] as $val)
+                                    <option value="{{ $val->madm }}">{{ $val->tendm }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='thatn'>
-                            <label class="control-label" style="font-weight: bold">Thất nghiệp</label>
-                            <select name="thatnghiep" id="" class="form-control select2basic"
+                            <label class="control-label" style="font-weight: bold">Việc làm mong muốn</label>
+                            <select name="vieclammongmuon" id="" class="form-control select2basic"
                                 style="width:100%">
-                                @foreach ($baocao['a_thatnghiep'] as $val)
-                                    <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
-                                @endforeach
+                                    <option value="1">Trong tỉnh, trong nước</option>
+                                    <option value="2">Đi làm việc ở nước ngoài</option>
                             </select>
                         </div>
 
                         <div class="col-lg-10 d-none mt-2" id='khongthamgiahdkt'>
-                            <label class="control-label" style="font-weight: bold">Không tham gia HĐKT</label>
-                            <select name="khongthamgiahdkt" id="" class="form-control select2basic"
+                            <label class="control-label" style="font-weight: bold">Ngành nghề muốn học</label>
+                            <select name="nganhnghemuonhoc" id="" class="form-control select2basic"
                                 style="width:100%">
-                                @foreach ($baocao['a_khongthamgia'] as $val)
-                                    <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
+                                @foreach ($baocao['nganhnghe'] as $val)
+                                    <option value="{{ $val->madm }}">{{ $val->tendm }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-10 d-none mt-2" id='trinhdochuyenmonmuonhoc'>
+                            <label class="control-label" style="font-weight: bold">Trình độ chuyên môn muốn học</label>
+                            <select name="trinhdochuyenmonmuonhoc" id="" class="form-control select2basic"
+                                style="width:100%">
+                                    <option value="1">Sơ cấp</option>
+                                    <option value="2">Trung cấp</option>
+                                    <option value="3">Cao đẳng</option>
                             </select>
                         </div>
 

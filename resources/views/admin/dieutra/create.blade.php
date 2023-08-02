@@ -188,7 +188,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Chuyên ngành</label>
+                                                                    <label>Chuyên ngành đào tạo</label>
                                                                          <select name="chuyennganh[]" class="form-control selec2basic">
                                                                             <option value="">---Chọn chuyên ngành đào tạo---</option>
                                                                             @foreach ($m_nganhnghe as $val)
@@ -219,7 +219,7 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Ngành nghề mong muốn <span class="text-danger">*</span></label>
+                                                                    <label>Ngành nghề mong muốn</label>
                                                                     <select name="nganhnghemongmuon[]" class="form-control selec2basic">
                                                                         <option value="">---Chọn ngành nghề mong muốn---</option>
                                                                         @foreach ($m_nganhnghe as $val)
@@ -232,7 +232,18 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Ngành nghề muốn học <span class="text-danger">*</span></label>
+                                                                    <label>Thị trường </label>
+                                                                    <select name="thitruonglamviec[]" class="form-control selec2basic">
+                                                                        <option value="">---Chọn thị trường muốn làm việc--</option>
+                                                                        @foreach (getCountries() as $k=>$val)
+                                                                            <option value="{{$k}}">{{$val}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Ngành nghề muốn học<span class="text-danger">*</span> </label>
                                                                     <select name="nganhnghemuonhoc[]" class="form-control selec2basic">
                                                                         <option value="">---Chọn ngành nghề muốn học---</option>
                                                                         @foreach ($m_nganhnghe as $val)
@@ -243,7 +254,7 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Trình độ chuyên môn muốn học <span class="text-danger">*</span></label>
+                                                                    <label>Trình độ chuyên môn muốn học<span class="text-danger">*</span> </label>
                                                                     <select name="trinhdochuyenmonmuonhoc[]" class="form-control selec2basic">
                                                                         <option value="">---Chọn trình độ chuyên môn muốn học---</option>
                                                                         <option value="1">Sơ cấp</option>

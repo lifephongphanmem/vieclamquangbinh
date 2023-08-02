@@ -15,7 +15,7 @@ class nhankhauModel extends Model
         'hoten','gioitinh','ngaysinh','cccd','bhxh','thuongtru','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat','chuyennganh','tinhtranghdkt',
         'nguoicovieclam','congvieccuthe','thamgiabhxh','hdld','noilamviec','loaihinhnoilamviec','diachinoilamviec','thatnghiep','thoigianthatnghiep',
         'khongthamgiahdkt','ho','mqh','maloi','maloailoi','madv','kydieutra','soluongtrung','loaibiendong','truongbiendong','doituongtimvieclam','vieclammongmuon','nganhnghemongmuon',
-        'nganhnghemuonhoc','trinhdochuyenmonmuonhoc','sdt','khuvuc'
+        'nganhnghemuonhoc','trinhdochuyenmonmuonhoc','sdt','khuvuc','thitruonglamviec'
 
         //Loại biến động: 1:báo tăng, 2:báo giảm,3:cập nhật
         //Khu vực: 1:thành thị, 2:nông thôn

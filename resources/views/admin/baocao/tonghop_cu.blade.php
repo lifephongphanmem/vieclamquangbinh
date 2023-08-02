@@ -32,38 +32,37 @@
     <table id="data_body2" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th rowspan="3">TT</th>
-                <th rowspan="3">Họ và tên </th>
+                <th rowspan="2">TT</th>
+                <th rowspan="2">Họ và tên </th>
                 <th colspan="2" style="width:10%">Ngày tháng năm sinh<br></th>
-                <th rowspan="3">Số CCCD/CMND </th>
-                <th rowspan="3">Điện thoại </th>
-                <th rowspan="3">Địa chỉ</th>
-                <th rowspan="3"> Khu vực </th>
-                <th rowspan="3" style="width:3%">Đối tượng ưu tiên (Ghi theo mã số từ 1-6)</th>
-                <th rowspan="3">Tên dân tộc thiểu số</th>
-                <th rowspan="3" style="width:3%">Trình độ</br>GDPT</br>cao nhất</br>đạt được</br>(Ghi theo</br>mã số
+                <th rowspan="2">Số CCCD/CMND </th>
+                <th rowspan="2">Mã số BHXH/BHYT </th>
+                <th rowspan="2" style="width:10%">Nơi đăng ký thường trú </th>
+                <th rowspan="2">Nơi ở hiện nay</th>
+                <th rowspan="2" style="width:3%">Đối tượng ưu tiên (Ghi theo mã số từ 1-6)</th>
+                <th rowspan="2">Tên dân tộc thiểu số</th>
+                <th rowspan="2" style="width:3%">Trình độ</br>GDPT</br>cao nhất</br>đạt được</br>(Ghi theo</br>mã số
                     từ</br>1-4)</th>
-                <th rowspan="3" style="width:3%">Trình độ CMKT cao nhất (Ghi theo mã số từ 1-8)</th>
-                <th rowspan="3">Chuyên ngành đào tạo (Ghi rõ)</th>
-                <th colspan="4"> Nhu cầu tìm kiếm việc làm </th>
-                <th colspan="2"> Nhu cầu học nghề </th>
-                <th rowspan="3"> Ghi chú </th>
+                <th rowspan="2" style="width:3%">Trình độ CMKT cao nhất (Ghi theo mã số từ 1-8)</th>
+                <th rowspan="2">Chuyên ngành đào tạo (Ghi rõ)</th>
+                <th rowspan="2" style="width:3%">Tình trạng tham gia HĐKT (Ghi theo mã số từ 1-3)</th>
+                <th rowspan="2" style="width:3%">Người có việc làm (Ghi theo mã số từ 1-5)</th>
+                <th rowspan="2">Công việc cụ thể đang làm (ghi rõ)</th>
+                <th rowspan="2" style="width:3%">Tham gia BHXH (Ghi theo mã số từ 1-3)</th>
+                <th rowspan="2" style="width:3%">HĐLĐ (Ghi theo mã số từ 1-3)</th>
+                <th rowspan="2">Nơi làm việc (ghi rõ tên cơ quan/đơn vị …)</th>
+                <th rowspan="2" style="width:3%">Loại hình nơi làm việc (Ghi theo mã số từ 1-11)</th>
+                <th rowspan="2">Địa chỉ nơi làm việc </th>
+                <th rowspan="2">Người thất nghiệp</th>
+                <th rowspan="2" style="width:3%">Thời gian thất nghiệp (Ghi theo mã số từ 1-3)</th>
+                <th rowspan="2" style="width:3%">Không tham gia HĐKT (Ghi theo mã số từ 1-5)</th>
             </tr>
             <tr>
-                <th rowspan="2">Nam</th>
-                <th rowspan="2">Nữ</th>
-                <th rowspan="2"> Đối tượng </th>
-                <th colspan="3"> Việc làm mong muốn </th>
-                <th rowspan="2"> Ngành nghề muốn học </th>
-                <th rowspan="2"> Trình độ CM muốn học </th>
+                <th>Nam</th>
+                <th>Nữ</th>
             </tr>
             <tr>
-                <th> Khu vực</th>
-                <th>Ngành nghề</th>
-                <th>Thị trường</th>
-            </tr>
-            <tr>
-                @for ($i = 1; $i < 21; $i++)
+                @for ($i = 1; $i < 25; $i++)
                     <td style="font-weight:bold; text-decoration: underline;font-style: italic;text-align: center">
                         {{ $i }}</td>
                 @endfor
@@ -90,21 +89,25 @@
                     @endif
 
                     <td style="text-align: center ; vertical-align: middle">{{ $item->cccd }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->sdt}}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->bhxh }}</td>
+                    <td style="vertical-align: middle">{{ $item->thuongtru }}</td>
                     <td style="vertical-align: middle">{{ $item->diachi }}</td>
-                    <td style="vertical-align: middle">{{ $item->khuvuc==1?'Thành thị':'Nông thôn' }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->uutien }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->dantoc }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->trinhdogiaoduc }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->chuyenmonkythuat }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->chuyennganh }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->doituongtimvieclam==1?'Chưa từng làm việc':'Đã từng làm việc' }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->vieclammongmuon==2?'Đi nước ngoài':'Trong tỉnh,trong nước' }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemongmuon }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ isset($item->thitruonglamviec)?getCountries()[$model->thitruonglamviec]:'' }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemuonhoc }}</td>
-                    <td style="vertical-align: middle">{{ $item->trinhdochuyenmonmuonhoc }}</td>
-                    <td></td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->tinhtranghdkt }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->nguoicovieclam }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->congvieccuthe }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->thamgiabhxh }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->hdld }}</td>
+                    <td style="vertical-align: middle">{{ $item->noilamviec }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->loaihinhnoilamviec }}</td>
+                    <td style="vertical-align: middle">{{ $item->diachinoilamviec }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->thatnghiep }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->thoigianthatnghiep }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->khongthamgiahdkt }}</td>
                     {{-- <td style="text-align: center ; vertical-align: middle">{{ $item->mqh }}</td> --}}
 
                     {{-- @if ($item->mqh == 'CH')
