@@ -1,0 +1,225 @@
+@extends('main_baocao')
+@section('content')
+    <table id="data_header" width="96%" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; font-size: 12px">
+        <tr>
+            <td></td>
+            <td class="text-right" style="font-style:italic">Mẫu số 03</td>
+        </tr>
+        <tr>
+            <td width="50%" style="vertical-align: top; padding-left: 10% ;text-align: left">
+
+                <p>Tỉnh: Quảng Bình</p>
+                <p>{{ isset($m_donvi) ? $m_donvi->name : 'Quận, huyện, thị xã:.................................................' }}
+                </p>
+                <p>Xã, phường, thị trấn:................................................</p>
+                <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+
+            </td>
+            <td style="vertical-align: top; text-align: center;padding-left: 10% ">
+                <b>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                    Độc lập - Tự do - Hạnh phúc</b>
+                <hr style="color: black;width: 15%;vertical-align: top; margin-top: 2px">
+            </td>
+        </tr>
+        <tr>
+            <td width="50%" style=" text-align: left; padding-left: 10% ">
+                <p>Số: ......../BC- </p>
+            </td>
+            <td style="text-align: center"><i style="margin-left: 15%;">Quảng Bình, ngày .... tháng .... năm ....</i></td>
+        </tr>
+        <tr>
+            <td colspan="2" id="data_body1"
+                style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">BÁO CÁO
+                <br>VỀ THÔNG TIN
+                CUNG LAO ĐỘNG NĂM {{ $inputs['kydieutra'] }}
+            </td>
+        </tr>
+        <tr style="font-style: italic;">
+            <td rowspan="2" style="text-align: right;vertical-align: top;"> Kính gửi: </td>
+            <td>Ủy ban nhân dân:.......................... <br> Sở Lao động - Thương binh và Xã hội </td>
+        </tr>
+    </table>
+
+
+
+
+    <table id="data_body" cellspacing="0" cellpadding="0" border="1"
+        style="margin: 20px auto; border-collapse: collapse;font-size: 12px" id="data">
+
+        <tr>
+            <th style="width: 5%;">STT</th>
+            <th style="width: 45%;">Chỉ tiêu</th>
+            <th style="width: 10%;">Đơn vị</th>
+            <th style="width: 20%;">Kỳ trước</th>
+            <th style="width: 20%;">Kỳ báo cáo</th>
+        </tr>
+        <tr style="text-align: center">
+            <td> A </td>
+            <td> B </td>
+            <td> C </td>
+            <td> D </td>
+            <td> E </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-weight: bold; text-transform: uppercase;text-align: left">I. THÔNG TIN CUNG LAO
+                ĐỘNG</td>
+        </tr>
+        <?php
+        $model_truoc = $model->where('kydieutra', $inputs['kydieutra'] - 1);
+        $model_hientai = $model->where('kydieutra', $inputs['kydieutra']);
+        $model_truoc_trongnuoc = $model_truoc->where('vieclammongmuon','1');
+        $model_hientai_trongnuoc = $model_hientai->where('vieclammongmuon','1');
+        
+        ?>
+        <tr>
+            <td style="font-weight: bold;">1</td>
+            <td style="font-weight: bold;">Số người từ 15 tuổi trở lên có nhu cầu tìm kiếm việc làm</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai) }}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">1.1</td>
+            <td colspan="4">Trong tỉnh, trong nước</td>
+        </tr>
+        <tr>
+            <td>a</td>
+            <td colspan="4">Chia theo khu vực</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Thành thị</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc_trongnuoc->whereIn('madv', $ma_thanhthi)) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai_trongnuoc->whereIn('madv', $ma_thanhthi)) }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Nông thôn</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc_trongnuoc->whereIn('madv', $ma_nongthon)) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai_trongnuoc->whereIn('madv', $ma_nongthon)) }}</td>
+        </tr>
+        <tr>
+            <td>b</td>
+            <td colspan="4">Chia theo giới tính</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Nam</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc_trongnuoc->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai_trongnuoc->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Nữ</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">
+                {{ count($model_truoc_trongnuoc->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+            <td style="text-align: center;">
+                {{ count($model_hientai_trongnuoc->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+        </tr>
+        <tr>
+            <td>c</td>
+            <td colspan="4">Chia theo trình độ chuyên môn kỹ thật</td>
+        </tr>
+        @foreach ($a_cmkt as $key => $ct)
+            <tr>
+                <td></td>
+                <td>{{ $ct }}</td>
+                <td style="text-align: center;">Người</td>
+                <td style="text-align: center;"> {{ count($model_truoc_trongnuoc->where('chuyenmonkythuat', $key)) }} </td>
+                <td style="text-align: center;"> {{ count($model_hientai_trongnuoc->where('chuyenmonkythuat', $key)) }}
+                </td>
+            </tr>
+        @endforeach
+        <tr>
+            <td>d</td>
+            <td colspan="4">Chia theo nghề nghiệp </td>
+        </tr>
+        {{-- @foreach ($a_vithevl as $k => $val)
+            <tr>
+                <td></td>
+                <td>{{ $val }}</td>
+                <td style="text-align: center;">Người</td>
+                <td style="text-align: center;"> </td>
+                <td style="text-align: center;"></td>
+            </tr>
+        @endforeach --}}
+
+        <?php
+        $model_truoc_nuocngoai = $model_truoc->where('vieclammongmuon','2');
+        $model_hientai_nuocngoai = $model_hientai->where('vieclammongmuon','2');
+        ?>
+        <tr>
+            <td style="font-weight: bold;">1.2</td>
+            <td colspan="4">Đi làm việc ở nước ngoài</td>
+        </tr>
+        <tr>
+            <td>a</td>
+            <td colspan="4">Chia theo khu vực</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Thành thị</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc_nuocngoai->whereIn('madv', $ma_thanhthi)) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai_nuocngoai->whereIn('madv', $ma_thanhthi)) }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Nông thôn</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc_nuocngoai->whereIn('madv', $ma_nongthon)) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai_nuocngoai->whereIn('madv', $ma_nongthon)) }}</td>
+        </tr>
+        <tr>
+            <td>b</td>
+            <td colspan="4">Chia theo giới tính</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Nam</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">{{ count($model_truoc_nuocngoai->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+            <td style="text-align: center;">{{ count($model_hientai_nuocngoai->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>- Nữ</td>
+            <td style="text-align: center;">Người</td>
+            <td style="text-align: center;">
+                {{ count($model_truoc_nuocngoai->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+            <td style="text-align: center;">
+                {{ count($model_hientai_nuocngoai->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+        </tr>
+        <tr>
+            <td>c</td>
+            <td colspan="4">Chia theo thị trường</td>
+        </tr>
+
+
+        <tr>
+            <td>d</td>
+            <td colspan="4">Chia theo ngành nghề</td>
+        </tr>
+
+
+
+
+
+    </table>
+    <table id="data_footer" width="96%" cellspacing="0" height cellpadding="0"
+        style="margin: 20px auto;text-align: center; height:200px;font-size: 12px">
+        <tr>
+            <td width="40%" style="text-align: left; vertical-align: top;">
+
+            </td>
+            <td style="vertical-align: top;">
+                <b>ỦY BAN NHÂN DÂN.......................</b><br>
+                {{-- <i>(Chữ ký, dấu)</i> --}}
+            </td>
+        </tr>
+    </table>
+@stop
