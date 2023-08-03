@@ -55,7 +55,10 @@
                                                 <option {{ isset($model)?($model->phiengd == "Phiên online" ? 'selected' : ''):'' }}>Phiên online</option>
                                             </select>
                                         </div>
-
+                                        <div class="col-sm-4 col-sm-offset-0 ">
+                                            <label>Thời điểm phiên (*)</label>
+                                            <input type="date" name="thoidiem" value="{{ $model->thoidiem }}"  class="form-control" disabled>
+                                        </div>
                                     </div>
                                 </fieldset>
                             </div>

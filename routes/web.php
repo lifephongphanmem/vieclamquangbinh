@@ -184,12 +184,17 @@ Route::prefix('dieutra')->group(function () {
     Route::get('/create', [AdminDieutra::class, 'create']);
     Route::post('/store', [AdminDieutra::class, 'store']);
     Route::post('/XoaDanhSach/{id}', [AdminDieutra::class, 'XoaDanhSach']);
-    Route::post('/intonghop', [AdminDieutra::class, 'intonghop']); //in tổng hợp cung lao động mẫu 03 xã 
-    Route::post('/inbaocaohuyen', [AdminDieutra::class, 'inbaocaohuyen']); //in tổng hợp cung lao động mẫu 03 huyện
-    Route::post('/inbaocaotinh', [AdminDieutra::class, 'inbaocaotinh']); //in tổng hợp cung lao động mẫu 03 tỉnh
+    Route::post('/intonghop', [AdminDieutra::class, 'intonghop']); //in tổng hợp cung lao động mẫu 03 xã  cũ
+    Route::post('/inbaocaohuyen', [AdminDieutra::class, 'inbaocaohuyen']); //in tổng hợp cung lao động mẫu 03 huyện cũ
+    Route::post('/inbaocaotinh', [AdminDieutra::class, 'inbaocaotinh']); //in tổng hợp cung lao động mẫu 03 tỉnh cũ
+
     Route::post('/intonghop-mau01b', [AdminDieutra::class, 'intonghop_mau01b']); //in tổng hợp cung lao động mẫu 01b xã
     Route::post('/inbaocaohuyen-mau01b', [AdminDieutra::class, 'inbaocaohuyen_mau01b']); //in tổng hợp cung lao động mẫu 01b huyện
     Route::post('/inbaocaotinh-mau01b', [AdminDieutra::class, 'inbaocaotinh_mau01b']); //in tổng hợp cung lao động mẫu 01b tỉnh
+
+    Route::post('/mau03_xa', [AdminDieutra::class, 'mau03_xa']); //in tổng hợp cung lao động mẫu 03 xã 
+    Route::post('/mau03_huyen', [AdminDieutra::class, 'mau03_huyen']); //in tổng hợp cung lao động mẫu 03 huyện 
+   
     Route::get('/danhsachloi/{id}', [AdminDieutra::class, 'danhsachloi']);
     Route::get('/danhsachloi_chitiet', [AdminDieutra::class, 'danhsachloi_chitiet']);
     Route::post('/indanhsachloi', [AdminDieutra::class, 'indanhsachloi']);

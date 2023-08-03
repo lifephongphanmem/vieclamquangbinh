@@ -39,7 +39,7 @@ class dangkytimviecImport extends Model
 
     public function dktvimport($input)
     {
-       
+      
         $request = request();
         
         // Get the csv rows as an array
@@ -99,8 +99,7 @@ class dangkytimviecImport extends Model
         // check file excel
 
         $nfield = sizeof($arr_col);
-        $thoidiem =  date('Y-m-d');
-
+        $thoidiem =  $request->thoidiem;
 
        
         // $maphien = date('YmdHis');
