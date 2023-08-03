@@ -9,9 +9,9 @@
             <td width="50%" style="vertical-align: top; padding-left: 10% ;text-align: left">
 
                 <p>Tỉnh: Quảng Bình</p>
-                <p>{{ isset($mahuyen->name) ? $mahuyen->name : 'Quận, huyện, thị xã:...............................' }}
-                </p>
-                <p>Xã, phường, thị trấn:..............................</p>
+                <p>{{ isset($mahuyen) ? $mahuyen->name : 'Quận, huyện, thị xã:...............................' }}</p>
+                <p>{{ isset($maxa) ? $maxa->name : 'Xã, phường, thị trấn:..............................' }}</p>
+        
                 <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
 
             </td>
