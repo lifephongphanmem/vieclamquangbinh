@@ -1479,11 +1479,10 @@ class AdminDieutra extends Controller
 
     public function mau03_xa(Request $request)
     {
-        if (!chkPhanQuyen('baocaohuyen', 'hoanthanh')) {
+        if (!chkPhanQuyen('baocaoxa', 'hoanthanh')) {
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
-
 
 
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
@@ -1503,7 +1502,7 @@ class AdminDieutra extends Controller
         // $ma_thanhthi = array_column($ds_xa->whereNotIn('level','Xã')->toarray(),'madv');
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
-        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'],$inputs['kydieutra']-1 ])
+        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'],$inputs['kydieutra']-1 ])->where('kydieutra','!=', '2022')
         ->where('loaibiendong', '!=', 2)->select('madv','kydieutra','gioitinh','chuyenmonkythuat','vieclammongmuon','thitruonglamviec','khuvuc','nganhnghemongmuon')->get();
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $inputs['madv']);
@@ -1550,7 +1549,7 @@ class AdminDieutra extends Controller
         // $ma_thanhthi = array_column($ds_xa->whereNotIn('level','Xã')->toarray(),'madv');
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
-        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'],$inputs['kydieutra']-1 ])
+        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'],$inputs['kydieutra']-1 ])->where('kydieutra','!=', '2022')
         ->where('loaibiendong', '!=', 2)->select('madv','kydieutra','gioitinh','chuyenmonkythuat','vieclammongmuon','thitruonglamviec','khuvuc','nganhnghemongmuon')->get();
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $ds_maxa);
