@@ -164,17 +164,28 @@
                                     <span class="menu-text">Báo cáo thông tin thị trường cung lao động</span>
                                 </a>
                             </li> --}}
-                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+
+                            @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
                                 <li class="menu-item" aria-haspopup="true">
-                                    <a data-target="#thongtin-cung-modal" data-toggle="modal" class="menu-link">
+                                    <a data-target="#modify-modal-huyen-mau03" data-toggle="modal" class="menu-link">
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Báo cáo về thông tin cung lao động</span>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Huyện)</span>
                                     </a>
                                 </li>
                             @endif
 
+                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#modify-modal-xa-mau03" data-toggle="modal" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
