@@ -133,10 +133,10 @@ class dangkytimviecController extends Controller
          $maphien = date('Ymd') . '-ol';
       }
       // $maphien = date('YmdHis');
-      $thoidiem = date('Y-m-d');
+      
       for ($i = 0; $i < $input['quantity']; $i++) {
        
-         $model = dangkytimviec::where('thoidiem',  $thoidiem )->where('phiengd',$input['phiengd'])->where('cccd',$input['cccd'][$i])->where('madkkd',$input['madkkd'])->get();
+         $model = dangkytimviec::where('thoidiem', $input['thoidiem'] )->where('phiengd',$input['phiengd'])->where('cccd',$input['cccd'][$i])->where('madkkd',$input['madkkd'])->get();
 
 
          if (count($model) == 0) {
@@ -181,7 +181,7 @@ class dangkytimviecController extends Controller
                'hotroan' => $input['hotroan'][$i],
                'phucloi' => $input['phucloi'][$i],
                'linhvuc' => $input['linhvuc'][$i],
-               'thoidiem' => $thoidiem,
+               'thoidiem' => $input['thoidiem'],
    
                'tendn' => $input['tendn'][$i],
                'madkkd' => $input['madkkd'][$i],
@@ -322,7 +322,7 @@ class dangkytimviecController extends Controller
 
    public function importexcel(Request $request)
    {
-   
+      
       $input = $request->all();
       //  dd($input['import_file']);
       $model = new dangkytimviecImport();

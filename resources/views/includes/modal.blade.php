@@ -54,7 +54,7 @@
     </form>
 </div>
 
-<!-- modal in báo cáo xã mẫu 03-->
+<!-- modal in báo cáo xã mẫu 03 cũ-->
 <form method="POST" action="{{ '/dieutra/intonghop' }}" accept-charset="UTF-8" id="frm_modify_xa" target="_blank">
     @csrf
     <div id="modify-modal-xa" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
@@ -189,7 +189,7 @@
     </div>
 </form>
 
-<!-- modal in bao cáo huyện mẫu 03-->
+<!-- modal in bao cáo huyện mẫu 03 cũ-->
 <form method="POST" action="{{ '/dieutra/inbaocaohuyen' }}" accept-charset="UTF-8" id="frm_modify_huyen"
     target="_blank">
     @csrf
@@ -324,7 +324,7 @@
         </div>
     </div>
 </form>
-<!-- modal in báo cáo tỉnh mẫu 03-->
+<!-- modal in báo cáo tỉnh mẫu 03 cũ-->
 <form method="POST" action="{{ '/dieutra/inbaocaotinh' }}" accept-charset="UTF-8" id="frm_modify_tinh"
     target="_blank">
     @csrf
@@ -440,6 +440,108 @@
         </div>
     </div>
 </form>
+
+<!-- modal in bao cáo xã mẫu 03 -->
+<form method="POST" action="{{ '/dieutra/mau03_xa' }}" accept-charset="UTF-8" id="frm_modify_xa_mau03"
+    target="_blank">
+    @csrf
+    <div id="modify-modal-xa-mau03" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 mb-2">
+                        <label class="control-label">Đơn vị</label>
+                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                            @if (session('admin')->capdo == 'T')
+                                {{-- <option value="">Tất cả</option> --}}
+                            @endif
+                            @foreach ($baocao['m_xa'] as $key => $ct)
+                                <option
+                                    value="{{ $ct->madv }}"{{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                    {{ $ct->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label class="control-label">Kỳ điều tra</label>
+                        <select name="kydieutra" id="" class="form-control select2basic"
+                            style="width:100%">
+                            @foreach ($baocao['a_kydieutra'] as $key => $ct)
+                                <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
+                                    {{ $ct }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- modal in bao cáo huyện mẫu 03 -->
+<form method="POST" action="{{ '/dieutra/mau03_huyen' }}" accept-charset="UTF-8" id="frm_modify_huyen_mau03"
+    target="_blank">
+    @csrf
+    <div id="modify-modal-huyen-mau03" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (huyện)</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 mb-2">
+                        <label class="control-label">Đơn vị</label>
+                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                            @if (session('admin')->capdo == 'T')
+                                <option value="">Tất cả</option>
+                            @endif
+                            @foreach ($baocao['m_huyen'] as $key => $ct)
+                                <option value="{{ $ct->madv }}"
+                                    {{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                    {{ $ct->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label class="control-label">Kỳ điều tra</label>
+                        <select name="kydieutra" id="" class="form-control select2basic"
+                            style="width:100%">
+                            @foreach ($baocao['a_kydieutra'] as $key => $ct)
+                                <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
+                                    {{ $ct }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" id="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 <!-- modal in báo cáo xã mẫu 01b-->
 <form method="POST" action="{{ '/dieutra/intonghop-mau01b' }}" accept-charset="UTF-8" id="frm_modify_xa" target="_blank">
     @csrf
