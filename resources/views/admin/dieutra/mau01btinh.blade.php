@@ -105,10 +105,10 @@
                 @foreach ($a_cmkt as $key => $item)
                     <th>{{ count($model->where('chuyenmonkythuat', $key ))}}</th>
                 @endforeach
-                <th> </th>
-                <th> </th>
-                <th> </th>
-                <th> </th>
+                <td>{{count($model->where('doituongtimvieclam',1))==0?'':count($model->where('doituongtimvieclam',1))}}</td>
+                <td>{{count($model->where('doituongtimvieclam',2))==0?'':count($model->where('doituongtimvieclam',2))}}</td>
+                <td>{{count($model->where('vieclammongmuon',1))==0?'':count($model->where('vieclammongmuon',1))}}</td>
+                <td>{{count($model->where('vieclammongmuon',2))==0?'':count($model->where('vieclammongmuon',2))}}</td>
                 <th> </th>
                 <th> </th>
                 <th> </th>

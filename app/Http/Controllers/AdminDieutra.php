@@ -712,7 +712,8 @@ class AdminDieutra extends Controller
     {
         // dd($request->all());
         $inputs = $request->all();
-        // dd($inputs);
+        // $inputs['vieclammongmuon']=implode(';',$inputs['vieclammongmuon']);
+        dd($inputs);
         // nhankhauModel::create($inputs);
         $note = '';
         $check = $inputs['ho'] ?? '';
@@ -749,10 +750,12 @@ class AdminDieutra extends Controller
         for ($i = 0; $i < $inputs['quantity']; $i++) {
             $tmp = array();
             foreach ($inputs as $key => $val) {
+ 
                 if (isset($val[$i])) {
                     $tmp[$key] = $val[$i];
                 };
             }
+            dd($tmp);
             $tmp['madv'] = $inputs['madv'];
             $tmp['kydieutra'] = $inputs['kydieutra'];
             $tmp['ho'] = $inputs['ho'];
@@ -799,7 +802,8 @@ class AdminDieutra extends Controller
             if ($maloi != []) {
                 $tmp['maloailoi'] = implode(';', $maloi);
             }
-            nhankhauModel::create($tmp);
+            dd($tmp);
+            // nhankhauModel::create($tmp);
 
             // $xa['ldtren15'] += 1;
             // $huyen['ldtren15'] += 1;
