@@ -143,7 +143,7 @@
                                     </a>
                                 </li>
                             @endif
-                            @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
                             <li class="menu-item" aria-haspopup="true">
                                 <a data-target="#modify-modal-xa-mau03" data-toggle="modal" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">

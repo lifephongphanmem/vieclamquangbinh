@@ -67,16 +67,16 @@
         <?php
         $model_truoc = $model->where('kydieutra', $inputs['kydieutra'] - 1);
         $model_hientai = $model->where('kydieutra', $inputs['kydieutra']);
-        $model_truoc_trongnuoc = $model_truoc->where('vieclammongmuon', '1');
-        $model_hientai_trongnuoc = $model_hientai->where('vieclammongmuon', '1');
-        
+        $model_truoc_trongnuoc = $model_truoc->whereIn('vieclammongmuon', ['1','3']);
+        $model_hientai_trongnuoc = $model_hientai->whereIn('vieclammongmuon', ['1','3']);
+        // dd($model_hientai );
         ?>
         <tr>
             <td style="font-weight: bold;">1</td>
             <td style="font-weight: bold;">Số người từ 15 tuổi trở lên có nhu cầu tìm kiếm việc làm</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc)) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai)) }}</td>
         </tr>
         <tr>
             <td style="font-weight: bold;">1.1</td>
@@ -90,15 +90,15 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc_trongnuoc->where('khuvuc', '1')) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai_trongnuoc->where('khuvuc', '1')) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_trongnuoc->where('khuvuc', '1'))) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_trongnuoc->where('khuvuc', '1'))) }}</td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc_trongnuoc->where('khuvuc', '2')) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai_trongnuoc->where('khuvuc', '2')) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_trongnuoc->where('khuvuc', '2'))) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_trongnuoc->where('khuvuc', '2'))) }}</td>
         </tr>
         <tr>
             <td>b</td>
@@ -108,17 +108,17 @@
             <td></td>
             <td>- Nam</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc_trongnuoc->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai_trongnuoc->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_trongnuoc->wherein('gioitinh', ['nam', 'Nam']))) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_trongnuoc->wherein('gioitinh', ['nam', 'Nam']))) }}</td>
         </tr>
         <tr>
             <td></td>
             <td>- Nữ</td>
             <td style="text-align: center;">Người</td>
             <td style="text-align: center;">
-                {{ count($model_truoc_trongnuoc->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+                {{ dinhdangso(count($model_truoc_trongnuoc->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</td>
             <td style="text-align: center;">
-                {{ count($model_hientai_trongnuoc->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+                {{ dinhdangso(count($model_hientai_trongnuoc->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</td>
         </tr>
         <tr>
             <td>c</td>
@@ -129,8 +129,8 @@
                 <td></td>
                 <td>{{ $ct }}</td>
                 <td style="text-align: center;">Người</td>
-                <td style="text-align: center;"> {{ count($model_truoc_trongnuoc->where('chuyenmonkythuat', $key)) }} </td>
-                <td style="text-align: center;"> {{ count($model_hientai_trongnuoc->where('chuyenmonkythuat', $key)) }}
+                <td style="text-align: center;"> {{ dinhdangso(count($model_truoc_trongnuoc->where('chuyenmonkythuat', $key))) }} </td>
+                <td style="text-align: center;"> {{ dinhdangso(count($model_hientai_trongnuoc->where('chuyenmonkythuat', $key))) }}
                 </td>
             </tr>
         @endforeach
@@ -149,13 +149,13 @@
         @endforeach --}}
 
         <?php
-        $model_truoc_nuocngoai = $model_truoc->where('vieclammongmuon', '2');
-        $model_hientai_nuocngoai = $model_hientai->where('vieclammongmuon', '2');
+        $model_truoc_nuocngoai = $model_truoc->whereIn('vieclammongmuon', ['2','3']);
+        $model_hientai_nuocngoai = $model_hientai->whereIn('vieclammongmuon',['2','3']);
         
         ?>
         <tr>
             <td style="font-weight: bold;">1.2</td>
-            <td colspan="4">Đi làm việc ở nước ngoài</td>
+            <td colspan="4" style="font-weight: bold;">Đi làm việc ở nước ngoài</td>
         </tr>
         <tr>
             <td>a</td>
@@ -165,15 +165,15 @@
             <td></td>
             <td>- Thành thị</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc_nuocngoai->where('khuvuc', '1')) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai_nuocngoai->where('khuvuc', '1')) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_nuocngoai->where('khuvuc', '1'))) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_nuocngoai->where('khuvuc', '1'))) }}</td>
         </tr>
         <tr>
             <td></td>
             <td>- Nông thôn</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc_nuocngoai->where('khuvuc', '2')) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai_nuocngoai->where('khuvuc', '2')) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_nuocngoai->where('khuvuc', '2'))) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_nuocngoai->where('khuvuc', '2'))) }}</td>
         </tr>
         <tr>
             <td>b</td>
@@ -183,17 +183,17 @@
             <td></td>
             <td>- Nam</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ count($model_truoc_nuocngoai->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
-            <td style="text-align: center;">{{ count($model_hientai_nuocngoai->wherein('gioitinh', ['nam', 'Nam'])) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_nuocngoai->wherein('gioitinh', ['nam', 'Nam']))) }}</td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_nuocngoai->wherein('gioitinh', ['nam', 'Nam']))) }}</td>
         </tr>
         <tr>
             <td></td>
             <td>- Nữ</td>
             <td style="text-align: center;">Người</td>
             <td style="text-align: center;">
-                {{ count($model_truoc_nuocngoai->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+                {{ dinhdangso(count($model_truoc_nuocngoai->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</td>
             <td style="text-align: center;">
-                {{ count($model_hientai_nuocngoai->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
+                {{ dinhdangso(count($model_hientai_nuocngoai->wherein('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</td>
         </tr>
         <tr>
             <td>c</td>
@@ -202,8 +202,8 @@
 
         @foreach (getCountries() as $k => $val)
             <?php
-            $count_truoc = count($model_truoc_nuocngoai->where('thitruonglamviec', $k));
-            $count_hientai = count($model_hientai_nuocngoai->where('thitruonglamviec', $k));
+            $count_truoc = dinhdangso(count($model_truoc_nuocngoai->where('thitruonglamviec', $k)));
+            $count_hientai = dinhdangso(count($model_hientai_nuocngoai->where('thitruonglamviec', $k)));
             ?>
             @if ($count_truoc > 0 || $count_hientai > 0)
                 <tr>
@@ -225,8 +225,8 @@
                 <td>{{ $d[$key] }}</td>
                 <td>{{ $val->tendm }}</td>
                 <td style="text-align: center;">Người</td>
-                <td style="text-align: center;">{{ count($model_truoc_nuocngoai->where('nganhnghemongmuon', $val->madm)) }}</td>
-                <td style="text-align: center;">{{ count($model_hientai_nuocngoai->where('nganhnghemongmuon', $val->madm)) }}</td>
+                <td style="text-align: center;">{{ dinhdangso(count($model_truoc_nuocngoai->where('nganhnghemongmuon', $val->madm))) }}</td>
+                <td style="text-align: center;">{{ dinhdangso(count($model_hientai_nuocngoai->where('nganhnghemongmuon', $val->madm))) }}</td>
             </tr>
         @endforeach
 

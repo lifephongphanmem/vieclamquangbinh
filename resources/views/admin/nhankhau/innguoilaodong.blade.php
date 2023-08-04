@@ -141,7 +141,7 @@
         </tr>
         <tr>
             <td style="text-align: left">11.2.1
-                @if ($model->vieclammongmuon == 1)
+                @if ($model->vieclammongmuon == 1 || $model->vieclammongmuon == 3)
                     &#x2611;
                 @else
                     &#x2610;
@@ -155,7 +155,7 @@
         <tr>
             <td style="text-align: left">
                 12.2.2
-                @if ($model->vieclammongmuon == 2)
+                @if ($model->vieclammongmuon == 2 || $model->vieclammongmuon == 3 )
                     &#x2611;
                 @else
                     &#x2610;
