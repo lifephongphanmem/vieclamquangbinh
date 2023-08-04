@@ -67,8 +67,8 @@
         <?php
         $model_truoc = $model->where('kydieutra', $inputs['kydieutra'] - 1);
         $model_hientai = $model->where('kydieutra', $inputs['kydieutra']);
-        $model_truoc_trongnuoc = $model_truoc->where('vieclammongmuon', '1');
-        $model_hientai_trongnuoc = $model_hientai->where('vieclammongmuon', '1');
+        $model_truoc_trongnuoc = $model_truoc->whereIn('vieclammongmuon', ['1','3']);
+        $model_hientai_trongnuoc = $model_hientai->whereIn('vieclammongmuon', ['1','3']);
         // dd($model_hientai );
         ?>
         <tr>
@@ -149,8 +149,8 @@
         @endforeach --}}
 
         <?php
-        $model_truoc_nuocngoai = $model_truoc->where('vieclammongmuon', '2');
-        $model_hientai_nuocngoai = $model_hientai->where('vieclammongmuon', '2');
+        $model_truoc_nuocngoai = $model_truoc->whereIn('vieclammongmuon', ['2','3']);
+        $model_hientai_nuocngoai = $model_hientai->whereIn('vieclammongmuon',['2','3']);
         
         ?>
         <tr>

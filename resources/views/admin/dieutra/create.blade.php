@@ -214,6 +214,7 @@
                                                                         <option value="">---Chọn việc làm mong muốn---</option>
                                                                         <option value="1">Trong tỉnh, trong nước</option>
                                                                         <option value="2">Đi làm việc ở nước ngoài</option>
+                                                                        <option value="3">Cả 2 ý trên (Trong nước và nước ngoài)</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -290,7 +291,6 @@
                                 <div class="col-lg-12">
                                     <a onclick="history.back()" class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
-                    
                                 </div>
                             </div>
                         </div>

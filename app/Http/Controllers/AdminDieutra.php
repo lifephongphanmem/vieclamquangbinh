@@ -1495,6 +1495,9 @@ class AdminDieutra extends Controller
             // $ds_xa = $m_danhmuc->where('parent', $mahuyen->maquocgia);
             // $ds_maxa = array_column($ds_xa->toarray(), 'madv');
 
+
+
+            
         }else{
             $maxa = null;
             $mahuyen = null;
