@@ -753,7 +753,6 @@ class AdminDieutra extends Controller
                     $tmp[$key] = $val[$i];
                 };
             }
-            dd($tmp);
             $tmp['madv'] = $inputs['madv'];
             $tmp['kydieutra'] = $inputs['kydieutra'];
             $tmp['ho'] = $inputs['ho'];
@@ -800,7 +799,6 @@ class AdminDieutra extends Controller
             if ($maloi != []) {
                 $tmp['maloailoi'] = implode(';', $maloi);
             }
-            dd($tmp);
             // nhankhauModel::create($tmp);
 
             // $xa['ldtren15'] += 1;
