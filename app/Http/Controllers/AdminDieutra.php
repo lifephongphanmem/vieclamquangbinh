@@ -799,7 +799,7 @@ class AdminDieutra extends Controller
             if ($maloi != []) {
                 $tmp['maloailoi'] = implode(';', $maloi);
             }
-            // nhankhauModel::create($tmp);
+            nhankhauModel::create($tmp);
 
             // $xa['ldtren15'] += 1;
             // $huyen['ldtren15'] += 1;
