@@ -382,7 +382,6 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
-
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
             ->where(function ($q) use ($inputs) {
@@ -713,7 +712,6 @@ class AdminDieutra extends Controller
         // dd($request->all());
         $inputs = $request->all();
         // $inputs['vieclammongmuon']=implode(';',$inputs['vieclammongmuon']);
-        dd($inputs);
         // nhankhauModel::create($inputs);
         $note = '';
         $check = $inputs['ho'] ?? '';
