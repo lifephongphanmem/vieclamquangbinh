@@ -52,7 +52,7 @@
                                 <th  width="5%"> STT </th>
                                 <th>Loại</th>
                                 <th  style="text-align: center">Mô tả</th>
-                                <th  style="text-align: center">Lý do</th>
+                                {{-- <th  style="text-align: center">Lý do</th> --}}
                                 <th  width="15%" class="text-center">Thời gian</th>
                                 {{-- <th  width="8%" class="text-center">Thao tác</th> --}}
                             </tr>

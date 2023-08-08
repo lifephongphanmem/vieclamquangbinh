@@ -174,7 +174,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
-                        <h4 id="modal-header-primary-label" class="modal-title">Lý do giảm</h4>
+                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý</h4>
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     {{-- <div class="modal-body">
