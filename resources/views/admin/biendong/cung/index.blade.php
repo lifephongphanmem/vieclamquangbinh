@@ -46,7 +46,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Danh sách nhân khẩu biến động</h3>
+                        <h3 class="card-label text-uppercase">Danh sách biến động</h3>
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
@@ -116,6 +116,7 @@
                                 {{-- <th>Tình trạng việc làm</th> --}}
                                 <th>Thời gian bắt đầu</th>
                                 <th>Thời gian cập nhật</th>
+                                <th>Lý do</th>
                                 {{-- <th>Thao tác</th> --}}
 
                             </tr>
@@ -139,6 +140,7 @@
                                     </span>{{ \Carbon\Carbon::parse($ld->created_at)->format('d/m/Y') }}</td>
                                 <td><span class="text-ellipsis">
                                     </span>{{ \Carbon\Carbon::parse($ld->updated_at)->format('d/m/Y') }}</td>
+                                    <td><span class="text-ellipsis"> </span>{{ $ld->lydo }}</td>
                                 {{-- <td class="text-ellipsis">
                                     <a href="{{'/nhankhau-innguoilaodong?id='.$ld->id}}" class="btn btn-sm mr-2" title="In danh sách" target="_blank">
                                         <i class="icon-lg la flaticon2-print text-dark"></i></a>

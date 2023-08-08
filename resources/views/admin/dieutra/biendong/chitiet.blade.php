@@ -52,6 +52,7 @@
                                 <th  width="5%"> STT </th>
                                 <th>Loại</th>
                                 <th  style="text-align: center">Mô tả</th>
+                                <th  style="text-align: center">Lý do</th>
                                 <th  width="15%" class="text-center">Thời gian</th>
                                 {{-- <th  width="8%" class="text-center">Thao tác</th> --}}
                             </tr>
@@ -87,6 +88,7 @@
                                     } ?>
                                 </td>
                                 <td class="text-left">{{ $rp->note }}</td>
+                                {{-- <td class="text-left">{{ $rp->lydo }}</td> --}}
                                 <td class="text-center">{{ $rp->time }}</td>
 
                                 {{-- <td class="text-center"><a onclick="intonghop('{{ $rp->id }}')" title="In báo cáo chi tiết"

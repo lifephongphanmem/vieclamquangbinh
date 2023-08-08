@@ -831,8 +831,9 @@ class AdminNhankhau extends Controller
         }
     }
 
-    public function baogiam($id)
+    public function baogiam($id,Request $request)
     {
+     
         if (!chkPhanQuyen('danhsachnhankhau', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'nhankhau');
         }
@@ -853,7 +854,7 @@ class AdminNhankhau extends Controller
             $tonghopcld->update($xa);
         }
 
-        $model->update(['loaibiendong' => 2]);
+        $model->update(['loaibiendong' => 2, 'lydo' => $request->lydo]);
         $danhsach->update(['soluong' => $soluong]);
 
         return redirect('/biendong/danhsach_biendong?madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&loaibiendong=2')

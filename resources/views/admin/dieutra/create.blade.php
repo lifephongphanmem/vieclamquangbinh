@@ -265,6 +265,12 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label>Lý do thêm<span class="text-danger">*</span> </label>
+                                                                    <input name="lydo[]" class="form-control" required>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                 </div>
                                             </div>
