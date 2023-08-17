@@ -194,7 +194,7 @@ class AdminCompany extends Controller
 			// 	$val->diachi = $val->xa . ' - ' . $val->huyen . ' - ' . $val->tinh;
 			// }
 		}
-
+		
 		// dd($ctys->take(10));
 		// dd($ctys->first());
 		return view('admin.company.all')->with('ctys', $ctys)
@@ -249,7 +249,7 @@ class AdminCompany extends Controller
 	}
 	public function getDmhc()
 	{
-		$cats = DB::table('danhmuchanhchinh')->where('level', 'huyện')->orwhere('level', 'thành phố')->get();
+		$cats = DB::table('danhmuchanhchinh')->where('level', 'Huyện')->orwhere('level', 'Thành phố')->orwhere('level','Thị xã')->get();
 		return $cats;
 	}
 	public function getParams($paramtype)
