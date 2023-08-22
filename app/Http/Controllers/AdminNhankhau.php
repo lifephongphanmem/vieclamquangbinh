@@ -69,7 +69,7 @@ class AdminNhankhau extends Controller
         }
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-        $a_kydieutra = array_column(danhsach::where('kydieutra',2022)->get()->toarray(), 'kydieutra', 'kydieutra');
+        $a_kydieutra = array_column(danhsach::where('kydieutra', 2022)->get()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
         $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
@@ -159,8 +159,8 @@ class AdminNhankhau extends Controller
         }
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-        $a_kydieutra = array_column(danhsach::where('kydieutra','!=',2022)->get()->toarray(), 'kydieutra', 'kydieutra');
-        $kydieutra = danhsach::where('kydieutra','!=',2022)->orderBy('id', 'desc')->first();
+        $a_kydieutra = array_column(danhsach::where('kydieutra', '!=', 2022)->get()->toarray(), 'kydieutra', 'kydieutra');
+        $kydieutra = danhsach::where('kydieutra', '!=', 2022)->orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
         $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where('madv', $inputs['madv'])->where('loaibiendong', '!=', 2)->get();
@@ -831,8 +831,9 @@ class AdminNhankhau extends Controller
         }
     }
 
-    public function baogiam($id)
+    public function baogiam($id, Request $request)
     {
+
         if (!chkPhanQuyen('danhsachnhankhau', 'thaydoi')) {
             return view('errors.noperm')->with('machucnang', 'nhankhau');
         }
@@ -840,20 +841,24 @@ class AdminNhankhau extends Controller
         $danhsach = danhsach::where('user_id', $model->madv)->where('kydieutra', $model->kydieutra)->first();
         $soluong = $danhsach->soluong - 1;
         $tonghopcld = tonghopcunglaodong::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->first();
+        $ldtren15 = $tonghopcld->ldtren15 - 1;
         if ($model->tinhtranghdkt == '1') {
             $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
+            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldcovieclam' => $xa]);
         }
         if ($model->tinhtranghdkt == '2') {
             $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
+            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa]);
         }
         if ($model->tinhtranghdkt == '3') {
             $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
+            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa]);
         }
-        if ($model->tinhtranghdkt != null) {
-            $tonghopcld->update($xa);
+        if ($model->tinhtranghdkt == null) {
+            $tonghopcld->update(['ldtren15' => $ldtren15]);
         }
 
-        $model->update(['loaibiendong' => 2]);
+        $model->update(['loaibiendong' => 2, 'lydo' => $request->lydo]);
         $danhsach->update(['soluong' => $soluong]);
 
         return redirect('/biendong/danhsach_biendong?madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&loaibiendong=2')

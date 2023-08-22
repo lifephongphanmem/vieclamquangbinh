@@ -178,10 +178,8 @@
                         <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     {{-- <div class="modal-body">
-                            <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra
-                                    này</b></label>
-                        </div> --}}
-
+                        <textarea name="lydo" id="lydo" class="form-control" rows="4" required ></textarea>
+                    </div> --}}
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
                         <button type="submit" class="btn btn-primary">Đồng
@@ -364,7 +362,7 @@
             if ($('#madv').val() == '') {
                 toastr.warning('Bạn chưa chọn xã');
             } else {
-                huyen = $('#mahuyen').val();                
+                huyen = $('#mahuyen').val();
                 url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen;
                 window.location.href = url;
             }

@@ -799,6 +799,7 @@ class AdminDieutra extends Controller
             if ($maloi != []) {
                 $tmp['maloailoi'] = implode(';', $maloi);
             }
+            
             nhankhauModel::create($tmp);
 
             // $xa['ldtren15'] += 1;
@@ -1005,6 +1006,7 @@ class AdminDieutra extends Controller
         $inputs = $request->all();
         $donvi = User::where('madv', $inputs['madv'])->first();
         $model = DB::table('report')->where('user', $donvi->id)->where('kydieutra', $inputs['kydieutra'])->get();
+        // dd($model);
         return view('admin.dieutra.biendong.chitiet')
             ->with('baocao', getdulieubaocao())
             ->with('model', $model);
