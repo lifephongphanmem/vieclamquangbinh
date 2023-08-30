@@ -928,13 +928,17 @@ class AdminDieutra extends Controller
 
     public function biendong(Request $request)
     {
+    
         if (!chkPhanQuyen('biendong', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'biendong');
         }
         // dd(session('admin'));
         $inputs = $request->all();
         if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
-            $inputs['mahuyen'] = 450;
+            if (!isset($inputs['mahuyen'])) {
+                $inputs['mahuyen'] = 450;
+            }
+          
         } elseif (session('admin')->capdo == 'H') {
             $inputs['mahuyen'] = session('admin')->maquocgia;
         } else {
