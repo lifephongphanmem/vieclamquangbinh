@@ -730,21 +730,23 @@ class AdminDieutra extends Controller
         $tonghopcung_xa = tonghopcunglaodong::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         $donvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
             ->select('dmdonvi.madv', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia', 'danhmuchanhchinh.level')->get();
-        $level_xa = $donvi->where('madv', $tonghopcung_xa->madv)->first()->level;
-        $maquocgia_huyen = $donvi->where('madv', $inputs['madv'])->first()->parent;
 
-        $madv_huyen = $donvi->where('maquocgia', $maquocgia_huyen)->first()->madv;
-
+        // $level_xa = $donvi->where('madv', $tonghopcung_xa->madv)->first()->level;
+        // $maquocgia_huyen = $donvi->where('madv', $inputs['madv'])->first()->parent;
+        // $madv_huyen = $donvi->where('maquocgia', $maquocgia_huyen)->first()->madv;
         // $tonghopcung_huyen = tonghopcunglaodong::where('madv', $madv_huyen)->where('kydieutra', $inputs['kydieutra'])->first();
         // $tonghopcung_tinh = tonghopcunglaodong::where('capdo', 'T')->where('kydieutra', $inputs['kydieutra'])->first();
-        //xã
-        $xa['ldtren15'] = $tonghopcung_xa->ldtren15;
+        // dd($tonghopcung_xa);
+        $xa['ldtren15'] = $tonghopcung_xa->ldtren15 + $inputs['quantity'];
         $xa['ldcovieclam'] = $tonghopcung_xa->ldcovieclam;
         $xa['ldthatnghiep'] = $tonghopcung_xa->ldthatnghiep;
         $xa['ldkhongthamgia'] = $tonghopcung_xa->ldkhongthamgia;
         $xa['nam'] = $tonghopcung_xa->nam;
         $xa['nu'] = $tonghopcung_xa->nu;
-
+        // dd($xa);
+        $tonghopcung_xa->update($xa);
+        // $tonghopcung_huyen->update($huyen);
+        // $tonghopcung_tinh->update($tinh);
         for ($i = 0; $i < $inputs['quantity']; $i++) {
             $tmp = array();
             foreach ($inputs as $key => $val) {
@@ -840,11 +842,7 @@ class AdminDieutra extends Controller
         } else {
             $xa['nongthon'] = $inputs['quantity'];
         }
-        $xa['ldtren15'] = $inputs['quantity'];
-        // dd($xa);
-        $tonghopcung_xa->update($xa);
-        // $tonghopcung_huyen->update($huyen);
-        // $tonghopcung_tinh->update($tinh);
+
 
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($model);
@@ -930,13 +928,17 @@ class AdminDieutra extends Controller
 
     public function biendong(Request $request)
     {
+    
         if (!chkPhanQuyen('biendong', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'biendong');
         }
         // dd(session('admin'));
         $inputs = $request->all();
         if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
-            $inputs['mahuyen'] = 450;
+            if (!isset($inputs['mahuyen'])) {
+                $inputs['mahuyen'] = 450;
+            }
+          
         } elseif (session('admin')->capdo == 'H') {
             $inputs['mahuyen'] = session('admin')->maquocgia;
         } else {

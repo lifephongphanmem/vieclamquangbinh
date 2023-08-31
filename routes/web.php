@@ -194,7 +194,7 @@ Route::prefix('dieutra')->group(function () {
 
     Route::post('/mau03_xa', [AdminDieutra::class, 'mau03_xa']); //in tổng hợp cung lao động mẫu 03 xã 
     Route::post('/mau03_huyen', [AdminDieutra::class, 'mau03_huyen']); //in tổng hợp cung lao động mẫu 03 huyện 
-   
+
     Route::get('/danhsachloi/{id}', [AdminDieutra::class, 'danhsachloi']);
     Route::get('/danhsachloi_chitiet', [AdminDieutra::class, 'danhsachloi_chitiet']);
     Route::post('/indanhsachloi', [AdminDieutra::class, 'indanhsachloi']);

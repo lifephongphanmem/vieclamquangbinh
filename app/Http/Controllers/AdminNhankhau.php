@@ -842,19 +842,21 @@ class AdminNhankhau extends Controller
         $soluong = $danhsach->soluong - 1;
         $tonghopcld = tonghopcunglaodong::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->first();
         $ldtren15 = $tonghopcld->ldtren15 - 1;
+
         if ($model->tinhtranghdkt == '1') {
             $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldcovieclam' => $xa]);
+            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldcovieclam' => $xa['ldcovieclam']]);
         }
         if ($model->tinhtranghdkt == '2') {
             $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa]);
+            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa['ldcovieclam']]);
         }
         if ($model->tinhtranghdkt == '3') {
             $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa]);
+            $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa['ldcovieclam']]);
         }
         if ($model->tinhtranghdkt == null) {
+            
             $tonghopcld->update(['ldtren15' => $ldtren15]);
         }
 
