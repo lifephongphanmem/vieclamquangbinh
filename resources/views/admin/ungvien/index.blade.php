@@ -102,5 +102,5 @@
         </div>
     </div>
 
-    @include('includes.delete');
+    @include('includes.delete')
 @endsection
