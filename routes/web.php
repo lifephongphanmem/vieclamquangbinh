@@ -358,6 +358,7 @@ Route::prefix('BaoCaoDN')->group(function () {
 Route::prefix('baocao_tonghop')->group(function () {
     Route::get('/', [baocaotonghopController::class, 'index_cung']);
     Route::post('/tonghop', [baocaotonghopController::class, 'tonghop']);
+    Route::post('/tonghoptinh', [baocaotonghopController::class, 'tonghoptinh']);
     Route::post('/thongtincunglaodong', [baocaotonghopController::class, 'thongtincunglaodong']);
 
     Route::get('/mau02PLI', [baocaotonghopController::class, 'mau02']);

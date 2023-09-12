@@ -63,7 +63,8 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (xã)</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03
+                        (xã)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -199,7 +200,8 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (huyện)</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03
+                        (huyện)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -334,7 +336,8 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     {{-- <h4 id="modal-header-primary-label" class="modal-title">In báo cáo</h4> --}}
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03
+                    </h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -450,7 +453,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03
+                        (Xã)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -500,7 +504,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03 (huyện)</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 03
+                        (huyện)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -543,7 +548,8 @@
 </form>
 
 <!-- modal in báo cáo xã mẫu 01b-->
-<form method="POST" action="{{ '/dieutra/intonghop-mau01b' }}" accept-charset="UTF-8" id="frm_modify_xa" target="_blank">
+<form method="POST" action="{{ '/dieutra/intonghop-mau01b' }}" accept-charset="UTF-8" id="frm_modify_xa"
+    target="_blank">
     @csrf
     <div id="modify-modal-xa-mau01b" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
         aria-hidden="true">
@@ -551,7 +557,8 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
 
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b (xã)</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b
+                        (xã)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -570,9 +577,10 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
+                        <select name="kydieutra" id="" class="form-control select2basic"
+                            style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
-                                <option value="{{ $key }}" {{$key==date('Y')?'selected':''}}>
+                                <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
                                     {{ $ct }}</option>
                             @endforeach
                         </select>
@@ -686,7 +694,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b (huyện)</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b
+                        (huyện)</h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -709,7 +718,7 @@
                         <select name="kydieutra" id="" class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
-                                <option value="{{ $key }}" {{$key==date('Y')?'selected':''}}>
+                                <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
                                     {{ $ct }}</option>
                             @endforeach
                         </select>
@@ -820,7 +829,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b</h4>
+                    <h4 id="modal-header-primary-label" class="modal-title">Báo cáo thông tin cung lao động - Mẫu 01b
+                    </h4>
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
@@ -829,7 +839,8 @@
                         <select name="kydieutra" id="" class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
-                                <option value="{{ $key }}" {{$key==date('Y')?'selected':''}}>{{ $ct }}</option>
+                                <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
+                                    {{ $ct }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -978,8 +989,8 @@
 </div>
 <!--Model về thông tin cung lao động-->
 <div id="thongtin-cung-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-    <form id="frmDanhsach" method="POST" action="{{ '/mau03_xa' }}"
-        accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
+    <form id="frmDanhsach" method="POST" action="{{ '/mau03_xa' }}" accept-charset="UTF-8"
+        enctype="multipart/form-data" target='_blank'>
         @csrf
         <div class="modal-dialog">
             <div class="modal-content">
@@ -991,9 +1002,10 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Năm điều tra</label>
-                        <select class="form-control select2basic" id="nam" name="kydieutra" style="width:100%">
+                        <select class="form-control select2basic" id="nam" name="kydieutra"
+                            style="width:100%">
                             <?php $nam_start = date('Y') - 2;
-                            $nam_stop = date('Y')+2; ?>
+                            $nam_stop = date('Y') + 2; ?>
                             @for ($i = $nam_start; $i <= $nam_stop; $i++)
                                 <option value="{{ $i }}" {{ $i == date('Y') ? 'selected' : '' }}>Năm
                                     {{ $i }}</option>
@@ -1049,8 +1061,9 @@
 </div>
 
 <!-- modal tổng hợp -->
-<form method="POST" action="{{ '/baocao_tonghop/tonghop' }}" accept-charset="UTF-8" id="frm_modify_tinh"
-    target="_blank">
+<form method="POST"
+    action="{{ session('admin')->capdo == 'T' ? '/baocao_tonghop/tonghoptinh' : '/baocao_tonghop/tonghop' }}"
+    accept-charset="UTF-8" id="frm_modify_tinh" target="_blank">
     @csrf
     <div id="modify-modal-tonghop" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
         aria-hidden="true">
@@ -1061,6 +1074,24 @@
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
+                    @if (session('admin')->capdo == 'T')
+                        <div class="col-lg-12 mb-2">
+                            <label class="control-label">Đơn vị</label>
+                            <select name="madv" id="" class="form-control select2basic"
+                                style="width:100%">
+                                @if (session('admin')->capdo == 'T')
+                                    <option value="">Tất cả</option>
+                                @endif
+                                @foreach ($baocao['m_huyen'] as $key => $ct)
+                                    <option value="{{ $ct->madv }}"
+                                        {{ session('admin')->madv == $ct->madv ? 'selected' : '' }}>
+                                        {{ $ct->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
+
                     <div class="col-lg-12">
                         <label class="control-label" style="font-weight: bold">Kỳ điều tra</label>
                         <select name="kydieutra" id="" class="form-control select2basic"
@@ -1201,8 +1232,8 @@
                             <label class="control-label" style="font-weight: bold">Việc làm mong muốn</label>
                             <select name="vieclammongmuon" id="" class="form-control select2basic"
                                 style="width:100%">
-                                    <option value="1">Trong tỉnh, trong nước</option>
-                                    <option value="2">Đi làm việc ở nước ngoài</option>
+                                <option value="1">Trong tỉnh, trong nước</option>
+                                <option value="2">Đi làm việc ở nước ngoài</option>
                             </select>
                         </div>
 
@@ -1216,12 +1247,13 @@
                             </select>
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='trinhdochuyenmonmuonhoc'>
-                            <label class="control-label" style="font-weight: bold">Trình độ chuyên môn muốn học</label>
+                            <label class="control-label" style="font-weight: bold">Trình độ chuyên môn muốn
+                                học</label>
                             <select name="trinhdochuyenmonmuonhoc" id="" class="form-control select2basic"
                                 style="width:100%">
-                                    <option value="1">Sơ cấp</option>
-                                    <option value="2">Trung cấp</option>
-                                    <option value="3">Cao đẳng</option>
+                                <option value="1">Sơ cấp</option>
+                                <option value="2">Trung cấp</option>
+                                <option value="3">Cao đẳng</option>
                             </select>
                         </div>
 
@@ -1252,6 +1284,7 @@
                     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
                 </div>
                 <div class="modal-body">
+
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
                         <select name="kydieutra" id="" class="form-control select2basic"
@@ -1263,7 +1296,8 @@
                     </div>
                     <div class="col-lg-12 mb-2 mt-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv" id="" class="form-control select2basic"
+                            style="width:100%">
                             <option value="all">Tất cả</option>
                             @if (session('admin')->capdo == 'T')
                                 @foreach ($baocao['m_huyen'] as $key => $ct)
@@ -1282,7 +1316,8 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label mt-3">Biến động</label>
-                        <select name="biendong" id="" class="form-control select2basic" style="width:100%">
+                        <select name="biendong" id="" class="form-control select2basic"
+                            style="width:100%">
                             <option value="all">Tất cả</option>
                             <option value="1">Báo tăng</option>
                             <option value="3">Cập nhật thông tin</option>
