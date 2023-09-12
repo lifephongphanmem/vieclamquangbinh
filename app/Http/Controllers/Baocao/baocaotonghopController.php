@@ -35,6 +35,7 @@ use App\Models\tuyendungModel;
 use App\Models\Vitrituyendung;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Facades\Excel;
 
 class baocaotonghopController extends Controller
@@ -883,6 +884,78 @@ class baocaotonghopController extends Controller
         ->with(  'pageTitle','Báo cáo thông tin thị trường lao động');
 
     }
+
+    public function tonghoptinh(Request $request)
+    {
+      
+        $inputs = $request->all();
+        $madv = [session('admin')->madv];
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+        ->get();
+
+        if (isset($inputs['madv'])) {
+            $maquocgia_huyen = $m_danhmuc->where('madv',$inputs['madv'])->first()->maquocgia;
+            $ds_maxa = array_column( $m_danhmuc->where('parent',$maquocgia_huyen)->ToArray(),'madv' );
+        }else{
+            $ds_maxa = '';
+        }
+      
+        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+            ->where('loaibiendong','!=',2)
+            ->where(function ($q) use ($inputs) {
+
+                if (isset($inputs['gender'])) {
+                    $q->where('gioitinh', $inputs['gioitinh']);
+                }
+                if (isset($inputs['dttkvl'])) {
+                    $q->where('doituongtimvieclam', $inputs['doituongtimvieclam']);
+                }
+                if (isset($inputs['dtut'])) {
+                    $q->where('uutien', $inputs['uutien']);
+                }
+                if (isset($inputs['trinhdogdpt'])) {
+                    $q->where('trinhdogiaoduc', $inputs['trinhdogiaoduc']);
+                }
+                if (isset($inputs['trinhdocmkt'])) {
+                    $q->where('chuyenmonkythuat', $inputs['chuyenmonkythuat']);
+                }
+                if (isset($inputs['chuyennganhdaotao'])) {
+                    $q->where('chuyennganh', $inputs['chuyennganh']);
+                }
+                if (isset($inputs['vlmongmuon'])) {
+                    $q->where('vieclammongmuon', $inputs['vieclammongmuon']);
+                }
+                if (isset($inputs['nghemuonhoc'])) {
+                    $q->where('nganhnghemuonhoc', $inputs['nganhnghemuonhoc']);
+                }
+                if (isset($inputs['tdmcmh'])) {
+                    $q->where('trinhdochuyenmonmuonhoc', $inputs['trinhdochuyenmonmuonhoc']);
+                }
+            })
+            // ->when($inputs['tuoitu'],function($query,$tuoitu){
+            //     $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > $tuoitu");
+            // })
+            ->get();
+            if (isset($inputs['madv'])) {
+                $model =  $model->wherein('madv', $ds_maxa);
+            }
+        // $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        //     ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+        //     ->get();
+
+        // $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
+        // $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        return view('admin.baocao.tonghoptinh')
+            ->with('model', $model)
+            ->with('inputs', $inputs)
+            ->with('m_danhmuc', $m_danhmuc)
+            // ->with('m_donvi', $m_donvi)
+            ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
+            ->with('pageTitle', 'Tổng hợp');
+    }
+
+
 
 }
 
