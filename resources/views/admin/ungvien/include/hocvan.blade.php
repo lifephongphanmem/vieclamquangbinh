@@ -1,64 +1,63 @@
-
-
 <div class="form-body">
-    <div class="row col-md-12">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Chuyên ngành<span class="require">*</span></label>
-
-                <input type="text" name="chuyennganh" class="form-control" placeholder="VD: Kinh doanh quốc tế"
-                    value="">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Trường <span class="require">*</span></label>
-
-                <input type="text" name="truong" class="form-control" placeholder="VD: Đại học Ngoại Thương"
-                    value="">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Bằng cấp <span class="require">*</span></label>
-                <select name="bangcap" class="form-control">
-                    <option value="">Chọn bằng cấp</option>
-                    @foreach ($dmtrinhdokythuat as $item)
-                        <option value="{{ $item->madmtdkt }}">{{ $item->tentdkt }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row col-md-3">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label">Từ ngày </label>
-                <input type="date" name="tungay" class="form-control" value="">
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label">Đến ngày </label>
-                <input type="date" name="denngay" class="form-control" value="">
-            </div>
-        </div>
+    <div id="form_hocvan1">
 
     </div>
-
-    <div class="row col-md-9">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label">Thành tựu</label>
-                <textarea type="date" name="thanhtuu" class="form-control" rows="6"></textarea>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
-        <button onclick="storehocvan()" class="btn btn-sm btn-info btn-lg pull-right" style="margin-left:49%">
-            Lưu
+        <button onclick="createhocvan()" class="btn btn-sm btn-success btn-lg pull-right" style="margin-left:2%">
+            Thêm mới
         </button>
+        <br>
     </div>
 </div>
+
+<div class="form-body" id="form_hocvan2">
+
+</div>
+
+<script>
+    function createhocvan() {
+        if ($('#user').val() == '') {
+            toastr.warning("Vui lòng lưu lại thông tin trước khi cập nhật thông tin này.");
+        } else {
+            $.ajax({
+                url: '/ungvien/createhocvan',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    console.log(data);
+                    $('#form_hocvan2').replaceWith(data.content);
+                }
+            })
+        }
+    }
+
+    function storehocvan() {
+
+        $.ajax({
+            url: '/ungvien/storehocvan',
+            type: 'POST',
+            data: {
+                _token: CSRF_TOKEN,
+                user: $('#user').val(),
+                chuyennganh: $('#chuyennganh').val(),
+                truong: $('#truong').val(),
+                bangcap: $('#bangcap').val(),
+                tungay: $('#tungay').val(),
+                denngay: $('#denngay').val(),
+                thanhtuu: $('#thanhtuu').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                console.log(data);
+                // $('#form_hocvan3').hide();
+ 
+                $('#form_hocvan1').replaceWith(data.content1);
+                $('#form_hocvan2').replaceWith(data.content2);
+                toastr.success('Đã lưu thông tin', "Hoàn thành!");
+            }
+        })
+    }
+</script>

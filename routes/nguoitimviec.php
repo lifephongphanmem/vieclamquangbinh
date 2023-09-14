@@ -23,7 +23,10 @@ Route::prefix('ungvien')->group(function(){
     Route::get('/',[ungvienController::class,'index']);
     Route::get('/create',[ungvienController::class,'create']);
     Route::post('/storecoban',[ungvienController::class,'storecoban']);
+    Route::get('/createhocvan',[ungvienController::class,'createhocvan']);
     Route::post('/storehocvan',[ungvienController::class,'storehocvan']);
+    Route::get('/createkinhnghiem',[ungvienController::class,'createkinhnghiem']);
+    Route::post('/storekinhnghiem',[ungvienController::class,'storekinhnghiem']);
     Route::get('/edit',[ungvienController::class,'edit']);
     Route::post('/update',[ungvienController::class,'update']);
     Route::get('/delete/{user}',[ungvienController::class,'delete']);

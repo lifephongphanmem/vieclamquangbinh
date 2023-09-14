@@ -1,26 +1,24 @@
-
-
-
-<div class="form-body" id="frm_data">
+<div class="form-body" id="frm_coban">
 
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Ảnh đại diện </label>
-                <input type="file" name="avatar" id="avatar" class="form-control" placeholder="Chọn ảnh" value="">
+                <input type="file" name="avatar" id="avatar" class="form-control" placeholder="Chọn ảnh"
+                    value="">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Họ tên <span class="require">*</span></label>
-                <input type="text" name="hoten" id="hoten" class="form-control" placeholder="Nhập đầy đủ Họ và Tên"
-                    value="" required>
+                <input type="text" name="hoten" id="hoten" class="form-control"
+                    placeholder="Nhập đầy đủ Họ và Tên" value="" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Giới tính <span class="require">*</span></label>
-                <select name="gioitinh"  id="gioitinh" class="form-control">
+                <select name="gioitinh" id="gioitinh" class="form-control">
                     <option value="Nữ">Nữ</option>
                     <option value="Nam">Nam</option>
                 </select>
@@ -29,14 +27,14 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Số điện thoại<span class="require">*</span></label>
-                <input type="number" name="phone"  id="phone" class="form-control" value="" required>
+                <input type="number" name="phone" id="phone" class="form-control" value="" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_tinh = $danhmuc->where('capdo', 'T'); ?>
                 <label class="control-label">Tỉnh<span class="require">*</span></label>
-                <select name="tinh"  id="tinh"class="form-control">
+                <select name="tinh" id="tinh"class="form-control">
                     @foreach ($danhmuc_tinh as $item)
                         <option value="{{ $item->maquocgia }}">{{ $item->name }}</option>
                     @endforeach
@@ -47,7 +45,7 @@
             <div class="form-group">
                 <?php $danhmuc_huyen = $danhmuc->where('capdo', 'H'); ?>
                 <label class="control-label">Huyện<span class="require">*</span></label>
-                <select name="huyen"  id="huyen" class="form-control select2basic" required>
+                <select name="huyen" id="huyen" class="form-control select2basic" required>
                     <option value="">Chọn huyện</option>
                     @foreach ($danhmuc_huyen as $item)
                         <option value="{{ $item->maquocgia }}">{{ $item->name }}</option>
@@ -59,7 +57,7 @@
             <div class="form-group">
                 <?php $danhmuc_xa = $danhmuc->where('capdo', 'X'); ?>
                 <label class="control-label">Xã<span class="require">*</span></label>
-                <select name="xa"  id="xa" class="form-control select2basic" required>
+                <select name="xa" id="xa" class="form-control select2basic" required>
                     <option value="">Chọn xã</option>
                     @foreach ($danhmuc_xa as $item)
                         <option value="{{ $item->maquocgia }}">{{ $item->name }}</option>
@@ -70,14 +68,14 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">address<span class="require">*</span></label>
-                <input type="text" name="address"  id="address" class="form-control" placeholder="số nhà-Tên đường/Xóm-Thôn"
-                    required>
+                <input type="text" name="address" id="address" class="form-control"
+                    placeholder="số nhà-Tên đường/Xóm-Thôn" required>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Chức danh<span class="require">*</span></label>
-                <select name="chucdanh"  id="chucdanh" class="form-control" value="">
+                <select name="chucdanh" id="chucdanh" class="form-control" value="">
                     <option value="">Chọn chức danh</option>
                 </select>
             </div>
@@ -94,7 +92,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Hình thức làm việc<span class="require">*</span></label>
-                <select name="hinhthuclv"  id="hinhthuclv" class="form-control" value="">
+                <select name="hinhthuclv" id="hinhthuclv" class="form-control" value="">
                     <option>Full time</option>
                     <option>Freelance</option>
                     <option>Part time</option>
@@ -104,13 +102,13 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Mức lương mong muốn<span class="require">*</span></label>
-                <input type="number" id="luong"  name="luong" class="form-control" value="">
+                <input type="number" id="luong" name="luong" class="form-control" value="">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Trình độ</label>
-                <select name="trinhdocmkt"  id="trinhdocmkt" class="form-control">
+                <select name="trinhdocmkt" id="trinhdocmkt" class="form-control">
                     <option value="">Chọn trình độ</option>
                     @foreach ($dmtrinhdokythuat as $item)
                         <option value="{{ $item->madmtdkt }}">{{ $item->tentdkt }}</option>
@@ -121,7 +119,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Word</label>
-                <select name="word"  id="word" class="form-control">
+                <select name="word" id="word" class="form-control">
                     <option value="1">1 điểm</option>
                     <option value="2">2 điểm</option>
                     <option value="3">3 điểm</option>
@@ -138,7 +136,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Excel</label>
-                <select name="excel"  id="excel" class="form-control">
+                <select name="excel" id="excel" class="form-control">
                     <option value="1">1 điểm</option>
                     <option value="2">2 điểm</option>
                     <option value="3">3 điểm</option>
@@ -155,7 +153,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">powerpoint</label>
-                <select name="powerpoint"  id="powerpoint" class="form-control">
+                <select name="powerpoint" id="powerpoint" class="form-control">
                     <option value="1">1 điểm</option>
                     <option value="2">2 điểm</option>
                     <option value="3">3 điểm</option>
@@ -178,19 +176,63 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="control-label">Mục tiêu nghề nghiệp</label>
-                <textarea name="muctieu"  id="muctieu" class="form-control" rows="3"></textarea>
+                <textarea name="muctieu" id="muctieu" class="form-control" rows="3"></textarea>
             </div>
         </div>
     </div>
 
-    {{-- <div class="row">
-        <button type="submit" class="btn btn-sm btn-info btn-lg pull-right" style="margin-left:49%">
-            Lưu
-        </button>
-    </div> --}}
     <div class="row">
         <button onclick="storecoban()" class="btn btn-sm btn-info btn-lg pull-right" style="margin-left:49%">
             Lưu
         </button>
     </div>
 </div>
+<script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    function storecoban() {
+        $.ajax({
+            url: '/ungvien/storecoban',
+            type: 'POST',
+            data: {
+                //thông tin tài khoản
+                _token: CSRF_TOKEN,
+                name: $('#name').val(),
+                email: $('#email').val(),
+                password: $('#password').val(),
+                status: $('#status').val(),
+
+                // thông tin cơ bản
+                hoten: $('#hoten').val(),
+                gioitinh: $('#gioitinh').val(),
+                phone: $('#phone').val(),
+                tinh: $('#tinh').val(),
+                huyen: $('#huyen').val(),
+                xa: $('#xa').val(),
+                address: $('#address').val(),
+                chucdanh: $('#chucdanh').val(),
+                honnhan: $('#honnhan').val(),
+                hinhthuclv: $('#hinhthuclv').val(),
+                luong: $('#luong').val(),
+                trinhdocmkt: $('#trinhdocmkt').val(),
+                word: $('#word').val(),
+                excel: $('#excel').val(),
+                powerpoint: $('#powerpoint').val(),
+                gioithieu: $('#gioithieu').val(),
+                muctieu: $('#muctieu').val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    $('#frm_coban').replaceWith(data.content);
+                    var form = $('#user').val(data.user);
+                    toastr.success(data.message, "Hoàn thành!");
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+
+    }
+</script>

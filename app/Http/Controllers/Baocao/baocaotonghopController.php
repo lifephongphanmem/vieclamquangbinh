@@ -901,7 +901,9 @@ class baocaotonghopController extends Controller
             $ds_maxa = '';
         }
       
-        $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
+        $model = nhankhauModel::select('hoten','gioitinh','ngaysinh','cccd','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat',
+        'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv')
+        ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong','!=',2)
             ->where(function ($q) use ($inputs) {
 
@@ -936,10 +938,12 @@ class baocaotonghopController extends Controller
             // ->when($inputs['tuoitu'],function($query,$tuoitu){
             //     $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > $tuoitu");
             // })
+             
             ->get();
             if (isset($inputs['madv'])) {
                 $model =  $model->wherein('madv', $ds_maxa);
             }
+            // dd($model);
         // $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         //     ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
         //     ->get();
