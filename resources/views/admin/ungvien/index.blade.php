@@ -80,7 +80,14 @@
                                     <td>{{ $item->luong }}</td>
                                     <td></td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td>{{ $item->status == '1' ? 'kích hoạt' : 'khóa' }}</td>
+                                    <td>{{  ? 'kích hoạt' : 'khóa' }}</td>
+                                    <td>
+                                        @if ($item->status == '1')
+                                            
+                                        @else
+                                            
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ '/ungvien/edit?user='.$item->user }}" title="Sửa thông tin" type="button"
                                             class="btn btn-sm btn-clean btn-icon">
