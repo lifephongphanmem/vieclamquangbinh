@@ -47,7 +47,7 @@
                         <span class="menu-text">Biến động</span>
                     </a>
                 </li>
-                <li class="menu-item" aria-haspopup="true">
+                {{-- <li class="menu-item" aria-haspopup="true">
                     <a href="{{ '/ungvien' }}" class="menu-link">
                         <span class="svg-icon menu-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -58,7 +58,7 @@
                         </span>
                         <span class="menu-text">Ứng viên</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </li>
