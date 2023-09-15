@@ -900,7 +900,6 @@ class baocaotonghopController extends Controller
         }else{
             $ds_maxa = '';
         }
-      
         $model = nhankhauModel::select('hoten','gioitinh','ngaysinh','cccd','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat',
         'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv')
         ->where('kydieutra', $inputs['kydieutra'])
