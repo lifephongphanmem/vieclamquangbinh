@@ -4,13 +4,14 @@
     <table id="data_header" width="96%" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
         <tr>
             <td></td>
-            <td class="text-right" style="font-style:italic">Mẫu số 02</td>
+            <td class="text-right" style="font-style:italic"></td>
+            {{-- <td class="text-right" style="font-style:italic">Mẫu số 02</td> --}}
         </tr>
         <tr>
             <td width="40%" style="vertical-align: top;">
 
                 <p>Tỉnh: Quảng Bình</p>
-                <p>{{ $m_donvi->huyen }}</p>
+                <p>{{ $m_donvi->huyen != "Quảng Bình" ? $m_donvi->huyen :'' }}</p>
                 <p>{{ $m_donvi->name }}</p>
                 <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
 

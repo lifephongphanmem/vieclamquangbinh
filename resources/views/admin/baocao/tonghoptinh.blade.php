@@ -4,12 +4,14 @@
     <table id="data_header" width="96%" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
         <tr>
             <td></td>
-            <td class="text-right" style="font-style:italic">Mẫu số 02</td>
+            <td class="text-right" style="font-style:italic"></td>
+             {{-- <td class="text-right" style="font-style:italic">Mẫu số 02</td> --}}
         </tr>
         <tr>
             <td width="40%" style="vertical-align: top;">
 
                 <p>Tỉnh: Quảng Bình</p>
+                <p>{{$tenhuyen}}</p>
                 {{-- <p>{{asset($m_donvi) ? $m_donvi->huyen : "" }}</p>
                 <p>{{asset($m_donvi) ? $m_donvi->name : "" }}</p> --}}
                 <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
@@ -70,22 +72,24 @@
             </tr>
 
         </thead>
-        <?php $stt = 1; ?>
+        <?php $stt_convert2Roman = 1; ?>
         <tbody>
-            @foreach ($ds_xa as $key => $xa)
+            @foreach ($ds_xa as $xa)
+           
                 <?php
                 $model_xa = $model->where('madv', $xa->madv);
                 ?>
 
                 @if ($model_xa->count() > 0)
                     <tr>
-                        <th>{{ convert2Roman($key) }}</th>
+                        <th>{{ convert2Roman($stt_convert2Roman++) }}</th>
                         <th style="text-align: left ;" colspan="19">{{ $xa->name }}</th>
                     </tr>
                 @endif
+                <?php $stt_model_xa = 1; ?>
                 @foreach ($model_xa as $item)
                     <tr>
-                        <td style="text-align: center ; vertical-align: middle">{{ $stt++ }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ $stt_model_xa++ }}</td>
                         <td style="vertical-align: middle">{{ $item->hoten }}</td>
 
                         @if ($item->gioitinh == 'Nam')
