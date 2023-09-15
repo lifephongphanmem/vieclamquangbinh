@@ -889,24 +889,27 @@ class baocaotonghopController extends Controller
     {
       
         $inputs = $request->all();
-        $madv = [session('admin')->madv];
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
         ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
         ->get();
 
-        if (isset($inputs['madv'])) {
+        // if (isset($inputs['madv'])) {
             $maquocgia_huyen = $m_danhmuc->where('madv',$inputs['madv'])->first()->maquocgia;
-            $ds_maxa = array_column( $m_danhmuc->where('parent',$maquocgia_huyen)->ToArray(),'madv' );
-        }else{
-            $ds_maxa = '';
-        }
+            $ds_xa = $m_danhmuc->where('parent',$maquocgia_huyen);
+            $ds_maxa = array_column( $ds_xa->ToArray(),'madv' );
+        // }else{
+        //     $ds_maxa = '';
+        // }
       
         $model = nhankhauModel::select('hoten','gioitinh','ngaysinh','cccd','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat',
-        'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv')
+        'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv','sdt','nganhnghemongmuon','thitruonglamviec')
         ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong','!=',2)
+            // ->wherein('madv',$ds_maxa)
             ->where(function ($q) use ($inputs) {
-
+                if (isset($inputs['ds_maxa'])) {
+                    $q->wherein('madv', $inputs['ds_maxa']);
+                }
                 if (isset($inputs['gender'])) {
                     $q->where('gioitinh', $inputs['gioitinh']);
                 }
@@ -940,13 +943,7 @@ class baocaotonghopController extends Controller
             // })
              
             ->get();
-            if (isset($inputs['madv'])) {
-                $model =  $model->wherein('madv', $ds_maxa);
-            }
-            // dd($model);
-        // $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-        //     ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
-        //     ->get();
+
 
         // $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
         // $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
@@ -954,6 +951,7 @@ class baocaotonghopController extends Controller
             ->with('model', $model)
             ->with('inputs', $inputs)
             ->with('m_danhmuc', $m_danhmuc)
+            ->with('ds_xa', $ds_xa)
             // ->with('m_donvi', $m_donvi)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
             ->with('pageTitle', 'Tổng hợp');
