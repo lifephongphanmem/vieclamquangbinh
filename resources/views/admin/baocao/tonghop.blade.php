@@ -101,7 +101,7 @@
                     <td style="text-align: center ; vertical-align: middle">{{ $item->doituongtimvieclam==1?'Chưa từng làm việc':'Đã từng làm việc' }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->vieclammongmuon==2?'Đi nước ngoài':'Trong tỉnh,trong nước' }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemongmuon }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ isset($item->thitruonglamviec)?getCountries()[$model->thitruonglamviec]:'' }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ isset($item->thitruonglamviec)?getthitruong()[$item->thitruonglamviec]:'' }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemuonhoc }}</td>
                     <td style="vertical-align: middle">{{ $item->trinhdochuyenmonmuonhoc }}</td>
                     <td></td>

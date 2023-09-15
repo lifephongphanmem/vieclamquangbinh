@@ -902,7 +902,7 @@ class baocaotonghopController extends Controller
         // }
       
         $model = nhankhauModel::select('hoten','gioitinh','ngaysinh','cccd','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat',
-        'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv')
+        'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv','sdt','nganhnghemongmuon','thitruonglamviec')
         ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong','!=',2)
             // ->wherein('madv',$ds_maxa)
