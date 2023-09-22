@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Đăng nhập</title>
+    <title>Trung tâm dịch vụ việc làm Quảng Bình</title>
     <meta name="robots" content="noindex, nofollow">
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/png" href="/static/media/images/siteinfo/2020_08_04/untitled-1.png">
@@ -128,7 +128,7 @@
 
     @yield('content')
 
-    @include('pages.page.footer')
+    @include('pages.page.includes.footer')
 
 
     {{-- 

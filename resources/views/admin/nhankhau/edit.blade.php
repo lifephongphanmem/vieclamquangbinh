@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <label>Số CMND/CCCD</label>
 
-                                        <input type="text" name="cmnd" value="{{ $ld->cccd }}"
+                                        <input type="text" name="cccd" value="{{ $ld->cccd }}"
                                             class="form-control" required>
 
                                     </div>
@@ -99,8 +99,10 @@
                                     <div class="form-group">
                                         <label>Khu vực</label>
                                         <select class="form-control" name="khuvuc">
-                                            <option value="1" {{ $ld->khuvuc == 1 ? 'selected' : '' }}>Thành thị</option>
-                                            <option value="2" {{ $ld->khuvuc == 2 ? 'selected' : '' }}>Nông thôn</option>
+                                            <option value="1" {{ $ld->khuvuc == 1 ? 'selected' : '' }}>Thành thị
+                                            </option>
+                                            <option value="2" {{ $ld->khuvuc == 2 ? 'selected' : '' }}>Nông thôn
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -190,9 +192,11 @@
                                         <label>Đối tượng tìm kiếm việc làm <span class="text-danger">*</span></label>
                                         <select name="doituongtimvieclam" class="form-control" required>
                                             <option value="">---Chọn đối tượng tìm kiếm việc làm---</option>
-                                            <option value="1" {{ $ld->doituongtimvieclam == 1 ? 'selected' : '' }}>Chưa
+                                            <option value="1" {{ $ld->doituongtimvieclam == 1 ? 'selected' : '' }}>
+                                                Chưa
                                                 từng làm việc</option>
-                                            <option value="2" {{ $ld->doituongtimvieclam == 2 ? 'selected' : '' }}>Đã từng
+                                            <option value="2" {{ $ld->doituongtimvieclam == 2 ? 'selected' : '' }}>Đã
+                                                từng
                                                 làm việc</option>
                                         </select>
                                     </div>
@@ -202,9 +206,11 @@
                                         <label>Việc làm mong muốn <span class="text-danger">*</span></label>
                                         <select name="vieclammongmuon" class="form-control">
                                             <option value="">---Chọn việc làm mong muốn---</option>
-                                            <option value="1" {{ $ld->vieclammongmuon == 1 ? 'selected' : '' }}>Trong tỉnh,
+                                            <option value="1" {{ $ld->vieclammongmuon == 1 ? 'selected' : '' }}>Trong
+                                                tỉnh,
                                                 trong nước</option>
-                                            <option value="2" {{ $ld->vieclammongmuon == 2 ? 'selected' : '' }}>Đi làm việc
+                                            <option value="2" {{ $ld->vieclammongmuon == 2 ? 'selected' : '' }}>Đi
+                                                làm việc
                                                 ở nước ngoài</option>
                                         </select>
                                     </div>
@@ -232,7 +238,9 @@
                                             <select name="thitruonglamviec" class="form-control selec2basic">
                                                 <option value="">---Chọn thị trường muốn làm việc--</option>
                                                 @foreach (getthitruong() as $k => $val)
-                                                    <option value="{{$k}}" {{ $ld->thitruonglamviec == $k ? 'selected' : '' }}>{{ $val }}</option>
+                                                    <option value="{{ $k }}"
+                                                        {{ $ld->thitruonglamviec == $k ? 'selected' : '' }}>
+                                                        {{ $val }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -256,18 +264,21 @@
                                             <select name="trinhdochuyenmonmuonhoc" class="form-control selec2basic">
                                                 <option value="">---Chọn trình độ chuyên môn muốn học---</option>
                                                 <option value="1"
-                                                    {{ $ld->trinhdochuyenmonmuonhoc == 1 ? 'selected' : '' }}>Sơ cấp</option>
+                                                    {{ $ld->trinhdochuyenmonmuonhoc == 1 ? 'selected' : '' }}>Sơ cấp
+                                                </option>
                                                 <option value="2"
-                                                    {{ $ld->trinhdochuyenmonmuonhoc == 2 ? 'selected' : '' }}>Trung cấp</option>
+                                                    {{ $ld->trinhdochuyenmonmuonhoc == 2 ? 'selected' : '' }}>Trung cấp
+                                                </option>
                                                 <option value="3"
-                                                    {{ $ld->trinhdochuyenmonmuonhoc == 3 ? 'selected' : '' }}>Cao đẳng</option>
+                                                    {{ $ld->trinhdochuyenmonmuonhoc == 3 ? 'selected' : '' }}>Cao đẳng
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Ghi chú<span class="text-danger">*</span> </label>
-                                            <input name="lydo" class="form-control" value="{{$ld->lydo }}">
+                                            <input name="lydo" class="form-control" value="{{ $ld->lydo }}">
                                         </div>
                                     </div>
                                 </div>
@@ -287,10 +298,10 @@
                                     </div>
                                 </div>
                     </form>
-
                 </div>
             </div>
         </div>
+    </div>
     </div>
     </div>
 @endsection

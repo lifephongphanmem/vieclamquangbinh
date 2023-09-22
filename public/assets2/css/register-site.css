@@ -1,0 +1,137 @@
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: Roboto,Helvetica,Verdana,Arial,sans-serif;
+    font-weight: 500;
+    line-height: 1.21;
+    color: inherit;
+}
+h1,h2 {
+    font-size: 2.3em;
+    margin: 0;
+    font-weight: 300;
+        color: #333;
+}
+.site-register{
+    background: #EEEEEE;
+}
+.width-box{
+    width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+}
+.box-register{
+    background: #fff;
+    padding: 40px;
+    box-shadow: 0px 3px 3px #ddd;
+}
+.push-top-10, .push-top-xs {
+    margin-top: 10px;
+        
+}
+.text-span{
+    color: #555;
+    font-size: 14px;
+}
+.btn-facebook {
+    background: #3B5998;
+    color: #fff!important;
+    padding: 7px 25px;
+}
+.btn-facebook:hover {
+    background: #344e86;
+}
+.btn-google {
+    background: #dd4b39;
+    color: #fff!important;
+    padding: 7px 35px;
+}
+.btn-google:hover {
+    background: #d73925;
+}
+.form-control {
+    -webkit-appearance: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: 39px;
+    padding: 5px 10px;
+    font-size: 13.5px;
+    line-height: 1.42857143;
+    color: #777;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+input[type=datetime].form-control, input[type=datetime-local].form-control, input[type=date].form-control, input[type=month].form-control, input[type=time].form-control, input[type=week].form-control, input[type=number].form-control, input[type=email].form-control, input[type=url].form-control, input[type=search].form-control, input[type=tel].form-control, input[type=color].form-control, input[type=text].form-control, input[type=password].form-control, select.form-control, textarea.form-control {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+}
+.error-message {
+    color: #ef474f;
+    font-size: 13px;
+}
+.btn-primary.active, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #e38008;
+    border-color: #b76706;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #ff6a00;
+    border-color: #f28809;
+}
+.text-span strong a{
+    color: #ff6a00;
+}
+.color-blue{
+    color: #ff6a00;
+}
+@media screen and (max-width: 800px) {
+    .width-box {
+        width: 100%;
+        padding: 30px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .width-box {
+        width: 100%;
+        padding: 10px;
+    }
+    .box-register {
+        background: #fff;
+        padding: 15px;
+        box-shadow: 0px 3px 3px #ddd;
+    }
+    .btn-facebook {
+        background: #3B5998;
+        color: #fff!important;
+        padding: 7px 15px;
+    }
+    .btn-google {
+        background: #dd4b39;
+        color: #fff!important;
+        padding: 7px 20px;
+    }
+    h1, h2 {
+        font-size: 2.2em;
+        margin: 0;
+        font-weight: 300;
+        color: #333;
+    }
+}

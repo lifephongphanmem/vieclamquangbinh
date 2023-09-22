@@ -13,6 +13,7 @@ use App\Models\ungvienkinhnghiem;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,12 +26,12 @@ class ungvienController extends Controller
         $model = User::leftjoin('ungvien', 'users.id', 'ungvien.user')
             ->select('ungvien.*', 'users.email', 'users.created_at ', 'users.status')
             ->where('phanloaitk', '3')->get();
-            if (isset($inputs['luongmin'])) {
-                $model = $model->where('luong','>=',$inputs['luongmin']);
-            }
-            if (isset($inputs['luongmax'])) {
-                $model = $model->where('luong','<=',$inputs['luongmax']);
-            }
+        if (isset($inputs['luongmin'])) {
+            $model = $model->where('luong', '>=', $inputs['luongmin']);
+        }
+        if (isset($inputs['luongmax'])) {
+            $model = $model->where('luong', '<=', $inputs['luongmax']);
+        }
         return view('admin.ungvien.index')
             ->with('model', $model)
             ->with('inputs', $inputs)
@@ -39,13 +40,14 @@ class ungvienController extends Controller
 
     public function trangthai(Request $request)
     {
-     
-        User::where('id',$request->user)->first()->update(['status'=> $request->trangthai]);
+
+        User::where('id', $request->user)->first()->update(['status' => $request->trangthai]);
         return redirect('/ungvien');
     }
 
     public function create()
     {
+
         $danhmuc = danhmuchanhchinh::all();
         $dmtrinhdokythuat = dmtrinhdokythuat::all();
         return view('admin.ungvien.create')
@@ -79,6 +81,7 @@ class ungvienController extends Controller
                 // 'avatar' => $inputs['avatar'],
                 'hoten' => $inputs['hoten'],
                 'gioitinh' => $inputs['gioitinh'],
+                'ngaysinh' => $inputs['ngaysinh'],
                 'phone' => $inputs['phone'],
                 'tinh' => $inputs['tinh'],
                 'huyen' => $inputs['huyen'],
@@ -104,57 +107,52 @@ class ungvienController extends Controller
             return  response($result);
         }
     }
-
-    public function createhocvan()
+    public function updatecoban(Request $request)
     {
-        $dmtrinhdokythuat = dmtrinhdokythuat::all();
+        $inputs = $request->all();
 
-        $result['content'] = '<div class="row col-md-12">';
-        $result['content'] .= '<div class="col-md-3">';
-        $result['content'] .= '<div class="form-group">';
-        $result['content'] .= '<label class="control-label">Chuyên ngành<span class="require">*</span></label>';
-        $result['content'] .= '<input type="text" name="chuyennganh" id="chuyennganh" class="form-control" placeholder="VD: Kinh doanh quốc tế" required>';
-        $result['content'] .= '</div></div>';
-        $result['content'] .= '<div class="col-md-3">';
-        $result['content'] .= '<div class="form-group">';
-        $result['content'] .= '<label class="control-label">Trường <span class="require">*</span></label>';
-        $result['content'] .= '<input type="text" name="truong" id="truong" class="form-control" placeholder="VD: Đại học Ngoại Thương" required>';
-        $result['content'] .= '</div> </div>';
-        $result['content'] .= '<div class="col-md-3">';
-        $result['content'] .= '<div class="form-group">';
-        $result['content'] .= '<label class="control-label">Bằng cấp <span class="require">*</span></label>';
-        $result['content'] .= '<select name="bangcap"  id="bangcap" class="form-control" required>';
-        $result['content'] .= '<option value="">Chọn bằng cấp</option>';
-        foreach ($dmtrinhdokythuat as $item) {
-            $result['content'] .= '<option value="' . $item->madmtdkt . '">' . $item->tentdkt . '</option>';
+        $model_user = [
+            'name' => $inputs['hoten'],
+            'status' => $inputs['status'],
+        ];
+        if ($inputs['checkpassword'] == 'on') {
+            $model_user['password'] = Hash::make($inputs['password']);
         }
-        $result['content'] .= '</select>';
-        $result['content'] .= '</div>';
-        $result['content'] .= '</div>';
-        $result['content'] .= '</div>';
-        $result['content'] .= '<div class="row col-md-3">';
-        $result['content'] .= '<div class="col-md-12">';
-        $result['content'] .= '<div class="form-group">';
-        $result['content'] .= '<label class="control-label">Từ ngày </label>';
-        $result['content'] .= '<input type="date" name="tungay" id="tungay" class="form-control" value="" required>';
-        $result['content'] .= '</div> </div>';
-        $result['content'] .= '<div class="col-md-12">';
-        $result['content'] .= '<div class="form-group">';
-        $result['content'] .= '<label class="control-label">Đến ngày </label>';
-        $result['content'] .= '<input type="date" name="denngay" id="denngay" class="form-control" value="" required>';
-        $result['content'] .= '</div> </div></div>';
-        $result['content'] .= '<div class="row col-md-9">';
-        $result['content'] .= '<div class="col-md-12">';
-        $result['content'] .= '<div class="form-group">';
-        $result['content'] .= '<label class="control-label">Thành tựu</label>';
-        $result['content'] .= '<textarea type="date" name="thanhtuu"  id="thanhtuu" class="form-control" rows="6"></textarea>';
-        $result['content'] .= '</div> </div> </div>';
-        $result['content'] .= '<div class="row">';
-        $result['content'] .= '<button onclick="storehocvan()" class="btn btn-sm btn-info btn-lg pull-right" style="margin-left:49%"> Lưu</button></div>';
+
+       User::find($inputs['user'])->update($model_user);
+
+        $data_ungvien = [
+            'user' => $inputs['user'],
+            // 'avatar' => $inputs['avatar'],
+            'hoten' => $inputs['hoten'],
+            'gioitinh' => $inputs['gioitinh'],
+            'ngaysinh' => $inputs['ngaysinh'],
+            'phone' => $inputs['phone'],
+            'tinh' => $inputs['tinh'],
+            'huyen' => $inputs['huyen'],
+            'xa' => $inputs['xa'],
+            'address' => $inputs['address'],
+            'chucdanh' => $inputs['chucdanh'],
+            'honnhan' => $inputs['honnhan'],
+            'hinhthuclv' => $inputs['hinhthuclv'],
+            'luong' => $inputs['luong'],
+            'trinhdocmkt' => $inputs['trinhdocmkt'],
+            'word' => $inputs['word'],
+            'excel' => $inputs['excel'],
+            'powerpoint' => $inputs['powerpoint'],
+            'gioithieu' => $inputs['gioithieu'],
+            'muctieu' => $inputs['muctieu'],
+        ];
+        ungvien::where('user', $inputs['user'])->update($data_ungvien);
+
+        $result['status'] = 'success';
+        $result['content'] = '<p> Đã Lưu thông tin </p>';
+        $result['message'] = "Đã lưu thông tin ";
+        $result['user'] = $inputs['user'] ;
 
         return  response($result);
     }
-
+ 
     public function storehocvan(Request $request)
     {
         $inputs = $request->all();
@@ -169,25 +167,53 @@ class ungvienController extends Controller
         ];
         ungvienhocvan::create($data_ungvienhocvan);
 
-        $result['content2'] ="<p> </p>";
-
-        $ungvienhocvan = ungvienhocvan::where('user',$inputs['user'])->get();
-
-        $result['content1'] = "<div id='form_hocvan3'>";
-        foreach ($ungvienhocvan as $item){
-            $result['content1'] .="<p>Chuyên ngành: ". $item->chuyennganh ." </p>";
-            $result['content1'] .="<p>Trường: ". $item->truong ." </p>";
-            $result['content1'] .="<p>Bằng cấp: ". $item->bangcap ." </p>";
-            $result['content1'] .="<p>Từ ngày:". $item->tungay ." ,đến ngày: ". $item->denngay ."</p>";
-            $result['content1'] .="<p>Thành tựu: ". $item->thanhtuu ."</p><hr></div>";
+        $ungvienhocvan = ungvienhocvan::where('user', $inputs['user'])->get();
+        $result['content'] = "<div>";
+        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
+        foreach ($ungvienhocvan as $item) {
+            $result['content'] .= "<tr>";
+            $result['content'] .= "<td width='80%'>";
+            $result['content'] .= $item->truong . " ------- ";
+            $result['content'] .= $item->tungay . " - ";
+            $result['content'] .= $item->denngay;
+            $result['content'] .= "</td>";
+            $result['content'] .= "<td width='20%'>";
+            $result['content'] .= "<a  onclick='deletehocvan(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
+            $result['content'] .= "</td>";
+            $result['content'] .= "</tr>";
         }
+        $result['content'] .= "</table>";
+        $result['content'] .= "</div>";
+        return response($result);
+    }
 
+    public function deletehocvan(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienhocvan::find($inputs['id'])->delete();
+
+        $ungvienhocvan = ungvienhocvan::where('user', $inputs['user'])->get();
+        $result['content'] = "<div>";
+        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
+        foreach ($ungvienhocvan as $item) {
+            $result['content'] .= "<tr>";
+            $result['content'] .= "<td width='80%'>";
+            $result['content'] .= $item->truong . " ------- ";
+            $result['content'] .= $item->tungay . " - ";
+            $result['content'] .= $item->denngay;
+            $result['content'] .= "</td>";
+            $result['content'] .= "<td width='20%'>";
+            $result['content'] .= "<a  onclick='deletehocvan(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
+            $result['content'] .= "</td>";
+            $result['content'] .= "</tr>";
+        }
+        $result['content'] .= "</table>";
+        $result['content'] .= "</div>";
         return response($result);
     }
 
     public function storekinhnghiem(Request $request)
     {
-
         $inputs = $request->all();
         $data_ungvienkinhnghiem = [
             'user' => $inputs['user'],
@@ -197,11 +223,57 @@ class ungvienController extends Controller
             'chucdanh' => $inputs['chucdanh'],
             'ngayvao' => $inputs['ngayvao'],
             'ngaynghi' => $inputs['ngaynghi'],
+            'chitiet' => $inputs['chitiet'],
+            'mota' => $inputs['mota'],
+            'lydo' => $inputs['lydo'],
         ];
         ungvienkinhnghiem::create($data_ungvienkinhnghiem);
 
 
-        return response($inputs);
+        $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $inputs['user'])->get();
+        $result['content'] = "<div>";
+        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
+        foreach ($ungvienkinhnghiem as $item) {
+            $result['content'] .= "<tr>";
+            $result['content'] .= "<td width='80%'>";
+            $result['content'] .= $item->congty . " ------- ";
+            $result['content'] .= $item->ngayvao . " - ";
+            $result['content'] .= $item->ngaynghi;
+            $result['content'] .= "</td>";
+            $result['content'] .= "<td width='20%'>";
+            $result['content'] .= "<a  onclick='deletekinhnghiem(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
+            $result['content'] .= "</td>";
+            $result['content'] .= "</tr>";
+        }
+        $result['content'] .= "</table>";
+        $result['content'] .= "</div>";
+
+        return response($result);
+    }
+
+    public function deletekinhnghiem(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienkinhnghiem::find($inputs['id'])->delete();
+
+        $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $inputs['user'])->get();
+        $result['content'] = "<div>";
+        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
+        foreach ($ungvienkinhnghiem as $item) {
+            $result['content'] .= "<tr>";
+            $result['content'] .= "<td width='80%'>";
+            $result['content'] .= $item->congty . " ------- ";
+            $result['content'] .= $item->ngayvao . " - ";
+            $result['content'] .= $item->ngaynghi;
+            $result['content'] .= "</td>";
+            $result['content'] .= "<td width='20%'>";
+            $result['content'] .= "<a  onclick='deletekinhnghiem(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
+            $result['content'] .= "</td>";
+            $result['content'] .= "</tr>";
+        }
+        $result['content'] .= "</table>";
+        $result['content'] .= "</div>";
+        return response($result);
     }
 
     public function delete($user)

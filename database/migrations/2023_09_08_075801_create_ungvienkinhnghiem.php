@@ -21,6 +21,9 @@ class CreateUngvienkinhnghiem extends Migration
             $table->string('chucdanh')->nullable();
             $table->string('ngayvao')->nullable();
             $table->string('ngaynghi')->nullable();
+            $table->string('lydo')->nullable();
+            $table->string('chitiet')->nullable();
+            $table->string('mota')->nullable();
             $table->timestamps();
         });
     }

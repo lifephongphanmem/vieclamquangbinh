@@ -155,6 +155,7 @@
             $('#user').val(user);
             $('#trangthai').val(tt);
         }
+        
         function checkluong() {
             var luongmin = $('#luongmin').val();
             var luongmax = $('#luongmax').val();

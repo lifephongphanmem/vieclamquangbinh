@@ -20,6 +20,7 @@ class CreateUngvien extends Migration
             $table->string('avatar')->nullable();
             $table->string('hoten')->nullable();
             $table->string('gioitinh')->nullable();
+            $table->string('ngaysinh')->nullable();
             $table->string('phone')->nullable();
             $table->string('tinh')->nullable();
             $table->string('huyen')->nullable();
