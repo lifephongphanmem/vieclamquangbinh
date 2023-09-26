@@ -18,14 +18,30 @@ use Illuminate\Support\Facades\Hash;
 
 class ungvienController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $inputs = $request->all();
+
         $model = User::leftjoin('ungvien', 'users.id', 'ungvien.user')
             ->select('ungvien.*', 'users.email', 'users.created_at ', 'users.status')
             ->where('phanloaitk', '3')->get();
+            if (isset($inputs['luongmin'])) {
+                $model = $model->where('luong','>=',$inputs['luongmin']);
+            }
+            if (isset($inputs['luongmax'])) {
+                $model = $model->where('luong','<=',$inputs['luongmax']);
+            }
         return view('admin.ungvien.index')
             ->with('model', $model)
+            ->with('inputs', $inputs)
             ->with('baocao', getdulieubaocao());
+    }
+
+    public function trangthai(Request $request)
+    {
+     
+        User::where('id',$request->user)->first()->update(['status'=> $request->trangthai]);
+        return redirect('/ungvien');
     }
 
     public function create()

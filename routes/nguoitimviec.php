@@ -21,6 +21,7 @@ Route::prefix('page')->group(function(){
 
 Route::prefix('ungvien')->group(function(){
     Route::get('/',[ungvienController::class,'index']);
+    Route::post('/trangthai',[ungvienController::class,'trangthai']);
     Route::get('/create',[ungvienController::class,'create']);
     Route::post('/storecoban',[ungvienController::class,'storecoban']);
     Route::get('/createhocvan',[ungvienController::class,'createhocvan']);

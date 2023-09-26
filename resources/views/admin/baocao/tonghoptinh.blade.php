@@ -70,21 +70,20 @@
             </tr>
 
         </thead>
-        <?php $stt = 1;
-        $huyen = $m_danhmuc->where('capdo', 'H'); ?>
+        <?php $stt = 1; ?>
         <tbody>
-            @foreach ($huyen as $h)
-                <?php $ds_maxa = array_column($m_danhmuc->where('parent', $h->maquocgia)->ToArray(), 'madv');
-                $model_huyen = $model->wherein('madv', $ds_maxa);
+            @foreach ($ds_xa as $key => $xa)
+                <?php
+                $model_xa = $model->where('madv', $xa->madv);
                 ?>
-                @if ($model_huyen->count()>0)
-                <tr>
-                    <th></th>
-                    <th style="text-align: left ;" colspan="19">{{$h->name}}</th>
-                </tr>
+
+                @if ($model_xa->count() > 0)
+                    <tr>
+                        <th>{{ convert2Roman($key) }}</th>
+                        <th style="text-align: left ;" colspan="19">{{ $xa->name }}</th>
+                    </tr>
                 @endif
-                @foreach ($model_huyen as $item)
-                   
+                @foreach ($model_xa as $item)
                     <tr>
                         <td style="text-align: center ; vertical-align: middle">{{ $stt++ }}</td>
                         <td style="vertical-align: middle">{{ $item->hoten }}</td>
@@ -115,7 +114,7 @@
                             {{ $item->vieclammongmuon == 2 ? 'Đi nước ngoài' : 'Trong tỉnh,trong nước' }}</td>
                         <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemongmuon }}</td>
                         <td style="text-align: center ; vertical-align: middle">
-                            {{ isset($item->thitruonglamviec) ? getCountries()[$item->thitruonglamviec] : '' }}</td>
+                            {{ isset($item->thitruonglamviec) ? getthitruong()[$item->thitruonglamviec] : '' }}</td>
                         <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemuonhoc }}</td>
                         <td style="vertical-align: middle">{{ $item->trinhdochuyenmonmuonhoc }}</td>
                         <td></td>

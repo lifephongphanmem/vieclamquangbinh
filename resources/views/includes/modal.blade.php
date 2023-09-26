@@ -1080,7 +1080,7 @@
                             <select name="madv" id="" class="form-control select2basic"
                                 style="width:100%">
                                 @if (session('admin')->capdo == 'T')
-                                    <option value="">Tất cả</option>
+                                    {{-- <option value="">Tất cả</option> --}}
                                 @endif
                                 @foreach ($baocao['m_huyen'] as $key => $ct)
                                     <option value="{{ $ct->madv }}"
