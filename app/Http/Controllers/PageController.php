@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\ungvien;
+use App\Models\ungvienhocvan;
+use App\Models\ungvienkinhnghiem;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -10,9 +14,34 @@ class PageController extends Controller
 
     public function index()
     {
-    
-        return view('pages.page.ungvien') ->with('baocao', getdulieubaocao());
+        $model = User::leftjoin('ungvien', 'users.id', 'ungvien.user')
+        ->select('ungvien.*', 'users.email', 'users.created_at ', 'users.status')
+        ->where('phanloaitk', '3')->get();
+
+        return view('pages.page.ungvien.index')
+        ->with('model',$model)
+         ->with('baocao', getdulieubaocao());
     }
+
+    public function thongtin(Request $request)
+    {
+ 
+        $inputs = $request->all();
+        $model = User::find($request->user);
+        $ungvien = ungvien::where('user',$inputs['user'])->first();
+        $ungvienhocvan = ungvienhocvan::where('user',$inputs['user'])->get();
+        $ungvienkinhnghiem = ungvienkinhnghiem::where('user',$inputs['user'])->get();
+
+        return view('pages.page.ungvien.thongtin') 
+        ->with('model', $model)
+        ->with('ungvien', $ungvien)
+        ->with('ungvienhocvan', $ungvienhocvan)
+        ->with('ungvienkinhnghiem', $ungvienkinhnghiem)
+        ->with('baocao', getdulieubaocao());
+    }
+
+
+
     public function viewlogin()
     {
     
@@ -23,9 +52,5 @@ class PageController extends Controller
     
         return view('pages.page.gioi-thieu') ->with('baocao', getdulieubaocao());
     }
-    public function thongtinungvien()
-    {
-    
-        return view('pages.page.thong-tin-ung-vien') ->with('baocao', getdulieubaocao());
-    }
+
 }

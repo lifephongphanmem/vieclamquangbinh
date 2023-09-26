@@ -16,6 +16,8 @@
                 <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
 
             </td>
+
+            
             {{-- <td style="vertical-align: top;">
                 <b>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
                     Độc lập - Tự do - Hạnh phúc</b>
@@ -32,6 +34,8 @@
 
     <table id="data_body2" border="1" cellspacing="0" cellpadding="0">
         <thead>
+
+
             <tr>
                 <th rowspan="3">TT</th>
                 <th rowspan="3">Họ và tên </th>

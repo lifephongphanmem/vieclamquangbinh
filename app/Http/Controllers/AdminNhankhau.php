@@ -575,7 +575,7 @@ class AdminNhankhau extends Controller
     }
     public function update(Request $request, $id)
     {
-        // dd(1);
+        // dd($request->all());
         $inputs = $request->all();
         $loailoi = $inputs['loailoi'] ?? '';
         $kydieutra = $inputs['kydieutra'];
@@ -698,8 +698,7 @@ class AdminNhankhau extends Controller
             // if ($inputs['tinhtranghdkt'] != null) {
             //     $tonghopcld->update($xa);
             // }
-
-            $model->update($inputs);
+         
             // $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
             // if(ckdulieuloi($id) != []){
             $maloi = implode(';', ckdulieuloi($id));
@@ -707,7 +706,8 @@ class AdminNhankhau extends Controller
             // }
 
         }
-
+        // dd($inputs);
+        $model->update($inputs);
         if (isset($sualoi)) {
             return redirect('/dieutra/danhsachloi_chitiet?loailoi=' . $sualoi . '&madv=' . $model->madv . '&kydieutra=' . $model->kydieutra);
         } else if ($inputs['view'] == 'nhankhau') {

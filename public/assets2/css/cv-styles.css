@@ -1,0 +1,115 @@
+.box-cv-member{
+    width: 100%;
+    float: left;
+}
+.cv-pdf{
+    width: 80%;
+    background: #fff;
+    padding: 30px;
+    margin: 0 auto;
+    font-family: times new roman,times,serif;
+    font-size: 16px;
+    box-shadow: 3px 3px 3px #ddd;
+}
+.header-cv{
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.name-member{
+    float: left;
+}
+.img-member{
+    float: right;
+}
+.img-member img{
+    height: 180px;
+}
+.name-member h2{
+    font-size: 35px;
+    font-family: times new roman,times,serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 15px 0px;
+}
+.name-member h3{
+    font-weight: 600;
+    font-size: 20px;
+}
+.position-apply{
+    margin-top: 40px;
+}
+.position-apply p{
+    font-weight: 600;
+    font-size: 18px;
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.position-apply span{
+    font-weight: 600;
+    font-size: 18px;
+    float: left;
+    width: 100%;
+    color: #0a2049;
+}
+.content-cv tr{
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+.content-cv tr td{
+    padding: 10px 8px !important;
+    font-family: times new roman,times,serif;
+        font-size: 16px;
+}
+.bor-right{
+    border-right: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle !important;
+}
+.content-cv h4{
+    font-size: 19px;
+    font-family: times new roman,times,serif;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.content-cv p{
+    font-size: 17px;
+}
+.dowload-pdf{
+    margin-top: 10px;
+    text-align: right;
+}
+.dowload-pdf img{
+    margin-top: -5px;
+    margin-right: 6px;
+}
+.dowload-pdf a{
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+.dowload-pdf a:hover{
+    background: #ebebeb;
+}
+@media screen and (max-width : 992px) {
+    .cv-pdf{
+        width: 90%;
+        background: #fff;
+        padding: 30px;
+        margin: 0 auto;
+        font-family: times new roman,times,serif;
+        font-size: 16px;
+        box-shadow: 3px 3px 3px #ddd;
+    }
+}
+@media screen and (max-width : 767px) {
+    .cv-pdf{
+        width: 99%;
+        background: #fff;
+        padding: 30px;
+        margin: 0 auto;
+        font-family: times new roman,times,serif;
+        font-size: 16px;
+        box-shadow: 3px 3px 3px #ddd;
+    }
+}
