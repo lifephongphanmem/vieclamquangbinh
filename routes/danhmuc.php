@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Danhmuc\capbacController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Danhmuc\dmchucvuController;
 use App\Http\Controllers\Danhmuc\dmchuyenmondaotaoController;
@@ -19,6 +21,7 @@ use App\Http\Controllers\Danhmuc\dsdiabanController;
 use App\Http\Controllers\Danhmuc\dsdonviController;
 use App\Http\Controllers\Danhmuc\nghecongviecController;
 use App\Http\Controllers\Danhmuc\nguyennhanthatnghiepController;
+use App\Models\Danhmuc\capbac;
 
 Route::prefix('danh_muc')->group(function () {
     // đối tượng ưu tiên
@@ -164,5 +167,11 @@ Route::prefix('danh_muc')->group(function () {
         Route::post('/store_update', [dmnganhngheController::class, 'store_update']);
         Route::get('/delete/{id}', [dmnganhngheController::class, 'delete']);
         Route::get('/edit/{id}', [dmnganhngheController::class, 'edit']);
+    });
+    Route::prefix('capbac')->group(function () {
+        Route::get('/', [capbacController::class, 'index']);
+        Route::post('/store_update', [capbacController::class, 'store_update']);
+        Route::get('/edit/{id}', [capbacController::class, 'edit']);
+        Route::get('/delete/{id}', [capbacController::class, 'delete']);
     });
 });

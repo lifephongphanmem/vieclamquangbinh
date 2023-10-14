@@ -191,6 +191,16 @@
                             </a>
                         </li>
                         @endif
+                        {{-- @if (chkPhanQuyen('capbac', 'phanquyen')) --}}
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{ url('/danh_muc/capbac') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Cấp bậc</span>
+                            </a>
+                        </li>
+                        {{-- @endif --}}
                     </ul>
                 </div>
             </li>

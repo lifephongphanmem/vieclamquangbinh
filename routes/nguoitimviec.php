@@ -9,7 +9,6 @@ Route::prefix('nguoitimviec')->group(function(){
     Route::get('/danhsach',[AdminNhankhau::class,'nguoitimviec']);
 });
 
-
 Route::prefix('page')->group(function(){
     Route::prefix('ungvien')->group(function(){
         Route::get('/',[PageController::class,'index']);

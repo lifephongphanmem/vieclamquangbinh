@@ -141,7 +141,7 @@
             dataType: 'JSON',
             success: function(data) {
                 // $('#form_hocvan3').hide();
-                $('#form_hocvan1').replaceWith(data.content);
+                $('#form_hocvan1').html(data.content);
                 $('#form_hocvan2').css("display", "none");
                 toastr.success('Đã lưu thông tin', "Hoàn thành!");
             }

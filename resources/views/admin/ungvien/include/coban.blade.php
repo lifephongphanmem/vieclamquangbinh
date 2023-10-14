@@ -16,19 +16,20 @@
                     required>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-1">
             <div class="form-group">
                 <label class="control-label">Giới tính <span class="require">*</span></label>
                 <select name="gioitinh" id="gioitinh" class="form-control">
                     <option value="Nữ"
-                        {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nữ' ? 'selected' : '') : '' }}>Nữ</option>
+                        {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nữ' ? 'selected' : '') : '' }}>Nữ
+                    </option>
                     <option value="Nam"
                         {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nam' ? 'selected' : '') : '' }}>Nam
                     </option>
                 </select>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label class="control-label">Ngày sinh<span class="require">*</span></label>
                 <input type="date" name="ngaysinh" id="ngaysinh" class="form-control"
@@ -93,9 +94,12 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Chức danh<span class="require">*</span></label>
-                <select name="chucdanh" id="chucdanh" class="form-control" value="">
-                    <option value="">Chọn chức danh</option>
+                <label class="control-label">Cấp bậc<span class="require">*</span></label>
+                <select name="capbac" id="capbac" class="form-control" >
+                    <option value="">Chọn cấp bậc</option>
+                    @foreach ($capbac as $item)
+                        <option value="{{ $item->madm }}">{{ $item->tendm }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -114,17 +118,10 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Hình thức làm việc<span class="require">*</span></label>
-                <select name="hinhthuclv" id="hinhthuclv" class="form-control" value="">
-                    <option
-                        {{ isset($ungvien->hinhthuclv) ? ($ungvien->hinhthuclv == 'Full time' ? 'selected' : '') : '' }}>
-                        Full time</option>
-                    <option
-                        {{ isset($ungvien->hinhthuclv) ? ($ungvien->hinhthuclv == 'Freelance' ? 'selected' : '') : '' }}>
-                        Freelance</option>
-                    <option
-                        {{ isset($ungvien->hinhthuclv) ? ($ungvien->hinhthuclv == 'Part time' ? 'selected' : '') : '' }}>
-                        Part time</option>
+                <label class="control-label">Hình thức làm việc</label>
+                <select class="form-control " name="hinhthuclv" id="hinhthuclv">
+                    <option value="Toàn thời gian" selected="">Toàn thời gian</option>
+                    <option value="Bán thời gian">Bán thời gian</option>
                 </select>
             </div>
         </div>
@@ -132,7 +129,7 @@
             <div class="form-group">
                 <label class="control-label">Mức lương mong muốn<span class="require">*</span></label>
                 <input type="number" id="luong" name="luong"
-                    class="form-control"value="{{ isset($ungvien->luong) ? $ungvien->luong : '' }}" required>
+                    class="form-control"value="{{ isset($ungvien->luong) ? $ungvien->luong : '' }}"  required      placeholder="VD: 8 (8 triệu)">
             </div>
         </div>
         <div class="col-md-3">
@@ -152,25 +149,35 @@
             <div class="form-group">
                 <label class="control-label">Word</label>
                 <select name="word" id="word" class="form-control">
-                    <option value="1" {{ isset($ungvien->word) ? ($ungvien->word == '1' ? 'selected' : '') : '' }}>1
+                    <option value="1"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '1' ? 'selected' : '') : '' }}>1
                         điểm</option>
-                    <option value="2" {{ isset($ungvien->word) ? ($ungvien->word == '2' ? 'selected' : '') : '' }}>2
+                    <option value="2"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '2' ? 'selected' : '') : '' }}>2
                         điểm</option>
-                    <option value="3" {{ isset($ungvien->word) ? ($ungvien->word == '3' ? 'selected' : '') : '' }}>3
+                    <option value="3"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '3' ? 'selected' : '') : '' }}>3
                         điểm</option>
-                    <option value="4" {{ isset($ungvien->word) ? ($ungvien->word == '4' ? 'selected' : '') : '' }}>4
+                    <option value="4"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '4' ? 'selected' : '') : '' }}>4
                         điểm</option>
-                    <option value="5" {{ isset($ungvien->word) ? ($ungvien->word == '5' ? 'selected' : '') : '' }}>5
+                    <option value="5"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '5' ? 'selected' : '') : '' }}>5
                         điểm</option>
-                    <option value="6" {{ isset($ungvien->word) ? ($ungvien->word == '6' ? 'selected' : '') : '' }}>6
+                    <option value="6"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '6' ? 'selected' : '') : '' }}>6
                         điểm</option>
-                    <option value="7" {{ isset($ungvien->word) ? ($ungvien->word == '7' ? 'selected' : '') : '' }}>7
+                    <option value="7"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '7' ? 'selected' : '') : '' }}>7
                         điểm</option>
-                    <option value="8" {{ isset($ungvien->word) ? ($ungvien->word == '8' ? 'selected' : '') : '' }}>8
+                    <option value="8"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '8' ? 'selected' : '') : '' }}>8
                         điểm</option>
-                    <option value="9" {{ isset($ungvien->word) ? ($ungvien->word == '9' ? 'selected' : '') : '' }}>9
+                    <option value="9"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '9' ? 'selected' : '') : '' }}>9
                         điểm</option>
-                    <option value="10" {{ isset($ungvien->word) ? ($ungvien->word == '10' ? 'selected' : '') : '' }}>
+                    <option value="10"
+                        {{ isset($ungvien->word) ? ($ungvien->word == '10' ? 'selected' : '') : '' }}>
                         10 điểm</option>
                 </select>
             </div>
@@ -179,26 +186,36 @@
             <div class="form-group">
                 <label class="control-label">Excel</label>
                 <select name="excel" id="excel" class="form-control">
-                    <option value="1" {{ isset($ungvien->excel) ? ($ungvien->excel == '1' ? 'selected' : '') : '' }}>
+                    <option value="1"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '1' ? 'selected' : '') : '' }}>
                         1 điểm</option>
-                    <option value="2" {{ isset($ungvien->excel) ? ($ungvien->excel == '2' ? 'selected' : '') : '' }}>
+                    <option value="2"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '2' ? 'selected' : '') : '' }}>
                         2 điểm</option>
-                    <option value="3" {{ isset($ungvien->excel) ? ($ungvien->excel == '3' ? 'selected' : '') : '' }}>
+                    <option value="3"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '3' ? 'selected' : '') : '' }}>
                         3 điểm</option>
-                    <option value="4" {{ isset($ungvien->excel) ? ($ungvien->excel == '4' ? 'selected' : '') : '' }}>
+                    <option value="4"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '4' ? 'selected' : '') : '' }}>
                         4 điểm</option>
-                    <option value="5" {{ isset($ungvien->excel) ? ($ungvien->excel == '5' ? 'selected' : '') : '' }}>
+                    <option value="5"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '5' ? 'selected' : '') : '' }}>
                         5 điểm</option>
-                    <option value="6" {{ isset($ungvien->excel) ? ($ungvien->excel == '6' ? 'selected' : '') : '' }}>
+                    <option value="6"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '6' ? 'selected' : '') : '' }}>
                         6 điểm</option>
-                    <option value="7" {{ isset($ungvien->excel) ? ($ungvien->excel == '7' ? 'selected' : '') : '' }}>
+                    <option value="7"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '7' ? 'selected' : '') : '' }}>
                         7 điểm</option>
-                    <option value="8" {{ isset($ungvien->excel) ? ($ungvien->excel == '8' ? 'selected' : '') : '' }}>
+                    <option value="8"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '8' ? 'selected' : '') : '' }}>
                         8 điểm</option>
-                    <option value="9" {{ isset($ungvien->excel) ? ($ungvien->excel == '9' ? 'selected' : '') : '' }}>
+                    <option value="9"
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '9' ? 'selected' : '') : '' }}>
                         9 điểm</option>
                     <option value="10"
-                        {{ isset($ungvien->excel) ? ($ungvien->excel == '10' ? 'selected' : '') : '' }}>10 điểm</option>
+                        {{ isset($ungvien->excel) ? ($ungvien->excel == '10' ? 'selected' : '') : '' }}>10 điểm
+                    </option>
                 </select>
             </div>
         </div>
@@ -234,7 +251,8 @@
                         {{ isset($ungvien->powerpoint) ? ($ungvien->powerpoint == '9' ? 'selected' : '') : '' }}>9 điểm
                     </option>
                     <option value="10"
-                        {{ isset($ungvien->powerpoint) ? ($ungvien->powerpoint == '10' ? 'selected' : '') : '' }}>10 điểm
+                        {{ isset($ungvien->powerpoint) ? ($ungvien->powerpoint == '10' ? 'selected' : '') : '' }}>10
+                        điểm
                     </option>
                 </select>
             </div>
@@ -265,7 +283,7 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     function storecoban() {
-   
+       
         if ($('#case').val() == 'create') {
             var url_link = '/ungvien/storecoban';
         }
@@ -294,7 +312,7 @@
                 huyen: $('#huyen').val(),
                 xa: $('#xa').val(),
                 address: $('#address').val(),
-                chucdanh: $('#chucdanh').val(),
+                capbac: $('#capbac').val(),
                 honnhan: $('#honnhan').val(),
                 hinhthuclv: $('#hinhthuclv').val(),
                 luong: $('#luong').val(),

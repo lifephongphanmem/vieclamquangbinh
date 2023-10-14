@@ -145,7 +145,7 @@
             dataType: 'JSON',
             success: function(data) {
                 console.log(data);
-                $('#form_kinhnghiem1').replaceWith(data.content);
+                $('#form_kinhnghiem1').html(data.content);
                 $('#form_kinhnghiem2').css("display", "none");
                 toastr.success('Đã lưu thông tin', "Hoàn thành!");
             }

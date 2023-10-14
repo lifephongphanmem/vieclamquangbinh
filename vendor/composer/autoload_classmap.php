@@ -134,6 +134,7 @@ return array(
     'App\\Models\\Tuyendung' => $baseDir . '/app/Models/Tuyendung.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\Vitrituyendung' => $baseDir . '/app/Models/Vitrituyendung.php',
+    'App\\Models\\capbac' => $baseDir . '/app/Models/capbac.php',
     'App\\Models\\dangkytimviec' => $baseDir . '/app/Models/dangkytimviec.php',
     'App\\Models\\dangkytimviecImport' => $baseDir . '/app/Models/dangkytimviecImport.php',
     'App\\Models\\danhsach' => $baseDir . '/app/Models/danhsach.php',
