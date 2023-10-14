@@ -382,6 +382,7 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
+
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
             ->where(function ($q) use ($inputs) {
@@ -738,9 +739,12 @@ class AdminDieutra extends Controller
         // $tonghopcung_tinh = tonghopcunglaodong::where('capdo', 'T')->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($tonghopcung_xa);
         $xa['ldtren15'] = $tonghopcung_xa->ldtren15 + $inputs['quantity'];
-        $xa['ldcovieclam'] = $tonghopcung_xa->ldcovieclam;
-        $xa['ldthatnghiep'] = $tonghopcung_xa->ldthatnghiep;
-        $xa['ldkhongthamgia'] = $tonghopcung_xa->ldkhongthamgia;
+        $xa['trongnuoc'] = $tonghopcung_xa->trongnuoc;
+        $xa['nuocngoai'] = $tonghopcung_xa->nuocngoai;
+        $xa['hocnghe'] = $tonghopcung_xa->hocnghe;
+        // $xa['ldcovieclam'] = $tonghopcung_xa->ldcovieclam;
+        // $xa['ldthatnghiep'] = $tonghopcung_xa->ldthatnghiep;
+        // $xa['ldkhongthamgia'] = $tonghopcung_xa->ldkhongthamgia;
         $xa['nam'] = $tonghopcung_xa->nam;
         $xa['nu'] = $tonghopcung_xa->nu;
         // dd($xa);
@@ -750,7 +754,7 @@ class AdminDieutra extends Controller
         for ($i = 0; $i < $inputs['quantity']; $i++) {
             $tmp = array();
             foreach ($inputs as $key => $val) {
- 
+
                 if (isset($val[$i])) {
                     $tmp[$key] = $val[$i];
                 };
@@ -801,7 +805,7 @@ class AdminDieutra extends Controller
             if ($maloi != []) {
                 $tmp['maloailoi'] = implode(';', $maloi);
             }
-            
+
             nhankhauModel::create($tmp);
 
             // $xa['ldtren15'] += 1;
@@ -836,6 +840,20 @@ class AdminDieutra extends Controller
             } else {
                 $xa['nu'] += 1;
             }
+
+            if ($tmp['vieclammongmuon'] == '1') {
+                $xa['trongnuoc'] += 1;
+            }
+            if ($tmp['vieclammongmuon'] == '2') {
+                $xa['nuocngoai'] += 1;
+            }
+            if ($tmp['vieclammongmuon'] == '3') {
+                $xa['trongnuoc'] += 1;
+                $xa['nuocngoai'] += 1;
+            }
+            if (isset($tmp['nganhnghemuonhoc'])) {
+                $xa['hocnghe'] += 1;
+            }
         }
         if (session('admin')->capdohanhchinh == 'thanhthi') {
             $xa['thanhthi'] = $inputs['quantity'];
@@ -843,7 +861,7 @@ class AdminDieutra extends Controller
             $xa['nongthon'] = $inputs['quantity'];
         }
 
-
+        $tonghopcung_xa->update($xa);
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($model);
         if (isset($model)) {
@@ -928,7 +946,7 @@ class AdminDieutra extends Controller
 
     public function biendong(Request $request)
     {
-    
+
         if (!chkPhanQuyen('biendong', 'danhsach')) {
             return view('errors.noperm')->with('machucnang', 'biendong');
         }
@@ -938,7 +956,6 @@ class AdminDieutra extends Controller
             if (!isset($inputs['mahuyen'])) {
                 $inputs['mahuyen'] = 450;
             }
-          
         } elseif (session('admin')->capdo == 'H') {
             $inputs['mahuyen'] = session('admin')->maquocgia;
         } else {
@@ -1264,7 +1281,7 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaoxa');
         }
         $inputs = $request->all();
-
+        $inputs['madv'] = $request->madv_xa;
         $model = nhankhauModel::select('madv', 'hoten', 'ngaysinh', 'cccd', 'gioitinh', 'diachi', 'uutien', 'trinhdogiaoduc', 'chuyenmonkythuat', 'doituongtimvieclam', 'vieclammongmuon', 'nganhnghemongmuon', 'nganhnghemuonhoc', 'trinhdochuyenmonmuonhoc', 'sdt', 'khuvuc')
             ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
@@ -1342,6 +1359,7 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
+        $inputs['madv'] = $request->madv_huyen;
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -1501,20 +1519,20 @@ class AdminDieutra extends Controller
 
 
 
-            
-        }else{
+
+        } else {
             $maxa = null;
             $mahuyen = null;
         }
         // $ma_thanhthi = array_column($ds_xa->whereNotIn('level','Xã')->toarray(),'madv');
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
-        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'],$inputs['kydieutra']-1 ])->where('kydieutra','!=', '2022')
-        ->where('loaibiendong', '!=', 2)->select('madv','kydieutra','gioitinh','chuyenmonkythuat','vieclammongmuon','thitruonglamviec','khuvuc','nganhnghemongmuon')->get();
+        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])->where('kydieutra', '!=', '2022')
+            ->where('loaibiendong', '!=', 2)->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon')->get();
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $inputs['madv']);
         }
-            
+
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $m_nganhnghe = dmnganhnghe::all();
 
@@ -1549,19 +1567,18 @@ class AdminDieutra extends Controller
             $mahuyen = $m_danhmuc->where('madv', $inputs['madv'])->first();
             $ds_xa = $m_danhmuc->where('parent', $mahuyen->maquocgia);
             $ds_maxa = array_column($ds_xa->toarray(), 'madv');
-
-        }else{
+        } else {
             $mahuyen = null;
         }
         // $ma_thanhthi = array_column($ds_xa->whereNotIn('level','Xã')->toarray(),'madv');
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
-        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'],$inputs['kydieutra']-1 ])->where('kydieutra','!=', '2022')
-        ->where('loaibiendong', '!=', 2)->select('madv','kydieutra','gioitinh','chuyenmonkythuat','vieclammongmuon','thitruonglamviec','khuvuc','nganhnghemongmuon')->get();
+        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])->where('kydieutra', '!=', '2022')
+            ->where('loaibiendong', '!=', 2)->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon')->get();
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $ds_maxa);
         }
-            
+
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $m_nganhnghe = dmnganhnghe::all();
 
@@ -1577,5 +1594,26 @@ class AdminDieutra extends Controller
             // ->with('ma_nongthon', $ma_nongthon)
 
             ->with('pageTitle', 'Tổng hợp cung lao động');
+    }
+
+    public function getxa(Request $request)
+    {
+
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
+
+        $maquocgia_huyen = $m_danhmuc->where('madv', $request->madv_huyen)->first()->maquocgia;
+        $ds_xa = $m_danhmuc->where('parent', $maquocgia_huyen);
+
+        $result['content'] = '<label class="control-label">Chọn xa</label>';
+        $result['content'] .= '<select name="madv_xa" id="madv_xa_01b" class="form-control select2basic" style="width:100%" onchange="checkxa()">';
+        $result['content'] .= '<option value="">Tất cả</option>';
+        foreach ($ds_xa as $key => $ct) {
+            $result['content'] .= '<option value="' . $ct->madv . '">' . $ct->name . '</option>';
+        }
+        $result['content'] .= '</select>';
+
+        return response($result);
     }
 }

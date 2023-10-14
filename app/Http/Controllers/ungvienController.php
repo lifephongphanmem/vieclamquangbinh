@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmail;
 use App\Models\Company;
+use App\Models\Danhmuc\capbac;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\ungvien;
@@ -50,9 +51,11 @@ class ungvienController extends Controller
 
         $danhmuc = danhmuchanhchinh::all();
         $dmtrinhdokythuat = dmtrinhdokythuat::all();
+        $capbac = capbac::all();
         return view('admin.ungvien.create')
             ->with('danhmuc', $danhmuc)
             ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+            ->with('capbac', $capbac)
             ->with('baocao', getdulieubaocao());
     }
 
@@ -64,7 +67,6 @@ class ungvienController extends Controller
             'email' => $inputs['email'],
             'password' => Hash::make($inputs['password']),
             'phanloaitk' => 3,
-            // 'madv' => date('YmdHis'),
             'status' => $inputs['status'], //0: vô hiệu,1: kích hoạt,2: khóa
         ];
 
@@ -87,7 +89,7 @@ class ungvienController extends Controller
                 'huyen' => $inputs['huyen'],
                 'xa' => $inputs['xa'],
                 'address' => $inputs['address'],
-                'chucdanh' => $inputs['chucdanh'],
+                'capbac' => $inputs['capbac'],
                 'honnhan' => $inputs['honnhan'],
                 'hinhthuclv' => $inputs['hinhthuclv'],
                 'luong' => $inputs['luong'],
@@ -104,8 +106,9 @@ class ungvienController extends Controller
             $result['content'] = '<p> Đã Lưu thông tin </p>';
             $result['message'] = "Đã lưu thông tin";
             $result['user'] = $model_user->id;
-            return  response($result);
+        
         }
+        return  response($result);
     }
     public function updatecoban(Request $request)
     {

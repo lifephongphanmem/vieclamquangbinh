@@ -247,7 +247,7 @@
                                             {{ $ldcovieclam['kytruoc'] }}</div>
                                         <a href="#"
                                             class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
-                                            có việc làm</a>
+                                            có nhu cầu làm việc trong nước</a>
                                     </div>
                                 </div>
                             </div>
@@ -274,8 +274,7 @@
                                         <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                             {{ $ldthatnghiep['kytruoc'] }}</div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ thất
-                                            nghiệp</a>
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có nhu cầu tìm việc nươc ngoài</a>
                                     </div>
                                 </div>
                             </div>
@@ -302,8 +301,7 @@
                                         <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                             {{ $ldkhongthamgia['kytruoc'] }}</div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ không tham
-                                            gia HĐKT</a>
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có nhu cầu học nghề</a>
                                     </div>
                                 </div>
                             </div>
@@ -365,7 +363,7 @@
                                     <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                         {{ $ldcovieclam['kyhientai'] }}</div>
                                     <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
-                                        có việc làm</a>
+                                        có nhu cầu làm việc trong nước</a>
                                 </div>
                             </div>
                         </div>
@@ -391,7 +389,7 @@
                                     <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                         {{ $ldthatnghiep['kyhientai'] }}</div>
                                     <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
-                                        thất nghiệp</a>
+                                        cso nhu cầu làm việc nước ngoài</a>
                                 </div>
                             </div>
                         </div>
@@ -417,7 +415,7 @@
                                     <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                         {{ $ldkhongthamgia['kyhientai'] }}</div>
                                     <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
-                                        không tham gia HĐKT</a>
+                                        có nhu cầu học nghề</a>
                                 </div>
                             </div>
                         </div>

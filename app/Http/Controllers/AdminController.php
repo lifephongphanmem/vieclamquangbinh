@@ -86,10 +86,10 @@ class AdminController extends Controller
 		if ($kydieutra == date(('Y'))) {
 			$kydieutra_truoc = $kydieutra - 1;
 			$kydieutra_hientai = date('Y');
-		} else if($kydieutra == 2022) {
+		} else if ($kydieutra == 2022) {
 			$kydieutra_truoc = '';
 			$kydieutra_hientai = date('Y');
-		}else{
+		} else {
 			$kydieutra_truoc = '';
 			$kydieutra_hientai = $kydieutra;
 		}
@@ -100,8 +100,167 @@ class AdminController extends Controller
 		$ldkhongthamgia = array('kytruoc' => 0, 'kyhientai' => 0);
 
 		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
-			
-			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
+
+			$model = tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->get();
+
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc);
+			if (count($model_truoc) > 0) {
+				foreach ($model_truoc as $m_truoc) {
+					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
+					$ldcovieclam['kytruoc'] += $m_truoc['trongnuoc'];
+					$ldthatnghiep['kytruoc'] += $m_truoc['nuocngoai'];
+					$ldkhongthamgia['kytruoc'] += $m_truoc['hocnghe'];
+				}
+			}
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai);
+			if (count($model_hientai) > 0) {
+				foreach ($model_hientai as $m_hientai) {
+					$tongsonhankhau['kyhientai'] += $m_hientai['ldtren15'];
+					$ldcovieclam['kyhientai'] += $m_hientai['trongnuoc'];
+					$ldthatnghiep['kyhientai'] += $m_hientai['nuocngoai'];
+					$ldkhongthamgia['kyhientai'] += $m_hientai['hocnghe'];
+				}
+			}
+		} else if (session('admin')->capdo == 'H') {
+			$model = tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->get();
+			// $madv_huyen = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
+				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')
+				->get();
+			$maquocgia = $dmdonvi->where('madv', session('admin')->madv)->first()->maquocgia;
+			$ds_madv_xa = array_column($dmdonvi->where('parent', $maquocgia)->toarray(), 'madv');
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->whereIn('madv', $ds_madv_xa);
+			if (count($model_truoc) > 0) {
+				foreach ($model_truoc as $m_truoc) {
+					$tongsonhankhau['kytruoc'] += $m_truoc['ldtren15'];
+					$ldcovieclam['kytruoc'] += $m_truoc['trongnuoc'];
+					$ldthatnghiep['kytruoc'] += $m_truoc['nuocngoai'];
+					$ldkhongthamgia['kytruoc'] += $m_truoc['hocnghe'];
+				}
+			}
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->whereIn('madv', $ds_madv_xa);
+			if (count($model_hientai) > 0) {
+				foreach ($model_hientai as $m_hientai) {
+					$tongsonhankhau['kyhientai'] += $m_hientai['ldtren15'];
+					$ldcovieclam['kyhientai'] += $m_hientai['trongnuoc'];
+					$ldthatnghiep['kyhientai'] += $m_hientai['nuocngoai'];
+					$ldkhongthamgia['kyhientai'] += $m_hientai['hocnghe'];
+				}
+			}
+		} else {
+			$madv = session('admin')->madv;
+			$model = tonghopcunglaodong::where('madv', $madv)->get();
+
+			$model_truoc = $model->where('kydieutra', $kydieutra_truoc)->first();
+			$model_hientai = $model->where('kydieutra', $kydieutra_hientai)->first();
+			if (isset($model_truoc)) {
+				$tongsonhankhau['kytruoc'] = $model_truoc->ldtren15;
+				$ldcovieclam['kytruoc'] = $model_truoc->trongnuoc;
+				$ldthatnghiep['kytruoc'] = $model_truoc->nuocngoai;
+				$ldkhongthamgia['kytruoc'] = $model_truoc->hocnghe;
+			}
+			if (isset($model_hientai)) {
+				$tongsonhankhau['kyhientai'] =  $model_hientai->ldtren15;
+				$ldcovieclam['kyhientai'] = $model_hientai->trongnuoc;
+				$ldthatnghiep['kyhientai'] = $model_hientai->nuocngoai;
+				$ldkhongthamgia['kyhientai'] = $model_hientai->hocnghe;
+			}
+		}
+
+
+		//Tính biến động
+		$tongso_biendong = $tongsonhankhau['kyhientai'] - $tongsonhankhau['kytruoc'];
+		$ldcovieclam_biendong = $ldcovieclam['kyhientai'] - $ldcovieclam['kytruoc'];
+		$ldthatnghiep_biendong = $ldthatnghiep['kyhientai'] - $ldthatnghiep['kytruoc'];
+		$ldkhongthamgia_biendong = $ldkhongthamgia['kyhientai'] - $ldkhongthamgia['kytruoc'];
+		// dd($ldcovieclam);
+
+
+		return view('admin.dashboard')
+			->with('einfo', $einfo)
+			->with('baocao', getdulieubaocao())
+			->with('tongso_biendong', $tongso_biendong)
+			->with('ldcovieclam_biendong', $ldcovieclam_biendong)
+			->with('ldthatnghiep_biendong', $ldthatnghiep_biendong)
+			->with('ldkhongthamgia_biendong', $ldkhongthamgia_biendong)
+			->with('kydieutra_truoc', $kydieutra_truoc)
+			->with('kydieutra_hientai', $kydieutra_hientai)
+			->with('tongsonhankhau', $tongsonhankhau)
+			->with('ldcovieclam', $ldcovieclam)
+			->with('ldthatnghiep', $ldthatnghiep)
+			->with('ldkhongthamgia', $ldkhongthamgia)
+			->with('dinfo', $dinfo)
+			->with('last_rinfoup', $last_rinfoup)
+			->with('last_rinfodown', $last_rinfodown)
+			->with('cus_rinfoup', $cus_rinfoup)
+			->with('cus_rinfodown', $cus_rinfodown)
+			->with('rinfoup', $rinfoup)
+			->with('rinfodown', $rinfodown)
+			->with('m_filter_s', $m_filter_s)
+			->with('m_filter_e', $m_filter_e);
+	}
+	public function dashboard_cu2()
+	{
+
+		$ctys = DB::table('company')->where('user', null)->get();
+		$dinfo = $this->getDashboard();
+		$dinfo['laodong'] += $ctys->sum('sld');
+		$emodel = new Employer;
+		$einfo = $emodel->getEmployerState();
+		$einfo['tong'] += $ctys->sum('sld');
+		$rmodel = new Report;
+		$thismonth = date('Y-m');
+		$lastmonth = date("Y-m", strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-1 month"));
+		$ebd = $rmodel->getBiendong($thismonth);
+		$rinfoup = $emodel->getEmployerStateById($ebd->tang['eid']);
+		$rinfodown = $emodel->getEmployerStateById($ebd->giam['eid']);
+		$last_ebd = $rmodel->getBiendong($lastmonth);
+		$last_rinfoup = $emodel->getEmployerStateById($last_ebd->tang['eid']);
+		$last_rinfodown = $emodel->getEmployerStateById($last_ebd->giam['eid']);
+		$request = request();
+		$m_filter_s = $request->m_filter_s;
+		$m_filter_e = $request->m_filter_e;
+		$export = $request->export;
+		if ($export) {
+			return Excel::download(new BaocaoExport, 'tinhhinhsudunglaodong' . date('m-d-Y-His A e') . '.xlsx');
+		}
+		if ($m_filter_s && $m_filter_e) {
+			$cus_ebd = $rmodel->getcusBiendong($m_filter_s, $m_filter_e);
+		} else {
+			$cus_ebd = $rmodel->getBiendong($thismonth);
+		}
+
+		$cus_rinfoup = $emodel->getEmployerStateById($cus_ebd->tang['eid']);
+		$cus_rinfodown = $emodel->getEmployerStateById($cus_ebd->giam['eid']);
+		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
+			$kydieutra = danhsach::max('kydieutra');
+		} elseif (session('admin')->capdo == 'H') {
+			$madv = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
+			$kydieutra = danhsach::wherein('user_id', $madv)->max('kydieutra');
+		} elseif (session('admin')->capdo == 'X') {
+			$kydieutra = danhsach::where('user_id', session('admin')->madv)->max('kydieutra');
+		}
+		// $kydieutra = danhsach::max('kydieutra');
+		//  dd($kydieutra);
+		if ($kydieutra == date(('Y'))) {
+			$kydieutra_truoc = $kydieutra - 1;
+			$kydieutra_hientai = date('Y');
+		} else if ($kydieutra == 2022) {
+			$kydieutra_truoc = '';
+			$kydieutra_hientai = date('Y');
+		} else {
+			$kydieutra_truoc = '';
+			$kydieutra_hientai = $kydieutra;
+		}
+		// dd($kydieutra_hientai);
+		$tongsonhankhau = array('kytruoc' => 0, 'kyhientai' => 0);
+		$ldcovieclam = array('kytruoc' => 0, 'kyhientai' => 0);
+		$ldthatnghiep = array('kytruoc' => 0, 'kyhientai' => 0);
+		$ldkhongthamgia = array('kytruoc' => 0, 'kyhientai' => 0);
+
+		if (in_array(session('admin')->sadmin, ['ADMIN', 'SSA'])) {
+
+			$model = tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->get();
 
 			$model_truoc = $model->where('kydieutra', $kydieutra_truoc);
 			if (count($model_truoc) > 0) {
@@ -122,7 +281,7 @@ class AdminController extends Controller
 				}
 			}
 		} else if (session('admin')->capdo == 'H') {
-			$model= tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc,$kydieutra_hientai])->get();
+			$model = tonghopcunglaodong::wherein('kydieutra', [$kydieutra_truoc, $kydieutra_hientai])->get();
 			// $madv_huyen = array_column(getMaXa(session('admin')->maquocgia)->toarray(), 'madv');
 			$dmdonvi = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
 				->select('dmdonvi.madv', 'dmdonvi.tendv', 'danhmuchanhchinh.capdo', 'danhmuchanhchinh.level', 'danhmuchanhchinh.parent', 'danhmuchanhchinh.maquocgia')

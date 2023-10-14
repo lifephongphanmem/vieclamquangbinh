@@ -191,9 +191,12 @@ class HethongchungController extends Controller
 					// $data['nam'] = count($model->where('gioitinh', 'Nam'));
 					// $data['nu'] = count($model->where('gioitinh', 'Nữ'));
 					$data['ldtren15'] = count($model);
-					$data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
-					$data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
-					$data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
+					$data['trongnuoc'] = count($model->whereIN('vieclammongmuon', ['1','3']));
+					$data['nuocngoai'] = count($model->whereIn('vieclammongmuon', ['2','3']));
+					$data['hocnghe'] = count($model->whereNotNull('nganhnghemuonhoc'));
+					// $data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
+					// $data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
+					// $data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
 					// if ($item->level == 'Thị trấn' || $item->level == 'Phường') {
 					// 	$data['thanhthi'] = count($model);
 					// 	$data['nongthon'] = 0;
@@ -223,9 +226,9 @@ class HethongchungController extends Controller
 					// $data['nam'] = count($model->where('gioitinh', 'Nam'));
 					// $data['nu'] = count($model->where('gioitinh', 'Nữ'));
 					$data['ldtren15'] = count($model);
-					$data['ldcovieclam'] = count($model->where('tinhtranghdkt', '1'));
-					$data['ldthatnghiep'] = count($model->where('tinhtranghdkt', '2'));
-					$data['ldkhongthamgia'] = count($model->where('tinhtranghdkt', '3'));
+					$data['trongnuoc'] = count($model->whereIN('vieclammongmuon', ['1','3']));
+					$data['nuocngoai'] = count($model->whereIn('vieclammongmuon', ['2','3']));
+					$data['hocnghe'] = count($model->whereNotNull('nganhnghemuonhoc'));
 					// if ($item->level == 'Thị trấn' || $item->level == 'Phường') {
 					// 	$data['thanhthi'] = count($model);
 					// 	$data['nongthon'] = 0;
