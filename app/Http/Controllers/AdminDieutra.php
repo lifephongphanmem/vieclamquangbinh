@@ -1606,7 +1606,7 @@ class AdminDieutra extends Controller
         $maquocgia_huyen = $m_danhmuc->where('madv', $request->madv_huyen)->first()->maquocgia;
         $ds_xa = $m_danhmuc->where('parent', $maquocgia_huyen);
 
-        $result['content'] = '<label class="control-label">Chọn xa</label>';
+        $result['content'] = '<label class="control-label">Chọn xã</label>';
         $result['content'] .= '<select name="madv_xa" id="madv_xa_01b" class="form-control select2basic" style="width:100%" onchange="checkxa()">';
         $result['content'] .= '<option value="">Tất cả</option>';
         foreach ($ds_xa as $key => $ct) {

@@ -1,5 +1,5 @@
 <head>
-    <title>Ứng viên Phan Thuý Hiền</title>
+    <title>Ứng viên {{ $ungvien->hoten }}</title>
     <meta name="robots" content="noindex, nofollow">
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/png" href="/static/media/images/siteinfo/2020_08_04/untitled-1.png">
@@ -11,14 +11,15 @@
     <link href="{{ url('assets2/css/vensdor/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/vensdor/plugin.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/vensdor/jquery.fancybox.min.css') }}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet">
+    <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/jquery-migrate.min.js') }}" type="text/javascript"></script>
     <link href="{{ url('assets2/css/vensdor/slick.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/root.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/styles.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/reponse.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/fix.css') }}" rel="stylesheet">
     <link href="{{ url('assets2/css/fix_t.css') }}" rel="stylesheet">
-    <script src="{{ url('assets2/assets/2330ed02/jquery.min.js') }}"></script>
+
     <style>
         body.alert {
             position: fixed;
@@ -84,11 +85,10 @@
                             <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 ">
                                 <div>
                                     <h2>{{ $ungvien->hoten }}</h2>
-                                    <p>Địa chỉ:
-                                        {{ $ungvien->address - $ungvien->xa - $ungvien->huyen - $ungvien->tinh }}</p>
-                                    <a target="_blank"
+                                    <p>Địa chỉ: {{ $ungvien->address .' - '. $xa .' - '. $huyen .' - '. 'Quảng Bình' }}</p>
+                                    {{-- <a target="_blank"
                                         href="{{ url('assets2/profile/profile/download-file-cv.html?id=f169285092264e6daeadde40') }}"><img
-                                            src="/images/icon_d.png"> Tải CV ứng viên</a>
+                                            src="/images/icon_d.png"> Tải CV ứng viên</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                                     <div>
                                         <span><img src="{{ url('assets2/images/nh.png') }}"></span>
                                         <div>
-                                            <h4>Loại hình công việc:</h4>
+                                            <h4>Hình thức làm việc:</h4>
                                             <p>{{ $ungvien->hinhthuclv }}</p>
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@
                                         <span><img src="{{ url('assets2/images/td.png') }}"></span>
                                         <div>
                                             <h4>Trình độ học vấn:</h4>
-                                            <p>{{ $ungvien->trinhdocmkt }}</p>
+                                            <p>{{ $trinhdocmkt }}</p>
                                         </div>
                                     </div>
                                     <div>
@@ -147,10 +147,10 @@
                                         <p>{{ $ungvien->muctieu }}</p>
                                     </div>
                                 </div>
+                                {{-- <div class="sk_two">
+                                </div> --}}
                                 <div class="sk_two">
-                                </div>
-                                <div class="sk_two">
-                                    <h3>TIN HỌC:</h3>
+                                    <h3 >TIN HỌC:</h3>
                                     <div class="content_text">
                                         <p class="dot">
                                             <span>Word</span>
@@ -195,7 +195,8 @@
                                                 <span class="{{ $ungvien->powerpoint >= '8' ? 'tick' : '' }}"></span>
                                                 <span class="{{ $ungvien->powerpoint >= '9' ? 'tick' : '' }}"></span>
                                                 <span class="{{ $ungvien->powerpoint >= '10' ? 'tick' : '' }}"></span>
-                                            </span>
+                                            
+                                                
                                         </p>
                                     </div>
                                 </div>
@@ -208,11 +209,11 @@
                             <div class="content_text_one">
                                 <p class="d_flex_center d_flex">
                                     <span>
-                                        <span><img src="{{ url('assets2/images/sn.png') }}">{{  $ungvien->ngaysinh }}</span>
+                                        <span><img src="{{ url('assets2/images/sn.png') }}" style="margin-top: -7px">{{  getDayVn($ungvien->ngaysinh) }}</span>
                                     </span>
                                     <span>
-                                        <span><img src="{{ url('assets2/images/add_u.png') }}"></span>
-                                        {{ $ungvien->address - $ungvien->xa - $ungvien->huyen - $ungvien->tinh }}</span>
+                                        <img src="{{ url('assets2/images/add_u.png') }}" style="margin-top: -7px"> {{ $ungvien->address .' - '. $xa .' - '. $huyen .' - '. 'Quảng Bình' }}
+                                    </span>
                                 </p>
                                 <p class="d_flex_center d_flex">
                                     <span>

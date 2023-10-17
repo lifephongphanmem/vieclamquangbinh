@@ -1,5 +1,5 @@
 <div class="form-body">
-    <div id="form_kinhnghiem1">
+    <div id="kinhnghiem_danhsach">
         @if (isset($ungvienkinhnghiem))
             <table class="table  table-bordered table-hover dataTable no-footer">
                 @foreach ($ungvienkinhnghiem as $item)
@@ -25,7 +25,7 @@
 </div>
 <br>
 
-<div class="form-body" id="form_kinhnghiem2" style="display: none">
+<div class="form-body" id="kinhnghiem_themmoi" style="display: none">
     <div class="row col-md-12">
         <div class="col-md-3">
             <div class="form-group">
@@ -116,12 +116,12 @@
             $('#chitiet').val('');
             $('#mota').val('');
             $('#lydo').val('');
-            $("#form_kinhnghiem2").css("display", "block");
+            $("#kinhnghiem_danhsach").css("display", "block");
         }
     }
 
     function huykinhnghiem() {
-        $("#form_kinhnghiem2").css("display", "none");
+        $("#kinhnghiem_danhsach").css("display", "none");
     }
 
     function storekhinhnghiem() {
@@ -145,8 +145,8 @@
             dataType: 'JSON',
             success: function(data) {
                 console.log(data);
-                $('#form_kinhnghiem1').html(data.content);
-                $('#form_kinhnghiem2').css("display", "none");
+                $('#kinhnghiem_danhsach').html(data.content);
+                $('#kinhnghiem_themmoi').css("display", "none");
                 toastr.success('Đã lưu thông tin', "Hoàn thành!");
             }
         })
@@ -164,11 +164,9 @@
         },
         dataType: 'JSON',
         success: function(data) {
-      
-              $('#form_kinhnghiem1').hide();
-            $('#form_kinhnghiem1').replaceWith(data.content);
-            $('#form_kinhnghiem2').css("display", "none");
-            toastr.success('Đã lưu thông tin', "Hoàn thành!");
+            $('#kinhnghiem_danhsach').html(data.content);
+            $('#kinhnghiem_themmoi').css("display", "none");
+            toastr.success('Đã xóa thông tin', "Hoàn thành!");
         }
     })
 }

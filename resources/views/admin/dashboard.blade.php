@@ -389,7 +389,7 @@
                                     <div class="text-inverse-primary font-weight-bolder font-size-h2 mt-3">
                                         {{ $ldthatnghiep['kyhientai'] }}</div>
                                     <a href="#" class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
-                                        cso nhu cầu làm việc nước ngoài</a>
+                                        có nhu cầu làm việc nước ngoài</a>
                                 </div>
                             </div>
                         </div>

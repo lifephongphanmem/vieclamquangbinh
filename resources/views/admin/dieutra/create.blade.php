@@ -267,8 +267,8 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label>Ghi chú<span class="text-danger">*</span> </label>
-                                                                    <input name="lydo[]" class="form-control" required>
+                                                                    <label>Ghi chú</label>
+                                                                    <input name="lydo[]" class="form-control" >
                                                                 </div>
                                                             </div>
                                                         </div>

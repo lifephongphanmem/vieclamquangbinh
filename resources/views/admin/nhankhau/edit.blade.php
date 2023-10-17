@@ -277,7 +277,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Ghi chú<span class="text-danger">*</span> </label>
+                                            <label>Ghi chú</label>
                                             <input name="lydo" class="form-control" value="{{ $ld->lydo }}">
                                         </div>
                                     </div>

@@ -286,11 +286,13 @@
        
         if ($('#case').val() == 'create') {
             var url_link = '/ungvien/storecoban';
+            var checkpassword = null;
         }
         if ($('#case').val() == 'edit') {
             var url_link = '/ungvien/updatecoban';
+            var checkpassword = document.getElementById('checkpassword').checked;
         }
-
+   
         $.ajax({
             url: url_link,
             type: 'POST',
@@ -299,7 +301,7 @@
                 _token: CSRF_TOKEN,
                 user: $('#user').val(),
                 email: $('#email').val(),
-                checkpassword: $('#checkpassword').val(),
+                checkpassword: checkpassword,
                 password: $('#password').val(),
                 status: $('#status').val(),
 
@@ -325,7 +327,7 @@
             },
             dataType: 'JSON',
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == 'success') {
                     $('#frm_coban').replaceWith(data.content);
                     var form = $('#user').val(data.user);
