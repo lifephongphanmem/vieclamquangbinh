@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmail;
 use App\Models\Company;
+use App\Models\Danhmuc\capbac;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\ungvien;
@@ -50,9 +51,11 @@ class ungvienController extends Controller
 
         $danhmuc = danhmuchanhchinh::all();
         $dmtrinhdokythuat = dmtrinhdokythuat::all();
+        $capbac = capbac::all();
         return view('admin.ungvien.create')
             ->with('danhmuc', $danhmuc)
             ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+            ->with('capbac', $capbac)
             ->with('baocao', getdulieubaocao());
     }
 
@@ -64,11 +67,10 @@ class ungvienController extends Controller
             'email' => $inputs['email'],
             'password' => Hash::make($inputs['password']),
             'phanloaitk' => 3,
-            // 'madv' => date('YmdHis'),
             'status' => $inputs['status'], //0: vô hiệu,1: kích hoạt,2: khóa
         ];
 
-        $model = User::where('email', $inputs['email'])->first();
+        $model_email = User::where('email', $inputs['email'])->first();
 
         if (isset($model)) {
             $result['message'] = "Mail đã được sử dụng";
@@ -87,7 +89,7 @@ class ungvienController extends Controller
                 'huyen' => $inputs['huyen'],
                 'xa' => $inputs['xa'],
                 'address' => $inputs['address'],
-                'chucdanh' => $inputs['chucdanh'],
+                'capbac' => $inputs['capbac'],
                 'honnhan' => $inputs['honnhan'],
                 'hinhthuclv' => $inputs['hinhthuclv'],
                 'luong' => $inputs['luong'],
@@ -104,54 +106,11 @@ class ungvienController extends Controller
             $result['content'] = '<p> Đã Lưu thông tin </p>';
             $result['message'] = "Đã lưu thông tin";
             $result['user'] = $model_user->id;
-            return  response($result);
+        
         }
-    }
-    public function updatecoban(Request $request)
-    {
-        $inputs = $request->all();
-
-        $model_user = [
-            'name' => $inputs['hoten'],
-            'status' => $inputs['status'],
-        ];
-        if ($inputs['checkpassword'] == 'on') {
-            $model_user['password'] = Hash::make($inputs['password']);
-        }
-
-       User::find($inputs['user'])->update($model_user);
-
-        $data_ungvien = [
-            'user' => $inputs['user'],
-            // 'avatar' => $inputs['avatar'],
-            'hoten' => $inputs['hoten'],
-            'gioitinh' => $inputs['gioitinh'],
-            'ngaysinh' => $inputs['ngaysinh'],
-            'phone' => $inputs['phone'],
-            'tinh' => $inputs['tinh'],
-            'huyen' => $inputs['huyen'],
-            'xa' => $inputs['xa'],
-            'address' => $inputs['address'],
-            'chucdanh' => $inputs['chucdanh'],
-            'honnhan' => $inputs['honnhan'],
-            'hinhthuclv' => $inputs['hinhthuclv'],
-            'luong' => $inputs['luong'],
-            'trinhdocmkt' => $inputs['trinhdocmkt'],
-            'word' => $inputs['word'],
-            'excel' => $inputs['excel'],
-            'powerpoint' => $inputs['powerpoint'],
-            'gioithieu' => $inputs['gioithieu'],
-            'muctieu' => $inputs['muctieu'],
-        ];
-        ungvien::where('user', $inputs['user'])->update($data_ungvien);
-
-        $result['status'] = 'success';
-        $result['content'] = '<p> Đã Lưu thông tin </p>';
-        $result['message'] = "Đã lưu thông tin ";
-        $result['user'] = $inputs['user'] ;
-
         return  response($result);
     }
+
  
     public function storehocvan(Request $request)
     {
@@ -293,6 +252,7 @@ class ungvienController extends Controller
         $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $request->user)->get();
         $danhmuc = danhmuchanhchinh::all();
         $dmtrinhdokythuat = dmtrinhdokythuat::all();
+        $capbac = capbac::all();
 
         return view('admin.ungvien.edit')
             ->with('model', $model)
@@ -301,6 +261,53 @@ class ungvienController extends Controller
             ->with('ungvienkinhnghiem', $ungvienkinhnghiem)
             ->with('danhmuc', $danhmuc)
             ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+            ->with('capbac', $capbac)
             ->with('baocao', getdulieubaocao());
+    }
+
+    public function updatecoban(Request $request)
+    {
+        $inputs = $request->all();
+
+        $model_user = [
+            'name' => $inputs['hoten'],
+            'status' => $inputs['status'],
+        ];
+        if ($inputs['checkpassword'] == true) {
+            $model_user['password'] = Hash::make($inputs['password']);
+        }
+
+    //    User::find($inputs['user'])->update($model_user);
+
+        $data_ungvien = [
+            'user' => $inputs['user'],
+            // 'avatar' => $inputs['avatar'],
+            'hoten' => $inputs['hoten'],
+            'gioitinh' => $inputs['gioitinh'],
+            'ngaysinh' => $inputs['ngaysinh'],
+            'phone' => $inputs['phone'],
+            'tinh' => $inputs['tinh'],
+            'huyen' => $inputs['huyen'],
+            'xa' => $inputs['xa'],
+            'address' => $inputs['address'],
+            'capbac' => $inputs['capbac'],
+            'honnhan' => $inputs['honnhan'],
+            'hinhthuclv' => $inputs['hinhthuclv'],
+            'luong' => $inputs['luong'],
+            'trinhdocmkt' => $inputs['trinhdocmkt'],
+            'word' => $inputs['word'],
+            'excel' => $inputs['excel'],
+            'powerpoint' => $inputs['powerpoint'],
+            'gioithieu' => $inputs['gioithieu'],
+            'muctieu' => $inputs['muctieu'],
+        ];
+        ungvien::where('user', $inputs['user'])->update($data_ungvien);
+
+        $result['status'] = 'success';
+        $result['content'] = '<p> Đã Lưu thông tin </p>';
+        $result['message'] = "Đã lưu thông tin ";
+        $result['user'] = $inputs['user'] ;
+
+        return  response($result);
     }
 }

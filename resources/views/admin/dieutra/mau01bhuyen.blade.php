@@ -114,26 +114,25 @@
                 <th> </th>
                 <th> </th>
             </tr>
+          
             @foreach ($ds_danhmuc as $key => $dm)
                 <tr style="text-align: center">
-                    <?php  $model_x = $model->where('madv', $dm->madv); ?>
+                    <?php  $model_x = $model->where('madv', $dm->madv);  ?>
                     <td>{{ ++$stt }}</td>
                     <td>{{ $dm->name }}</td>
                     <td>{{ count($model_x->whereIn('gioitinh', ['nam', 'Nam']))==0?'':count($model_x->whereIn('gioitinh', ['nam', 'Nam'])) }}</td>
                     <td>{{ count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))==0?'':count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
-                    <td>{{ count($model_x->where('khuvuc', $thanhthi))==0?'':count($model_x->where('khuvuc', $thanhthi)) }}</td>
-                    <td>{{ count($model_x->whereIn('madv', $nongthon))==0?'':count($model_x->whereIn('madv', $nongthon)) }}</td>
+                    <td>{{ count($model_x->where('khuvuc', '1'))==0?'':count($model_x->where('khuvuc','1')) }}</td>
+                    <td>{{ count($model_x->whereIn('khuvuc', '2'))==0?'':count($model_x->where('khuvuc', '2')) }}</td>
 
                     @foreach ($a_dtut as $key => $item)
                         <?php $uutien = count($model_x->where('uutien', $key)); ?>
                         <td>{{ $uutien > 0 ? $uutien : '' }}</td>
                     @endforeach
-
                     @foreach ($a_gdpt as $key => $value)
                         <?php $trinhdogiaoduc = count($model_x->where('trinhdogiaoduc', $key)); ?>
                         <td>{{ $trinhdogiaoduc > 0 ? $trinhdogiaoduc : '' }}</td>
                     @endforeach
-
                     @foreach ($a_cmkt as $key => $item)
                         <?php $chuyenmonkythuat = count($model_x->where('chuyenmonkythuat', $key)); ?>
                         <td>{{ $chuyenmonkythuat > 0 ? $chuyenmonkythuat : '' }}</td>

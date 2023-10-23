@@ -5,14 +5,15 @@
     <title>Trung tâm dịch vụ việc làm Quảng Bình</title>
     <meta name="robots" content="noindex, nofollow">
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="/static/media/images/siteinfo/2020_08_04/untitled-1.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link href="{{ url('assets2/assets/76353db0/authchoice.css" rel="stylesheet') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" />
-    <script src="{{ url('assets2/assets/2330ed02/jquery.min.js') }}"></script>
-
+    <script src="{{ url('assets/global/plugins/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url('assets/global/plugins/jquery-migrate.min.js') }}" type="text/javascript"></script>
 
     <link href="{{ url('assets2/css/vensdor/font-awesome.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets2/css/vensdor/plugin.css') }}" rel="stylesheet" type="text/css" />
@@ -108,7 +109,7 @@
                                 <a href="{{ '/page/gioithieu' }}">giới thiệu</a>
                             </li>
                             <li>
-                                <a href="/tat-ca-viec-lam.html">Việc tìm người </a>
+                                <a href="{{ '/page/vieclam' }}">Việc tìm người </a>
                             </li>
                             <li>
                                 <a href="{{ '/page/ungvien' }}">Người tìm việc</a>

@@ -205,7 +205,7 @@
                                     <div class="form-group">
                                         <label>Việc làm mong muốn <span class="text-danger">*</span></label>
                                         <select name="vieclammongmuon" class="form-control">
-                                            <option value="">---Chọn việc làm mong muốn---</option>
+                                            <option value="3">---Tất cả---</option>
                                             <option value="1" {{ $ld->vieclammongmuon == 1 ? 'selected' : '' }}>Trong
                                                 tỉnh,
                                                 trong nước</option>
@@ -277,7 +277,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Ghi chú<span class="text-danger">*</span> </label>
+                                            <label>Ghi chú</label>
                                             <input name="lydo" class="form-control" value="{{ $ld->lydo }}">
                                         </div>
                                     </div>

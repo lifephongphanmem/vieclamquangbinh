@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Imports\ColectionImport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Maatwebsite\Excel\Facades\Excel;
 
 class nguoilaodong extends Model
 {
@@ -46,4 +48,6 @@ class nguoilaodong extends Model
       ,'state'
       ,'fromttdvvl'
     ];
+
+ 
 }

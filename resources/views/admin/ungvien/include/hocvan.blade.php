@@ -1,5 +1,5 @@
 <div class="form-body">
-    <div id="form_hocvan1">
+    <div id="hocvan_danhsach">
         @if (isset($ungvienhocvan))
         <table  class="table  table-bordered table-hover dataTable no-footer">
             @foreach ($ungvienhocvan as $item)
@@ -25,7 +25,7 @@
 </div>
 <br>
 
-<div class="form-body" id="form_hocvan2" style="display: none">
+<div class="form-body" id="hocvan_themmoi" style="display: none">
     <div class="row col-md-12">
         <div class="col-md-3">
             <div class="form-group">
@@ -115,12 +115,12 @@
             $('#tungay').val('');
             $('#denngay').val('');
             $('#thanhtuu').val('');
-            $("#form_hocvan2").css("display", "block");
+            $("#hocvan_themmoi").css("display", "block");
         }
     }
 
     function huyhocvan() {
-        $("#form_hocvan2").css("display", "none");
+        $("#hocvan_themmoi").css("display", "none");
     }
 
     function storehocvan() {
@@ -141,8 +141,8 @@
             dataType: 'JSON',
             success: function(data) {
                 // $('#form_hocvan3').hide();
-                $('#form_hocvan1').replaceWith(data.content);
-                $('#form_hocvan2').css("display", "none");
+                $('#hocvan_danhsach').html(data.content);
+                $('#hocvan_themmoi').css("display", "none");
                 toastr.success('Đã lưu thông tin', "Hoàn thành!");
             }
         })
@@ -160,11 +160,10 @@
             },
             dataType: 'JSON',
             success: function(data) {
-          
-                  $('#form_hocvan1').hide();
-                $('#form_hocvan1').replaceWith(data.content);
-                $('#form_hocvan2').css("display", "none");
-                toastr.success('Đã lưu thông tin', "Hoàn thành!");
+                // $('#form_hocvan1').hide();
+                $('#hocvan_danhsach').html(data.content);
+                // $('#hocvan_themmoi').css("display", "none");
+                toastr.success('Đã xóa thông tin', "Hoàn thành!");
             }
         })
     }

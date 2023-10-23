@@ -9,12 +9,17 @@ Route::prefix('nguoitimviec')->group(function(){
     Route::get('/danhsach',[AdminNhankhau::class,'nguoitimviec']);
 });
 
-
 Route::prefix('page')->group(function(){
     Route::prefix('ungvien')->group(function(){
-        Route::get('/',[PageController::class,'index']);
-        Route::get('/thongtin',[PageController::class,'thongtin']);
-
+        Route::get('/',[PageController::class,'index_ungvien']);
+        Route::get('/thongtin',[PageController::class,'thongtin_ungvien']);
+        Route::get('/filter',[PageController::class,'filter_ungvien']);
+    });
+    Route::prefix('vieclam')->group(function(){
+        Route::get('/',[PageController::class,'index_vieclam']);
+        Route::get('/thongtin',[PageController::class,'thongtin_vieclam']);
+        Route::get('/congty',[PageController::class,'congty']);
+        Route::get('/filter',[PageController::class,'filter_vieclam']);
     });
     Route::get('/gioithieu',[PageController::class,'gioithieu']);
     Route::get('/dangnhap',[PageController::class,'viewlogin']);

@@ -22,5 +22,8 @@ class tonghopcunglaodong extends Model
         'nam',
         'nu',
         'capdo',
+        'trongnuoc',
+        'nuocngoai',
+        'hocnghe',
     ];
 }

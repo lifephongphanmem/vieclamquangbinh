@@ -41,7 +41,7 @@
                     @if (session('admin')->capdo == 'T')
                     @include('main.main_subcunglaodong')
                     @include('main.main_nguoitimviec_viectimnguoi')
-                    @include('main.main_subbaocao')
+                    {{-- @include('main.main_subbaocao') --}}
                     @include('main.main_subhethong')
                     @else
                     @include('main.main_subcungxahuyen')

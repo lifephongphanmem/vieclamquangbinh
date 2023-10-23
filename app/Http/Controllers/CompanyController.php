@@ -28,8 +28,10 @@ class CompanyController extends Controller
    
 	 public function show($action=null)
     {
+		
 		// get filter
 		$request=request();
+		// dd($request->all());
 		$search = $request->search;
 		switch($action){
 			case "tamdung": $state_filter = 1; break;
@@ -63,6 +65,7 @@ class CompanyController extends Controller
 		// Thông tin người lao động
 		$cid =$info->id;
 		// get Employers
+	
 		$lds= DB::table('nguoilaodong')->where('company',$cid)
 					->when($search, function ($query, $search) {
                     return $query->where('nguoilaodong.hoten', 'like', '%'.$search.'%')
@@ -73,7 +76,6 @@ class CompanyController extends Controller
 					})
 					// ->paginate(20);
 					->get();
-	
 		return view('pages.doanhnghiep')
 				->with('info',$info)
 				->with('baocao', getdulieubaocao())
@@ -91,9 +93,8 @@ class CompanyController extends Controller
 				->with('list_hdld',$list_hdld)
 				->with('search',$search)
 				->with('state_filter',$state_filter)
-				->with('action',$action)
-				;
-	
+				->with('action',$action);
+		
     }
 	
 	
@@ -211,5 +212,3 @@ class CompanyController extends Controller
 	}
 	
 }
-
-?>

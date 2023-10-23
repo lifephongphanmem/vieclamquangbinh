@@ -688,6 +688,7 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
         'App\\Models\\Tuyendung' => __DIR__ . '/../..' . '/app/Models/Tuyendung.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Vitrituyendung' => __DIR__ . '/../..' . '/app/Models/Vitrituyendung.php',
+        'App\\Models\\capbac' => __DIR__ . '/../..' . '/app/Models/capbac.php',
         'App\\Models\\dangkytimviec' => __DIR__ . '/../..' . '/app/Models/dangkytimviec.php',
         'App\\Models\\dangkytimviecImport' => __DIR__ . '/../..' . '/app/Models/dangkytimviecImport.php',
         'App\\Models\\danhsach' => __DIR__ . '/../..' . '/app/Models/danhsach.php',
