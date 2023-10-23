@@ -1505,7 +1505,7 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
-
+        $inputs['madv'] = $inputs['madv_xa'];
 
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
@@ -1517,9 +1517,6 @@ class AdminDieutra extends Controller
             // $ds_xa = $m_danhmuc->where('parent', $mahuyen->maquocgia);
             // $ds_maxa = array_column($ds_xa->toarray(), 'madv');
 
-
-
-
         } else {
             $maxa = null;
             $mahuyen = null;
@@ -1528,11 +1525,12 @@ class AdminDieutra extends Controller
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
         $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])->where('kydieutra', '!=', '2022')
-            ->where('loaibiendong', '!=', 2)->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon')->get();
+            ->where('loaibiendong', '!=', 2)
+            ->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon', 'nganhnghemuonhoc')->get();
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $inputs['madv']);
         }
-
+       
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $m_nganhnghe = dmnganhnghe::all();
 
@@ -1557,7 +1555,7 @@ class AdminDieutra extends Controller
         }
         $inputs = $request->all();
 
-
+        $inputs['madv'] = $inputs['madv_huyen'];
 
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
@@ -1574,7 +1572,8 @@ class AdminDieutra extends Controller
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
         $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])->where('kydieutra', '!=', '2022')
-            ->where('loaibiendong', '!=', 2)->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon')->get();
+            ->where('loaibiendong', '!=', 2)
+            ->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon','nganhnghemuonhoc')->get();
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $ds_maxa);
         }
@@ -1608,6 +1607,27 @@ class AdminDieutra extends Controller
 
         $result['content'] = '<label class="control-label">Chọn xã</label>';
         $result['content'] .= '<select name="madv_xa" id="madv_xa_01b" class="form-control select2basic" style="width:100%" onchange="checkxa()">';
+        $result['content'] .= '<option value="">Tất cả</option>';
+        foreach ($ds_xa as $key => $ct) {
+            $result['content'] .= '<option value="' . $ct->madv . '">' . $ct->name . '</option>';
+        }
+        $result['content'] .= '</select>';
+
+        return response($result);
+    }
+    
+    public function getxa_mau03(Request $request)
+    {
+
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->get();
+
+        $maquocgia_huyen = $m_danhmuc->where('madv', $request->madv_huyen)->first()->maquocgia;
+        $ds_xa = $m_danhmuc->where('parent', $maquocgia_huyen);
+
+        $result['content'] = '<label class="control-label">Chọn xã</label>';
+        $result['content'] .= '<select name="madv_xa" id="madv_xa_mau03" class="form-control select2basic" style="width:100%" onchange="checkxa_mau03()">';
         $result['content'] .= '<option value="">Tất cả</option>';
         foreach ($ds_xa as $key => $ct) {
             $result['content'] .= '<option value="' . $ct->madv . '">' . $ct->name . '</option>';
