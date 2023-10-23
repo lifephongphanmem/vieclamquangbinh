@@ -18,6 +18,7 @@ Route::prefix('page')->group(function(){
     Route::prefix('vieclam')->group(function(){
         Route::get('/',[PageController::class,'index_vieclam']);
         Route::get('/thongtin',[PageController::class,'thongtin_vieclam']);
+        Route::get('/congty',[PageController::class,'congty']);
         Route::get('/filter',[PageController::class,'filter_vieclam']);
     });
     Route::get('/gioithieu',[PageController::class,'gioithieu']);

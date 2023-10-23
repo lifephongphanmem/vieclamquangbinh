@@ -42,10 +42,10 @@ class PageController extends Controller
         $ungvien = ungvien::where('user', $inputs['user'])->first();
         $ungvienhocvan = ungvienhocvan::where('user', $inputs['user'])->get();
         $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $inputs['user'])->get();
-        $trinhdocmkt = dmtrinhdokythuat::where('madmtdkt',$ungvien->trinhdocmkt)->first()->tentdkt;
+        $trinhdocmkt = dmtrinhdokythuat::where('madmtdkt', $ungvien->trinhdocmkt)->first()->tentdkt;
         $dmhanhchinh = danhmuchanhchinh::all();
-        $huyen = $dmhanhchinh->where('maquocgia',$ungvien->huyen)->first()->name;
-        $xa = $dmhanhchinh->where('maquocgia',$ungvien->xa)->first()->name;
+        $huyen = $dmhanhchinh->where('maquocgia', $ungvien->huyen)->first()->name;
+        $xa = $dmhanhchinh->where('maquocgia', $ungvien->xa)->first()->name;
         return view('pages.page.ungvien.thongtin')
             ->with('model', $model)
             ->with('ungvien', $ungvien)
@@ -118,7 +118,7 @@ class PageController extends Controller
 
             $result['content'] .= '<div class="text">';
             $result['content'] .= '<a href="">';
-            $result['content'] .= '<h3>'. $item->hoten .'</h3>';
+            $result['content'] .= '<h3>' . $item->hoten . '</h3>';
             $result['content'] .= '</a>';
             $result['content'] .= '<div class="text_extra d_flex d_flex_center">';
             if (isset($item->luong)) {
@@ -130,7 +130,7 @@ class PageController extends Controller
             if (getDayVn($item->created_at) == date("d/m/Y")) {
                 $result['content'] .= '<p><span><img src="/assets2/images/time_l.png"></span> Hôm nay</p>';
             } else {
-                $result['content'] .= '<p><span><img src="/assets2/images/time_l.png"></span>'. getDayVn($item->created_at) . '</p>';
+                $result['content'] .= '<p><span><img src="/assets2/images/time_l.png"></span>' . getDayVn($item->created_at) . '</p>';
             }
             $result['content'] .= '<p><span><i class="fa fa-map-marker" aria-hidden="true"></i></span>';
             $result['content'] .= 'Quảng Bình </p>';
@@ -147,11 +147,12 @@ class PageController extends Controller
 
     public function index_vieclam()
     {
-        // tuyendungModel::
-        $model = Vitrituyendung::leftjoin('tuyendungModel', 'tuyendungModel.id', 'ungvien.user')
-            ->select('ungvien.*', 'users.email', 'users.created_at ', 'users.status')
-            ->where('phanloaitk', '3')
+
+        $model = Vitrituyendung::leftjoin('tuyendung', 'tuyendung.id', 'Vitrituyendung.idtuyendung')
+            ->join('Company', 'Company.user', 'tuyendung.user')
+            ->select('Vitrituyendung.*', 'tuyendung.thoihan','Company.name as congty','Company.user')
             ->orderBy('id', 'DESC')->get();
+            // dd($model);
         $capbac = capbac::all();
         $dmtrinhdokythuat = dmtrinhdokythuat::all();
         return view('pages.page.vieclam.index')
@@ -159,6 +160,37 @@ class PageController extends Controller
             ->with('capbac', $capbac)
             ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
             ->with('baocao', getdulieubaocao());
+    }
+
+    public function thongtin_vieclam(Request $request)
+    {
+        $model = Vitrituyendung::find($request->id);
+        $Tuyendung  = Tuyendung::find($model->idtuyendung);
+        $Company = Company::where('user',$Tuyendung->user)->first();
+     
+        $list_vitrikhac = Vitrituyendung::leftJoin('Tuyendung','Tuyendung.id','Vitrituyendung.idtuyendung')
+     
+        ->select('Vitrituyendung.id','Vitrituyendung.name','Tuyendung.thoihan')
+        ->where('Vitrituyendung.id','!=',$request->id)
+        ->get();
+        return view('pages.page.vieclam.thongtin')
+            ->with('model', $model)
+            ->with('Tuyendung', $Tuyendung)
+            ->with('Company', $Company)
+            ->with('list_vitrikhac', $list_vitrikhac)
+            ->with('baocao', getdulieubaocao());
+    }
+
+    public function congty(Request $request){
+        $Company = Company::where('user',$request->user)->first();
+        $model = Vitrituyendung::LeftJoin('Tuyendung', 'Tuyendung.id','Vitrituyendung.idtuyendung')
+        ->select('Vitrituyendung.*','Tuyendung.thoihan')
+        ->get();
+        // dd($Vitrituyendung);
+        return view('pages.page.vieclam.congty')
+        ->with('model', $model)
+        ->with('Company', $Company)
+        ->with('baocao', getdulieubaocao());
     }
 
     public function viewlogin()
