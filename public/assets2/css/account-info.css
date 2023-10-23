@@ -1,0 +1,872 @@
+.site-account-info{
+    background: #eee;
+    padding: 30px;
+}
+.box-info-user{
+    float: left;
+    width: 100%;
+}
+.section-user{
+    float: left;
+    width: 100%;
+    background: #fff;
+}
+.frame-user {
+    padding: 15px 0px 0 0px;
+    border-left: 5px solid #e81e10;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    float: left;
+    width: 100%;
+}
+.avatar-user{
+    float: left;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    margin: 15px 15px;
+}
+.update-pic-user{
+    border: 1px solid #ddd;
+    border-radius: 150px;
+    height: 150px;
+}
+.update-pic-user .fa-user{
+    color: #ebebeb;
+    font-size: 125px;
+}
+.user-avatar-edit {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    transform: rotate(130deg);
+    transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s; 
+    opacity: 0;
+}
+.user-avatar-edit button{
+    border: none;
+}
+.user-avatar-edit button i{
+    font-size: 28px;
+    transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -ms-transition: all 0.3s ease-in-out 0s; 
+    color: #000;
+}
+.user-avatar-edit button:hover{
+    background: none;
+}
+.user-avatar-edit button:hover i{
+    font-size: 30px;
+    color: #000;
+}
+.avatar-user:hover .user-avatar-edit{
+    opacity: 1;
+}
+.ctn-info-user{
+    float: left;
+
+    padding: 15px;
+}
+.bottom-frame-user {
+    float: left;
+    width: 100%;
+    background: #ebebeb;
+}
+.bottom-frame-user .btn-contact-info {
+    float: right;
+    padding: 8px 80px;
+    background: #ccc;
+    font-size: 12px;
+    color: #888;
+}
+.bottom-frame-user .btn-contact-info:hover{
+    color: #000;
+}
+.ctn-info-user h2 {
+    color: #f7941d;
+    font-size: 22px;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.ctn-info-user p{
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+.download-resume{
+    float: left;
+    width: 100%;
+}
+.download-resume a {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 15px;
+    float: left;
+    margin-top: 2px;
+    color: #777;
+}
+.download-resume a:hover{
+    color: #000;
+}
+.change-main-user{
+    float: left;
+    width: 100%;
+}
+.edit-main-user{
+    float: left;
+    min-width: 150px;
+    display: none;
+}
+.edit-main-user .form-group label{
+    margin-bottom: 7px;
+}
+.edit-main-user .form-group input{
+    /*border-radius: 0px;*/
+}
+.stl_btn_remove{
+    padding: 7px 30px;
+}
+.stl_btn_save{
+    background: #faa831;
+    border-radius:3px; 
+    padding: 7px 30px;
+    border: 1px solid #faa831;
+}
+.btn-main-user {
+    position: absolute;
+    right: 14px;
+    top: 0px;
+    background: rgba(221, 221, 221, 0.84);
+    padding: 5px 10px;
+    font-size: 12px;
+    font-style: italic;
+    color: #888;
+    cursor: pointer;
+}
+.btn-main-user:hover{
+    background: #ddd;
+}
+.btn-main-user i {
+    margin-right: 5px;
+    transform: rotate(120deg);
+}
+.section-summary{
+    float: left;
+    width: 100%;
+    margin: 10px 0px;
+    background: #fff;
+}
+.section-summary h2 {
+    padding: 20px 25px 10px 25px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #ebebeb;
+}
+.section-summary h2 i {
+    margin-right: 10px;
+    font-size: 19px;
+}
+.view-control{
+    color: #999;
+    font-size: 12px;
+    padding: 25px 25px 25px 25px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.view-control:hover{
+    box-shadow: 3px 3px 3px #ccc;
+}
+.view-control:hover .user-avatar-edit {
+    opacity: 1;
+}
+.view-control:hover .user-avatar-edit i {
+    font-size: 30px;
+    color: #000;
+}
+.view-control .user-avatar-edit {
+    opacity: 1;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    outline: none;
+}
+.btn-default.focus, .btn-default:focus {
+    outline: none;
+    background: none;
+}
+.form-group label{
+    color: #000;
+    font-size: 14px;
+    margin-bottom: 10px;
+    float: left;
+}
+.section-summary textarea{
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
+}
+.section-summary .edit-main-user{
+    float: left;
+    width: 100%;
+}
+.arial{
+    font-family: arial;
+    font-weight: normal;
+    color: #444;
+}
+.width-25{
+    width: 25%;
+    float: left;
+}
+.width-50{
+    width: 50%;
+    float: left;
+    min-width: 165px;
+    margin-bottom: 20px;
+}
+.add-skill, .add-specialized{
+    float: left;
+    margin-left: 10px;
+    width: 35px;
+    height: 34px;
+}
+.site-account-info .fa-plus:before {
+    content: "\f067";
+}
+.box-tag-skill, .box-tag-specialized{
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+}
+.box-tag-skill a, .box-tag-specialized a{
+    padding: 5px 10px;
+    background: #ebebeb;
+    float: left;
+    position: relative;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+.box-tag-skill a i.fa-times, .box-tag-specialized a i.fa-times {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    border-radius: 50px;
+    padding-top: 1px;
+    background: #ddd;
+}
+.site-hoso{
+    float: left;
+    width: 100%;
+}
+/*=========================== 
+41. FAQ PAGE
+============================= */
+.faq-area {
+    margin-bottom: 110px;
+    margin:30px 0px;
+}
+.faq-content{}
+h3.faq-title {
+    color: #4c4c4c;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 15px;
+}
+.faq-desc {
+    margin-bottom: 45px;
+}
+.faq-desc h3 {
+    color: #333;
+    font-size: 18px;
+        line-height: 21px;
+}
+.faq-desc p {
+    color: #222;
+    margin: 0;
+}
+.faq-accordion{}
+.faq-accordion .panel-title a {
+    display: block;
+    position: relative;
+    padding: 15px 10px 15px 25px;
+    color:#222;
+    font-size:14px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+.faq-accordion .panel-body {
+    padding: 20px 25px;
+    color: #222;
+}
+.faq-accordion .panel-title a:after {
+    content: "\f068";
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+    position: absolute;
+    right: 0px;
+    top: 11px;
+    background: #f5f5f5;
+    padding: 2px;
+}
+.collapsed:after{
+    content: "\f067" !important;
+}
+.faq-accordion .panel-heading {
+    padding: 0;
+}
+.faq-accordion .panel-group .panel {
+    border-radius: 0;
+    border: 1px solid #ddd;
+}
+.faq-accordion .panel.panel-default.actives{
+    border:1px solid #009587;
+}
+.faq-accordion .panel.panel-default.actives .panel-title a{
+    color: #009587;
+}
+.faq-accordion .panel-title a:hover{color:#009587}
+.faq-accordion .panel-title a:focus{text-decoration:none}
+.faq-accordion .panel-default > .panel-heading {
+    background-color: #f5f5f5;
+}
+.error-containt-area{
+    text-align: center;
+}
+.error-img {
+    margin: 60px 0 30px;
+}
+.error-page-text {
+    margin-bottom: 90px;
+}
+.error-page-text h2 {
+    border-bottom: 1px solid #d9d9d9;
+    font-family: "Open Sans",sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    padding-bottom: 5px;
+}
+.error-page-text p {
+    color: #6a6a6a;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+.error-page-text input[type="text"] {
+    border: 1px solid #d9d9d9;
+    font-size: 14px;
+    height: 50px;
+    padding-left: 10px;
+    width: 510px;
+}
+.error-page-text input[type="submit"]{
+    font-family: "Open Sans",sans-serif;
+    font-size: 14px;
+}
+.error-page-text input[type="submit"] {
+    background: #222222 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    font-family: "Open Sans",sans-serif;
+    font-size: 14px;
+    padding: 16px 60px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    transition:0.4s;
+}
+.error-page-text input[type="submit"]:hover{
+    background: #009587;
+}
+.form-fields{
+    border:1px solid #e5e5e5;
+    color: #909295;
+    padding: 20px 25px;
+}
+.form-fields h2 {
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 18px;
+    margin: 0 0 15px;
+    padding: 0 0 5px;
+    text-transform: uppercase;
+}
+.form-fields p {
+    margin: 0 0 8px;
+    padding: 0;
+}
+.form-fields p label {
+    color: #6a6a6a;
+    font-family: Open Sans,Arial,Helvetica,sans-serif;
+    margin: 0 0 5px;
+    line-height: 2;
+    display: block;
+    font-weight: normal;
+}
+.form-fields p label span {
+    border: 0 none;
+    color: red;
+    font-weight: 700;
+}
+.form-action {
+    background: #f2f2f2 none repeat scroll 0 0;
+    border-color: #e5e5e5 #e5e5e5;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    float: left;
+    padding: 15px 10px;
+    width: 100%;
+}
+.form-action input[type="submit"] {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 1px solid #e5e5e5;
+    color: #3f3f3f;
+    display: inline-block;
+    font-family: Open Sans,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    height: 39px;
+    line-height: 37px;
+    padding: 0 15px;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    float: right;
+}
+.form-action input[type="submit"]:hover, .coupon input[type="submit"]:hover {
+    background: #009587 none repeat scroll 0 0;
+    border-color: #009587;
+    color: #fff;
+}
+.bottom-edit{
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #ccc;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.bottom-edit:hover{
+    background: #666;
+}
+.show-input{
+    display: none;
+}
+.box-tool-user{
+    float: left;
+    width: 100%;
+}
+.tool-1{
+    background: #fff;
+    border: 1px solid #ebebeb;
+    margin-bottom: 15px;
+    float: left;
+    width: 100%;
+}
+.tool-1 h2{
+    padding: 12px 15px;
+    background: rgba(221, 221, 221, 0.79);
+}
+.ctn-tool{
+    background: #fff;
+    float: left;
+    width: 100%;
+    padding: 25px;
+}
+.ctn-tool a {
+    color: #777;
+    background-color: #f4f4f4;
+    border-color: #ccc;
+    padding: 7px 10px;
+    font-size: 13px;
+}
+.box-upload-hs{
+    text-align: center;
+    margin-top: 20px;
+    float: left;
+    width: 100%;
+}
+.box-upload-hs i{
+    color: #888;
+    font-size: 13px;
+    display: block;
+    margin-top: 15px;
+}
+.ctn-tool-top{
+    padding: 15px;
+    float: left;
+    width: 100%;
+}
+.ctn-tool-top a{
+    margin-bottom: 5px;
+    float: left;
+    width: 100%;
+}
+
+/*new-style*/
+.btn-push-cv {
+    float: right;
+    margin-top: 20px;
+    width: 300px;
+}
+.company-intro {
+    margin-bottom: 15px;
+    border: 0;
+    box-shadow: 0 1px 1px #ccc;
+    background: #fff;
+    padding: 20px 40px;
+}
+.company-intro-img {
+    float: left;
+    margin-right: 30px;
+}
+.company-intro-img img{
+    max-width: 230px;
+
+}
+.company-intro-requirment h4{
+    color: #515151;
+    font-size: 16px;
+    font-family: 'Roboto';
+    text-transform: none;
+    margin-bottom: 10px;
+}
+.company-intro-requirment p {
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+.company-intro-requirment{
+    margin-top: 0px;
+}
+.btn-cv{
+    color: #fff;
+    background-color: #f7941d;
+    border-color: #f28809;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 3px;
+    border:none;
+    float: right;
+    width: 100%;
+    max-width: 180px;
+    margin-bottom: 10px;
+}
+.btn-gg {
+    background: #dd4b39;
+    color: #fff!important;
+    border-radius: 3px;
+    border:none;
+    float: right;
+    width: 100%;
+    max-width: 180px;
+    padding: 6px 10px;
+}
+.show-view-i {
+    float: right;
+    width: 250px;
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+    margin-top: 8px;
+    margin-right: -5px;
+}
+.show-view-i span{
+    margin-left: 15px;
+}
+.login-btn p{
+    float: left;
+    background: #f4f4f4!important;
+    border: 1px solid #ddd;
+    padding: 6px 15px;
+    border-radius: 3px;
+    color: #515151;
+    font-size: 14px;
+    font-family: 'Roboto';
+    margin-top: 5px;
+}
+.login-btn p a{
+    margin-left:4px;
+}
+.padd-22 {
+    padding: 0px 22px;
+}
+.pad-10{
+    padding: 0px 8px;
+}
+.your-skill .boder-btn{
+    background: #fff;
+}
+.mar-shadow{
+    border: 0;
+    box-shadow: 0 1px 1px #ccc;
+    background: #fff;
+    float: left;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.mar-shadow h2 {
+    color: #515151;
+    font-size: 20px;
+        font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 600;
+    float: left;
+    padding-bottom: 6px;
+    margin: 10px;
+    width: 100%;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+.mar-shadow .col-sm-12{
+    float: left;
+    width: 100%;
+    margin-bottom: 6px;
+}
+.benefit-icon {
+    float: left;
+    width: 8%;
+    padding: 10px;
+    text-align: center;
+    border-left: 5px solid red;
+    border-radius: 5px;
+}
+.benefit-name {
+    color: #777;
+    float: left;
+    padding: 10px;
+    width: 90%;
+}
+.benefit-icon .fa, .skill-list .fa {
+    color: #777;
+}
+.your-do, .your-skill, .your-benefit{
+    border-bottom: none;
+}
+.your-benefit p strong{
+    color: #515151;
+    font-size: 15px;
+}
+.push-top a, .push-top-md a{
+    margin-top: 30px;
+        color: #337ab7;
+}
+.social-w{
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ebebeb;
+}
+.social-w:last-child{
+    border-bottom: none;
+}
+.social-w i{
+    margin-right: 7px;
+}
+.info-level{
+    float: left;
+    width: 100%;
+    margin: 10px;
+    margin-top: 0px;
+}
+.info-level p strong{
+    color: #515151;
+    font-size: 15px;
+    font-family: arial;
+    margin-top: 15px;
+    float: left;
+    width: 100%;
+}
+.info-level p:first-child strong{
+    margin-top: 0px;
+}
+.box-job-right .mar-shadow h2{
+    margin-top: 10px;
+}
+.info-level ul li{
+    float: left;
+    width: 100%;
+    margin-bottom: 6px;
+}
+.info-level ul li a{
+    font-family: 'Roboto';
+    color: #515151;
+}
+.info-level ul li a:hover{
+    color: #dd4b39;
+}
+.info-level ul li a span{
+    float: left;
+    width: 100%;
+    color: #ccc;
+    font-size: 12px;
+
+}
+.company-intro-requirment h3{
+    margin: 0px;
+}
+.total-view {
+    font-size: 30px;
+    font-weight: 700;
+    color: #f7941d;
+    line-height: 24px;
+}
+.link-list a {
+    color: #555!important;
+}
+.view-hs{
+    padding: 15px;
+    float: left;
+    width: 100%;
+}
+.tool-1 h2 {
+    padding: 12px 15px;
+    background: rgba(221, 221, 221, 0.79);
+    font-family: 'Roboto';
+}
+.view-job-user{
+    float: left;
+    width: 100%;
+    padding: 15px;
+}
+.view-job-user p {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.view-job-user p span {
+    float: right;
+    padding: 0px 12px;
+        background-color: #5cb85c;
+        border-radius: 4px;
+        font-size: 12px;
+    color: #fff;
+}
+.view-job-user ul li{
+    float: left;
+    width: 100%;
+    margin-bottom: 6px;
+}
+.view-job-user ul li a{
+    font-family: 'Roboto';
+    color: #515151;
+}
+.view-job-user ul li a span{
+    float: left;
+    width: 100%;
+    color: #ccc;
+    font-size: 12px;
+
+}
+.job-you-want{
+    float: left;
+    width: 100%;
+    padding: 25px;
+}
+.job-you-want ul li{
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
+}
+.job-you-want ul li label{
+    margin-bottom: 10px;
+}
+.group-job input{
+    width: 95%;
+    height: 35px;
+    padding-left: 10px;
+}
+.group-job p{
+    font-size: 12px;
+    color: #ccc;
+}
+.note-job{
+        margin-top: 34px;
+}
+.list-job-you-want{
+    float: left;
+    width: 100%;
+    padding: 15px;
+}
+.item-job{
+    padding: 15px;
+    float: left;
+}
+.item-job .fa {
+    width: 38px;
+    background: #ebebeb;
+    text-align: center;
+    float: left;
+    height: 38px;
+    margin-right: 10px;
+    padding-top: 10px;
+    font-size: 17px;
+}
+.item-job span{
+    margin-top: 8px;
+    float: left;
+}
+.company-same ul li {
+    width: 33.3333%;
+    border: 10px solid transparent;
+    margin-bottom: 0px;
+}
+.row-10{
+    margin: 0px -10px;
+}
+.company-same{
+    margin: 0px;
+}
+.steps-hoso .nice-select {
+    border: 1px solid #DDD;
+    background: #F8F8F8;
+    position: relative;
+    border-radius: 0px;
+    height: 40px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+@media screen and (max-width: 500px) {
+    .job-you-want .width-50{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 992px) {
+    .btn-push-cv{
+        float: left;
+    }
+    .btn-cv, .btn-gg, .show-view-i{
+        float: left;
+    }
+}
+/*add*/
+    .tool-1 h2 {
+        font-size: 16px;
+        margin-top: 0px;
+    }
+
+/*end add*/

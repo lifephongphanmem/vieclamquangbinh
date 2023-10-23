@@ -896,6 +896,8 @@ class baocaotonghopController extends Controller
         // if (isset($inputs['madv'])) {
             $maquocgia_huyen = $m_danhmuc->where('madv',$inputs['madv'])->first()->maquocgia;
 
+            $tenhuyen = $m_danhmuc->where('madv',$inputs['madv'])->first()->name;
+
             $ds_xa = $m_danhmuc->where('parent',$maquocgia_huyen);
             $ds_maxa = array_column( $ds_xa->ToArray(),'madv' );
 
@@ -903,11 +905,11 @@ class baocaotonghopController extends Controller
         'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv','sdt','nganhnghemongmuon','thitruonglamviec')
         ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong','!=',2)
-            // ->wherein('madv',$ds_maxa)
+            ->wherein('madv',$ds_maxa)
             ->where(function ($q) use ($inputs) {
-                if (isset($inputs['ds_maxa'])) {
-                    $q->wherein('madv', $inputs['ds_maxa']);
-                }
+                // if (isset($inputs['ds_maxa'])) {
+                //     $q->wherein('madv', $inputs['ds_maxa']);
+                // }
                 if (isset($inputs['gender'])) {
                     $q->where('gioitinh', $inputs['gioitinh']);
                 }
@@ -950,6 +952,7 @@ class baocaotonghopController extends Controller
             ->with('inputs', $inputs)
             ->with('m_danhmuc', $m_danhmuc)
             ->with('ds_xa', $ds_xa)
+            ->with('tenhuyen', $tenhuyen)
             // ->with('m_donvi', $m_donvi)
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
             ->with('pageTitle', 'Tổng hợp');

@@ -33,29 +33,29 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Thêm mới ứng viên</h3>
+                        <h3 class="card-label text-uppercase">Chỉnh sửa ứng viên</h3>
                     </div>
                     <div class="card-toolbar">
                     </div>
 
                 </div>
                 <div class="card-body">
-                    <form role="form" method="POST" action="{{ '/ungvien/update' }}" enctype='multipart/form-data'>
-                        @csrf
+                    {{-- <form role="form" method="POST" action="{{ '/ungvien/update' }}" enctype='multipart/form-data'>
+                        @csrf --}}
                         <div class="row ">
                             <div class="col-sm-12 col-sm-offset-2">
                                 <div class="form-group">
                                     <div class="col-md-3">
                                         <label>Email (*)</label>
-                                        <input type="email" name="email" class="form-control" placeholder="Email" value="{{$model->email}}" disabled>
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="{{$model->email}}" disabled>
                                     </div>
                                     <div class="col-md-3">
-                                        <label>Mật khẩu (*)  <input type="checkbox">  Tích để đồng ý đổi mật khẩu </label>
-                                        <input type="text" name="password" class="form-control" placeholder="Mật khẩu">
+                                        <label>Mật khẩu (*)  <input type="checkbox" name="checkpassword" id="checkpassword">  Tích để đồng ý đổi mật khẩu </label>
+                                        <input type="text" name="password" id="password" class="form-control" placeholder="Mật khẩu">
                                     </div>
                                     <div class="col-md-3" >
                                         <label>Trạng thái</label>
-                                        <select name="status" class="form-control">
+                                        <select name="status" id="status" class="form-control">
                                             <option value="1" {{$model->status == '1' ? 'selectea' : ''}}>Hoạt động</option>
                                             <option value="2" {{$model->status == '2' ? 'selectea' : '' }}>Khóa</option>
                                         </select>
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                         </div>
-                     
+        
                         <div class="panel-body" id='dynamicTable'>
 
                             <div class="row" id="1stld">
@@ -144,16 +144,11 @@
 
                         </div>
 
-                        <input type="hidden" name="isnew" value='1'>
-                        <input type="hidden" name="id[]" value='0'>
 
-                        <div class="row">
-                            <button type="submit" class="btn btn-sm btn-info btn-lg pull-right" style="margin-left:48%">
-                                Hoàn thành
-                            </button>
-                        </div>
-
-                    </form>
+                        <input type="text" name="case" id="case" value="edit" >
+                        <input  name="user" id="user" value="{{$ungvien->user}}">
+{{-- 
+                    </form> --}}
                 </div>
             </div>
         </div>

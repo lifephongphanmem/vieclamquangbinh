@@ -152,7 +152,7 @@
                         </div>
 
                     </div>
-
+                    <input type="text" name="case" id="case" value="create">
                     <input name="user" id="user" value="">
                     
                     {{-- {!! Form::close() !!} --}}
