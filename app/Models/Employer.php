@@ -699,7 +699,8 @@ class Employer extends Model
 		// check file excel
 
 		$nfield = sizeof($arr_col);
-		$count = 0;
+		$count_success = 0;
+		$count_error = 0;
 		for ($i = 1; $i < count($arr); $i++) {
 
 			$data = array();
@@ -710,14 +711,23 @@ class Employer extends Model
 			$data['company'] = session('admin')->company_id;
 			$nld = nguoilaodong::where('company', $data['company'])->where('cmnd', (string)$data['cmnd'])->first();
 
-			if ($nld->count() == 0) {
-
+			if (isset($nld)) {
+				$count_error += 1;
+			} else {
+				
 				nguoilaodong::create($data);
-				$count = $count + 1;
+			
+				$count_success += 1;
 			}
 
 			// DB::table('nguoilaodong')->insert($data);
 		}
+		// dd($count_success);
+		$RetArray = array();
+		$RetArray['count_success'] = $count_success;
+		$RetArray['count_error'] = $count_error;
+
+		return $RetArray;
 	}
 
 	// Lấy lich su lam việc của người lao động

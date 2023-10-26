@@ -71,15 +71,32 @@
         </li>
 
     @endif
-    @if (chkPhanQuyen('biendongxa', 'phanquyen'))
-        <li class="menu-item menu-item-submenu menu-item-rel">
-            <a href="{{ '/biendong/danhsach_biendong' }}" class="menu-link">
+    @if (session('admin')->capdo == 'H')
+        <li class="menu-item" aria-haspopup="true">
+            <a href="{{ '/biendong?madv=' . '&kydieutra=' . $baocao['kydieutra'] }}" class="menu-link">
+                {{-- <span class="svg-icon menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-clipboard-pulse" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1H3a1 1 0 0 0-1 1V14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5a1 1 0 0 0-1-1h-1v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Zm6.979 3.856a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.895-.133L4.232 10H3.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 .416-.223l1.41-2.115 1.195 3.982a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h1.5a.5.5 0 0 0 0-1h-1.128L9.979 5.356Z" />
+                    </svg>
+                </span> --}}
                 <span class="menu-text">Biến động</span>
-                <span class="menu-desc"></span>
-                <i class="menu-arrow"></i>
             </a>
         </li>
+    @else
+        @if (chkPhanQuyen('biendongxa', 'phanquyen'))
+            <li class="menu-item menu-item-submenu menu-item-rel">
+                <a href="{{ '/biendong/danhsach_biendong' }}" class="menu-link">
+                    <span class="menu-text">Biến động</span>
+                    <span class="menu-desc"></span>
+                    <i class="menu-arrow"></i>
+                </a>
+            </li>
+        @endif
     @endif
+
+
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
             <span class="menu-text">Tổng hợp - báo cáo</span>
@@ -203,18 +220,18 @@
                                     <path
                                         d="M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z"
                                         fill="#000000" />
-                                    <rect fill="#000000" opacity="0.3" x="10" y="9"
-                                        width="7" height="2" rx="1" />
-                                    <rect fill="#000000" opacity="0.3" x="7" y="9"
-                                        width="2" height="2" rx="1" />
-                                    <rect fill="#000000" opacity="0.3" x="7" y="13"
-                                        width="2" height="2" rx="1" />
-                                    <rect fill="#000000" opacity="0.3" x="10" y="13"
-                                        width="7" height="2" rx="1" />
-                                    <rect fill="#000000" opacity="0.3" x="7" y="17"
-                                        width="2" height="2" rx="1" />
-                                    <rect fill="#000000" opacity="0.3" x="10" y="17"
-                                        width="7" height="2" rx="1" />
+                                    <rect fill="#000000" opacity="0.3" x="10" y="9" width="7" height="2"
+                                        rx="1" />
+                                    <rect fill="#000000" opacity="0.3" x="7" y="9" width="2" height="2"
+                                        rx="1" />
+                                    <rect fill="#000000" opacity="0.3" x="7" y="13" width="2" height="2"
+                                        rx="1" />
+                                    <rect fill="#000000" opacity="0.3" x="10" y="13" width="7" height="2"
+                                        rx="1" />
+                                    <rect fill="#000000" opacity="0.3" x="7" y="17" width="2" height="2"
+                                        rx="1" />
+                                    <rect fill="#000000" opacity="0.3" x="10" y="17" width="7" height="2"
+                                        rx="1" />
                                 </g>
                             </svg>
                             <!--end::Svg Icon-->
