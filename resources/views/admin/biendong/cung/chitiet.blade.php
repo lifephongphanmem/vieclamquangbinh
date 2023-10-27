@@ -89,7 +89,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Số điện thoại</label>
-                                        <input type="text" name="sdt" value={{$ld->sdt}} class="form-control">
+                                        <input type="text" name="sdt" value="{{$ld->sdt}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">

@@ -720,12 +720,13 @@ class AdminDieutra extends Controller
             $m_nhankhau = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->get();
             $soho = $m_nhankhau->max('ho');
             $inputs['ho'] = $soho + 1;
-            $note .= "Thêm 1 hộ. ";
+            $note .= "Thêm";
             // dd(1);
         }
         // dd($inputs);
         // dd(2);
-        $note .= "Danh sách:";
+        // $note .= "Danh sách:";
+        $note .= ": ";
         // $a = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('cccd', '0440790803424')->first();
         // dd($a);
         $tonghopcung_xa = tonghopcunglaodong::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
@@ -976,7 +977,7 @@ class AdminDieutra extends Controller
                 ->where('parent', $inputs['mahuyen'])->get();
         } else {
 
-
+            
             if (session('admin')->capdo == 'H') {
                 $a_huyen = [session('admin')->maquocgia => session('admin')->tendiaban];
                 $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
@@ -1125,6 +1126,7 @@ class AdminDieutra extends Controller
             ->get();
         $m_donvi = $m_danhmuc->where('madv', session('admin')->madv)->first();
         $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        $dmnganhnghe = dmnganhnghe::all();
         $model = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
             ->where(function ($query) use ($inputs) {
                 if ($inputs['biendong'] != 'all') {
@@ -1196,10 +1198,11 @@ class AdminDieutra extends Controller
                 //     $a_loaibiendong = array('4' => 'Báo giảm');
                 //     break;
         }
-
+        // dd($model);
         return view('admin.dieutra.biendong.danhsach')
             ->with('model', $model)
             ->with('a_loaibiendong', $a_loaibiendong)
+            ->with('dmnganhnghe', $dmnganhnghe)
             ->with('m_donvi', $m_donvi)
             ->with('pageTitle', 'Danh sách biến động');
     }
@@ -1277,11 +1280,16 @@ class AdminDieutra extends Controller
 
     public function intonghop_mau01b(Request $request)
     {
+        
         if (!chkPhanQuyen('baocaoxa', 'hoanthanh')) {
             return view('errors.noperm')->with('machucnang', 'baocaoxa');
         }
         $inputs = $request->all();
-        $inputs['madv'] = $request->madv_xa;
+        if (isset($inputs['madv_xa'])) {
+            $inputs['madv'] = $request->madv_xa;
+        }
+       
+      
         $model = nhankhauModel::select('madv', 'hoten', 'ngaysinh', 'cccd', 'gioitinh', 'diachi', 'uutien', 'trinhdogiaoduc', 'chuyenmonkythuat', 'doituongtimvieclam', 'vieclammongmuon', 'nganhnghemongmuon', 'nganhnghemuonhoc', 'trinhdochuyenmonmuonhoc', 'sdt', 'khuvuc')
             ->where('kydieutra', $inputs['kydieutra'])
             ->where('loaibiendong', '!=', 2)
@@ -1359,7 +1367,9 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
-        $inputs['madv'] = $request->madv_huyen;
+        if (isset($inputs['madv_huyen'])) {
+            $inputs['madv'] = $request->madv_huyen;
+        }
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -1505,8 +1515,9 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'baocaohuyen');
         }
         $inputs = $request->all();
-        $inputs['madv'] = $inputs['madv_xa'];
-
+        if (isset($inputs['madv_xa'])) {
+            $inputs['madv'] = $request->madv_xa;
+        }
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -1555,8 +1566,9 @@ class AdminDieutra extends Controller
         }
         $inputs = $request->all();
 
-        $inputs['madv'] = $inputs['madv_huyen'];
-
+        if (isset($inputs['madv_huyen'])) {
+            $inputs['madv'] = $request->madv_huyen;
+        }
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();

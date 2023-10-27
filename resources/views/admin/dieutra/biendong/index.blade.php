@@ -49,7 +49,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Biến động nhân khẩu</h3>
+                        <h3 class="card-label text-uppercase">Biến động</h3>
                     </div>
                     <div class="card-toolbar">
                         @if (chkPhanQuyen('biendonghuyen', 'hoanthanh'))
