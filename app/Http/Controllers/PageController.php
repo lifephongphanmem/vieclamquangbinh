@@ -255,6 +255,19 @@ class PageController extends Controller
         return view('success.dangkythanhcong')
             ->with('message', 'Đăng ký thành công. Vui lòng truy cập Mail đăng ký để kích hoạt tài khoản.');
     }
+    public function iframe_hocvan(Request $request)
+    {
+     
+        $ungvienhocvan = ungvienhocvan::where('user',$request->user)->get();
+   
+        $dmtrinhdokythuat =dmtrinhdokythuat::all();
+        // dd($ungvienhocvan);
+        return view('pages.page.ungvien.iframehocvan')
+        ->with('ungvienhocvan', $ungvienhocvan)
+        ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+        ->with('user', $request->user)
+        ->with('baocao', getdulieubaocao());
+    }
     public function gioithieu()
     {
 
