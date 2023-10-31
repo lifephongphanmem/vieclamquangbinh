@@ -14,7 +14,7 @@ Route::prefix('page')->group(function(){
         Route::get('/',[PageController::class,'index_ungvien']);
         Route::get('/thongtin',[PageController::class,'thongtin_ungvien']);
         Route::get('/filter',[PageController::class,'filter_ungvien']);
-        Route::get('/filter',[PageController::class,'filter_ungvien']);
+        Route::get('/iframe',[PageController::class,'iframe_hocvan']);
     });
     Route::prefix('vieclam')->group(function(){
         Route::get('/',[PageController::class,'index_vieclam']);

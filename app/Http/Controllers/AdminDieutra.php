@@ -864,7 +864,7 @@ class AdminDieutra extends Controller
         } else {
             $xa['nongthon'] = $inputs['quantity'];
         }
-        dd($xa);
+        // dd($xa);
         $tonghopcung_xa->update($xa);
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($model);

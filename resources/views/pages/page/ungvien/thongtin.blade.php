@@ -297,7 +297,7 @@
         <div id="box-img-view-in" class="box-img-view-in">
             <span class="close-box-img-view" onclick="close_hocvan()"><i class="fa fa-times"></i></span>
             <div class="input-img " id="input-img" style="display: block">
-                <div class="form-body" style="margin: 1%;">
+                {{-- <div class="form-body" style="margin: 1%;">
                     <div id="hocvan_danhsach">
                         @if (isset($ungvienhocvan))
                             <table class="table  table-bordered table-hover dataTable no-footer">
@@ -351,9 +351,9 @@
                                 <label class="control-label">Bằng cấp <span class="require">*</span></label>
                                 <select name="bangcap" id="bangcap" class="form-control" required>
                                     <option value="">Chọn bằng cấp</option>
-                                    {{-- @foreach ($dmtrinhdokythuat as $item)
+                                    @foreach ($dmtrinhdokythuat as $item)
                                         <option value="{{ $item->madmtdkt }}">{{ $item->tentdkt }}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -390,7 +390,8 @@
                     </div>
 
                 </div>
-              
+               --}}
+               <iframe src="{{ '/page/ungvien/iframe?user='.$ungvien->user }}"></iframe>
             </div>
 
         </div>
