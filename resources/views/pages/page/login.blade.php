@@ -1,14 +1,11 @@
-
 @extends ('main_page')
 @section('content')
-<div id="w0">
-
     <div class="auth_main">
         <div class="container">
             <div class="am_row">
                 <div class="am_img_container">
                     <a class="sty-image">
-                        <img src="{{ url('assets2/media/files/banners/123_1598519320_3765f4778181ef71.png')}}"
+                        <img src="{{ url('assets2/media/files/banners/123_1598519320_3765f4778181ef71.png') }}"
                             alt="login">
                     </a>
                 </div>
@@ -22,8 +19,8 @@
                         <i class="af_input_suffix fa fa-envelope" aria-hidden="true"></i>
                     </div>
                     <div class="rela_input">
-                        <input class="af_input" name="LoginForm[password]" type="password"
-                            placeholder="Password" required="" minlength="8" maxlength="16">
+                        <input class="af_input" name="LoginForm[password]" type="password" placeholder="Password"
+                            required="" minlength="8" maxlength="16">
                         <i class="af_input_suffix fa fa-lock" aria-hidden="true"></i>
                     </div>
                     <div class="af-flex">
@@ -43,12 +40,10 @@
                             href="https://accounts.google.com/o/oauth2/auth?response_type=code&amp;access_type=online&amp;client_id=693205346130-d4bk8u9hkeaqbhcd4l8afhlbihv3chr3.apps.googleusercontent.com&amp;redirect_uri=https://vieclamquangbinh.gov.vn/site/login-goole.html&amp;state&amp;scope=email%20profile&amp;approval_prompt=auto"><i
                                 class="fa fa-google" aria-hidden="true" target=""></i> Google</a>
                     </div> --}}
-                    <p class="af_register_link">Bạn chưa có tài khoản? <a href="/dang-ky.html">Đăng ký ngay.</a>
+                    <p class="af_register_link">Bạn chưa có tài khoản? <a href="/page/dangky">Đăng ký ngay.</a>
                     </p>
                 </form>
             </div>
         </div>
     </div>
-
-</div>
 @endsection

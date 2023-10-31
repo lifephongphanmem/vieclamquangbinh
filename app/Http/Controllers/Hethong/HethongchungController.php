@@ -159,7 +159,7 @@ class HethongchungController extends Controller
 				}
 				$user->phanquyen = json_decode($user->phanquyen, true);
 				// dd($user);
-			} else {
+			} elseif ($user->phanloaitk == 2)  {
 				$cty = Company::where('email', $user->email)->first();
 				if(!isset($cty)){
 					return view('errors.tontai_dulieu')->with('message', 'Doanh nghiệp chưa đăng ký tài khoản');
@@ -168,6 +168,10 @@ class HethongchungController extends Controller
 				$user->company_id=$cty->id;
 				$user->maxa = $cty->xa;
 				$user->mahuyen = $cty->huyen;
+			}else{
+				$user->id = $user->id;
+				$user->name = $user->name;
+				$user->email = $user->email;
 			}
 		} else {
 			//$ttuser->chucnang = array('SSA');
@@ -307,8 +311,11 @@ class HethongchungController extends Controller
 		}elseif (session('admin')->sadmin == 'SSA'){
 			return redirect('/van_phong/danh_sach')
 			->with('success', 'Đăng nhập thành công');
-		}else{
+		}elseif (session('admin')->phanloaitk == 2){
 			return redirect('/doanhnghieppanel')
+			->with('success', 'Đăng nhập thành công');
+		}else{
+			return redirect('/page/ungvien/thongtin?user='. session('admin')->id)
 			->with('success', 'Đăng nhập thành công');
 		}
 		
@@ -322,6 +329,7 @@ class HethongchungController extends Controller
 			return redirect('');
 		}
 	}
+
 	public function DangKy(Request $request)
 	{
 		$validate = $request->validate([

@@ -739,7 +739,7 @@ class AdminDieutra extends Controller
         // $tonghopcung_huyen = tonghopcunglaodong::where('madv', $madv_huyen)->where('kydieutra', $inputs['kydieutra'])->first();
         // $tonghopcung_tinh = tonghopcunglaodong::where('capdo', 'T')->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($tonghopcung_xa);
-        $xa['ldtren15'] = $tonghopcung_xa->ldtren15 + $inputs['quantity'];
+        $xa['ldtren15'] = $tonghopcung_xa->ldtren15 ;
         $xa['trongnuoc'] = $tonghopcung_xa->trongnuoc;
         $xa['nuocngoai'] = $tonghopcung_xa->nuocngoai;
         $xa['hocnghe'] = $tonghopcung_xa->hocnghe;
@@ -841,7 +841,10 @@ class AdminDieutra extends Controller
             } else {
                 $xa['nu'] += 1;
             }
-
+           
+            if (!isset($cccd)) {
+                $xa['ldtren15'] += 1;
+            }
             if ($tmp['vieclammongmuon'] == '1') {
                 $xa['trongnuoc'] += 1;
             }
@@ -861,7 +864,7 @@ class AdminDieutra extends Controller
         } else {
             $xa['nongthon'] = $inputs['quantity'];
         }
-
+        dd($xa);
         $tonghopcung_xa->update($xa);
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();
         // dd($model);
