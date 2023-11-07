@@ -165,12 +165,21 @@ class ungvienController extends Controller
         foreach ($ungvienhocvan as $item) {
             $result['content'] .= "<tr>";
             $result['content'] .= "<td width='80%'>";
-            $result['content'] .= $item->truong . " ------- ";
-            $result['content'] .= $item->tungay . " - ";
-            $result['content'] .= $item->denngay;
-            $result['content'] .= "</td>";
-            $result['content'] .= "<td width='20%'>";
-            $result['content'] .= "<a  onclick='deletehocvan(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
+            $result['content'] .= "<span>";
+            $result['content'] .= " $item->truong &emsp;&emsp;&emsp;";
+            $result['content'] .= "</span>";
+            $result['content'] .= "<span >";
+            $result['content'] .=  getDayVn($item->tungay);
+            if (isset($item->denngay)) {
+                $result['content'] .= ' - ' . getDayVn($item->denngay);
+            }
+            $result['content'] .= "</span>";
+
+            $result['content'] .= "<span class='pull-right'>";
+            $result['content'] .= "<a class='btn btn-primary edit-inp'><i class='glyphicon glyphicon-pencil'></i> Cật nhật</a>";
+            $result['content'] .= "<a onclick='deletehocvan(" . $item->id . ")'";
+            $result['content'] .= "class='btn btn-danger deletedata'><i class='glyphicon glyphicon-remove'></i> Xóa</a>";
+            $result['content'] .= "</span>";
             $result['content'] .= "</td>";
             $result['content'] .= "</tr>";
         }

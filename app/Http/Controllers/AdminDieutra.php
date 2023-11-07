@@ -1541,10 +1541,13 @@ class AdminDieutra extends Controller
         $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])->where('kydieutra', '!=', '2022')
             ->where('loaibiendong', '!=', 2)
             ->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon', 'nganhnghemuonhoc')->get();
+
+    
         if (isset($inputs['madv'])) {
             $model =  $model->whereIn('madv', $inputs['madv']);
         }
-       
+        // $model = $model->where('vieclammongmuon', 3);
+        // dd($model);
         $a_cmkt = array_column(dmtrinhdokythuat::all()->toarray(), 'tentdkt', 'stt');
         $m_nganhnghe = dmnganhnghe::all();
 

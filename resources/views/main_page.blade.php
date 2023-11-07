@@ -31,11 +31,6 @@
 
 </head>
 
-
-
- 
-
-
 <body class="home  style-inpage fixed">
 
     <header>
@@ -83,11 +78,40 @@
                                 </ul>
                             </div>
                         @elseif (session('admin')->phanloaitk == 2)
+
                             <div class="account ">
-                                <a class="d_flex d_flex_center" href="">
-                                    <img src="{{ url('assets2/images/us.png') }}">
-                                    <p><span>{{ session('admin')->name }}</span></p>
-                                </a>
+                                <p>
+                                    <span>
+                                        <a href="javascript:void(0);">
+                                            <img src="{{ url('assets2/media/images/default/defaultimage.jpg') }}"
+                                                alt="{{ session('admin')->name }}"
+                                                style="margin-top:-5px; margin-right:6px; max-height: 100px; display: none">{{ session('admin')->name }}
+                                        </a>
+                                    </span>
+                                </p>
+                                <ul class="sub-account">
+                                    <li class="target-user display-xs">
+                                        <ul class="sub-accounts">
+                                            <li>
+                                                <a href="{{ '/doanhnghieppanel' }}"
+                                                    title="Quản lý doanh nghiệp">Quản lý doanh nghiệp</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ '/page/vieclam/congty?user='.session('admin')->id}}"
+                                                    title="Thông tin tuyển dụng">Thông tin tuyển dụng</a>
+                                            </li>
+                                            <li>
+                                                <a href="/tuyendung-hosodanop" title="Hồ sơ ứng tuyển">Hồ sơ ứng tuyển</a>
+                                            </li>
+                                            <li>
+                                                <a href="tuyendung-fn" title="Đăng tin tuyển dụng">Đăng tin tuyển dụng</a>
+                                            </li>
+                                            <li>
+                                                <a href="/DangXuat" title="Thoát">Thoát</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
                         @else
                             <div class="account ">
@@ -108,7 +132,7 @@
                                                     title="Cập nhật hồ sơ">Cập nhật hồ sơ</a>
                                             </li>
                                             <li>
-                                                <a href="" title="Vị trí đã ứng tuyển">Vị
+                                                <a href="/page/ungvien/vi-tri-da-ung-tuyen" title="Vị trí đã ứng tuyển">Vị
                                                     trí đã ứng tuyển</a>
                                             </li>
                                             <li>
@@ -137,7 +161,7 @@
                     <div class="menu_main">
                         <ul>
                             <li>
-                                <a href="/">Trang chủ</a>
+                                <a href="{{'/page/trangchu'}}">Trang chủ</a>
                             </li>
                             <li>
                                 <a href="{{ '/page/gioithieu' }}">giới thiệu</a>
@@ -165,19 +189,4 @@
 
     @include('pages.page.includes.footer')
 
-
-    {{-- 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script src="{{ url('assets2/js/jquery.fancybox.min.js') }}"></script>
-    <script src="{{ url('assets2/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ url('assets2/js/wow.min.js') }}"></script>
-    <script src="{{ url('assets2/js/slick.js') }}"></script>
-    <script src="{{ url('assets2/js/waypoints.min.js') }}"></script>
-    <script src="{{ url('assets2/js/jquery.counterup.min.js') }}"></script>
-    <script src="{{ url('assets2/js/menu.js') }}"></script>
-    <script src="{{ url('assets2/js/slider.js') }}"></script>
-    <script src="{{ url('assets2/js/main.js') }}"></script>
-    <script src="{{ url('assets2/js/add.js') }}"></script> --}}
 </body>

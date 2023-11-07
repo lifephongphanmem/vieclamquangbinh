@@ -9,25 +9,25 @@
                             alt="login">
                     </a>
                 </div>
-                <form id="login-form" class="am_auth_form" action="/dang-nhap.html" method="post">
-                    <input type="hidden" name="_csrf-frontend"
-                        value="bW9qRE1pQjAAGSMQeB0RBRgrAQ4BGztbGRwjKTgxOAMeHBJ1HzoRRw==">
+                <form id="login-form" class="am_auth_form" action="/DangNhap" method="post">
+                    @csrf
+
                     <h4 class="af_title">Đăng nhập</h4>
                     <div class="rela_input">
-                        <input value="" class="af_input" name="LoginForm[email]" type="text"
-                            placeholder="Email/Số điện thoại" required="">
+                        <input value="" class="af_input" name="username" type="text"
+                            placeholder="Tên tài khoản" required="">
                         <i class="af_input_suffix fa fa-envelope" aria-hidden="true"></i>
                     </div>
                     <div class="rela_input">
-                        <input class="af_input" name="LoginForm[password]" type="password" placeholder="Password"
-                            required="" minlength="8" maxlength="16">
+                        <input class="af_input" name="password" type="password" placeholder="Password"
+                           minlength="8" maxlength="16">
                         <i class="af_input_suffix fa fa-lock" aria-hidden="true"></i>
                     </div>
                     <div class="af-flex">
-                        <div class="aff-check">
+                        {{-- <div class="aff-check">
                             <input type="checkbox" name="LoginForm[rememberMe]" id="remember">
                             <label for="remember">Ghi nhớ mật khẩu</label>
-                        </div>
+                        </div> --}}
                         <a href="/lay-lai-mat-khau.html" class="aff-forgot">Quên mật khẩu?</a>
                     </div>
                     <button href="#" type="submit" class="af_btn_submit">Đăng nhập</button>

@@ -10,11 +10,35 @@ Route::prefix('nguoitimviec')->group(function(){
 });
 
 Route::prefix('page')->group(function(){
+    Route::get('/trangchu',[PageController::class,'home']);
+    Route::get('/gioithieu',[PageController::class,'gioithieu']);
+    Route::get('/dangnhap',[PageController::class,'viewlogin']);
+    Route::get('/dangky',[PageController::class,'viewregister']);
+    Route::post('/register',[PageController::class,'register']);
+
+
     Route::prefix('ungvien')->group(function(){
         Route::get('/',[PageController::class,'index_ungvien']);
         Route::get('/thongtin',[PageController::class,'thongtin_ungvien']);
         Route::get('/filter',[PageController::class,'filter_ungvien']);
-        Route::get('/iframe',[PageController::class,'iframe_hocvan']);
+
+        Route::get('/vi-tri-da-ung-tuyen',[PageController::class,'danhsach_apply']);
+        Route::post('/apply',[PageController::class,'apply']);
+        Route::get('/delete_apply',[PageController::class,'delete_apply']);
+
+        Route::get('/iframe_coban',[PageController::class,'iframe_coban']);
+        Route::post('/update_coban',[PageController::class,'update_coban']);
+
+        Route::get('/iframe_hocvan',[PageController::class,'iframe_hocvan']);
+        Route::post('/store_hocvan',[PageController::class,'store_hocvan']);
+        Route::post('/update_hocvan',[PageController::class,'update_hocvan']);
+        Route::get('/delete_hocvan',[PageController::class,'delete_hocvan']);
+
+        Route::get('/iframe_kinhnghiem',[PageController::class,'iframe_kinhnghiem']);
+        Route::post('/store_kinhnghiem',[PageController::class,'store_kinhnghiem']);
+        Route::post('/update_kinhnghiem',[PageController::class,'update_kinhnghiem']);
+        Route::get('/delete_kinhnghiem',[PageController::class,'delete_kinhnghiem']);
+
     });
     Route::prefix('vieclam')->group(function(){
         Route::get('/',[PageController::class,'index_vieclam']);
@@ -22,10 +46,7 @@ Route::prefix('page')->group(function(){
         Route::get('/congty',[PageController::class,'congty']);
         Route::get('/filter',[PageController::class,'filter_vieclam']);
     });
-    Route::get('/gioithieu',[PageController::class,'gioithieu']);
-    Route::get('/dangnhap',[PageController::class,'viewlogin']);
-    Route::get('/dangky',[PageController::class,'viewregister']);
-    Route::post('/register',[PageController::class,'register']);
+ 
 });
 
 Route::prefix('ungvien')->group(function(){
