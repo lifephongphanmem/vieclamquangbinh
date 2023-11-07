@@ -211,11 +211,10 @@
                                                                 <div class="form-group">
                                                                     <label>Việc làm mong muốn <span class="text-danger">*</span></label>
                                                                     <select name="vieclammongmuon[]" class="form-control">
-                                                                        {{-- <option value="">---Chọn việc làm mong muốn---</option> --}}
+                                                                        <option value="">---Chọn việc làm mong muốn---</option>
                                                                         <option value="3">Tất cả</option>
                                                                         <option value="1">Trong tỉnh, trong nước</option>
-                                                                        <option value="2">Đi làm việc ở nước ngoài</option>
-                                                                       
+                                                                        <option value="2">Đi làm việc ở nước ngoài</option>                                                                       
                                                                     </select>
                                                                 </div>
                                                             </div>

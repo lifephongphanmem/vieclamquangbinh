@@ -12,17 +12,26 @@ use App\Models\Danhmuc\dsnhomtaikhoan_phanquyen;
 use App\Models\Hethong\dstaikhoan_phanquyen;
 use Illuminate\Http\Request;
 use DB;
-use Session;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Report;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Session;
 use Validator;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Session::has('admin')) {
+                return redirect('/');
+            };
+            return $next($request);
+        });
+    }
 	/**
 	 * Show the profile for a given user.
 	 *
