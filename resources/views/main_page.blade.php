@@ -25,9 +25,15 @@
     <link href="{{ url('assets2/css/fix.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets2/css/fix_t.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&amp;display=swap" rel="stylesheet">
+
+
 
 </head>
 
+
+
+ 
 
 
 <body class="home  style-inpage fixed">
@@ -47,53 +53,81 @@
                     </a>
                 </div>
                 <div class="hotline_account d_flex d_flex_center">
-                    <div class="hotline ">
+                    <div class="hotline " style="margin-right: 15%">
                         <a class="d_flex d_flex_center" href="tel:0232.6250999">
                             <img src="{{ url('assets2/images/hl.png') }}">
                             <p><strong>Hotline:</strong><span>0232.6250999</span></p>
                         </a>
                     </div>
-                    <div class="account ">
-                        <a class="d_flex d_flex_center" href="{{'/page/dangnhap'}}">
-                            <img src="{{ url('assets2/images/us.png') }}">
+                    @if (session('admin') != null)
 
-
-                            <p><span>TÀI KHOẢN</span></p>
-                        </a>
-                    </div>
-                    {{-- <div class="account ">
-                        <p>
-                            <span>
-                                <a href="javascript:void(0);">
-                                    <img src="{{ url('assets2/media/images/default/defaultimage.jpg') }}"
-                                        alt="quang"
-                                        style="margin-top:-5px; margin-right:6px; max-height: 100px; display: none">quang
-                                </a>
-                            </span>
-                        </p>
-                        <ul class="sub-account">
-                            <li class="target-user display-xs">
-                                <ul class="sub-accounts">
-                                    <li>
-                                        <a href="" title="Cập nhật hồ sơ">Cập nhật hồ sơ</a>
-                                    </li>
-                                    <li>
-                                        <a href="" title="Vị trí đã ứng tuyển">Vị
-                                            trí đã ứng tuyển</a>
-                                    </li>
-                                    <script type="text/javascript">
-                                        function alertq() {
-                                            alert(
-                                                'Đây là chức năng dành cho tài khoản nhà tuyển dụng VIP , vui lòng liên hệ hotline để được tư vấn 024.66.835.586 hoặc 0966.835.856');
-                                        }
-                                    </script>
-                                    <li>
-                                        <a href="" title="Thoát">Thoát</a>
+                        @if (session('admin')->phanloaitk == 1)
+                            <div class="account ">
+                                <p>
+                                    <span>
+                                        <a href="javascript:void(0);">
+                                            <img src="{{ url('assets2/media/images/default/defaultimage.jpg') }}"
+                                                alt="{{ session('admin')->name }}"
+                                                style="margin-top:-5px; margin-right:6px; max-height: 100px; display: none">{{ session('admin')->name }}
+                                        </a>
+                                    </span>
+                                </p>
+                                <ul class="sub-account">
+                                    <li class="target-user display-xs">
+                                        <ul class="sub-accounts">
+                                            <li>
+                                                <a href="/DangXuat" title="Thoát">Thoát</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </div> --}}
+                            </div>
+                        @elseif (session('admin')->phanloaitk == 2)
+                            <div class="account ">
+                                <a class="d_flex d_flex_center" href="">
+                                    <img src="{{ url('assets2/images/us.png') }}">
+                                    <p><span>{{ session('admin')->name }}</span></p>
+                                </a>
+                            </div>
+                        @else
+                            <div class="account ">
+                                <p>
+                                    <span>
+                                        <a href="javascript:void(0);">
+                                            <img src="{{ url('assets2/media/images/default/defaultimage.jpg') }}"
+                                                alt="{{ session('admin')->name }}"
+                                                style="margin-top:-5px; margin-right:6px; max-height: 100px; display: none">{{ session('admin')->name }}
+                                        </a>
+                                    </span>
+                                </p>
+                                <ul class="sub-account">
+                                    <li class="target-user display-xs">
+                                        <ul class="sub-accounts">
+                                            <li>
+                                                <a href="{{ '/page/ungvien/thongtin?user=' . session('admin')->id }}"
+                                                    title="Cập nhật hồ sơ">Cập nhật hồ sơ</a>
+                                            </li>
+                                            <li>
+                                                <a href="" title="Vị trí đã ứng tuyển">Vị
+                                                    trí đã ứng tuyển</a>
+                                            </li>
+                                            <li>
+                                                <a href="/DangXuat" title="Thoát">Thoát</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endif
+                    @else
+                        <div class="account ">
+                            <a class="d_flex d_flex_center" href="{{ '/page/dangnhap' }}">
+                                <img src="{{ url('assets2/images/us.png') }}">
+                                <p><span>TÀI KHOẢN</span></p>
+                            </a>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

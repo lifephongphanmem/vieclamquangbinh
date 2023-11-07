@@ -157,20 +157,39 @@ class EmployerController extends Controller
     return Excel::download(new EmployersExport, 'nguoilaodong.xlsx');
   }
 
-  
+
   public function import(Request $request)
   {
 
-      $input = $request->all();
+    $input = $request->all();
 
-      $model = new Employer();
-      // $request->validate([
-      //    'import_file' => 'required|mimes:xlsx, csv, xls'
-      // ]);
+    $model = new Employer();
+    $request->validate([
+       'import_file' => 'required|mimes:xlsx, csv, xls'
+    ]);
 
-      $model->importa($input);
 
-      return redirect('/doanhnghieppanel');
+    try {
+     
+      $RetIm =  $model->importa($input);
+   
+      $count_success = $RetIm['count_success'];
+
+      $count_error = $RetIm['count_error'];
+  
+    } 
+    catch (Exception $e) {
+
+      return redirect('/doanhnghieppanel')->with('error' , 'Dữ liệu nhập không hợp lệ');
+    }
+
+    if ($count_success >0) {
+      return redirect('/doanhnghieppanel')->with('success' , 'Đã thêm mới '. $count_success .' Người lao động');
+    }{
+      return redirect('/doanhnghieppanel')->with('error' , 'Hãy kiểm tra lại dữ liệu ');
+    }
+
+    return redirect('/doanhnghieppanel');
   }
 
   // public function import()
@@ -194,14 +213,14 @@ class EmployerController extends Controller
   //     // return redirect('doanhnghieppanel')->withErrors(['message' => 'Dữ liệu nhập không hợp lệ. ' . $e->getMessage()]);
   //     return redirect('doanhnghieppanel')->with('error','Dữ liệu nhập không hợp lệ');
   //   }
-   
+
   //   if ($ld) {
   //     return redirect('report-fa')->with('success', $ld . " người lao động thêm thành công");
   //   } else {
   //     redirect('doanhnghieppanel')->with('error' , 'Dữ liệu nhập không hợp lệ');
   //   }
   // }
-  
+
   public function save(Request $request)
   {
     // dd($request->all());

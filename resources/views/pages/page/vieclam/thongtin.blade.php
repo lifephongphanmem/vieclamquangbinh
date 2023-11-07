@@ -150,7 +150,8 @@
                                         <a href=""><img src=""></a>
                                         <h2>{{ $Company->name }}</h2>
                                         <p>{{ $Company->adress }}</p>
-                                        <a href="{{'/page/vieclam/congty?user='.$Company->user}}" class="more"><span>Thông
+                                        <a href="{{ '/page/vieclam/congty?user=' . $Company->user }}"
+                                            class="more"><span>Thông
                                                 tin chi tiết</span>
                                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                                         </a>
@@ -159,16 +160,13 @@
                                         <h3>Việc làm cùng công ty:</h3>
                                         <div class="list_job_c">
                                             @foreach ($list_vitrikhac as $item)
-                                                
-                                      
-                                            <a class="item  d_flex" href="">
-                                                <img src="{{ '/assets2/images/star.png' }}">
-                                                <div>
-                                                    <h4>{{ $item->name }}</h4>
-                                                    <p> Hạn nộp hồ sơ: {{ getDayVn($item->thoihan) }}</p>
-                                                </div>
-                                            </a>
-
+                                                <a class="item  d_flex" href="{{ '/page/vieclam/thongtin?id='. $item->id  }}">
+                                                    <img src="{{ '/assets2/images/star.png' }}">
+                                                    <div>
+                                                        <h4>{{ $item->name }}</h4>
+                                                        <p> Hạn nộp hồ sơ: {{ getDayVn($item->thoihan) }}</p>
+                                                    </div>
+                                                </a>
                                             @endforeach
                                         </div>
                                     </div>

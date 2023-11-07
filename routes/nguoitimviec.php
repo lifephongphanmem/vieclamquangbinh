@@ -14,6 +14,7 @@ Route::prefix('page')->group(function(){
         Route::get('/',[PageController::class,'index_ungvien']);
         Route::get('/thongtin',[PageController::class,'thongtin_ungvien']);
         Route::get('/filter',[PageController::class,'filter_ungvien']);
+        Route::get('/iframe',[PageController::class,'iframe_hocvan']);
     });
     Route::prefix('vieclam')->group(function(){
         Route::get('/',[PageController::class,'index_vieclam']);
@@ -23,6 +24,8 @@ Route::prefix('page')->group(function(){
     });
     Route::get('/gioithieu',[PageController::class,'gioithieu']);
     Route::get('/dangnhap',[PageController::class,'viewlogin']);
+    Route::get('/dangky',[PageController::class,'viewregister']);
+    Route::post('/register',[PageController::class,'register']);
 });
 
 Route::prefix('ungvien')->group(function(){

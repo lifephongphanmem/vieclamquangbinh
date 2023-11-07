@@ -104,6 +104,8 @@ class AdminBiendong extends Controller
 		$m_diaban = danhmuchanhchinh::all();
 		$a_loaibiendong=array('1'=>'Tăng','2'=>'Giảm','3'=>'Cập nhật thông tin');
 		$inputs['url'] = '/biendong/danhsach_biendong';
+
+       
         // dd($model);
 		return view('admin.biendong.cung.index')
 		->with('model',$model)
@@ -119,6 +121,8 @@ class AdminBiendong extends Controller
             ->with('a_loaibiendong', $a_loaibiendong)
             ->with('dmhc', $dmhc_list);
 	}
+
+
 
 	public function thongtinthaydoi(Request $request,$nkid){
 		$inputs=$request->all();

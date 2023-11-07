@@ -28,7 +28,7 @@ class CompanyController extends Controller
    
 	 public function show($action=null)
     {
-		
+	
 		// get filter
 		$request=request();
 		// dd($request->all());

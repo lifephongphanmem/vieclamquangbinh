@@ -75,7 +75,8 @@
                             <select name="kydieutra" id="kydieutra" onchange="kydieutra()"
                                 class="form-control select2basic">
                                 @foreach ($a_kydieutra as $key => $ct)
-                                    <option value="{{ $key }}" {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
+                                    <option value="{{ $key }}"
+                                        {{ $key == $inputs['kydieutra'] ? 'selected' : '' }}>
                                         {{ $ct }}</option>
                                 @endforeach
                             </select>
@@ -88,7 +89,8 @@
                                 @endif
 
                                 @foreach ($a_xa as $key => $ct)
-                                    <option value="{{ $ct->madv }}" {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}>
+                                    <option value="{{ $ct->madv }}"
+                                        {{ $ct->madv == $inputs['madv'] ? 'selected' : '' }}>
                                         {{ $ct->name }}</option>
                                 @endforeach
                             </select>
@@ -157,37 +159,37 @@
 
 
 
-        <script>
-            function getxa() {
-                var madv = $('#mdv').val;
-                var url = '/nhankhau/get_xa?madv=' + madv;
-                var mahuyen = $('#mahuyen').val();
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    data: {
-                        _token: CSRF_TOKEN,
-                        mahuyen: mahuyen
-                    },
-                    dataType: 'JSON',
-                    success: function(data) {
-                        console.log(data);
-                        $('#madv').find('.xa').remove();
-                        $('#madv').append(data);
-                    },
-                    error: function(message) {
-                        toastr.error(message, 'Lỗi!');
-                    }
-                });
-            };
+    <script>
+        function getxa() {
+            var madv = $('#mdv').val;
+            var url = '/nhankhau/get_xa?madv=' + madv;
+            var mahuyen = $('#mahuyen').val();
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    mahuyen: mahuyen
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    console.log(data);
+                    $('#madv').find('.xa').remove();
+                    $('#madv').append(data);
+                },
+                error: function(message) {
+                    toastr.error(message, 'Lỗi!');
+                }
+            });
+        };
 
-            function getdulieu() {
-                madv = $('#madv').val();
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + madv +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
-                // $('#madv option[value=' + madv + ' ]').attr('selected', 'selected');
-                // getxa();
-            }
-        </script>
-    @endsection
+        function getdulieu() {
+            madv = $('#madv').val();
+            window.location.href = "{{ $inputs['url'] }}" + '?madv=' + madv +
+                '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
+            // $('#madv option[value=' + madv + ' ]').attr('selected', 'selected');
+            // getxa();
+        }
+    </script>
+@endsection
