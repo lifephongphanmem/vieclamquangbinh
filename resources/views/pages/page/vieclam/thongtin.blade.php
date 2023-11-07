@@ -57,9 +57,22 @@
                                                 </ul>
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                <a href="/dang-nhap.html"
-                                                    data-confirm="Bạn cần đăng nhập để tạo hồ sơ ứng tuyển. Bạn có muốn đến đăng nhập ngay để có thể nộp đơn?"
-                                                    class="btn_nop">Nộp hồ sơ </a>
+                                                @if ($hoso == 'chuanop')
+
+                                                    @if (session('admin') != null)
+                                                        @if (session('admin')->phanloaitk == 3)
+                                                            <a href="#" data-toggle="modal" data-target="#myModals"
+                                                                class="btn_nop">Nộp đơn
+                                                            </a>
+                                                        @endif
+                                                    @else
+                                                        <a href="/page/dangnhap"
+                                                            onclick="return confirm('Bạn cần đăng nhập để tạo hồ sơ ứng tuyển. Bạn có muốn đến đăng nhập ngay để có thể nộp đơn?')"
+                                                            class="btn_nop">Nộp hồ sơ </a>
+                                                    @endif
+                                                @else
+                                                    <a class="btn_nop">Đã nộp </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -99,11 +112,25 @@
                                     <div class="info">
                                         <div class="content_info d_flex d_flex_center">
                                             <p>Bấm vào nút <a>NỘP HỒ SƠ</a> để ứng tuyển</p>
-                                            <a href="/dang-nhap.html"
-                                                data-confirm="Bạn cần đăng nhập để tạo hồ sơ ứng tuyển. Bạn có muốn đến đăng nhập ngay để có thể nộp đơn?"
-                                                class="btn_nop">Nộp hồ sơ </a>
+                                            @if ($hoso == 'chuanop')
+
+                                                @if (session('admin') != null)
+                                                    @if (session('admin')->phanloaitk == 3)
+                                                        <a href="#" data-toggle="modal" data-target="#myModals"
+                                                            class="btn_nop">Nộp đơn
+                                                        </a>
+                                                    @endif
+                                                @else
+                                                    <a href="/page/dangnhap"
+                                                        onclick="return confirm('Bạn cần đăng nhập để tạo hồ sơ ứng tuyển. Bạn có muốn đến đăng nhập ngay để có thể nộp đơn?')"
+                                                        class="btn_nop">Nộp hồ sơ </a>
+                                                @endif
+                                            @else
+                                                <a class="btn_nop">Đã nộp </a>
+                                            @endif
                                         </div>
                                     </div>
+
                                     <div class="info">
                                         <h3>LIÊN HỆ PHỎNG VẤN: </h3>
                                         <div class="content_info">
@@ -160,7 +187,8 @@
                                         <h3>Việc làm cùng công ty:</h3>
                                         <div class="list_job_c">
                                             @foreach ($list_vitrikhac as $item)
-                                                <a class="item  d_flex" href="{{ '/page/vieclam/thongtin?id='. $item->id  }}">
+                                                <a class="item  d_flex"
+                                                    href="{{ '/page/vieclam/thongtin?id=' . $item->id }}">
                                                     <img src="{{ '/assets2/images/star.png' }}">
                                                     <div>
                                                         <h4>{{ $item->name }}</h4>
@@ -189,19 +217,20 @@
         </style>
         <div id="myModals" class="modal fade" role="dialog" style="display: none;">
             <div class="modal-dialog">
-                <!-- Modal content-->
+                <!-- Modal myModals-->
                 <div class="modal-content">
-                    <div class="modal-header center">
+                    {{-- <div class="modal-header center">
                         <button type="button" class="close" data-dismiss="modal">×</button>
                         <a href="/recruitment/recruitment/redirect-edit.html?id=5948&amp;alias=quan-ly-karaoke"
                             class="btn btn-warning">Chỉnh sửa thông tin trước khi gửi</a>
-                    </div>
-                    <form id="form-apply" action="/recruitment/apply/apply.html" method="get" role="form">
+                    </div> --}}
+                    <form id="form-apply" action="{{ '/page/ungvien/apply' }}" method="post" role="form">
+                        @csrf
                         <div class="modal-body noiv">
-                            <p>Hoặc gửi ngay.</p>
-                            <input type="hidden" name="id" value="5948">
-                            <textarea name="content" placeholder="Nội dung gửi đến nhà ứng tuyển." required=""></textarea>
-                            <input id="location-select" name="location" value="29" type="hidden">
+                            {{-- <p>Hoặc gửi ngay.</p> --}}
+                            <input type="hidden" name="vitri" value="{{ $model->id }}">
+                            <input type="hidden" name="ungvien" value="{{ session('admin')->id }}">
+                            <textarea name="noidung" placeholder="Lời nhắn gửi đến nhà tuyển dụng."></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" id="sent-form" class="btn btn-primary">Gửi ngay</button>
@@ -212,4 +241,5 @@
             </div>
         </div>
     </div>
+
 @endsection

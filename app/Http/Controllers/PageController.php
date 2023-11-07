@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmail;
+use App\Models\apply;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\ungvien;
 use App\Models\Danhmuc\capbac;
 use App\Models\Danhmuc\danhmuchanhchinh;
+use App\Models\Danhmuc\dmdonvi;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\Tuyendung;
 use App\Models\tuyendungModel;
@@ -33,8 +35,7 @@ class PageController extends Controller
         return view('pages.page.ungvien.index')
             ->with('model', $model)
             ->with('capbac', $capbac)
-            ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
-            ->with('baocao', getdulieubaocao());
+            ->with('dmtrinhdokythuat', $dmtrinhdokythuat);
     }
 
 
@@ -58,8 +59,49 @@ class PageController extends Controller
             ->with('ungvienkinhnghiem', $ungvienkinhnghiem)
             ->with('trinhdocmkt', $trinhdocmkt)
             ->with('huyen', $huyen)
-            ->with('xa', $xa)
-            ->with('baocao', getdulieubaocao());
+            ->with('xa', $xa);
+    }
+
+    public function danhsach_apply()
+    {
+
+        $user =  session('admin')->id;
+
+        $model = User::find($user);
+        $ungvien = ungvien::where('user', $user)->first();
+
+        $vitriungtuyen = apply::leftJoin('Vitrituyendung', 'Vitrituyendung.id', 'apply.vitri')
+            ->leftJoin('Tuyendung', 'Tuyendung.id', 'Vitrituyendung.idtuyendung')
+            ->leftJoin('Company', 'Company.user', 'Tuyendung.user')
+            ->where('ungvien', $user)
+            ->select('apply.*', 'Vitrituyendung.name as tenvitri', 'Company.name as tencongty')
+            ->get();
+
+        $trinhdocmkt = dmtrinhdokythuat::where('madmtdkt', $ungvien->trinhdocmkt)->first();
+        $dmhanhchinh = danhmuchanhchinh::all();
+        $huyen = $dmhanhchinh->where('maquocgia', $ungvien->huyen)->first();
+        $xa = $dmhanhchinh->where('maquocgia', $ungvien->xa)->first();
+        return view('pages.page.ungvien.vitridaungtuyen')
+            ->with('model', $model)
+            ->with('ungvien', $ungvien)
+            ->with('vitriungtuyen', $vitriungtuyen)
+            ->with('trinhdocmkt', $trinhdocmkt)
+            ->with('huyen', $huyen)
+            ->with('xa', $xa);
+    }
+    public function apply(Request $request)
+    {
+
+        $inputs = $request->all();
+        $inputs['trangthai'] = 0;
+        apply::create($inputs);
+        return redirect('page/vieclam/thongtin?id=' . $inputs['vitri']);
+    }
+
+    public function delete_apply(Request $request)
+    {
+        apply::find($request->id)->delete();
+        return redirect('page/ungvien/vi-tri-da-ung-tuyen');
     }
 
     public function filter_ungvien(Request $request)
@@ -150,9 +192,105 @@ class PageController extends Controller
         return response($result);
     }
 
-    public function index_vieclam()
+    public function iframe_hocvan(Request $request)
+    {
+        $ungvienhocvan = ungvienhocvan::where('user', $request->user)->get();
+
+        $dmtrinhdokythuat = dmtrinhdokythuat::all();
+
+        return view('pages.page.ungvien.iframehocvan')
+            ->with('ungvienhocvan', $ungvienhocvan)
+            ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+            ->with('user', $request->user);
+    }
+    public function store_hocvan(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienhocvan::create($inputs);
+        return redirect('/page/ungvien/iframe_hocvan?user=' . $inputs['user']);
+    }
+    public function update_hocvan(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienhocvan::find($inputs['id'])->update($inputs);
+        return redirect('/page/ungvien/iframe_hocvan?user=' . $inputs['user']);
+    }
+    public function delete_hocvan(Request $request)
+    {
+        $inputs = $request->all();
+        $model = ungvienhocvan::find($inputs['id']);
+        $user = $model->user;
+        $model->delete();
+        return redirect('/page/ungvien/iframe_hocvan?user=' . $user);
+    }
+
+    public function iframe_kinhnghiem(Request $request)
+    {
+        $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $request->user)->get();
+
+        $dmtrinhdokythuat = dmtrinhdokythuat::all();
+
+        return view('pages.page.ungvien.iframekinhnghiem')
+            ->with('ungvienkinhnghiem', $ungvienkinhnghiem)
+            ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+            ->with('user', $request->user);
+    }
+    public function store_kinhnghiem(Request $request)
     {
 
+        $inputs = $request->all();
+        ungvienkinhnghiem::create($inputs);
+        return redirect('/page/ungvien/iframe_kinhnghiem?user=' . $inputs['user']);
+    }
+    public function update_kinhnghiem(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienkinhnghiem::find($inputs['id'])->update($inputs);
+        return redirect('/page/ungvien/iframe_kinhnghiem?user=' . $inputs['user']);
+    }
+    public function delete_kinhnghiem(Request $request)
+    {
+        $inputs = $request->all();
+        $model = ungvienkinhnghiem::find($inputs['id']);
+        $user = $model->user;
+        $model->delete();
+        return redirect('/page/ungvien/iframe_kinhnghiem?user=' . $user);
+    }
+
+    public function iframe_coban(Request $request)
+    {
+        //    dd($request->success);
+        $ungvien = ungvien::where('user', $request->user)->first();
+
+        $dmtrinhdokythuat = dmtrinhdokythuat::all();
+        $danhmuc = danhmuchanhchinh::all();
+        $capbac = capbac::all();
+        return view('pages.page.ungvien.iframecoban')
+            ->with('ungvien', $ungvien)
+            ->with('danhmuc', $danhmuc)
+            ->with('capbac', $capbac)
+            ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
+            ->with('user', $request->user)
+            ->with('success', $request->success);
+    }
+
+    public function update_coban(Request $request)
+    {
+        $inputs = $request->all();
+        ungvien::find($inputs['id'])->update($inputs);
+        return redirect('/page/ungvien/iframe_coban?user=' . $inputs['user'] . '&success=đã lưu thông tin')
+            ->with('success', 'đã lưu thông tin');
+    }
+
+
+
+
+
+
+
+
+    public function index_vieclam()
+    {
         $model = Vitrituyendung::leftjoin('tuyendung', 'tuyendung.id', 'Vitrituyendung.idtuyendung')
             ->join('Company', 'Company.user', 'tuyendung.user')
             ->select('Vitrituyendung.*', 'tuyendung.thoihan', 'Company.name as congty', 'Company.user')
@@ -163,12 +301,26 @@ class PageController extends Controller
         return view('pages.page.vieclam.index')
             ->with('model', $model)
             ->with('capbac', $capbac)
-            ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
-            ->with('baocao', getdulieubaocao());
+            ->with('dmtrinhdokythuat', $dmtrinhdokythuat);
     }
 
     public function thongtin_vieclam(Request $request)
     {
+        if (session('admin') != null) {
+            if (session('admin')->phanloaitk == 3) {
+                $id_ungvien = session('admin')->id;
+            } else {
+                $id_ungvien = null;
+            }
+        } else {
+            $id_ungvien = null;
+        }
+        $ungtuyen = apply::where('ungvien', $id_ungvien)->where('vitri', $request->id)->first();
+        if (isset($ungtuyen)) {
+            $hoso = 'danop';
+        } else {
+            $hoso = 'chuanop';
+        }
         $model = Vitrituyendung::find($request->id);
         $Tuyendung  = Tuyendung::find($model->idtuyendung);
         $Company = Company::where('user', $Tuyendung->user)->first();
@@ -178,12 +330,13 @@ class PageController extends Controller
             ->select('Vitrituyendung.id', 'Vitrituyendung.name', 'Tuyendung.thoihan')
             ->where('Vitrituyendung.id', '!=', $request->id)
             ->get();
+
         return view('pages.page.vieclam.thongtin')
             ->with('model', $model)
             ->with('Tuyendung', $Tuyendung)
             ->with('Company', $Company)
-            ->with('list_vitrikhac', $list_vitrikhac)
-            ->with('baocao', getdulieubaocao());
+            ->with('hoso', $hoso)
+            ->with('list_vitrikhac', $list_vitrikhac);
     }
 
     public function congty(Request $request)
@@ -195,21 +348,20 @@ class PageController extends Controller
         // dd($Vitrituyendung);
         return view('pages.page.vieclam.congty')
             ->with('model', $model)
-            ->with('Company', $Company)
-            ->with('baocao', getdulieubaocao());
+            ->with('Company', $Company);
     }
 
 
     public function viewlogin()
     {
 
-        return view('pages.page.login')->with('baocao', getdulieubaocao());
+        return view('pages.page.login');
     }
 
     public function viewregister()
     {
 
-        return view('pages.page.register')->with('baocao', getdulieubaocao());
+        return view('pages.page.register');
     }
 
     public function register(Request $request)
@@ -250,27 +402,38 @@ class PageController extends Controller
             $run->handle();
         }
 
-
-
         return view('success.dangkythanhcong')
             ->with('message', 'Đăng ký thành công. Vui lòng truy cập Mail đăng ký để kích hoạt tài khoản.');
     }
-    public function iframe_hocvan(Request $request)
+
+    public function home()
     {
-     
-        $ungvienhocvan = ungvienhocvan::where('user',$request->user)->get();
-   
-        $dmtrinhdokythuat =dmtrinhdokythuat::all();
-        // dd($ungvienhocvan);
-        return view('pages.page.ungvien.iframehocvan')
-        ->with('ungvienhocvan', $ungvienhocvan)
-        ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
-        ->with('user', $request->user)
-        ->with('baocao', getdulieubaocao());
+        $vieclam =  Vitrituyendung::leftjoin('tuyendung', 'tuyendung.id', 'Vitrituyendung.idtuyendung')
+            ->join('Company', 'Company.user', 'tuyendung.user')
+            ->select('Vitrituyendung.*', 'tuyendung.thoihan', 'Company.name as congty', 'Company.user');
+
+        $count_vieclam = $vieclam->count();
+        $vieclam =  $vieclam->orderBy('id', 'DESC')->limit(5)->get();
+
+        $ungvien = User::leftjoin('ungvien', 'users.id', 'ungvien.user')
+            ->select('ungvien.*', 'users.email', 'users.created_at ', 'users.status')
+            ->where('phanloaitk', '3');
+        $count_ungvien = $ungvien->count();
+        $ungvien =   $ungvien->orderBy('id', 'DESC')->limit(5)->get();
+
+
+        return view('pages.page.home')
+            ->with('vieclam', $vieclam)
+            ->with('ungvien', $ungvien)
+            ->with('count_vieclam', $count_vieclam)
+            ->with('count_ungvien', $count_ungvien);
     }
+
     public function gioithieu()
     {
-
-        return view('pages.page.gioi-thieu')->with('baocao', getdulieubaocao());
+        $user = User::where('sadmin', 'admin')->first();
+        $Company = dmdonvi::where('madv', $user->madv)->first();
+        // dd($Company);
+        return view('pages.page.gioi-thieu');
     }
 }
