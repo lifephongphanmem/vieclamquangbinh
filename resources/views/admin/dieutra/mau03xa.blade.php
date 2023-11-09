@@ -142,7 +142,7 @@
         
         $model_truoc_hocnghe_trongnuoc = $model_truoc_hocnghe->whereIn('vieclammongmuon', ['1', '3']);
         $model_hientai_hocnghe_trongnuoc = $model_hientai_hocnghe->whereIn('vieclammongmuon', ['1', '3']);
-        // dd($model_hientai_hocnghe);
+
         $model_truoc_hocnghe_nuocngoai = $model_truoc_hocnghe->whereIn('vieclammongmuon', ['2', '3']);
         $model_hientai_hocnghe_nuocngoai = $model_hientai_hocnghe->whereIn('vieclammongmuon', ['2', '3']);
         ?>
@@ -245,15 +245,17 @@
             <td>d</td>
             <td colspan="4">Chia theo nghề nghiệp </td>
         </tr>
-        {{-- @foreach ($a_vithevl as $k => $val)
+        @foreach ($m_nganhnghe as $key => $val)
             <tr>
-                <td></td>
-                <td>{{ $val }}</td>
+                <td>{{ $val->madm }}</td>
+                <td>{{ $val->tendm }}</td>
                 <td style="text-align: center;">Người</td>
-                <td style="text-align: center;"> </td>
-                <td style="text-align: center;"></td>
+                <td style="text-align: center;">
+                    {{ dinhdangso(count($model_truoc_trongnuoc->where('nganhnghemongmuon', $val->madm))) }}</td>
+                <td style="text-align: center;">
+                    {{ dinhdangso(count($model_hientai_trongnuoc->where('nganhnghemongmuon', $val->madm))) }}</td>
             </tr>
-        @endforeach --}}
+        @endforeach
 
         <?php
         $model_truoc_nuocngoai = $model_truoc->whereIn('vieclammongmuon', ['2', '3']);
