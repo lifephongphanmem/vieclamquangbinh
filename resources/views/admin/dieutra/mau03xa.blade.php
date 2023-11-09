@@ -251,9 +251,9 @@
                 <td>{{ $val->tendm }}</td>
                 <td style="text-align: center;">Người</td>
                 <td style="text-align: center;">
-                    {{ dinhdangso(count($model_truoc_trongnuoc->where('nganhnghemuonhoc', $val->madm))) }}</td>
+                    {{ dinhdangso(count($model_truoc_trongnuoc->where('nganhnghemongmuon', $val->madm))) }}</td>
                 <td style="text-align: center;">
-                    {{ dinhdangso(count($model_hientai_trongnuoc->where('nganhnghemuonhoc', $val->madm))) }}</td>
+                    {{ dinhdangso(count($model_hientai_trongnuoc->where('nganhnghemongmuon', $val->madm))) }}</td>
             </tr>
         @endforeach
 
