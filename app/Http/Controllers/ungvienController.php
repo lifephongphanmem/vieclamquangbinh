@@ -126,91 +126,186 @@ class ungvienController extends Controller
         ungvienhocvan::create($data_ungvienhocvan);
         $dmtrinhdokythuat = dmtrinhdokythuat::all();
         $ungvienhocvan = ungvienhocvan::where('user', $inputs['user'])->get();
-        $result['content'] = "<div>";
-        $result['content'] .= "<table id='sample_3' class='table table-bordered table-hover dataTable no-footer'>";
+
+
+
+        $result['content'] = '<table class="table table-bordered table-hover dataTable no-footer">';
         foreach ($ungvienhocvan as $item) {
-            $result['content'] .= "<tr>";
-            $result['content'] .= "<td>";
-            $result['content'] .= " <div style='margin-top: 1rem'>";
-            $result['content'] .= " <span>".$item->truong ."&emsp;&emsp;&emsp;";
-            $result['content'] .= "</span>";
-            $result['content'] .= "<span>". getDayVn($item->tungay);
-            if (isset($item->denngay)) {
-                $result['content'] .= ' - ' . getDayVn($item->denngay);
-            }
-            $result['content'] .= "</div><div style='display: flex;justify-content:end;margin-top:-2rem'><span>";
-            $result['content'] .= '<a onclick="edithocvan("' . $item->id . '")" class="btn btn-primary"> Cật nhật</a>';
-            $result['content'] .= '<a onclick="deletehocvan("' . $item->id . '")" class="btn btn-danger"> Xóa </a>';
-            $result['content'] .= "</span></div>";
+            $result['content'] .= '<tr>';
+            $result['content'] .= '<td>';
+            $result['content'] .= '<div style="margin-bottom: -2rem;margin-top: 1rem">';
+            $result['content'] .= '<span >' . $item->truong . '&emsp;&emsp;&emsp;"';
+            $result['content'] .= '</span>';
+            $result['content'] .= '<span>' . getDayVn($item->tungay) . '-' . getDayVn($item->denngay);
 
 
+            $result['content'] .= '</span>';
+            $result['content'] .= '</div>';
 
-            $result['content'] .= "<div class='form-body' id='hocvan_edit" . $item->id . "' style='margin-top: 10px;' >";
-            $result['content'] .= "<div class='row col-md-12'>";
-            $result['content'] .= "<div class='col-md-3'>";
-            $result['content'] .= "<div class='form-group'>";
-            $result['content'] .= "<label class='control-label'>Chuyên ngành<span";
-            $result['content'] .= "class='require'>*</span></label>";
-            $result['content'] .= "<input type='text' name='chuyennganh' id='chuyennganh_edit'";
-            $result['content'] .= "class='form-control' placeholder='VD: Kinh doanh quốc tế' required>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "<div class='col-md-3'>";
-            $result['content'] .= "<div class='form-group'>";
-            $result['content'] .= "<label class='control-label'>Trường <span class='require'>*</span></label>";
-            $result['content'] .= "<input type='text' name='truong' id='truong_edit' class='form-control'";
-            $result['content'] .= "placeholder='VD: Đại học Ngoại Thương' required>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "<div class='col-md-3'>";
-            $result['content'] .= "<div class='form-group'>";
-            $result['content'] .= "<label class='control-label'>Bằng cấp <span class='require'>*</span></label>";
-            $result['content'] .= "<select name='bangcap' id='bangcap_edit' class='form-control' required>";
-            $result['content'] .= "<option value=''>Chọn bằng cấp</option>";
+            $result['content'] .= '<div style="display: flex;justify-content:end;">';
+            $result['content'] .= '<span>';
+            $result['content'] .= '<a onclick="edithocvan(' . $item->id . ')" class="btn btn-primary"> Cật nhật</a>';
+            $result['content'] .= '<a onclick="deletehocvan(' . $item->id . ')" class="btn btn-danger"> Xóa</a>';
+            $result['content'] .= '</span>';
+            $result['content'] .= '</div>';
+
+            $result['content'] .= '<div class="form-body" id="hocvan_edit{{$item->id}}" style="margin-top: 10px;display: none" >';
+            $result['content'] .= '<div class="row col-md-12">';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Chuyên ngành<span';
+            $result['content'] .= 'class="require">*</span></label>';
+            $result['content'] .= '<input type="text" name="chuyennganh" id="chuyennganh_edit"';
+            $result['content'] .= 'class="form-control" placeholder="VD: Kinh doanh quốc tế" required>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Trường <span class="require">*</span></label>';
+            $result['content'] .= '<input type="text" name="truong" id="truong_edit" class="form-control"';
+            $result['content'] .= 'placeholder="VD: Đại học Ngoại Thương" required>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Bằng cấp <span class="require">*</span></label>';
+            $result['content'] .= '<select name="bangcap" id="bangcap_edit" class="form-control" required>';
+            $result['content'] .= '<option value="">Chọn bằng cấp</option>';
             foreach ($dmtrinhdokythuat as $dm) {
-                $result['content'] .= "<option value='" . $dm->madmtdkt . "'>{{ $dm->tentdkt }}</option>";
+                $result['content'] .= '<option value="{{ $dm->madmtdkt }}">{{ $dm->tentdkt }}</option>';
             }
-            $result['content'] .= "</select>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "<div class='row col-md-3'>";
-            $result['content'] .= "<div class='col-md-12'>";
-            $result['content'] .= "<div class='form-group'>";
-            $result['content'] .= "<label class='control-label'>Từ ngày </label>";
-            $result['content'] .= "<input type='date' name='tungay' id='tungay_edit' class='form-control' value='' required>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "<div class='col-md-12'>";
-            $result['content'] .= "<div class='form-group'>";
-            $result['content'] .= "<label class='control-label'>Đến ngày </label>";
-            $result['content'] .= "<input type='date' name='denngay' id='denngay_edit' class='form-control' value='' required>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "<div class='row col-md-9'>";
-            $result['content'] .= "<div class='col-md-12'>";
-            $result['content'] .= "<div class='form-group'>";
-            $result['content'] .= "<label class='control-label'>Thành tựu</label>";
-            $result['content'] .= "<textarea type='text' name='thanhtuu' id='thanhtuu_edit' class='form-control' rows='6'></textarea>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "<input name='id' id='id_edit' hidden>";
-            $result['content'] .= "<div class='row'>";
-            $result['content'] .= "<button onclick='huyedithocvan('" . $item->id . "')' class='btn btn-sm btn-lg pull-right'";
-            $result['content'] .= "style='margin-left:2%;background-color: rgba(128, 128, 128, 0.507)'> Hủy</button>";
-            $result['content'] .= "<button onclick='updatehocvan('" . $item->id . "')' class='btn btn-sm btn-primary btn-lg pull-right'";
-            $result['content'] .= "style='margin-left:1px'>Lưu</button>";
-            $result['content'] .= "</div>";
-            $result['content'] .= "</div>";
+            $result['content'] .= '</select>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="row col-md-3">';
+            $result['content'] .= '<div class="col-md-12">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Từ ngày </label>';
+            $result['content'] .= '<input type="date" name="tungay" id="tungay_edit" class="form-control" value="" required>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-12">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Đến ngày </label>';
+            $result['content'] .= '<input type="date" name="denngay" id="denngay_edit" class="form-control" value="" required>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="row col-md-9">';
+            $result['content'] .= '<div class="col-md-12">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Thành tựu</label>';
+            $result['content'] .= '<textarea type="text" name="thanhtuu" id="thanhtuu_edit" class="form-control" rows="6"></textarea>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<input name="id" id="id_edit" hidden>';
+            $result['content'] .= '<div class="row">';
+            $result['content'] .= '<button onclick="huyedithocvan(' . $item->id . ')" class="btn btn-sm btn-lg pull-right"';
+            $result['content'] .= 'style="margin-left:2%;background-color: rgba(128, 128, 128, 0.507)"> Hủy</button>';
+            $result['content'] .= '<button onclick="updatehocvan(' . $item->id . ')" ';
+            $result['content'] .= 'class="btn btn-sm btn-primary btn-lg pull-right" style="margin-left:1px">Lưu</button>';
+            $result['content'] .= '</div>';
 
-            $result['content'] .= "</td>";
-            $result['content'] .= "</tr>";
+            $result['content'] .= '</div>';
 
+            $result['content'] .= '</td>';
+
+            $result['content'] .= '</tr>';
         }
-        $result['content'] .= "</table>";
-        $result['content'] .= "</div>";
+        $result['content'] .= '</table>';
+
+
+
+
+
+
+        // $result['content'] = "<div>";
+        // $result['content'] .= "<table id='sample_3' class='table table-bordered table-hover dataTable no-footer'>";
+        // foreach ($ungvienhocvan as $item) {
+        //     $result['content'] .= "<tr>";
+        //     $result['content'] .= "<td>";
+        //     $result['content'] .= " <div style='margin-top: 1rem'>";
+        //     $result['content'] .= " <span>".$item->truong ."&emsp;&emsp;&emsp;";
+        //     $result['content'] .= "</span>";
+        //     $result['content'] .= "<span>". getDayVn($item->tungay);
+        //     if (isset($item->denngay)) {
+        //         $result['content'] .= ' - ' . getDayVn($item->denngay);
+        //     }
+        //     $result['content'] .= "</div><div style='display: flex;justify-content:end;margin-top:-2rem'><span>";
+        //     $result['content'] .= '<a onclick="edithocvan("' . $item->id . '")" class="btn btn-primary"> Cật nhật</a>';
+        //     $result['content'] .= '<a onclick="deletehocvan("' . $item->id . '")" class="btn btn-danger"> Xóa </a>';
+        //     $result['content'] .= "</span></div>";
+
+
+
+        //     $result['content'] .= "<div class='form-body' id='hocvan_edit" . $item->id . "' style='margin-top: 10px;' >";
+        //     $result['content'] .= "<div class='row col-md-12'>";
+        //     $result['content'] .= "<div class='col-md-3'>";
+        //     $result['content'] .= "<div class='form-group'>";
+        //     $result['content'] .= "<label class='control-label'>Chuyên ngành<span";
+        //     $result['content'] .= "class='require'>*</span></label>";
+        //     $result['content'] .= "<input type='text' name='chuyennganh' id='chuyennganh_edit'";
+        //     $result['content'] .= "class='form-control' placeholder='VD: Kinh doanh quốc tế' required>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "<div class='col-md-3'>";
+        //     $result['content'] .= "<div class='form-group'>";
+        //     $result['content'] .= "<label class='control-label'>Trường <span class='require'>*</span></label>";
+        //     $result['content'] .= "<input type='text' name='truong' id='truong_edit' class='form-control'";
+        //     $result['content'] .= "placeholder='VD: Đại học Ngoại Thương' required>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "<div class='col-md-3'>";
+        //     $result['content'] .= "<div class='form-group'>";
+        //     $result['content'] .= "<label class='control-label'>Bằng cấp <span class='require'>*</span></label>";
+        //     $result['content'] .= "<select name='bangcap' id='bangcap_edit' class='form-control' required>";
+        //     $result['content'] .= "<option value=''>Chọn bằng cấp</option>";
+        //     foreach ($dmtrinhdokythuat as $dm) {
+        //         $result['content'] .= "<option value='" . $dm->madmtdkt . "'>{{ $dm->tentdkt }}</option>";
+        //     }
+        //     $result['content'] .= "</select>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "<div class='row col-md-3'>";
+        //     $result['content'] .= "<div class='col-md-12'>";
+        //     $result['content'] .= "<div class='form-group'>";
+        //     $result['content'] .= "<label class='control-label'>Từ ngày </label>";
+        //     $result['content'] .= "<input type='date' name='tungay' id='tungay_edit' class='form-control' value='' required>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "<div class='col-md-12'>";
+        //     $result['content'] .= "<div class='form-group'>";
+        //     $result['content'] .= "<label class='control-label'>Đến ngày </label>";
+        //     $result['content'] .= "<input type='date' name='denngay' id='denngay_edit' class='form-control' value='' required>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "<div class='row col-md-9'>";
+        //     $result['content'] .= "<div class='col-md-12'>";
+        //     $result['content'] .= "<div class='form-group'>";
+        //     $result['content'] .= "<label class='control-label'>Thành tựu</label>";
+        //     $result['content'] .= "<textarea type='text' name='thanhtuu' id='thanhtuu_edit' class='form-control' rows='6'></textarea>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "<input name='id' id='id_edit' hidden>";
+        //     $result['content'] .= "<div class='row'>";
+        //     $result['content'] .= '<button onclick="huyedithocvan("' . $item->id . '")" class="btn btn-sm btn-lg pull-right"';
+        //     $result['content'] .= "style='margin-left:2%;background-color: rgba(128, 128, 128, 0.507)'> Hủy</button>";
+        //     $result['content'] .= '<button onclick="updatehocvan("' . $item->id . '")" class="btn btn-sm btn-primary btn-lg pull-right"';
+        //     $result['content'] .= "style='margin-left:1px'>Lưu</button>";
+        //     $result['content'] .= "</div>";
+        //     $result['content'] .= "</div>";
+
+        //     $result['content'] .= "</td>";
+        //     $result['content'] .= "</tr>";
+
+        // }
+        // $result['content'] .= "</table>";
+        // $result['content'] .= "</div>";
         return response($result);
     }
 
@@ -235,7 +330,7 @@ class ungvienController extends Controller
                 $result['content'] .= ' - ' . getDayVn($item->denngay);
             }
             $result['content'] .= "<div style='display: flex;justify-content:end;margin-top:-2rem'><span>";
-            $result['content'] .= "<a onclick='edithocvan('". $item->id ."')' class='btn btn-primary'> Cật nhật</a>";
+            $result['content'] .= "<a onclick='edithocvan('" . $item->id . "')' class='btn btn-primary'> Cật nhật</a>";
             $result['content'] .= '<a onclick="deletehocvan("' . $item->id . '")" class="btn btn-danger"> Xóa </a>';
             $result['content'] .= "</span></div>";
 
@@ -303,7 +398,6 @@ class ungvienController extends Controller
 
             $result['content'] .= "</td>";
             $result['content'] .= "</tr>";
-
         }
         $result['content'] .= "</table>";
         $result['content'] .= "</div>";

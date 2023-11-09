@@ -137,29 +137,30 @@
             <td colspan="4">Nhu cầu tìm kiếm việc làm, học nghề </td>
         </tr>
         <?php
+        $model_truoc_trongnuoc = $model_truoc->whereIn('vieclammongmuon', ['1', '3']);
+        $model_hientai_trongnuoc = $model_hientai->whereIn('vieclammongmuon', ['1', '3']);
+
+       
+        $model_truoc_nuocngoai = $model_truoc->whereIn('vieclammongmuon', ['2', '3']);
+        $model_hientai_nuocngoai = $model_hientai->whereIn('vieclammongmuon', ['2', '3']);
+
         $model_truoc_hocnghe = $model_truoc->where('nganhnghemuonhoc', '!=', null);
         $model_hientai_hocnghe = $model_hientai->where('nganhnghemuonhoc', '!=', null);
-        
-        $model_truoc_hocnghe_trongnuoc = $model_truoc_hocnghe->whereIn('vieclammongmuon', ['1', '3']);
-        $model_hientai_hocnghe_trongnuoc = $model_hientai_hocnghe->whereIn('vieclammongmuon', ['1', '3']);
-        
-        $model_truoc_hocnghe_nuocngoai = $model_truoc_hocnghe->whereIn('vieclammongmuon', ['2', '3']);
-        $model_hientai_hocnghe_nuocngoai = $model_hientai_hocnghe->whereIn('vieclammongmuon', ['2', '3']);
         ?>
 
         <tr>
             <td></td>
             <td>- Trong tỉnh, trong nước</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_hocnghe_trongnuoc)) }} </td>
-            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_hocnghe_trongnuoc)) }} </td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_trongnuoc)) }} </td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_trongnuoc)) }} </td>
         </tr>
         <tr>
             <td></td>
             <td>- Đi làm việc ở nước ngoài</td>
             <td style="text-align: center;">Người</td>
-            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_hocnghe_nuocngoai)) }} </td>
-            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_hocnghe_nuocngoai)) }} </td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_truoc_nuocngoai)) }} </td>
+            <td style="text-align: center;">{{ dinhdangso(count($model_hientai_nuocngoai)) }} </td>
         </tr>
         <tr>
             <td></td>
@@ -169,11 +170,6 @@
             <td style="text-align: center;">{{ dinhdangso(count($model_hientai_hocnghe)) }} </td>
         </tr>
 
-
-        <?php
-        $model_truoc_trongnuoc = $model_truoc->whereIn('vieclammongmuon', ['1', '3']);
-        $model_hientai_trongnuoc = $model_hientai->whereIn('vieclammongmuon', ['1', '3']);
-        ?>
 
         <tr>
             <td style="font-weight: bold;">1.1</td>
@@ -251,11 +247,7 @@
             </tr>
         @endforeach
 
-        <?php
-        $model_truoc_nuocngoai = $model_truoc->whereIn('vieclammongmuon', ['2', '3']);
-        $model_hientai_nuocngoai = $model_hientai->whereIn('vieclammongmuon', ['2', '3']);
-        
-        ?>
+
         <tr>
             <td style="font-weight: bold;">1.2</td>
             <td colspan="4" style="font-weight: bold;">Đi làm việc ở nước ngoài</td>
@@ -391,11 +383,6 @@
             </tr>
         @endforeach --}}
 
-        <?php
-        $model_truoc_hocnghe = $model_truoc->whereNotNull('nganhnghemuonhoc');
-        $model_hientai_hocnghe = $model_hientai->whereNotNull('nganhnghemuonhoc');
-        
-        ?>
         <tr>
             <td style="font-weight: bold;">1.3</td>
             <td colspan="4" style="font-weight: bold;">Nhu cầu học nghề</td>
