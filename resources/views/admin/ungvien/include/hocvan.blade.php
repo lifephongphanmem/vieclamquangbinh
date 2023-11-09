@@ -211,8 +211,8 @@
         $("#hocvan_edit"+id).css("display", "block");
     }
     function huyedithocvan(id) {
-        console.log(id);
-        let id_edit = id.trim(); 
+       
+        let id_edit = (id).trim(); 
         $("#hocvan_edit"+id_edit).css("display", "none");
     }
     function deletehocvan(id, user) {
