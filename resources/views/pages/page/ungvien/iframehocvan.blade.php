@@ -29,9 +29,12 @@
             font-size: 14px;
             z-index: 9999;
         }
-        label{
+
+        label,
+        p {
             font-size: 12px;
         }
+
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HTPQJ1MCPG"></script>
@@ -55,7 +58,7 @@
 
 <body class="home  style-inpage fixed">
     <h2 style="text-align: center;background-color: #007cbd;color: white;font-size: 20px;height: 35px;">
-        <i class="fa fa-fw fa-bank" aria-hidden="true" style="margin-top: 7px;"></i> Trình độ học vấn 
+        <i class="fa fa-fw fa-bank" aria-hidden="true" style="margin-top: 7px;"></i> Trình độ học vấn
     </h2>
     <div class="form-body" style="margin: 1%;">
         <div id="hocvan_danhsach">
@@ -99,7 +102,7 @@
                                                                     <label class="control-label">Chuyên ngành<span
                                                                             class="require">*</span></label>
                                                                     <input type="text" name="chuyennganh"
-                                                                        id="chuyennganh" class="form-control"
+                                                                        id="chuyennganh_edit" class="form-control"
                                                                         value="{{ $item->chuyennganh }}"
                                                                         placeholder="VD: Kinh doanh quốc tế" required>
                                                                 </div>
@@ -108,8 +111,8 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">Trường <span
                                                                             class="require">*</span></label>
-                                                                    <input type="text" name="truong" id="truong"
-                                                                        class="form-control"
+                                                                    <input type="text" name="truong"
+                                                                        id="truong_edit" class="form-control"
                                                                         value="{{ $item->truong }}"
                                                                         placeholder="VD: Đại học Ngoại Thương" required>
                                                                 </div>
@@ -118,7 +121,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">Bằng cấp <span
                                                                             class="require">*</span></label>
-                                                                    <select name="bangcap" id="bangcap"
+                                                                    <select name="bangcap" id="bangcap_edit"
                                                                         class="form-control" required>
                                                                         <option value="">Chọn bằng cấp</option>
                                                                         @foreach ($dmtrinhdokythuat as $tdkt)
@@ -134,17 +137,18 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Từ ngày </label>
-                                                                    <input type="date" name="tungay" id="tungay"
-                                                                        value="{{ $item->tungay }}"
-                                                                        class="form-control" value="" >
+                                                                    <input type="date" name="tungay"
+                                                                        id="tungay_edit" value="{{ $item->tungay }}"
+                                                                        class="form-control">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Đến ngày </label>
                                                                     <input type="date" name="denngay"
-                                                                        id="denngay" value="{{ $item->denngay }}"
-                                                                        class="form-control" value="" >
+                                                                        id="denngay_edit"
+                                                                        value="{{ $item->denngay }}"
+                                                                        class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -152,7 +156,7 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Thành tựu</label>
-                                                                    <textarea type="text" name="thanhtuu" id="thanhtuu" class="form-control" rows="6">{{ $item->thanhtuu }}</textarea>
+                                                                    <textarea type="text" name="thanhtuu" id="thanhtuu_edit" class="form-control" rows="6">{{ $item->thanhtuu }}</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -162,11 +166,11 @@
                                                             value="{{ $item->id }}" hidden>
                                                         <div class="row col-md-9" style="margin-left: 0%">
                                                             <a onclick="huyedit_hocvan('{{ $item->id }}')"
-                                                                class="btn btn-sm btn-secondary btn-lg pull-left" style="background-color: rgb(198, 210, 221);color: white">
+                                                                class="btn btn-sm btn-secondary btn-lg pull-left"
+                                                                style="background-color: rgb(198, 210, 221);color: white">
                                                                 Hủy</a>
                                                             <button type="submit"
-                                                                class="btn btn-sm btn-info btn-lg pull-left">
-                                                                Lưu</button>
+                                                                class="btn btn-sm btn-info btn-lg pull-left">Lưu</button>
                                                         </div>
 
                                                     </div>
@@ -205,7 +209,7 @@
                     <div class="form-group">
                         <label class="control-label">Trường <span class="require">*</span></label>
                         <input type="text" name="truong" id="truong" class="form-control"
-                            placeholder="VD: Đại học Ngoại Thương" required>
+                            placeholder="VD: Đại học Ngoại Thương"  required>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -214,7 +218,8 @@
                         <select name="bangcap" id="bangcap" class="form-control" required>
                             <option value="">Chọn bằng cấp</option>
                             @foreach ($dmtrinhdokythuat as $item)
-                                <option value="{{ $item->madmtdkt }}">{{ $item->tentdkt }}</option>
+                                <option value="{{ $item->madmtdkt }}" >
+                                    {{ $item->tentdkt }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -224,7 +229,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label">Từ ngày </label>
-                        <input type="date" name="tungay" id="tungay" class="form-control" value="" >
+                        <input type="date" name="tungay" id="tungay" class="form-control" value="">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -244,7 +249,8 @@
             </div>
             <input type="text" id="user" name="user" value="{{ $user }}" hidden>
             <div class="row col-md-9" style="margin-left: 0%">
-                <a onclick="huythemmoi_hocvan()" class="btn btn-sm btn-light btn-lg pull-left" style="background-color: rgb(198, 210, 221);color: white">
+                <a onclick="huythemmoi_hocvan()" class="btn btn-sm btn-light btn-lg pull-left"
+                    style="background-color: rgb(198, 210, 221);color: white">
                     Hủy</a>
 
                 <button type="submit" class="btn btn-sm btn-info btn-lg pull-left">
@@ -254,7 +260,6 @@
     </div>
 
     <script>
-
         function createhocvan() {
             $('#chuyennganh').val('');
             $('#truong').val('');
@@ -265,7 +270,7 @@
             $("#hocvan_themmoi").css("display", "block");
         }
 
-        function huythemmoi_hocvan(id) {
+        function huythemmoi_hocvan() {
             $("#hocvan_themmoi").css("display", "none");
         }
 
@@ -277,6 +282,7 @@
         function huyedit_hocvan(id) {
             $("#hocvan_chinhsua" + id).css("display", "none");
         }
+
     </script>
 
 </body>

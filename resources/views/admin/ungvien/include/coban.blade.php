@@ -1,24 +1,24 @@
 <div class="form-body" id="frm_coban">
 
     <div class="row">
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Ảnh đại diện </label>
                 <input type="file" name="avatar" id="avatar" class="form-control" placeholder="Chọn ảnh"
                     value="">
             </div>
+        </div> --}}
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Họ tên <span style="color: red">*</span></label>
+                <input type="text" name="hoten" id="hoten" class="form-control"
+                    placeholder="Nhập đầy đủ Họ và Tên" value="{{ isset($ungvien->hoten) ? $ungvien->hoten : '' }}">
+                    <span style="color: red"></span>
+            </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Họ tên <span class="require">*</span></label>
-                <input type="text" name="hoten" id="hoten" class="form-control"
-                    placeholder="Nhập đầy đủ Họ và Tên" value="{{ isset($ungvien->hoten) ? $ungvien->hoten : '' }}"
-                    required>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group">
-                <label class="control-label">Giới tính <span class="require">*</span></label>
+                <label class="control-label">Giới tính</label>
                 <select name="gioitinh" id="gioitinh" class="form-control">
                     <option value="Nữ"
                         {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nữ' ? 'selected' : '') : '' }}>Nữ
@@ -29,24 +29,24 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Ngày sinh<span class="require">*</span></label>
+                <label class="control-label">Ngày sinh<span style="color: red">*</span></label>
                 <input type="date" name="ngaysinh" id="ngaysinh" class="form-control"
-                    value="{{ isset($ungvien->ngaysinh) ? $ungvien->ngaysinh : '' }}" required>
+                    value="{{ isset($ungvien->ngaysinh) ? $ungvien->ngaysinh : '' }}" >
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Số điện thoại<span class="require">*</span></label>
+                <label class="control-label">Số điện thoại<span style="color: red">*</span></label>
                 <input type="number" name="phone" id="phone" class="form-control"
-                    value="{{ isset($ungvien->phone) ? $ungvien->phone : '' }}" required>
+                    value="{{ isset($ungvien->phone) ? $ungvien->phone : '' }}" >
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_tinh = $danhmuc->where('capdo', 'T'); ?>
-                <label class="control-label">Tỉnh<span class="require">*</span></label>
+                <label class="control-label">Tỉnh<span style="color: red">*</span></label>
                 <select name="tinh" id="tinh"class="form-control">
                     @foreach ($danhmuc_tinh as $item)
                         <option value="{{ $item->maquocgia }}"
@@ -59,8 +59,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_huyen = $danhmuc->where('capdo', 'H'); ?>
-                <label class="control-label">Huyện<span class="require">*</span></label>
-                <select name="huyen" id="huyen" class="form-control select2basic" required>
+                <label class="control-label">Huyện<span style="color: red">*</span></label>
+                <select name="huyen" id="huyen" class="form-control select2basic" >
                     <option value="">Chọn huyện</option>
                     @foreach ($danhmuc_huyen as $item)
                         <option value="{{ $item->maquocgia }}"
@@ -73,8 +73,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_xa = $danhmuc->where('capdo', 'X'); ?>
-                <label class="control-label">Xã<span class="require">*</span></label>
-                <select name="xa" id="xa" class="form-control select2basic" required>
+                <label class="control-label">Xã<span style="color: red">*</span></label>
+                <select name="xa" id="xa" class="form-control select2basic" >
                     <option value="">Chọn xã</option>
                     @foreach ($danhmuc_xa as $item)
                         <option value="{{ $item->maquocgia }}"
@@ -86,7 +86,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">address<span class="require">*</span></label>
+                <label class="control-label">address<span style="color: red">*</span></label>
                 <input type="text" name="address" id="address" class="form-control"
                     placeholder="số nhà-Tên đường/Xóm-Thôn"
                     value="{{ isset($ungvien->address) ? $ungvien->address : '' }}" required>
@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Cấp bậc<span class="require">*</span></label>
+                <label class="control-label">Cấp bậc<span style="color: red">*</span></label>
                 <select name="capbac" id="capbac" class="form-control" >
                     <option value="">Chọn cấp bậc</option>
                     @foreach ($capbac as $item)
@@ -105,7 +105,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Trạng thái hôn nhân<span class="require">*</span></label>>
+                <label class="control-label">Trạng thái hôn nhân</label>
                 <select name="honnhan" id="honnhan" class="form-control">
                     <option value="0"
                         {{ isset($ungvien->honnhan) ? ($ungvien->honnhan == '0' ? 'selected' : '') : '' }}>Độc thân
@@ -127,7 +127,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Mức lương mong muốn<span class="require">*</span></label>
+                <label class="control-label">Mức lương mong muốn<span style="color: red">*</span></label>
                 <input type="number" id="luong" name="luong"
                     class="form-control"value="{{ isset($ungvien->luong) ? $ungvien->luong : '' }}"  required      placeholder="VD: 8 (8 triệu)">
             </div>

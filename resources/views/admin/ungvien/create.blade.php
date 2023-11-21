@@ -26,6 +26,7 @@
             TableManaged3.init();
         });
     </script>
+
 @stop
 @section('content')
     <div class="row">
@@ -38,6 +39,7 @@
                              ứng viên</h3>
                     </div>
                     <div class="card-toolbar">
+                        <a onclick="history.back()" class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
 
                 </div>
@@ -152,8 +154,8 @@
                         </div>
 
                     </div>
-                    <input type="text" name="case" id="case" value="create">
-                    <input name="user" id="user" value="">
+                    <input type="text" name="case" id="case" value="create" hidden>
+                    <input name="user" id="user" value="" hidden>
                     
                     {{-- {!! Form::close() !!} --}}
                     {{-- </form> --}}

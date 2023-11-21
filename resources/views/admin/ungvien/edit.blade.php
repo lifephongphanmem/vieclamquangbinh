@@ -144,9 +144,8 @@
 
                         </div>
 
-
-                        <input type="text" name="case" id="case" value="edit" >
-                        <input  name="user" id="user" value="{{$ungvien->user}}">
+                        <input type="text" name="case" id="case" value="edit" hidden>
+                        <input  name="user" id="user" value="{{$ungvien->user}}" hidden>
 {{-- 
                     </form> --}}
                 </div>

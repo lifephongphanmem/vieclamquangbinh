@@ -6,7 +6,7 @@
                     <tr>
                         <td>
                             <div style="margin-bottom: -2rem;margin-top: 1rem">
-                                <span >
+                                <span>
                                     {{ $item->truong }} &emsp;&emsp;&emsp;
                                 </span>
                                 <span>
@@ -17,35 +17,40 @@
 
                             <div style="display: flex;justify-content:end;">
                                 <span>
-                                    <a onclick="edithocvan('{{ $item->id }}')" class="btn btn-primary"> Cật nhật</a>
-                                    <a onclick="deletehocvan('{{ $item->id }}')" class="btn btn-danger"> Xóa</a>
+                                    <a onclick="edithocvan({{ $item->id }})" class="btn btn-primary"> Cật nhật</a>
+                                    <a onclick="deletehocvan({{ $item->id }})" class="btn btn-danger"> Xóa</a>
                                 </span>
                             </div>
-                       
-                            <div class="form-body" id="hocvan_edit{{$item->id}}" style="margin-top: 10px;display: none" >
+
+                            <div class="form-body" id="hocvan_edit{{ $item->id }}"
+                                style="margin-top: 10px;display: none">
                                 <div class="row col-md-12">
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Chuyên ngành<span
                                                     class="require">*</span></label>
-                                            <input type="text" name="chuyennganh" id="chuyennganh_edit"
-                                                class="form-control" placeholder="VD: Kinh doanh quốc tế" required>
+                                            <input type="text" name="chuyennganh" id="chuyennganh_edit{{$item->id}}"
+                                                value="{{ $item->chuyennganh }}" class="form-control"
+                                                placeholder="VD: Kinh doanh quốc tế" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Trường <span class="require">*</span></label>
-                                            <input type="text" name="truong" id="truong_edit" class="form-control"
-                                                placeholder="VD: Đại học Ngoại Thương" required>
+                                            <input type="text" name="truong" id="truong_edit{{$item->id}}" class="form-control"
+                                                value="{{ $item->truong }}" placeholder="VD: Đại học Ngoại Thương"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Bằng cấp <span class="require">*</span></label>
-                                            <select name="bangcap" id="bangcap_edit" class="form-control" required>
+                                            <select name="bangcap" id="bangcap_edit{{$item->id}}" class="form-control" required>
                                                 <option value="">Chọn bằng cấp</option>
                                                 @foreach ($dmtrinhdokythuat as $dm)
-                                                    <option value="{{ $dm->madmtdkt }}">{{ $dm->tentdkt }}</option>
+                                                    <option value="{{ $dm->madmtdkt }}"
+                                                        {{ $item->bangcap == $dm->madmtdkt ? 'selected' : '' }}>
+                                                        {{ $dm->tentdkt }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -55,15 +60,15 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Từ ngày </label>
-                                            <input type="date" name="tungay" id="tungay_edit" class="form-control"
-                                                value="" required>
+                                            <input type="date" name="tungay" id="tungay_edit{{$item->id}}" class="form-control"
+                                                value="{{ $item->tungay }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Đến ngày </label>
-                                            <input type="date" name="denngay" id="denngay_edit" class="form-control"
-                                                value="" required>
+                                            <input type="date" name="denngay" id="denngay_edit{{$item->id}}" class="form-control"
+                                                value="{{ $item->denngay }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -71,24 +76,25 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Thành tựu</label>
-                                            <textarea type="text" name="thanhtuu" id="thanhtuu_edit" class="form-control" rows="6"></textarea>
+                                            <textarea type="text" name="thanhtuu" id="thanhtuu_edit{{$item->id}}" class="form-control" rows="6">{{ $item->thanhtuu }}</textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <input name="id" id="id_edit" hidden>
+                        
                                 <div class="row">
-                                    <button onclick="huyedithocvan('{{$item->id}}')" class="btn btn-sm btn-lg pull-right"
+                                    <button onclick="huyedithocvan({{ $item->id }})"
+                                        class="btn btn-sm btn-lg pull-right"
                                         style="margin-left:2%;background-color: rgba(128, 128, 128, 0.507)">
                                         Hủy</button>
-                                    <button onclick="updatehocvan('{{$item->id}}')" class="btn btn-sm btn-primary btn-lg pull-right"
-                                        style="margin-left:1px">
+                                    <button onclick="updatehocvan({{ $item->id }})"
+                                        class="btn btn-sm btn-primary btn-lg pull-right" style="margin-left:1px">
                                         Lưu</button>
                                 </div>
 
                             </div>
 
                         </td>
-                      
+
                     </tr>
                 @endforeach
             </table>
@@ -132,6 +138,7 @@
             </div>
         </div>
     </div>
+
     <div class="row col-md-3">
         <div class="col-md-12">
             <div class="form-group">
@@ -199,22 +206,49 @@
             },
             dataType: 'JSON',
             success: function(data) {
-                // $('#form_hocvan3').hide();
                 $('#hocvan_danhsach').html(data.content);
                 $('#hocvan_themmoi').css("display", "none");
                 toastr.success('Đã lưu thông tin', "Hoàn thành!");
             }
         })
     }
+
     function edithocvan(id) {
-        // let id_edit = id.trim(); 
-        $("#hocvan_edit"+id).css("display", "block");
+
+        let id_edit = id.toString();
+        $("#hocvan_edit" + id_edit).css("display", "block");
     }
+
     function huyedithocvan(id) {
-       
-        let id_edit = (id).trim(); 
-        $("#hocvan_edit"+id_edit).css("display", "none");
+        let id_edit = id.toString();
+        $("#hocvan_edit" + id_edit).css("display", "none");
     }
+
+    function updatehocvan(id) {
+        let id_edit = id.toString();
+        $.ajax({
+            url: '/ungvien/updatehocvan',
+            type: 'POST',
+            data: {
+                _token: CSRF_TOKEN,
+                id: id,
+                user: $('#user').val(),
+                chuyennganh: $('#chuyennganh_edit'+id_edit).val(),
+                truong: $('#truong_edit'+id_edit).val(),
+                bangcap: $('#bangcap_edit'+id_edit).val(),
+                tungay: $('#tungay_edit'+id_edit).val(),
+                denngay: $('#denngay_edit'+id_edit).val(),
+                thanhtuu: $('#thanhtuu_edit'+id_edit).val(),
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                $('#hocvan_danhsach').html(data.content);
+                // $('#hocvan_themmoi').css("display", "none");
+                toastr.success('Đã lưu thông tin', "Hoàn thành!");
+            }
+        })
+    }
+
     function deletehocvan(id, user) {
 
         $.ajax({
