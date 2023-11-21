@@ -30,12 +30,19 @@
             z-index: 9999;
         }
 
-        label {
+        label,
+        p,
+        span {
             font-size: 12px;
         }
 
-        p {
+        span {
             font-size: 12px;
+            color: red;
+        }
+
+        input {
+            margin-bottom: 1%;
         }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -64,7 +71,8 @@
     </h2>
     @if (isset($success))
         <div style="background-color: #d6e9c6;margin: 1%;width: 98%;height: 8%;border-radius: 5px;" id='success'>
-            <button onclick="close_success()" type="button" class="close" aria-hidden="true" style="margin-right:5px">×</button>
+            <button onclick="close_success()" type="button" class="close" aria-hidden="true"
+                style="margin-right:5px">×</button>
             <p style="padding-top: 1%;margin-left: 1%;font-size: 14px;color: #3c7011bb">{{ $success }}</p>
         </div>
     @endif
@@ -75,8 +83,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Ảnh đại diện </label>
-                        <input type="file" name="avatar" id="avatar" class="form-control" placeholder="Chọn ảnh"
-                            value="">
+                        <input type="file" name="avatar" id="avatar" class="form-control" placeholder="Chọn ảnh">
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -84,19 +91,20 @@
                         <label class="control-label">Họ tên <span class="require">*</span></label>
                         <input type="text" name="hoten" id="hoten" class="form-control"
                             placeholder="Nhập đầy đủ Họ và Tên"
-                            value="{{ isset($ungvien->hoten) ? $ungvien->hoten : '' }}" required>
+                            value="{{ $errors->any() ? old('hoten') : $ungvien->hoten }}">
+                        @error('hoten')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-md-1">
                     <div class="form-group">
                         <label class="control-label">Giới tính <span class="require">*</span></label>
                         <select name="gioitinh" id="gioitinh" class="form-control">
-                            <option value="Nữ"
-                                {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nữ' ? 'selected' : '') : '' }}>
+                            <option value="Nữ" {{ $ungvien->gioitinh == 'Nữ' ? 'selected' : '' }}>
                                 Nữ
                             </option>
-                            <option value="Nam"
-                                {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nam' ? 'selected' : '') : '' }}>
+                            <option value="Nam" {{ $ungvien->gioitinh == 'Nam' ? 'selected' : '' }}>
                                 Nam
                             </option>
                         </select>
@@ -106,16 +114,24 @@
                     <div class="form-group">
                         <label class="control-label">Ngày sinh<span class="require">*</span></label>
                         <input type="date" name="ngaysinh" id="ngaysinh" class="form-control"
-                            value="{{ isset($ungvien->ngaysinh) ? $ungvien->ngaysinh : '' }}" required>
+                            value="{{ $errors->any() ? old('ngaysinh') : $ungvien->ngaysinh }}">
+                        @error('ngaysinh')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Số điện thoại<span class="require">*</span></label>
                         <input type="number" name="phone" id="phone" class="form-control"
-                            value="{{ isset($ungvien->phone) ? $ungvien->phone : '' }}" required>
+                            value="{{ $errors->any() ? old('phone') : $ungvien->phone }}">
+                        @error('phone')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <?php $danhmuc_tinh = $danhmuc->where('capdo', 'T'); ?>
@@ -123,7 +139,7 @@
                         <select name="tinh" id="tinh"class="form-control">
                             @foreach ($danhmuc_tinh as $item)
                                 <option value="{{ $item->maquocgia }}"
-                                    {{ isset($ungvien->tinh) ? ($ungvien->tinh == $item->maquocgia ? 'selected' : '') : '' }}>
+                                    {{ $ungvien->tinh == $item->maquocgia ? 'selected' : '' }}>
                                     {{ $item->name }}</option>
                             @endforeach
                         </select>
@@ -133,28 +149,34 @@
                     <div class="form-group">
                         <?php $danhmuc_huyen = $danhmuc->where('capdo', 'H'); ?>
                         <label class="control-label">Huyện<span class="require">*</span></label>
-                        <select name="huyen" id="huyen" class="form-control select2basic" required>
+                        <select name="huyen" id="huyen" class="form-control select2basic">
                             <option value="">Chọn huyện</option>
                             @foreach ($danhmuc_huyen as $item)
                                 <option value="{{ $item->maquocgia }}"
-                                    {{ isset($ungvien->huyen) ? ($ungvien->huyen == $item->maquocgia ? 'selected' : '') : '' }}>
+                                    {{ $errors->any() ? (old('huyen') == $item->maquocgia ? 'selected' : '') : ($ungvien->huyen == $item->maquocgia ? 'selected' : '') }}>
                                     {{ $item->name }}</option>
                             @endforeach
                         </select>
+                        @error('huyen')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <?php $danhmuc_xa = $danhmuc->where('capdo', 'X'); ?>
                         <label class="control-label">Xã<span class="require">*</span></label>
-                        <select name="xa" id="xa" class="form-control select2basic" required>
+                        <select name="xa" id="xa" class="form-control select2basic">
                             <option value="">Chọn xã</option>
                             @foreach ($danhmuc_xa as $item)
                                 <option value="{{ $item->maquocgia }}"
-                                    {{ isset($ungvien->xa) ? ($ungvien->xa == $item->maquocgia ? 'selected' : '') : '' }}>
+                                    {{ $errors->any() ? (old('xa') == $item->maquocgia ? 'selected' : '') : ($ungvien->xa == $item->maquocgia ? 'selected' : '') }}>
                                     {{ $item->name }}</option>
                             @endforeach
                         </select>
+                        @error('xa')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -162,12 +184,17 @@
                         <label class="control-label">address<span class="require">*</span></label>
                         <input type="text" name="address" id="address" class="form-control"
                             placeholder="số nhà-Tên đường/Xóm-Thôn"
-                            value="{{ isset($ungvien->address) ? $ungvien->address : '' }}" required>
+                            value="{{ $errors->any() ? old('address') : $ungvien->address }}">
+                        @error('address')
+                            <span>{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Cấp bậc<span class="require">*</span></label>
+                        <label class="control-label">Cấp bậc</label>
                         <select name="capbac" id="capbac" class="form-control">
                             <option value="">Chọn cấp bậc</option>
                             @foreach ($capbac as $item)
@@ -178,14 +205,12 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Trạng thái hôn nhân<span class="require">*</span></label>>
+                        <label class="control-label">Trạng thái hôn nhân</label>>
                         <select name="honnhan" id="honnhan" class="form-control">
-                            <option value="0"
-                                {{ isset($ungvien->honnhan) ? ($ungvien->honnhan == '0' ? 'selected' : '') : '' }}>Độc
+                            <option value="0" {{ $ungvien->honnhan == '0' ? 'selected' : '' }}>Độc
                                 thân
                             </option>
-                            <option value="1"
-                                {{ isset($ungvien->honnhan) ? ($ungvien->honnhan == '1' ? 'selected' : '') : '' }}>Đã
+                            <option value="1" {{ $ungvien->honnhan == '1' ? 'selected' : '' }}>Đã
                                 kết hôn
                             </option>
                         </select>
@@ -204,10 +229,11 @@
                     <div class="form-group">
                         <label class="control-label">Mức lương mong muốn<span class="require">*</span></label>
                         <input type="number" id="luong" name="luong"
-                            class="form-control"value="{{ isset($ungvien->luong) ? $ungvien->luong : '' }}" required
-                            placeholder="VD: 8 (8 triệu)">
+                            class="form-control"value="{{ $ungvien->luong }}" placeholder="VD: 8 (8 triệu)">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Trình độ</label>
@@ -215,7 +241,7 @@
                             <option value="">Chọn trình độ</option>
                             @foreach ($dmtrinhdokythuat as $item)
                                 <option value="{{ $item->madmtdkt }}"
-                                    {{ isset($ungvien->trinhdocmkt) ? ($ungvien->trinhdocmkt == $item->madmtdkt ? 'selected' : '') : '' }}>
+                                    {{ $ungvien->trinhdocmkt == $item->madmtdkt ? 'selected' : '' }}>
                                     {{ $item->tentdkt }}</option>
                             @endforeach
                         </select>
@@ -371,9 +397,9 @@
         </form>
     </div>
 
-<script>
-    function close_success() {
-        $('#success').css('display','none')
-    }
-</script>
+    <script>
+        function close_success() {
+            $('#success').css('display', 'none')
+        }
+    </script>
 </body>

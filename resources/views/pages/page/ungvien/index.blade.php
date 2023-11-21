@@ -38,8 +38,8 @@
                                                 <div class="img">
                                                     <a href="">
                                                         <img class="img-full-h"
-                                                            src="{{ isset($item->avatar) ? 'uploads/ungvien/' . $item->avatar : url('assets2/media/images/default/s100_100/defaultimage.jpg') }}"
-                                                            title="{{ $item->hoten }}">
+                                                            src="{{ isset($item->avatar) ? '/uploads/ungvien/' . $item->avatar : url('assets2/media/images/default/s100_100/defaultimage.jpg') }}"
+                                                            title="{{ $item->hoten }}" style="height: 100%;">
                                                     </a>
                                                 </div>
                                                 <div class="text">
