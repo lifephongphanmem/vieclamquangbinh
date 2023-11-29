@@ -25,6 +25,15 @@
                         <span class="menu-text font-weight-bold">Lịch sử tuyển dụng</span>
                     </a>
                 </li>
+                <li class="menu-item" aria-haspopup="true">
+                    <a href="{{ URL::to('tuyendung-hosodanop') }}" class="menu-link">
+                        <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                        </i>
+                        <span class="menu-text font-weight-bold">Hồ sơ ứng tuyển</span>
+                    </a>
+                </li>
+                
             </ul>
         </div>
     </li>

@@ -392,7 +392,6 @@ class PageController extends Controller
         // $validate = $request->validate([
         // 	// 'username' => 'required|max:255',
         // 	'email' => 'required|email|max:255|unique:users',
-        // 	'dkkd' => 'required|max:20|unique:company',
         // 	'password' => 'required|min:8|confirmed',
         // ]);
         $inputs = $request->all();
@@ -413,6 +412,7 @@ class PageController extends Controller
             $data_ungvien = [
                 'user' => $model_user->id,
                 // 'avatar' => $inputs['avatar'],
+                'email' => $inputs['email'],
                 'hoten' => $inputs['hoten'],
             ];
             ungvien::create($data_ungvien);
@@ -459,4 +459,10 @@ class PageController extends Controller
         // dd($Company);
         return view('pages.page.gioi-thieu');
     }
+
+
+
+
+
+    
 }

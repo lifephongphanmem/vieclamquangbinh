@@ -64,6 +64,7 @@ Route::prefix('ungvien')->group(function(){
     Route::get('/edithocvan',[ungvienController::class,'edithocvan']);
     Route::post('/updatehocvan',[ungvienController::class,'updatehocvan']);
     Route::get('/deletehocvan',[ungvienController::class,'deletehocvan']);
+    Route::get('/huyedithocvan',[ungvienController::class,'huyedithocvan']);
 
 
     Route::get('/createkinhnghiem',[ungvienController::class,'createkinhnghiem']);
@@ -71,5 +72,9 @@ Route::prefix('ungvien')->group(function(){
     Route::get('/editkinhnghiem',[ungvienController::class,'editkinhnghiem']);
     Route::post('/updatekinhnghiem',[ungvienController::class,'updatekinhnghiem']);
     Route::get('/deletekinhnghiem',[ungvienController::class,'deletekinhnghiem']);
+    Route::get('/huyeditkinhnghiem',[ungvienController::class,'huyeditkinhnghiem']);
+});
 
+Route::prefix('ungtuyen')->group(function(){
+    Route::get('/',[ungvienController::class,'index_ungtuyen']);
 });

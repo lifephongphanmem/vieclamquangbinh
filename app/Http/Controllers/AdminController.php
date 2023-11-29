@@ -42,7 +42,8 @@ class AdminController extends Controller
 	}
 	public function dashboard()
 	{
-
+		// $a = Nhankhau::where('kydieutra',2023)->get();
+		// dd($a);
 		$ctys = DB::table('company')->where('user', null)->get();
 		$dinfo = $this->getDashboard();
 		$dinfo['laodong'] += $ctys->sum('sld');

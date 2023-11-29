@@ -251,7 +251,6 @@
                                     src="{{ $info->image }}">
                             </div>
 
-
                         </div>
                     </div>
                 </div>

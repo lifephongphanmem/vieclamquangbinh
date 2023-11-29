@@ -11,6 +11,9 @@
             margin-top: 0px;
             padding: 0px 15px;
         }
+        input{
+            margin-bottom: 5px;
+        }
     </style>
 @stop
 
@@ -53,15 +56,12 @@
                                 <div class="col-md-3">
                                     <label>Email (*)</label>
                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                                    <span style="color: red" id="email_error"></span>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Mật khẩu (*)</label>
                                     <input type="text" name="password" id="password" class="form-control" placeholder="Mật khẩu">
-                                </div>
-                                <div class="col-md-3">
-                                    <label>Mật khẩu nhập lại (*)</label>
-                                    <input type="text" name="repassword"  id="repassword" class="form-control"
-                                        placeholder="Nhập lại mật khẩu">
+                                    <span style="color: red" id="password_error"></span>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Trạng thái</label>

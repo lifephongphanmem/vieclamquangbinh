@@ -25,6 +25,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 class AdminCompany extends Controller
 {
@@ -221,8 +222,21 @@ class AdminCompany extends Controller
 	{
 		$input = $request->all();
 		unset($input['_token']);
-		unset($input['id']);
-		Company::find($request->id)->update($input);
+		$image =$request->File('image');
+		$model = Company::find($input['id']);
+		if($image){
+			if ($model->image != null) {
+				if (File::exists($model->image)) {
+                    File::Delete($model->image);
+                }
+			}
+			// $data['image']= $image->store('DNDKKD');
+			$name = date('YmdHis') . $image->getClientOriginalName();
+            $image->move('uploads/DKKD/', $name);
+            $input['image'] = 'uploads/DKKD/' . $name;
+		}
+		
+		Company::find($input['id'])->update($input);
 		return redirect('/doanhnghiep-ba');
 	}
 

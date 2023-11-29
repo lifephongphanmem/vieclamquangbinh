@@ -28,31 +28,40 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="control-label">Chuyên ngành<span
-                                                    class="require">*</span></label>
-                                            <input type="text" name="chuyennganh" id="chuyennganh_edit{{$item->id}}"
+                                                    style="color: red">*</span></label>
+                                            <input type="text" name="chuyennganh"
+                                                id="chuyennganh_edit{{ $item->id }}"
                                                 value="{{ $item->chuyennganh }}" class="form-control"
-                                                placeholder="VD: Kinh doanh quốc tế" required>
+                                                placeholder="VD: Kinh doanh quốc tế">
+                                            <span style="color: red"
+                                                id="chuyennganh_edit_error{{ $item->id }}"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label class="control-label">Trường <span class="require">*</span></label>
-                                            <input type="text" name="truong" id="truong_edit{{$item->id}}" class="form-control"
-                                                value="{{ $item->truong }}" placeholder="VD: Đại học Ngoại Thương"
-                                                required>
+                                            <label class="control-label">Trường <span
+                                                    style="color: red">*</span></label>
+                                            <input type="text" name="truong" id="truong_edit{{ $item->id }}"
+                                                class="form-control" value="{{ $item->truong }}"
+                                                placeholder="VD: Đại học Ngoại Thương">
+                                            <span style="color: red" id="truong_edit_error{{ $item->id }}"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label class="control-label">Bằng cấp <span class="require">*</span></label>
-                                            <select name="bangcap" id="bangcap_edit{{$item->id}}" class="form-control" required>
+                                            <label class="control-label">Bằng cấp <span
+                                                    style="color: red">*</span></label>
+                                            <select name="bangcap" id="bangcap_edit{{ $item->id }}"
+                                                class="form-control">
                                                 <option value="">Chọn bằng cấp</option>
                                                 @foreach ($dmtrinhdokythuat as $dm)
                                                     <option value="{{ $dm->madmtdkt }}"
                                                         {{ $item->bangcap == $dm->madmtdkt ? 'selected' : '' }}>
-                                                        {{ $dm->tentdkt }}</option>
+                                                        {{ $dm->tentdkt }}
+                                                    </option>
                                                 @endforeach
                                             </select>
+                                            <span style="color: red" id="bangcap_edit_error{{ $item->id }}"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -60,15 +69,15 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Từ ngày </label>
-                                            <input type="date" name="tungay" id="tungay_edit{{$item->id}}" class="form-control"
-                                                value="{{ $item->tungay }}" required>
+                                            <input type="date" name="tungay" id="tungay_edit{{ $item->id }}"
+                                                class="form-control" value="{{ $item->tungay }}">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Đến ngày </label>
-                                            <input type="date" name="denngay" id="denngay_edit{{$item->id}}" class="form-control"
-                                                value="{{ $item->denngay }}" required>
+                                            <input type="date" name="denngay" id="denngay_edit{{ $item->id }}"
+                                                class="form-control" value="{{ $item->denngay }}">
                                         </div>
                                     </div>
                                 </div>
@@ -76,11 +85,11 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Thành tựu</label>
-                                            <textarea type="text" name="thanhtuu" id="thanhtuu_edit{{$item->id}}" class="form-control" rows="6">{{ $item->thanhtuu }}</textarea>
+                                            <textarea type="text" name="thanhtuu" id="thanhtuu_edit{{ $item->id }}" class="form-control" rows="6">{{ $item->thanhtuu }}</textarea>
                                         </div>
                                     </div>
                                 </div>
-                        
+
                                 <div class="row">
                                     <button onclick="huyedithocvan({{ $item->id }})"
                                         class="btn btn-sm btn-lg pull-right"
@@ -114,27 +123,30 @@
     <div class="row col-md-12">
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Chuyên ngành<span class="require">*</span></label>
+                <label class="control-label">Chuyên ngành<span style="color: red">*</span></label>
                 <input type="text" name="chuyennganh" id="chuyennganh" class="form-control"
-                    placeholder="VD: Kinh doanh quốc tế" required>
+                    placeholder="VD: Kinh doanh quốc tế">
+                <span style="color: red" id="chuyennganh_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Trường <span class="require">*</span></label>
+                <label class="control-label">Trường <span style="color: red">*</span></label>
                 <input type="text" name="truong" id="truong" class="form-control"
-                    placeholder="VD: Đại học Ngoại Thương" required>
+                    placeholder="VD: Đại học Ngoại Thương">
+                <span style="color: red" id="truong_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Bằng cấp <span class="require">*</span></label>
-                <select name="bangcap" id="bangcap" class="form-control" required>
+                <label class="control-label">Bằng cấp <span style="color: red">*</span></label>
+                <select name="bangcap" id="bangcap" class="form-control">
                     <option value="">Chọn bằng cấp</option>
                     @foreach ($dmtrinhdokythuat as $item)
                         <option value="{{ $item->madmtdkt }}">{{ $item->tentdkt }}</option>
                     @endforeach
                 </select>
+                <span style="color: red" id="bangcap_error"></span>
             </div>
         </div>
     </div>
@@ -143,13 +155,13 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label class="control-label">Từ ngày </label>
-                <input type="date" name="tungay" id="tungay" class="form-control" value="" required>
+                <input type="date" name="tungay" id="tungay" class="form-control">
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label class="control-label">Đến ngày </label>
-                <input type="date" name="denngay" id="denngay" class="form-control" value="" required>
+                <input type="date" name="denngay" id="denngay" class="form-control">
             </div>
         </div>
     </div>
@@ -191,26 +203,54 @@
 
     function storehocvan() {
 
-        $.ajax({
-            url: '/ungvien/storehocvan',
-            type: 'POST',
-            data: {
-                _token: CSRF_TOKEN,
-                user: $('#user').val(),
-                chuyennganh: $('#chuyennganh').val(),
-                truong: $('#truong').val(),
-                bangcap: $('#bangcap').val(),
-                tungay: $('#tungay').val(),
-                denngay: $('#denngay').val(),
-                thanhtuu: $('#thanhtuu').val(),
-            },
-            dataType: 'JSON',
-            success: function(data) {
-                $('#hocvan_danhsach').html(data.content);
-                $('#hocvan_themmoi').css("display", "none");
-                toastr.success('Đã lưu thông tin', "Hoàn thành!");
+        var chuyennganh = $('#chuyennganh').val();
+        var truong = $('#truong').val();
+        var bangcap = $('#bangcap').val();
+
+        if (chuyennganh != '' && truong != '' && bangcap != '') {
+            $.ajax({
+                url: '/ungvien/storehocvan',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    user: $('#user').val(),
+                    chuyennganh: $('#chuyennganh').val(),
+                    truong: $('#truong').val(),
+                    bangcap: $('#bangcap').val(),
+                    tungay: $('#tungay').val(),
+                    denngay: $('#denngay').val(),
+                    thanhtuu: $('#thanhtuu').val(),
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    $('#hocvan_danhsach').html(data.content);
+                    $('#hocvan_themmoi').css("display", "none");
+                    $('#chuyennganh_error').html('');
+                    $('#truong_error').html('');
+                    $('#bangcap_error').html('');
+                    toastr.success('Đã lưu thông tin', "Hoàn thành!");
+                }
+            })
+            
+        } else {
+
+            if (chuyennganh == '') {
+                $('#chuyennganh_error').html('Chuyên ngành không được để trống');
+            } else {
+                $('#chuyennganh_error').html('');
             }
-        })
+            if (truong == '') {
+                $('#truong_error').html('Trường không được để trống');
+            } else {
+                $('#truong_error').html('');
+            }
+            if (bangcap == '') {
+                $('#bangcap_error').html('Bằng cấp không được để trống');
+            } else {
+                $('#bangcap_error').html('');
+            }
+        }
+
     }
 
     function edithocvan(id) {
@@ -220,33 +260,51 @@
     }
 
     function huyedithocvan(id) {
-        let id_edit = id.toString();
-        $("#hocvan_edit" + id_edit).css("display", "none");
-    }
 
-    function updatehocvan(id) {
-        let id_edit = id.toString();
         $.ajax({
-            url: '/ungvien/updatehocvan',
-            type: 'POST',
+            url: '/ungvien/huyedithocvan',
+            type: 'GET',
             data: {
                 _token: CSRF_TOKEN,
                 id: id,
                 user: $('#user').val(),
-                chuyennganh: $('#chuyennganh_edit'+id_edit).val(),
-                truong: $('#truong_edit'+id_edit).val(),
-                bangcap: $('#bangcap_edit'+id_edit).val(),
-                tungay: $('#tungay_edit'+id_edit).val(),
-                denngay: $('#denngay_edit'+id_edit).val(),
-                thanhtuu: $('#thanhtuu_edit'+id_edit).val(),
             },
             dataType: 'JSON',
             success: function(data) {
                 $('#hocvan_danhsach').html(data.content);
-                // $('#hocvan_themmoi').css("display", "none");
-                toastr.success('Đã lưu thông tin', "Hoàn thành!");
             }
         })
+    }
+
+    function updatehocvan(id) {
+        let id_edit = id.toString();
+
+        var validate = validate_hocvan(id_edit);
+
+        if (validate) {
+            $.ajax({
+                url: '/ungvien/updatehocvan',
+                type: 'POST',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                    user: $('#user').val(),
+                    chuyennganh: $('#chuyennganh_edit' + id_edit).val(),
+                    truong: $('#truong_edit' + id_edit).val(),
+                    bangcap: $('#bangcap_edit' + id_edit).val(),
+                    tungay: $('#tungay_edit' + id_edit).val(),
+                    denngay: $('#denngay_edit' + id_edit).val(),
+                    thanhtuu: $('#thanhtuu_edit' + id_edit).val(),
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    $('#hocvan_danhsach').html(data.content);
+                    // $('#hocvan_themmoi').css("display", "none");
+                    toastr.success('Đã lưu thông tin', "Hoàn thành!");
+                }
+            })
+        }
+
     }
 
     function deletehocvan(id, user) {
@@ -267,5 +325,36 @@
                 toastr.success('Đã xóa thông tin', "Hoàn thành!");
             }
         })
+    }
+
+    function validate_hocvan(id_edit) {
+
+        var chuyennganh = $('#chuyennganh_edit' + id_edit).val();
+        var truong = $('#truong_edit' + id_edit).val();
+        var bangcap = $('#bangcap_edit' + id_edit).val();
+
+        if (chuyennganh != '' && truong != '' && bangcap != '') {
+
+            return true;
+        } else {
+
+            if (chuyennganh == '') {
+                $('#chuyennganh_edit_error' + id_edit).html('Chuyên ngành không được để trống');
+            } else {
+                $('#chuyennganh_edit_error' + id_edit).html('');
+            }
+            if (truong == '') {
+                $('#truong_edit_error' + id_edit).html('Trường không được để trống');
+            } else {
+                $('#truong_edit_error' + id_edit).html('');
+            }
+            if (bangcap == '') {
+                $('#bangcap_edit_error' + id_edit).html('Bằng cấp không được để trống');
+            } else {
+                $('#bangcap_edit_error' + id_edit).html('');
+            }
+            return false;
+        }
+
     }
 </script>

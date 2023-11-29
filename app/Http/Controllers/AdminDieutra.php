@@ -855,8 +855,13 @@ class AdminDieutra extends Controller
         }
         $user = User::where('madv', $inputs['madv'])->first()->id;
         // add to log system`
-        $rm = new Report();
-        $rm->report('thembangtay', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $inputs['quantity'], $note, $user, $inputs['kydieutra']);
+       
+        $lastid=DB::getPdo()->lastInsertId();
+        if($lastid != ''){
+            $rm = new Report();
+            $rm->report('thembangtay', "1", 'nhankhau', $lastid , $inputs['quantity'], $note, $user, $inputs['kydieutra']);
+        }
+       
         return redirect('/biendong/danhsach_biendong?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&loaibiendong=1');
         // if ($check == '') {
         //     return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
@@ -925,6 +930,8 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'biendong');
         }
         // dd(session('admin'));
+
+
         $inputs = $request->all();
         if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
             if (!isset($inputs['mahuyen'])) {
@@ -971,9 +978,11 @@ class AdminDieutra extends Controller
         foreach ($xa_biendong as $val) {
             $user_id = User::where('madv', $val->madv)->first()->id;
             $rp = DB::table('report')->where('user', $user_id)->where('kydieutra', $inputs['kydieutra'])->get();
-            $val->soluong = count($rp);
+            // $val->soluong = count($rp);
+            $val->soluong = $rp->sum('numrow');
             $val->kydieutra = $inputs['kydieutra'];
         }
+        // dd($xa_biendong);
         // $model=DB::table('report')->where('')
         $a_donvi = array_column(dmdonvi::all()->toarray(), 'tendv', 'madv');
         $inputs['url'] = '/biendong';

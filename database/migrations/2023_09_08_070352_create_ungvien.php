@@ -16,9 +16,10 @@ class CreateUngvien extends Migration
         Schema::create('ungvien', function (Blueprint $table) {
             $table->id();
             $table->string('user')->nullable();
-            // $table->string('email')->nullable();
+            $table->string('email')->nullable();
             $table->string('avatar')->nullable();
             $table->string('hoten')->nullable();
+            $table->string('cccd')->nullable();
             $table->string('gioitinh')->nullable();
             $table->string('ngaysinh')->nullable();
             $table->string('phone')->nullable();

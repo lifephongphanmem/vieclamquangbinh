@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
 use App\Models\Employer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class CompanyController extends Controller
 {
@@ -160,9 +161,15 @@ class CompanyController extends Controller
 		$data['nganhnghe']= $request->nganhnghe;
 		
 		$image =$request->File('image');
+		$model = DB::table('company')->where('id',$cid)->first();
 		if($image){
+			if ($model->image != null) {
+				if (File::exists($model->image)) {
+                    File::Delete($model->image);
+                }
+			}
 			// $data['image']= $image->store('DNDKKD');
-			$name = time() . $image->getClientOriginalName();
+			$name = date('YmdHis') . $image->getClientOriginalName();
             $image->move('uploads/DKKD/', $name);
             $data['image'] = 'uploads/DKKD/' . $name;
 		}
