@@ -9,7 +9,7 @@ class ungvien extends Model
 {
     use HasFactory;
     protected $table = 'ungvien';
-    protected $fillable = ['user','avatar','hoten','gioitinh','ngaysinh','phone','tinh','huyen','xa','address','chucdanh','honnhan','hinhthuclv','luong','trinhdocmkt',
+    protected $fillable = ['user','email','avatar','hoten','cccd','gioitinh','ngaysinh','phone','tinh','huyen','xa','address','chucdanh','honnhan','hinhthuclv','luong','trinhdocmkt',
         'word','excel','powerpoint','gioithieu','muctieu'];
 }
 

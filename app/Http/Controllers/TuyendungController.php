@@ -224,9 +224,26 @@ class TuyendungController extends Controller
 		return response()->json($html);
 	}
 
-	public function hosodanop(){
+	public function hosodanop(Request $request){
+		$inputs = $request->all();
 	
-		return view('pages.tuyendung.hosodanop');
+		$user = session('admin')->id;
+		$model = Tuyendung::join('Vitrituyendung','Vitrituyendung.idtuyendung' , 'Tuyendung.id')
+			->join('apply' , 'apply.vitri','Vitrituyendung.id')
+			->join('ungvien' , 'ungvien.user','apply.ungvien')
+			->select('apply.*', 'Tuyendung.user','Vitrituyendung.name','ungvien.hoten')
+			->orderBy('id', 'DESC')->get();
+			
+		$model = $model->where('user', $user);
+		if (isset($inputs['trangthai'])) {
+			$model = $model->where('trangthai',$inputs['trangthai']);
+		}else{
+			$inputs['trangthai'] = null;
+		}
+		// dd($inputs);
+		return view('pages.tuyendung.hosodanop')
+		->with('model',$model)
+		->with('inputs',$inputs);
 	}
 }
 
