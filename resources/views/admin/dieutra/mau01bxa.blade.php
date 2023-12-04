@@ -98,8 +98,8 @@
 
                     <td>{{$item->doituongtimvieclam==1?'x':''}}</td>
                     <td>{{$item->doituongtimvieclam==2?'x':''}} </td>
-                    <td>{{$item->vieclammongmuon==1?'x':''}}</td>
-                    <td>{{$item->vieclammongmuon==2?'x':''}}</td>
+                    <td>{{$item->vieclammongmuon==1 || $item->vieclammongmuon==3 ?'x':''}}</td>
+                    <td>{{$item->vieclammongmuon==2 || $item->vieclammongmuon==3 ?'x':''}}</td>
                     {{-- <td> {{isset($item->nganhnghemuonhoc)?$a_nganhnghe[$item->nganhnghemuonhoc]:''}}</td> --}}
                     <td> {{$item->nganhnghemuonhoc}}</td>
                     <td> {{isset($item->trinhdochuyenmonmuonhoc)?$a_trinhdocm[$item->trinhdochuyenmonmuonhoc]:''}}</td>
