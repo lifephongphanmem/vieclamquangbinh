@@ -107,8 +107,8 @@
                 @endforeach
                 <th>{{dinhdangso(count($model->where('doituongtimvieclam',1)))}}</th>
                 <th>{{dinhdangso(count($model->where('doituongtimvieclam',2)))}}</th>
-                <th>{{dinhdangso(count($model->where('vieclammongmuon',1)))}}</th>
-                <th>{{dinhdangso(count($model->where('vieclammongmuon',2)))}}</th>
+                <td>{{dinhdangso(count($model->whereIn('vieclammongmuon',[1,3])))}}</td>
+                <td>{{dinhdangso(count($model->whereIn('vieclammongmuon',[2,3])))}}</td>
                 <th>{{ dinhdangso(count($model->whereNotNull('nganhnghemuonhoc'))) }}</th>
                 <th>{{ dinhdangso(count($model->whereNotNull('trinhdochuyenmonmuonhoc'))) }}</th>
                 <th> </th>
