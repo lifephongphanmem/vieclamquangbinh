@@ -83,16 +83,15 @@
         </thead>
         <tbody>
             <?php
-            $thanhthi = array_column($m_danhmuc->where('level', '!=', 'Xã')->toarray(), 'madv');
-            $nongthon = array_column($m_danhmuc->where('level', 'Xã')->toarray(), 'madv');
+
             $stt = 0;
             ?>
             <tr style="text-align: center">
                 <th colspan="2">TỔNG</th>
                 <th>{{ dinhdangso(count($model->whereIn('gioitinh', ['nam', 'Nam']))) }}</th>
                 <th>{{ dinhdangso(count($model->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</th>
-                <th>{{ dinhdangso(count($model->whereIn('madv', $thanhthi))) }}</th>
-                <th>{{ dinhdangso(count($model->whereIn('madv', $nongthon))) }}</th>
+                <th>{{ dinhdangso(count($model->where('madv', '1'))) }}</th>
+                <th>{{ dinhdangso(count($model->where('madv', '2'))) }}</th>
 
                 @foreach ($a_dtut as $key => $item)
                     <th>{{ count($model->where('uutien', $key ))}}</th>
@@ -127,8 +126,8 @@
                     <td>{{ $dm->name }}</td>
                     <td>{{dinhdangso( count($model_x->whereIn('gioitinh', ['nam', 'Nam']))) }}</td>
                     <td>{{ dinhdangso(count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</td>
-                    <td>{{ dinhdangso(count($model_x->wherein('madv', $thanhthi))) }}</td>
-                    <td>{{ dinhdangso(count($model_x->whereIn('madv', $nongthon))) }}</td>
+                    <td>{{ dinhdangso(count($model_x->where('madv', '1'))) }}</td>
+                    <td>{{ dinhdangso(count($model_x->where('madv', '2'))) }}</td>
 
                     @foreach ($a_dtut as $key => $item)
                         <?php $uutien = count($model_x->where('uutien', $key)); ?>
