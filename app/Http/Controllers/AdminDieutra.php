@@ -723,9 +723,7 @@ class AdminDieutra extends Controller
             $note .= "Thêm";
             // dd(1);
         }
-        // dd($inputs);
-        // dd(2);
-        // $note .= "Danh sách:";
+
         $note .= ": ";
         // $a = nhankhauModel::where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('cccd', '0440790803424')->first();
         // dd($a);
@@ -743,15 +741,11 @@ class AdminDieutra extends Controller
         $xa['trongnuoc'] = $tonghopcung_xa->trongnuoc;
         $xa['nuocngoai'] = $tonghopcung_xa->nuocngoai;
         $xa['hocnghe'] = $tonghopcung_xa->hocnghe;
-        // $xa['ldcovieclam'] = $tonghopcung_xa->ldcovieclam;
-        // $xa['ldthatnghiep'] = $tonghopcung_xa->ldthatnghiep;
-        // $xa['ldkhongthamgia'] = $tonghopcung_xa->ldkhongthamgia;
         $xa['nam'] = $tonghopcung_xa->nam;
         $xa['nu'] = $tonghopcung_xa->nu;
         // dd($xa);
         $tonghopcung_xa->update($xa);
-        // $tonghopcung_huyen->update($huyen);
-        // $tonghopcung_tinh->update($tinh);
+
         for ($i = 0; $i < $inputs['quantity']; $i++) {
             $tmp = array();
             foreach ($inputs as $key => $val) {
@@ -773,10 +767,10 @@ class AdminDieutra extends Controller
             //kiểm tra lỗi
             //check lỗi loại 2
 
-            $a_loi2 = array(
-                'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
-                'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
-            );
+            // $a_loi2 = array(
+            //     'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+            //     'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
+            // );
 
             // if ($tmp['tinhtranghdkt'] == 3) {
 
@@ -786,14 +780,15 @@ class AdminDieutra extends Controller
             //             break;
             //         }
             //     }
+
             // }
 
             //check lỗi loại 3
 
-            $a_loi3 = array(
-                'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
-                'loaihinhnoilamviec', 'diachinoilamviec'
-            );
+            // $a_loi3 = array(
+            //     'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec',
+            //     'loaihinhnoilamviec', 'diachinoilamviec'
+            // );
             // if ($tmp['tinhtranghdkt'] == 2) {
             //     foreach ($a_loi3 as $tentruong) {
             //         if (isset($tmp[$tentruong])) {
@@ -809,33 +804,6 @@ class AdminDieutra extends Controller
 
             nhankhauModel::create($tmp);
 
-            // $xa['ldtren15'] += 1;
-            // $huyen['ldtren15'] += 1;
-            // $tinh['ldtren15'] += 1;
-            // if ($tmp['tinhtranghdkt'] == '1') {
-            //     $xa['ldcovieclam'] += 1;
-            //     // $huyen['ldcovieclam'] += 1;
-            //     // $tinh['ldcovieclam'] += 1;
-            // }
-            // if ($tmp['tinhtranghdkt'] == '2') {
-            //     $xa['ldthatnghiep'] += 1;
-            //     // $huyen['ldthatnghiep'] += 1;
-            //     // $tinh['ldthatnghiep'] += 1;
-            // }
-            // if ($tmp['tinhtranghdkt'] == '3') {
-            //     $xa['ldkhongthamgia'] += 1;
-            //     // $huyen['ldkhongthamgia'] += 1;
-            //     // $tinh['ldkhongthamgia'] += 1;
-            // }
-            // if ($level_xa == 'Thị trấn' || $level_xa == 'Phường') {
-            //     $xa['thanhthi'] = $tonghopcung_xa->thanhthi + 1;
-            //     $huyen['thanhthi'] = $tonghopcung_xa->thanhthi + 1;
-            //     $tinh['thanhthi'] = $tonghopcung_xa->thanhthi + 1;
-            // } else {
-            //     $xa['nongthon'] = $tonghopcung_xa->thanhthi + 1;
-            //     $huyen['nongthon'] = $tonghopcung_xa->thanhthi + 1;
-            //     $tinh['nongthon'] = $tonghopcung_xa->thanhthi + 1;
-            // }
             if ($tmp['gioitinh'] == 'Nam') {
                 $xa['nam'] += 1;
             } else {
@@ -887,8 +855,13 @@ class AdminDieutra extends Controller
         }
         $user = User::where('madv', $inputs['madv'])->first()->id;
         // add to log system`
-        $rm = new Report();
-        $rm->report('thembangtay', "1", 'nhankhau', DB::getPdo()->lastInsertId(), $inputs['quantity'], $note, $user, $inputs['kydieutra']);
+       
+        $lastid=DB::getPdo()->lastInsertId();
+        if($lastid != ''){
+            $rm = new Report();
+            $rm->report('thembangtay', "1", 'nhankhau', $lastid , $inputs['quantity'], $note, $user, $inputs['kydieutra']);
+        }
+       
         return redirect('/biendong/danhsach_biendong?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&loaibiendong=1');
         // if ($check == '') {
         //     return redirect('/nhankhau/hogiadinh?madv=' . $inputs['madv'] . '&kydieutra=' . $inputs['kydieutra'] . '&mahuyen=' . $inputs['huyen']);
@@ -899,6 +872,7 @@ class AdminDieutra extends Controller
 
     public function indanhsachloi(Request $request)
     {
+        
         $inputs = $request->all();
 
         if (isset($inputs['mahuyen'])) {
@@ -924,10 +898,11 @@ class AdminDieutra extends Controller
         // dd($model);
         $a_loi = array(
             'LOAI1' => 'Trống trường dữ liệu họ và tên hoặc ngày sinh',
-            'LOAI2' => 'Lỗi các cột dữ liệu liên quan đến nhân khẩu không tham gia HĐKT',
-            'LOAI3' => 'Lỗi các cột dữ liệu liên quan đến nhân khẩu thất nghiệp',
-            'LOAI4' => 'Tình trạng tham HĐKT trống'
+            // 'LOAI2' => 'Lỗi các cột dữ liệu liên quan đến nhân khẩu không tham gia HĐKT',
+            // 'LOAI3' => 'Lỗi các cột dữ liệu liên quan đến nhân khẩu thất nghiệp',
+            // 'LOAI4' => 'Tình trạng tham HĐKT trống'
         );
+       
         foreach ($model as $key => $ct) {
             $a_maloi = explode(';', $ct->maloailoi);
             // dd($a_maloi);
@@ -955,6 +930,8 @@ class AdminDieutra extends Controller
             return view('errors.noperm')->with('machucnang', 'biendong');
         }
         // dd(session('admin'));
+
+
         $inputs = $request->all();
         if (in_array(session('admin')->sadmin, ['SSA', 'ADMIN'])) {
             if (!isset($inputs['mahuyen'])) {
@@ -1001,9 +978,11 @@ class AdminDieutra extends Controller
         foreach ($xa_biendong as $val) {
             $user_id = User::where('madv', $val->madv)->first()->id;
             $rp = DB::table('report')->where('user', $user_id)->where('kydieutra', $inputs['kydieutra'])->get();
-            $val->soluong = count($rp);
+            // $val->soluong = count($rp);
+            $val->soluong = $rp->sum('numrow');
             $val->kydieutra = $inputs['kydieutra'];
         }
+        // dd($xa_biendong);
         // $model=DB::table('report')->where('')
         $a_donvi = array_column(dmdonvi::all()->toarray(), 'tendv', 'madv');
         $inputs['url'] = '/biendong';

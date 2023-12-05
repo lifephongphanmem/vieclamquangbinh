@@ -70,9 +70,9 @@
                 <th rowspan="2"> Đại học (10.7) </th>
                 <th rowspan="2"> Trên đại học (10.8) </th> --}}
                 <th colspan="2"> Đối tượng (11.1)</th>
-                <th colspan="2"> Việc làm mong muốn (11.2) (Ghi rõ ngành nghề )</th>
-                <th rowspan="2"> Ngành nghề muốn học (12.1) ( Ghi rõ ngành nghề ) </th>
-                <th rowspan="2"> Trình độ CM muốn học (12.2) ( Ghi rõ trình độ CM ) </th>
+                <th colspan="2"> Việc làm mong muốn (11.2) </th>
+                <th rowspan="2"> Ngành nghề muốn học (12.1)  </th>
+                <th rowspan="2"> Trình độ CM muốn học (12.2) </th>
             </tr>
             <tr>
                 <th>Chưa từng làm việc(11.1.1)</th>
@@ -89,10 +89,10 @@
             ?>
             <tr style="text-align: center">
                 <th colspan="2">TỔNG</th>
-                <th>{{ count($model->whereIn('gioitinh', ['nam', 'Nam'])) }}</th>
-                <th>{{ count($model->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</th>
-                <th>{{ count($model->whereIn('madv', $thanhthi)) }}</th>
-                <th>{{ count($model->whereIn('madv', $nongthon)) }}</th>
+                <th>{{ dinhdangso(count($model->whereIn('gioitinh', ['nam', 'Nam']))) }}</th>
+                <th>{{ dinhdangso(count($model->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</th>
+                <th>{{ dinhdangso(count($model->whereIn('madv', $thanhthi))) }}</th>
+                <th>{{ dinhdangso(count($model->whereIn('madv', $nongthon))) }}</th>
 
                 @foreach ($a_dtut as $key => $item)
                     <th>{{ count($model->where('uutien', $key ))}}</th>
@@ -105,10 +105,10 @@
                 @foreach ($a_cmkt as $key => $item)
                     <th>{{ count($model->where('chuyenmonkythuat', $key ))}}</th>
                 @endforeach
-                <td>{{count($model->where('doituongtimvieclam',1))==0?'':count($model->where('doituongtimvieclam',1))}}</td>
-                <td>{{count($model->where('doituongtimvieclam',2))==0?'':count($model->where('doituongtimvieclam',2))}}</td>
-                <td>{{count($model->where('vieclammongmuon',1))==0?'':count($model->where('vieclammongmuon',1))}}</td>
-                <td>{{count($model->where('vieclammongmuon',2))==0?'':count($model->where('vieclammongmuon',2))}}</td>
+                <td>{{dinhdangso(count($model->where('doituongtimvieclam',1)))}}</td>
+                <td>{{dinhdangso(count($model->where('doituongtimvieclam',2)))}}</td>
+                <td>{{dinhdangso(count($model->where('vieclammongmuon',1)))}}</td>
+                <td>{{dinhdangso(count($model->where('vieclammongmuon',2)))}}</td>
                 <th> </th>
                 <th> </th>
                 <th> </th>
@@ -125,10 +125,10 @@
                     ?>
                     <td>{{ ++$stt }}</td>
                     <td>{{ $dm->name }}</td>
-                    <td>{{ count($model_x->whereIn('gioitinh', ['nam', 'Nam']))==0?'':count($model_x->whereIn('gioitinh', ['nam', 'Nam'])) }}</td>
-                    <td>{{ count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))==0?'':count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ'])) }}</td>
-                    <td>{{ count($model_x->wherein('madv', $thanhthi))==0?'':count($model_x->wherein('madv', $thanhthi)) }}</td>
-                    <td>{{ count($model_x->whereIn('madv', $nongthon))==0?'':count($model_x->whereIn('madv', $nongthon)) }}</td>
+                    <td>{{dinhdangso( count($model_x->whereIn('gioitinh', ['nam', 'Nam']))) }}</td>
+                    <td>{{ dinhdangso(count($model_x->whereIn('gioitinh', ['nu', 'Nu', 'nữ', 'Nữ']))) }}</td>
+                    <td>{{ dinhdangso(count($model_x->wherein('madv', $thanhthi))) }}</td>
+                    <td>{{ dinhdangso(count($model_x->whereIn('madv', $nongthon))) }}</td>
 
                     @foreach ($a_dtut as $key => $item)
                         <?php $uutien = count($model_x->where('uutien', $key)); ?>
@@ -144,12 +144,12 @@
                         <?php $chuyenmonkythuat = count($model_x->where('chuyenmonkythuat', $key)); ?>
                         <td>{{ $chuyenmonkythuat > 0 ? $chuyenmonkythuat : '' }}</td>
                     @endforeach
-                    <td>{{count($model_x->where('doituongtimvieclam',1))==0?'':count($model_x->where('doituongtimvieclam',1))}}</td>
-                    <td>{{count($model_x->where('doituongtimvieclam',2))==0?'':count($model_x->where('doituongtimvieclam',2))}}</td>
-                    <td>{{count($model_x->where('vieclammongmuon',1))==0?'':count($model_x->where('vieclammongmuon',1))}}</td>
-                    <td>{{count($model_x->where('vieclammongmuon',2))==0?'':count($model_x->where('vieclammongmuon',2))}}</td>
-                    <td> </td>
-                    <td> </td>
+                    <td>{{dinhdangso(count($model_x->where('doituongtimvieclam',1)))}}</td>
+                    <td>{{dinhdangso(count($model_x->where('doituongtimvieclam',2)))}}</td>
+                    <td>{{dinhdangso(count($model_x->whereIn('vieclammongmuon',[1,3])))}}</td>
+                    <td>{{dinhdangso(count($model_x->whereIn('vieclammongmuon',[2,3])))}}</td>
+                    <td>{{ dinhdangso(count($model_x->whereNotNull('nganhnghemuonhoc'))) }}</td>
+                    <td>{{ dinhdangso(count($model_x->whereNotNull('trinhdochuyenmonmuonhoc'))) }}</td>
                     <td> </td>
                 </tr>
             @endforeach

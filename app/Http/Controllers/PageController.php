@@ -20,6 +20,11 @@ use App\Models\Vitrituyendung;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use App\Http\Requests\UngVienCoBanRequest;
+use App\Http\Requests\UngVienHocVanRequest;
+use App\Http\Requests\UngVienKinhNghiemRequest;
+
 
 class PageController extends Controller
 {
@@ -203,13 +208,13 @@ class PageController extends Controller
             ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
             ->with('user', $request->user);
     }
-    public function store_hocvan(Request $request)
+    public function store_hocvan(UngVienHocVanRequest $request)
     {
         $inputs = $request->all();
         ungvienhocvan::create($inputs);
         return redirect('/page/ungvien/iframe_hocvan?user=' . $inputs['user']);
     }
-    public function update_hocvan(Request $request)
+    public function update_hocvan(UngVienHocVanRequest $request)
     {
         $inputs = $request->all();
         ungvienhocvan::find($inputs['id'])->update($inputs);
@@ -235,14 +240,14 @@ class PageController extends Controller
             ->with('dmtrinhdokythuat', $dmtrinhdokythuat)
             ->with('user', $request->user);
     }
-    public function store_kinhnghiem(Request $request)
+    public function store_kinhnghiem(UngVienKinhNghiemRequest $request)
     {
 
         $inputs = $request->all();
         ungvienkinhnghiem::create($inputs);
         return redirect('/page/ungvien/iframe_kinhnghiem?user=' . $inputs['user']);
     }
-    public function update_kinhnghiem(Request $request)
+    public function update_kinhnghiem(UngVienKinhNghiemRequest $request)
     {
         $inputs = $request->all();
         ungvienkinhnghiem::find($inputs['id'])->update($inputs);
@@ -274,10 +279,28 @@ class PageController extends Controller
             ->with('success', $request->success);
     }
 
-    public function update_coban(Request $request)
+    public function update_coban(UngVienCoBanRequest $request)
     {
         $inputs = $request->all();
-        ungvien::find($inputs['id'])->update($inputs);
+
+        $ungvien = ungvien::find($inputs['id']);
+        if (isset($inputs['avatar'])) {
+            //xóa ảnh cũ trong forder
+            if ($ungvien->avatar != null) {
+                if (File::exists('uploads/ungvien/' . ($ungvien->avatar))) {
+                    File::Delete('uploads/ungvien/' . ($ungvien->avatar));
+                }
+            }
+            // lưu ảnh mới trong forder
+            $image = $inputs['avatar'];
+            $avatar = date('Ymdhis') . $image->getClientOriginalName();
+            $image->move('uploads/ungvien/', $avatar);
+            $inputs['avatar'] = $avatar;
+       
+        } 
+
+        $ungvien->update($inputs);
+
         return redirect('/page/ungvien/iframe_coban?user=' . $inputs['user'] . '&success=đã lưu thông tin')
             ->with('success', 'đã lưu thông tin');
     }
@@ -369,7 +392,6 @@ class PageController extends Controller
         // $validate = $request->validate([
         // 	// 'username' => 'required|max:255',
         // 	'email' => 'required|email|max:255|unique:users',
-        // 	'dkkd' => 'required|max:20|unique:company',
         // 	'password' => 'required|min:8|confirmed',
         // ]);
         $inputs = $request->all();
@@ -390,6 +412,7 @@ class PageController extends Controller
             $data_ungvien = [
                 'user' => $model_user->id,
                 // 'avatar' => $inputs['avatar'],
+                'email' => $inputs['email'],
                 'hoten' => $inputs['hoten'],
             ];
             ungvien::create($data_ungvien);
@@ -436,4 +459,10 @@ class PageController extends Controller
         // dd($Company);
         return view('pages.page.gioi-thieu');
     }
+
+
+
+
+
+    
 }

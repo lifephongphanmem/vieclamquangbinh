@@ -107,8 +107,8 @@
                             <div class="skill_uv">
                                 <div class="avatar_uv" onclick="capnhap_coban()">
                                     <p class="av" style="position: relative;">
-                                        <img src="{{ '/assets2/media/images/default/s200_200/defaultimage.jpg' }}"
-                                            alt="{{ $ungvien->hoten }}" style="height: 100%;">
+                                        <img src="{{$ungvien->avatar != null ? '/uploads/ungvien/'. $ungvien->avatar : '/assets2/media/images/default/s200_200/defaultimage.jpg' }}"
+                                        alt="{{ $ungvien->hoten }}" style="height: 100%;">
                                         {{-- <a class="editin-img open-task-iframe"
                                             style="border: 0px; background-color: #6199b8;color: white;width: 100%;position: absolute;bottom: 0%;left: 0;"><i
                                                 class="glyphicon glyphicon-pencil"></i> <span>cập nhật thông tin

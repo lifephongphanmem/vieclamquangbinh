@@ -15,12 +15,52 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
-
-
-
         });
     </script>
+    <script>
+        $('#capbac').change(function() {
+            window.location.href = '/ungvien?capbac=' + $('#capbac').val() + '&luongmin=' + $('#luongmin').val() +
+                '&luongmax=' + $('#luongmax').val();
+        });
+
+        function addtrangthai(user, tt) {
+            $('#user').val(user);
+            $('#trangthai').val(tt);
+        }
+
+        function checkluong() {
+            var luongmin = $('#luongmin').val();
+            var luongmax = $('#luongmax').val();
+            if (luongmin != '' || luongmax != '') {
+
+                if (luongmin >= luongmax) {
+                    toastr.warning('Lỗi', 'Lương nhỏ nhất không được nhỏ hơn lương lớn nhất')
+                } else {
+                    window.location.href = '/ungvien?capbac=' + $('#capbac').val() + '&luongmin=' + $('#luongmin')
+                        .val() + '&luongmax=' + $('#luongmax').val();
+                }
+
+            } else {
+                toastr.warning('Bạn chưa nhập giá trị')
+            }
+        }
+    </script>
 @stop
+<style>
+    #luongmin,
+    #luongmax {
+        height: calc(1.5em + 1.3rem + 2px);
+        padding: 0.65rem 1rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #3F4254;
+        background-color: #ffffff;
+        background-clip: padding-box;
+        border: 1px solid #E4E6EF;
+        border-radius: 0.42rem;
+    }
+</style>
 @section('content')
     <div class="row">
         <div class="col-xl-12">
@@ -36,14 +76,14 @@
                             <a href="{{ '/ungvien/create' }}" class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i>
                                 &ensp;Thêm</a>
                         </div>
-                        {{-- @endif
+                        {{-- @endif --}}
 
-                        @if (session('admin')->capdo == 'X') --}}
+                        {{-- @if (session('admin')->capdo == 'X') 
                         <button onclick="Inchitiet(' ')" data-target="#in-modal-confirm" data-toggle="modal" title="In"
                             class="btn btn-sm btn-success ml-3">
                             <i class="icon-lg la flaticon2-print text-primary"></i>Xuất danh sách
                         </button>
-                        {{-- @endif --}}
+                        @endif --}}
 
                     </div>
                 </div>
@@ -51,21 +91,22 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Cấp bậc</label>
-                            <select name="chucdanh" id="chucdanh" class="form-control" value="">
-                                <option value="">Chọn chức danh</option>
+                            <select name="capbac" id="capbac" class="form-control">
+                                <option value="">Chọn cấp bậc</option>
+                                @foreach ($capbac as $item)
+                                    <option value="{{ $item->madm }}"
+                                        {{ $item->madm == $inputs['capbac'] ? 'selected' : '' }}>{{ $item->tendm }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label style="font-weight: bold">Mức lương</label>
-                            <form action="{{ '/ungvien' }}" id="frm_checkluong" method="GET"
-                                enctype="multipart/form-data">
+                        <div class="col-md-4" id="frm_checkluong" >
+                            <label style="font-weight: bold;display: block">Mức lương</label>
                                 <input type="number" name="luongmin" id="luongmin" placeholder="Nhỏ nhất"
                                     value="{{ isset($inputs['luongmin']) ? $inputs['luongmin'] : '' }}">
                                 <input type="number" name="luongmax" id="luongmax" placeholder="Lớn nhất"
                                     value="{{ isset($inputs['luongmax']) ? $inputs['luongmax'] : '' }}">
                                 <a onclick="checkluong()" class="btn btn-sm btn-success ml-3">Tìm</a>
-                            </form>
-
                         </div>
 
                     </div>
@@ -99,10 +140,12 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td style="text-align: center">
                                         @if ($item->status == '1')
-                                            <a data-toggle="modal" data-target="#modal_trangthai"  onclick="addtrangthai('{{ $item->user }}','2')"
-                                                 title="click để khóa"> <i class="fa fa-check text-success " aria-hidden="true"></i></a>
+                                            <a data-toggle="modal" data-target="#modal_trangthai"
+                                                onclick="addtrangthai('{{ $item->user }}','2')" title="click để khóa"> <i
+                                                    class="fa fa-check text-success " aria-hidden="true"></i></a>
                                         @else
-                                            <a data-toggle="modal" data-target="#modal_trangthai" onclick="addtrangthai('{{ $item->user }}','1')"
+                                            <a data-toggle="modal" data-target="#modal_trangthai"
+                                                onclick="addtrangthai('{{ $item->user }}','1')"
                                                 title="click để kích hoạt"><i class="fa fa-times text-danger "
                                                     aria-hidden="true"></i></a>
                                         @endif
@@ -141,7 +184,7 @@
                     <input name="trangthai" id="trangthai">
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
-                        <button type="submit"  class="btn btn-primary">Đồng
+                        <button type="submit" class="btn btn-primary">Đồng
                             ý</button>
                     </div>
                 </div>
@@ -150,26 +193,7 @@
     </div>
 
     @include('includes.delete')
-    <script>
-        function addtrangthai(user,tt) {
-            $('#user').val(user);
-            $('#trangthai').val(tt);
-        }
-        
-        function checkluong() {
-            var luongmin = $('#luongmin').val();
-            var luongmax = $('#luongmax').val();
-            if (luongmin != '' && luongmax != '') {
-                if (luongmin > luongmax) {
-                    toastr.warning('Lỗi', 'Lương nhỏ nhất không được nhỏ hơn lương lớn nhất')
-                } else {
-                    $('#frm_checkluong').submit();
-                }
-            }else{
-                $('#frm_checkluong').submit();
-            }
-        }
-    </script>
+
 
 
 @endsection

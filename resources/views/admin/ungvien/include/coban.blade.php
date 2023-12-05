@@ -1,24 +1,32 @@
 <div class="form-body" id="frm_coban">
 
     <div class="row">
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label">Ảnh đại diện </label>
                 <input type="file" name="avatar" id="avatar" class="form-control" placeholder="Chọn ảnh"
                     value="">
             </div>
+        </div> --}}
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Họ tên <span style="color: red">*</span></label>
+                <input type="text" name="hoten" id="hoten" class="form-control"
+                    placeholder="Nhập đầy đủ Họ và Tên" value="{{ isset($ungvien->hoten) ? $ungvien->hoten : '' }}">
+                <span style="color: red" id="hoten_error"></span>
+            </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Họ tên <span class="require">*</span></label>
-                <input type="text" name="hoten" id="hoten" class="form-control"
-                    placeholder="Nhập đầy đủ Họ và Tên" value="{{ isset($ungvien->hoten) ? $ungvien->hoten : '' }}"
-                    required>
+                <label class="control-label">CCCD<span style="color: red">*</span></label>
+                <input type="number" name="cccd" id="cccd" class="form-control"
+                    placeholder="Nhập đầy đủ Họ và Tên" value="{{ isset($ungvien->cccd) ? $ungvien->cccd : '' }}">
+                <span style="color: red" id="cccd_error"></span>
             </div>
         </div>
         <div class="col-md-1">
             <div class="form-group">
-                <label class="control-label">Giới tính <span class="require">*</span></label>
+                <label class="control-label">Giới tính</label>
                 <select name="gioitinh" id="gioitinh" class="form-control">
                     <option value="Nữ"
                         {{ isset($ungvien->gioitinh) ? ($ungvien->gioitinh == 'Nữ' ? 'selected' : '') : '' }}>Nữ
@@ -31,22 +39,24 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label class="control-label">Ngày sinh<span class="require">*</span></label>
+                <label class="control-label">Ngày sinh<span style="color: red">*</span></label>
                 <input type="date" name="ngaysinh" id="ngaysinh" class="form-control"
-                    value="{{ isset($ungvien->ngaysinh) ? $ungvien->ngaysinh : '' }}" required>
+                    value="{{ isset($ungvien->ngaysinh) ? $ungvien->ngaysinh : '' }}">
+                <span style="color: red" id="ngaysinh_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Số điện thoại<span class="require">*</span></label>
+                <label class="control-label">Số điện thoại<span style="color: red">*</span></label>
                 <input type="number" name="phone" id="phone" class="form-control"
-                    value="{{ isset($ungvien->phone) ? $ungvien->phone : '' }}" required>
+                    value="{{ isset($ungvien->phone) ? $ungvien->phone : '' }}">
+                <span style="color: red" id="phone_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_tinh = $danhmuc->where('capdo', 'T'); ?>
-                <label class="control-label">Tỉnh<span class="require">*</span></label>
+                <label class="control-label">Tỉnh<span style="color: red">*</span></label>
                 <select name="tinh" id="tinh"class="form-control">
                     @foreach ($danhmuc_tinh as $item)
                         <option value="{{ $item->maquocgia }}"
@@ -54,13 +64,14 @@
                             {{ $item->name }}</option>
                     @endforeach
                 </select>
+
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_huyen = $danhmuc->where('capdo', 'H'); ?>
-                <label class="control-label">Huyện<span class="require">*</span></label>
-                <select name="huyen" id="huyen" class="form-control select2basic" required>
+                <label class="control-label">Huyện<span style="color: red">*</span></label>
+                <select name="huyen" id="huyen" class="form-control select2basic">
                     <option value="">Chọn huyện</option>
                     @foreach ($danhmuc_huyen as $item)
                         <option value="{{ $item->maquocgia }}"
@@ -68,13 +79,14 @@
                             {{ $item->name }}</option>
                     @endforeach
                 </select>
+                <span style="color: red" id="huyen_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <?php $danhmuc_xa = $danhmuc->where('capdo', 'X'); ?>
-                <label class="control-label">Xã<span class="require">*</span></label>
-                <select name="xa" id="xa" class="form-control select2basic" required>
+                <label class="control-label">Xã<span style="color: red">*</span></label>
+                <select name="xa" id="xa" class="form-control select2basic">
                     <option value="">Chọn xã</option>
                     @foreach ($danhmuc_xa as $item)
                         <option value="{{ $item->maquocgia }}"
@@ -82,20 +94,22 @@
                             {{ $item->name }}</option>
                     @endforeach
                 </select>
+                <span style="color: red" id="xa_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">address<span class="require">*</span></label>
+                <label class="control-label">address<span style="color: red">*</span></label>
                 <input type="text" name="address" id="address" class="form-control"
                     placeholder="số nhà-Tên đường/Xóm-Thôn"
-                    value="{{ isset($ungvien->address) ? $ungvien->address : '' }}" required>
+                    value="{{ isset($ungvien->address) ? $ungvien->address : '' }}">
+                <span style="color: red" id="address_error"></span>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Cấp bậc<span class="require">*</span></label>
-                <select name="capbac" id="capbac" class="form-control" >
+                <label class="control-label">Cấp bậc</label>
+                <select name="capbac" id="capbac" class="form-control">
                     <option value="">Chọn cấp bậc</option>
                     @foreach ($capbac as $item)
                         <option value="{{ $item->madm }}">{{ $item->tendm }}</option>
@@ -105,7 +119,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Trạng thái hôn nhân<span class="require">*</span></label>>
+                <label class="control-label">Trạng thái hôn nhân</label>
                 <select name="honnhan" id="honnhan" class="form-control">
                     <option value="0"
                         {{ isset($ungvien->honnhan) ? ($ungvien->honnhan == '0' ? 'selected' : '') : '' }}>Độc thân
@@ -127,9 +141,11 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Mức lương mong muốn<span class="require">*</span></label>
+                <label class="control-label">Mức lương mong muốn<span style="color: red">*</span></label>
                 <input type="number" id="luong" name="luong"
-                    class="form-control"value="{{ isset($ungvien->luong) ? $ungvien->luong : '' }}"  required      placeholder="VD: 8 (8 triệu)">
+                    class="form-control"value="{{ isset($ungvien->luong) ? $ungvien->luong : '' }}"
+                    placeholder="VD: 8 (8 triệu)">
+                <span style="color: red" id="luong_error"></span>
             </div>
         </div>
         <div class="col-md-3">
@@ -284,58 +300,156 @@
 
     function storecoban() {
        
-        if ($('#case').val() == 'create') {
-            var url_link = '/ungvien/storecoban';
-            var checkpassword = null;
-        }
-        if ($('#case').val() == 'edit') {
-            var url_link = '/ungvien/updatecoban';
-            var checkpassword = document.getElementById('checkpassword').checked;
-        }
-   
-        $.ajax({
-            url: url_link,
-            type: 'POST',
-            data: {
-                //thông tin tài khoản
-                _token: CSRF_TOKEN,
-                user: $('#user').val(),
-                email: $('#email').val(),
-                checkpassword: checkpassword,
-                password: $('#password').val(),
-                status: $('#status').val(),
+        var email = $('#email').val().trim();
 
-                // thông tin cơ bản
-                hoten: $('#hoten').val(),
-                gioitinh: $('#gioitinh').val(),
-                ngaysinh: $('#ngaysinh').val(),
-                phone: $('#phone').val(),
-                tinh: $('#tinh').val(),
-                huyen: $('#huyen').val(),
-                xa: $('#xa').val(),
-                address: $('#address').val(),
-                capbac: $('#capbac').val(),
-                honnhan: $('#honnhan').val(),
-                hinhthuclv: $('#hinhthuclv').val(),
-                luong: $('#luong').val(),
-                trinhdocmkt: $('#trinhdocmkt').val(),
-                word: $('#word').val(),
-                excel: $('#excel').val(),
-                powerpoint: $('#powerpoint').val(),
-                gioithieu: $('#gioithieu').val(),
-                muctieu: $('#muctieu').val(),
-            },
-            dataType: 'JSON',
-            success: function(data) {
-                // console.log(data);
-                if (data.status == 'success') {
-                    $('#frm_coban').replaceWith(data.content);
-                    var form = $('#user').val(data.user);
-                    toastr.success(data.message, "Hoàn thành!");
-                } else {
-                    toastr.error(data.message, "Lỗi!");
-                }
+        var hoten = $('#hoten').val().trim();
+        var cccd = $('#cccd').val();
+        var ngaysinh = $('#ngaysinh').val();
+        var phone = $('#phone').val();
+        var huyen = $('#huyen').val();
+        var xa = $('#xa').val();
+        var address = $('#address').val().trim();
+        var luong = $('#luong').val();
+
+        var regex =
+            /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+            if ($('#case').val() == 'create') {
+                var url_link = '/ungvien/storecoban';
+                var checkpassword = null;
+                var password = $('#password').val().trim();
             }
-        })
+            if ($('#case').val() == 'edit') {
+                var url_link = '/ungvien/updatecoban';
+                var checkpassword = document.getElementById('checkpassword').checked;
+                var password = true;
+            }
+
+        if (hoten != '' &&  cccd != '' && ngaysinh != '' && phone != '' && huyen != '' && xa != '' && address != '' && luong !=
+            '' && email != '' && password != '' && regex.test(email) == true) {
+
+            $.ajax({
+                url: url_link,
+                type: 'POST',
+                data: {
+                    //thông tin tài khoản
+                    _token: CSRF_TOKEN,
+                    user: $('#user').val(),
+                    email: $('#email').val(),
+                    checkpassword: checkpassword,
+                    password: $('#password').val(),
+                    status: $('#status').val(),
+
+                    // thông tin cơ bản
+                    hoten: $('#hoten').val(),
+                    cccd: $('#cccd').val(),
+                    gioitinh: $('#gioitinh').val(),
+                    ngaysinh: $('#ngaysinh').val(),
+                    phone: $('#phone').val(),
+                    tinh: $('#tinh').val(),
+                    huyen: $('#huyen').val(),
+                    xa: $('#xa').val(),
+                    address: $('#address').val(),
+                    capbac: $('#capbac').val(),
+                    honnhan: $('#honnhan').val(),
+                    hinhthuclv: $('#hinhthuclv').val(),
+                    luong: $('#luong').val(),
+                    trinhdocmkt: $('#trinhdocmkt').val(),
+                    word: $('#word').val(),
+                    excel: $('#excel').val(),
+                    powerpoint: $('#powerpoint').val(),
+                    gioithieu: $('#gioithieu').val(),
+                    muctieu: $('#muctieu').val(),
+                },
+                dataType: 'JSON',
+                success: function(data) {
+ 
+                    if (data.status == 'success') {
+                        // $('#frm_coban').replaceWith(data.content);
+                        $('#user').val(data.user);
+                        $('#email_error').html('');
+                        $('#cccd_error').html('');
+                        $('#password_error').html('');
+                        $('#hoten_error').html('');
+                        $('#ngaysinh_error').html('');
+                        $('#phone_error').html('');
+                        $('#huyen_error').html('');
+                        $('#xa_error').html('');
+                        $('#address_error').html('');
+                        $('#luong_error').html('');
+
+                        toastr.success(data.message, "Hoàn thành!");
+                    } else {
+                        if (data.email) {
+                            $('#email_error').html(data.email);
+                        }else{
+                            $('#email_error').html('');
+                        }
+                        if (data.cccd) {
+                            $('#cccd_error').html(data.cccd);
+                        }else{
+                            $('#cccd_error').html('');
+                        }
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        } else {
+  
+            if (regex.test(email) == false) {
+                $('#email_error').html('Email không hợp lệ');
+            } else if (email == '') {
+                $('#email_error').html('Email không được để trống');
+            } else {
+                $('#email_error').html('');
+            }
+            if (password == '') {
+                $('#password_error').html('Mật khẩu không được để trống');
+            } else {
+                $('#password_error').html('');
+            }
+            if (hoten == '') {
+                $('#hoten_error').html('Họ tên không được để trống');
+            } else {
+                $('#hoten_error').html('');
+            }
+            if (cccd == '') {
+                $('#cccd_error').html('CCCD không được để trống');
+            } else {
+                $('#cccd_error').html('');
+            }
+            if (ngaysinh == '') {
+                $('#ngaysinh_error').html('Ngày sinh không được để trống');
+            } else {
+                $('#ngaysinh_error').html('');
+            }
+            if (phone == '') {
+                $('#phone_error').html('Số điện thoại không được để trống');
+            } else {
+                $('#phone_error').html('');
+            }
+            if (huyen == '') {
+                $('#huyen_error').html('Huyện không được để trống');
+            } else {
+                $('#huyen_error').html('');
+            }
+            if (xa == '') {
+                $('#xa_error').html('Xã không được để trống');
+            } else {
+                $('#xa_error').html('');
+            }
+            if (address == '') {
+                $('#address_error').html('address không được để trống');
+            } else {
+                $('#address_error').html('');
+            }
+            if (luong == '') {
+                $('#luong_error').html('Mức lương không được để trống');
+            } else {
+                $('#luong_error').html('');
+            }
+        }
+
     }
+
 </script>

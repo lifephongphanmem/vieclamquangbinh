@@ -17,11 +17,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UngVienCoBanRequest;
+use App\Models\apply;
+use App\Models\Nhankhau;
+use App\Models\Tuyendung;
+use App\Models\Vitrituyendung;
+
 
 class ungvienController extends Controller
 {
     public function index(Request $request)
     {
+
         $inputs = $request->all();
 
         $model = User::leftjoin('ungvien', 'users.id', 'ungvien.user')
@@ -33,8 +40,16 @@ class ungvienController extends Controller
         if (isset($inputs['luongmax'])) {
             $model = $model->where('luong', '<=', $inputs['luongmax']);
         }
+        if (isset($inputs['capbac'])) {
+            $model = $model->where('capbac', $inputs['capbac']);
+        }
+        $capbac = capbac::all();
+        if (!isset($inputs['capbac'])) {
+            $inputs['capbac'] = null;
+        }
         return view('admin.ungvien.index')
             ->with('model', $model)
+            ->with('capbac', $capbac)
             ->with('inputs', $inputs)
             ->with('baocao', getdulieubaocao());
     }
@@ -59,29 +74,42 @@ class ungvienController extends Controller
             ->with('baocao', getdulieubaocao());
     }
 
-    public function storecoban(Request $request)
+    public function storecoban(UngVienCoBanRequest $request)
     {
         $inputs = $request->all();
-        $data_user = [
-            'name' => $inputs['hoten'],
-            'email' => $inputs['email'],
-            'password' => Hash::make($inputs['password']),
-            'phanloaitk' => 3,
-            'status' => $inputs['status'], //0: vô hiệu,1: kích hoạt,2: khóa
-        ];
 
-        $model_email = User::where('email', $inputs['email'])->first();
 
-        if (isset($model)) {
-            $result['message'] = "Mail đã được sử dụng";
+        $model_email = User::where('email', $inputs['email'])->count();
+        $model_cccd = Nhankhau::where('cccd', $inputs['cccd'])->count();
+
+        if ($model_email > 0 || $model_cccd == 0) {
+            if ($model_email > 0) {
+                $result['email'] = "Email đã được sử dụng";
+            }
+            if ($model_cccd = 0) {
+                $result['cccd'] = "CCCD không có thông tin, mời nhập lại hoặc liên hệ trung tâm dịch vụ việc làm Quảng Bình";
+            }
             $result['status'] = 'error';
-        } else {
+            $result['message'] = "Chưa Lưu thông tin";
+            return  response($result);
+        }
+
+        if ($model_email == 0 && $model_cccd > 0) {
+            $data_user = [
+                'name' => $inputs['hoten'],
+                'email' => $inputs['email'],
+                'password' => Hash::make($inputs['password']),
+                'phanloaitk' => 3,
+                'status' => $inputs['status'], //0: vô hiệu,1: kích hoạt,2: khóa
+            ];
+
             $model_user = User::create($data_user);
 
             $data_ungvien = [
                 'user' => $model_user->id,
-                // 'avatar' => $inputs['avatar'],
                 'hoten' => $inputs['hoten'],
+                'email' => $inputs['email'],
+                'cccd' => $inputs['cccd'],
                 'gioitinh' => $inputs['gioitinh'],
                 'ngaysinh' => $inputs['ngaysinh'],
                 'phone' => $inputs['phone'],
@@ -125,32 +153,16 @@ class ungvienController extends Controller
         ];
         ungvienhocvan::create($data_ungvienhocvan);
 
-        $ungvienhocvan = ungvienhocvan::where('user', $inputs['user'])->get();
-        $result['content'] = "<div>";
-        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
-        foreach ($ungvienhocvan as $item) {
-            $result['content'] .= "<tr>";
-            $result['content'] .= "<td width='80%'>";
-            $result['content'] .= "<span>";
-            $result['content'] .= " $item->truong &emsp;&emsp;&emsp;";
-            $result['content'] .= "</span>";
-            $result['content'] .= "<span >";
-            $result['content'] .=  getDayVn($item->tungay);
-            if (isset($item->denngay)) {
-                $result['content'] .= ' - ' . getDayVn($item->denngay);
-            }
-            $result['content'] .= "</span>";
+        $result = $this->gethocvan($inputs['user']);
 
-            $result['content'] .= "<span class='pull-right'>";
-            $result['content'] .= "<a class='btn btn-primary edit-inp'><i class='glyphicon glyphicon-pencil'></i> Cật nhật</a>";
-            $result['content'] .= "<a onclick='deletehocvan(" . $item->id . ")'";
-            $result['content'] .= "class='btn btn-danger deletedata'><i class='glyphicon glyphicon-remove'></i> Xóa</a>";
-            $result['content'] .= "</span>";
-            $result['content'] .= "</td>";
-            $result['content'] .= "</tr>";
-        }
-        $result['content'] .= "</table>";
-        $result['content'] .= "</div>";
+        return response($result);
+    }
+
+    public function updatehocvan(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienhocvan::find($inputs['id'])->update($inputs);
+        $result = $this->gethocvan($inputs['user']);
         return response($result);
     }
 
@@ -158,35 +170,21 @@ class ungvienController extends Controller
     {
         $inputs = $request->all();
         ungvienhocvan::find($inputs['id'])->delete();
-
-        $ungvienhocvan = ungvienhocvan::where('user', $inputs['user'])->get();
-        $result['content'] = "<div>";
-        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
-        foreach ($ungvienhocvan as $item) {
-            $result['content'] .= "<tr>";
-            $result['content'] .= "<td width='80%'>";
-            $result['content'] .= "<span>";
-            $result['content'] .= " $item->truong &emsp;&emsp;&emsp;";
-            $result['content'] .= "</span>";
-            $result['content'] .= "<span >";
-            $result['content'] .=  getDayVn($item->tungay);
-            if (isset($item->denngay)) {
-                $result['content'] .= ' - ' . getDayVn($item->denngay);
-            }
-            $result['content'] .= "</span>";
-
-            $result['content'] .= "<span class='pull-right'>";
-            $result['content'] .= "<a class='btn btn-primary edit-inp'><i class='glyphicon glyphicon-pencil'></i> Cật nhật</a>";
-            $result['content'] .= "<a onclick='deletehocvan(" . $item->id . ")'";
-            $result['content'] .= "class='btn btn-danger deletedata'><i class='glyphicon glyphicon-remove'></i> Xóa</a>";
-            $result['content'] .= "</span>";
-            $result['content'] .= "</td>";
-            $result['content'] .= "</tr>";
-        }
-        $result['content'] .= "</table>";
-        $result['content'] .= "</div>";
+        $result = $this->gethocvan($inputs['user']);
         return response($result);
     }
+
+    public function huyedithocvan(Request $request)
+    {
+        $inputs = $request->all();
+        $result = $this->gethocvan($inputs['user']);
+        return response($result);
+    }
+
+
+
+
+
 
     public function storekinhnghiem(Request $request)
     {
@@ -205,25 +203,17 @@ class ungvienController extends Controller
         ];
         ungvienkinhnghiem::create($data_ungvienkinhnghiem);
 
+        $result = $this->getkinhnghiem($inputs['user']);
 
-        $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $inputs['user'])->get();
-        $result['content'] = "<div>";
-        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
-        foreach ($ungvienkinhnghiem as $item) {
-            $result['content'] .= "<tr>";
-            $result['content'] .= "<td width='80%'>";
-            $result['content'] .= $item->congty . " ------- ";
-            $result['content'] .= $item->ngayvao . " - ";
-            $result['content'] .= $item->ngaynghi;
-            $result['content'] .= "</td>";
-            $result['content'] .= "<td width='20%'>";
-            $result['content'] .= "<a  onclick='deletekinhnghiem(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
-            $result['content'] .= "</td>";
-            $result['content'] .= "</tr>";
-        }
-        $result['content'] .= "</table>";
-        $result['content'] .= "</div>";
+        return response($result);
+    }
 
+    public function updatekinhnghiem(Request $request)
+    {
+        $inputs = $request->all();
+        ungvienkinhnghiem::find($inputs['id'])->update($inputs);
+
+        $result = $this->getkinhnghiem($inputs['user']);
         return response($result);
     }
 
@@ -232,25 +222,18 @@ class ungvienController extends Controller
         $inputs = $request->all();
         ungvienkinhnghiem::find($inputs['id'])->delete();
 
-        $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $inputs['user'])->get();
-        $result['content'] = "<div>";
-        $result['content'] .= "<table id='sample_3' class='table  table-bordered table-hover dataTable no-footer'>";
-        foreach ($ungvienkinhnghiem as $item) {
-            $result['content'] .= "<tr>";
-            $result['content'] .= "<td width='80%'>";
-            $result['content'] .= $item->congty . " ------- ";
-            $result['content'] .= $item->ngayvao . " - ";
-            $result['content'] .= $item->ngaynghi;
-            $result['content'] .= "</td>";
-            $result['content'] .= "<td width='20%'>";
-            $result['content'] .= "<a  onclick='deletekinhnghiem(" . $item->id . ")'class='btn btn-sm btn-clean btn-icon' ><i class='icon-lg flaticon-delete text-danger'></i></a>";
-            $result['content'] .= "</td>";
-            $result['content'] .= "</tr>";
-        }
-        $result['content'] .= "</table>";
-        $result['content'] .= "</div>";
+        $result = $this->getkinhnghiem($inputs['user']);
         return response($result);
     }
+
+    public function huyeditkinhnghiem(Request $request)
+    {
+        $inputs = $request->all();
+        $result = $this->getkinhnghiem($inputs['user']);
+        return response($result);
+    }
+
+
 
     public function delete($user)
     {
@@ -295,11 +278,20 @@ class ungvienController extends Controller
         }
 
         //    User::find($inputs['user'])->update($model_user);
+        $model_cccd = Nhankhau::where('cccd', $inputs['cccd'])->count();
 
+        if ($model_cccd == 0) {
+
+            $result['cccd'] = "CCCD không có thông tin, mời nhập lại hoặc liên hệ trung tâm dịch vụ việc làm Quảng Bình";
+            $result['status'] = 'error';
+            $result['message'] = "Chưa Lưu thông tin";
+            return  response($result);
+        }
         $data_ungvien = [
             'user' => $inputs['user'],
             // 'avatar' => $inputs['avatar'],
             'hoten' => $inputs['hoten'],
+            'cccd' => $inputs['cccd'],
             'gioitinh' => $inputs['gioitinh'],
             'ngaysinh' => $inputs['ngaysinh'],
             'phone' => $inputs['phone'],
@@ -326,5 +318,238 @@ class ungvienController extends Controller
         $result['user'] = $inputs['user'];
 
         return  response($result);
+    }
+
+
+
+
+    public function gethocvan($user)
+    {
+        $ungvienhocvan = ungvienhocvan::where('user', $user)->get();
+        $dmtrinhdokythuat = dmtrinhdokythuat::all();
+
+        $result['content'] = '<table class="table table-bordered table-hover dataTable no-footer">';
+        foreach ($ungvienhocvan as $item) {
+            $result['content'] .= '<tr>';
+            $result['content'] .= '<td>';
+            $result['content'] .= '<div style="margin-bottom: -2rem;margin-top: 1rem">';
+            $result['content'] .= '<span >' . $item->truong . '&emsp;&emsp;&emsp;';
+            $result['content'] .= '</span>';
+            $result['content'] .=  getDayVn($item->tungay);
+            if (isset($item->denngay)) {
+                $result['content'] .= ' - ' . getDayVn($item->denngay);
+            }
+            $result['content'] .= '</span>';
+            $result['content'] .= '</div>';
+
+            $result['content'] .= '<div style="display: flex;justify-content:end;">';
+            $result['content'] .= '<span>';
+            $result['content'] .= '<a onclick="edithocvan(' . $item->id . ')" class="btn btn-primary"> Cật nhật</a>';
+            $result['content'] .= '<a onclick="deletehocvan(' . $item->id . ')" class="btn btn-danger"> Xóa</a>';
+            $result['content'] .= '</span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="form-body" id="hocvan_edit' . $item->id . '" style="margin-top: 10px;display: none" >';
+            $result['content'] .= '<div class="row col-md-12">';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Chuyên ngành<span ';
+            $result['content'] .= 'style="color: red">*</span></label>';
+            $result['content'] .= '<input type="text" name="chuyennganh" id="chuyennganh_edit' . $item->id . '" value="' . $item->chuyennganh . '"';
+            $result['content'] .= 'class="form-control" placeholder="VD: Kinh doanh quốc tế" >';
+            $result['content'] .= '<span style="color: red" id="chuyennganh_edit_error'. $item->id.'"></span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Trường <span style="color: red">*</span></label>';
+            $result['content'] .= '<input type="text" name="truong" id="truong_edit' . $item->id . '" class="form-control"  value="' . $item->truong . '"';
+            $result['content'] .= 'placeholder="VD: Đại học Ngoại Thương" >';
+            $result['content'] .= '<span style="color: red" id="truong_edit_error'. $item->id.'"></span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Bằng cấp <span style="color: red">*</span></label>';
+            $result['content'] .= '<select name="bangcap" id="bangcap_edit' . $item->id . '" class="form-control" >';
+            $result['content'] .= '<option value="">Chọn bằng cấp</option>';
+            foreach ($dmtrinhdokythuat as $dm) {
+                $result['content'] .= '<option value="' . $dm->madmtdkt . '"';
+                if ($item->bangcap == $dm->madmtdkt) {
+                    $result['content'] .= 'selected';
+                }
+                $result['content'] .= '>' . $dm->tentdkt . '</option>';
+            }
+            $result['content'] .= '</select>';
+            $result['content'] .= '<span style="color: red" id="bangcap_edit_error'. $item->id.'"></span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="row col-md-3">';
+            $result['content'] .= '<div class="col-md-12">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Từ ngày </label>';
+            $result['content'] .= '<input type="date" name="tungay" id="tungay_edit' . $item->id . '" class="form-control"  value="' . $item->tungay . '" >';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-12">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Đến ngày </label>';
+            $result['content'] .= '<input type="date" name="denngay" id="denngay_edit' . $item->id . '" class="form-control" value="' . $item->denngay . '" >';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="row col-md-9">';
+            $result['content'] .= '<div class="col-md-12">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Thành tựu</label>';
+            $result['content'] .= '<textarea type="text" name="thanhtuu" id="thanhtuu_edit' . $item->id . '" class="form-control" rows="6">' . $item->thanhtuu . '</textarea>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<input name="id" id="id_edit' . $item->id . '" hidden>';
+            $result['content'] .= '<div class="row">';
+            $result['content'] .= '<button onclick="huyedithocvan(' . $item->id . ')" class="btn btn-sm btn-lg pull-right"';
+            $result['content'] .= 'style="margin-left:2%;background-color: rgba(128, 128, 128, 0.507)"> Hủy</button>';
+            $result['content'] .= '<button onclick="updatehocvan(' . $item->id . ')" ';
+            $result['content'] .= 'class="btn btn-sm btn-primary btn-lg pull-right" style="margin-left:1px">Lưu</button>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</td>';
+            $result['content'] .= '</tr>';
+        }
+        $result['content'] .= '</table>';
+
+        return $result;
+    }
+
+
+    public function getkinhnghiem($user)
+    {
+
+        $ungvienkinhnghiem = ungvienkinhnghiem::where('user', $user)->get();
+
+        $result['content'] = '<table class="table  table-bordered table-hover dataTable no-footer">';
+        foreach ($ungvienkinhnghiem as $item) {
+            $result['content'] .= '<tr>';
+            $result['content'] .= '<td>';
+            $result['content'] .= '<div style="margin-bottom: -2rem;margin-top: 1rem">';
+            $result['content'] .= '<span >' . $item->congty . '&emsp;&emsp;&emsp;';
+            $result['content'] .= '</span> <span>';
+            $result['content'] .=  getDayVn($item->ngayvao);
+            if (isset($item->ngaynghi)) {
+                $result['content'] .= ' - ' . getDayVn($item->ngaynghi);
+            }
+            $result['content'] .= '</span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div style="display: flex;justify-content:end;">';
+            $result['content'] .= '<span>';
+            $result['content'] .= '<a onclick="editkinhnghiem(' . $item->id . ')" class="btn btn-primary"> Cật nhật</a>';
+            $result['content'] .= '<a onclick="deletekinhnghiem(' . $item->id . ')" class="btn btn-danger"> Xóa</a>';
+            $result['content'] .= '</span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="form-body" id="kinhnghiem_edit' . $item->id . '" style="display: none">';
+            $result['content'] .= '<div class="row col-md-12">';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Công ty<span style="color: red">*</span></label>';
+            $result['content'] .= '<input type="text" name="congty" id="congty_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" placeholder="Ví dụ: Công ty ABC"';
+            $result['content'] .= 'value="' . $item->congty . '">';
+            $result['content'] .= '<span style="color: red" id="congty_edit_error'. $item->id.'"></span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Quy mô</label>';
+            $result['content'] .= '<input type="number" name="quymo" id="quymo_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" placeholder="Ví dụ: 50"';
+            $result['content'] .= 'value="' . $item->quymo . '">';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Lĩnh vực hoạt động của công ty</span></label>';
+            $result['content'] .= '<input type="text" name="linhvuc" id="linhvuc_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" placeholder="Ví dụ: Lĩnh vực vông nghiệp"';
+            $result['content'] .= 'value="' . $item->linhvuc . '">';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Chức danh<span style="color: red">*</span></label>';
+            $result['content'] .= '<input type="text" name="chucdanh"';
+            $result['content'] .= 'id="chucdanh_kn_edit' . $item->id . '" class="form-control"';
+            $result['content'] .= 'placeholder="Ví dụ: Kinh doanh quốc tế" value="' . $item->chucdanh . '">';
+            $result['content'] .= '<span style="color: red" id="chucdanh_kn_edit_error'. $item->id.'"></span>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="row col-md-12">';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Ngày vào</label>';
+            $result['content'] .= '<input type="date" name="ngayvao" id="ngayvao_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" value="' . $item->ngayvao . '">';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-3">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Ngày xin nghỉ việc</label>';
+            $result['content'] .= '<input type="date" name="ngaynghi" id="ngaynghi_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" value="' . $item->ngaynghi . '">';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-6">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Lý do nghỉ</label>';
+            $result['content'] .= '<input type="text" name="lydo" id="lydo_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" value="' . $item->lydo . '">';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-6">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Chi tiết công việc</label>';
+            $result['content'] .= '<textarea type="text" name="chitiet" id="chitiet_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" rows="3">' . $item->chitiet . '</textarea>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="col-md-6">';
+            $result['content'] .= '<div class="form-group">';
+            $result['content'] .= '<label class="control-label">Mô tả</label>';
+            $result['content'] .= '<textarea type="text" name="mota" id="mota_edit' . $item->id . '"';
+            $result['content'] .= 'class="form-control" rows="3">' . $item->chitiet . '</textarea>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '<div class="row">';
+            $result['content'] .= '<button onclick="huyeditkinhnghiem(' . $item->id . ')"';
+            $result['content'] .= 'class="btn btn-sm btn-secondary btn-lg pull-right"';
+            $result['content'] .= 'style="margin-left:2%;background-color: rgba(128, 128, 128, 0.507)"> Hủy</button>';
+            $result['content'] .= '<button onclick="updatekinhnghiem(' . $item->id . ')"';
+            $result['content'] .= 'class="btn btn-sm btn-info btn-lg pull-right" style="margin-left:1px">Lưu</button>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</div>';
+            $result['content'] .= '</td>';
+            $result['content'] .= '</tr>';
+        }
+        $result['content'] .= '</table>';
+
+        return $result;
+    }
+
+
+    function index_ungtuyen(){
+        
+        $model = Company::join('Tuyendung' ,'Tuyendung.user' , 'Company.user')
+        ->join('Vitrituyendung','Vitrituyendung.idtuyendung' , 'Tuyendung.id')
+        ->join('apply' , 'apply.vitri','Vitrituyendung.id')
+        ->join('ungvien' , 'ungvien.user','apply.ungvien')
+        
+        ->select('apply.*' ,'Vitrituyendung.name','Vitrituyendung.diadiem', 'Company.name as tencty' ,'ungvien.hoten','ungvien.phone','ungvien.email')
+        ->orderBy('id', 'DESC')->get();
+        // dd($model);
+        return view('admin.ungtuyen.index')
+        ->with('model',$model)
+        ->with('baocao', getdulieubaocao());
     }
 }

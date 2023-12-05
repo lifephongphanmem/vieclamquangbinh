@@ -105,200 +105,213 @@
                     <div class="row bg_w">
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 bg_F8">
                             <div class="skill_uv">
-                                <div class="avatar_uv" onclick="capnhap_coban()">
-                                    <p class="av" style="position: relative;">
-                                        <img src="{{ '/assets2/media/images/default/s200_200/defaultimage.jpg' }}"
-                                            alt="{{ $ungvien->hoten }}" style="height: 100%;">
-                                        <a class="editin-img open-task-iframe"
-                                            style="border: 0px; background-color: #6199b8;color: white;width: 100%;position: absolute;bottom: 0%;left: 0;"><i
-                                                class="glyphicon glyphicon-pencil"></i> <span>cập nhật thông tin
-                                            </span></a>
-                                    </p>
-
-                                    <h2>{{ $ungvien->hoten }}</h2>
-                                    <p></p>
-                                </div>
-                                <div class="sk_one">
-                                    <div>
-                                        <span><img src="{{ url('assets2/images/l1.png') }}"></span>
-                                        <div>
-                                            <h4>Mức lương mong muốn</h4>
-                                            <p>{{ isset($ungvien->luong) ? 'Tối thiểu ' . $ungvien->luong . ' Triệu' : '' }}
+                                @if (session('admin') != null)
+                                    @if (session('admin')->id == $ungvien->user)
+                                        <div class="avatar_uv" onclick="capnhap_coban()">
+                                            <p class="av" style="position: relative;">
+                                                <img src="{{$ungvien->avatar != null ? '/uploads/ungvien/'. $ungvien->avatar : '/assets2/media/images/default/s200_200/defaultimage.jpg' }}"
+                                                    alt="{{ $ungvien->hoten }}" style="height: 100%;">
+                                                <a href="#" class="editin-img open-task-iframe"
+                                                    style="border: 0px; background-color: #6199b8;color: white;width: 100%;position: absolute;bottom: 0%;left: 0;"><i
+                                                        class="glyphicon glyphicon-pencil"></i> <span>cập nhật thông tin
+                                                    </span></a>
                                             </p>
+                                            <h2>{{ $ungvien->hoten }}</h2>
+                                            <p></p>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="avatar_uv">
+                                            <p class="av" style="position: relative;">
+                                                <img src="{{$ungvien->avatar != null ? '/uploads/ungvien/'. $ungvien->avatar : '/assets2/media/images/default/s200_200/defaultimage.jpg' }}"
+                                                alt="{{ $ungvien->hoten }}" style="height: 100%;">
+                                            </p>
+                                            <h2>{{ $ungvien->hoten }}</h2>
+                                            <p></p>
+                                        </div>
+                                    @endif
+                                @endif
+                         
+                            <div class="sk_one">
+                                <div>
+                                    <span><img src="{{ url('assets2/images/l1.png') }}"></span>
                                     <div>
-                                        <span><img src="{{ url('assets2/images/nh.png') }}"></span>
-                                        <div>
-                                            <h4>Hình thức làm việc:</h4>
-                                            <p>{{ $ungvien->hinhthuclv }}</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span><img src="{{ url('assets2/images/td.png') }}"></span>
-                                        <div>
-                                            <h4>Trình độ học vấn:</h4>
-                                            <p>{{ isset($trinhdocmkt->tentdkt) ? $trinhdocmkt->tentdkt : '' }}</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span><img src="{{ url('assets2/images/kn.png') }}"></span>
-                                        <div>
-                                            <h4>Kinh nghiệm làm việc:</h4>
-                                            <p> </p>
-                                        </div>
+                                        <h4>Mức lương mong muốn</h4>
+                                        <p>{{ isset($ungvien->luong) ? 'Tối thiểu ' . $ungvien->luong . ' Triệu' : '' }}
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="sk_two">
-                                    <h3 class="w-64p">MỤC TIÊU NGHỀ NGHIỆP:</h3>
-                                    <div class="content_text">
-                                        <p>{{ $ungvien->muctieu }}</p>
+                                <div>
+                                    <span><img src="{{ url('assets2/images/nh.png') }}"></span>
+                                    <div>
+                                        <h4>Hình thức làm việc:</h4>
+                                        <p>{{ $ungvien->hinhthuclv }}</p>
                                     </div>
                                 </div>
-                                {{-- <div class="sk_two">
+                                <div>
+                                    <span><img src="{{ url('assets2/images/td.png') }}"></span>
+                                    <div>
+                                        <h4>Trình độ học vấn:</h4>
+                                        <p>{{ isset($trinhdocmkt->tentdkt) ? $trinhdocmkt->tentdkt : '' }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span><img src="{{ url('assets2/images/kn.png') }}"></span>
+                                    <div>
+                                        <h4>Kinh nghiệm làm việc:</h4>
+                                        <p> </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sk_two">
+                                <h3 class="w-64p">MỤC TIÊU NGHỀ NGHIỆP:</h3>
+                                <div class="content_text">
+                                    <p>{{ $ungvien->muctieu }}</p>
+                                </div>
+                            </div>
+                            {{-- <div class="sk_two">
                                 </div> --}}
-                                <div class="sk_two">
-                                    <h3>TIN HỌC:</h3>
-                                    <div class="content_text">
-                                        <p class="dot">
-                                            <span>Word</span>
-                                            <span class="item">
-                                                <span class="{{ $ungvien->word >= '1' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '2' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '3' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '4' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '5' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '6' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '7' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '8' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '9' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->word >= '10' ? 'tick' : '' }}"></span>
-                                            </span>
-                                        </p>
-                                        <p class="dot">
-                                            <span>Excel</span>
-                                            <span class="item">
-                                                <span class="{{ $ungvien->excel >= '1' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '2' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '3' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '4' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '5' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '6' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '7' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '8' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '9' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->excel >= '10' ? 'tick' : '' }}"></span>
-                                            </span>
-                                        </p>
-                                        <p class="dot">
-                                            <span>PowerPoint</span>
-                                            <span class="item">
-                                                <span class="{{ $ungvien->powerpoint >= '1' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '2' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '3' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '4' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '5' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '6' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '7' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '8' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '9' ? 'tick' : '' }}"></span>
-                                                <span class="{{ $ungvien->powerpoint >= '10' ? 'tick' : '' }}"></span>
+                            <div class="sk_two">
+                                <h3>TIN HỌC:</h3>
+                                <div class="content_text">
+                                    <p class="dot">
+                                        <span>Word</span>
+                                        <span class="item">
+                                            <span class="{{ $ungvien->word >= '1' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '2' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '3' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '4' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '5' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '6' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '7' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '8' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '9' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->word >= '10' ? 'tick' : '' }}"></span>
+                                        </span>
+                                    </p>
+                                    <p class="dot">
+                                        <span>Excel</span>
+                                        <span class="item">
+                                            <span class="{{ $ungvien->excel >= '1' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '2' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '3' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '4' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '5' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '6' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '7' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '8' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '9' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->excel >= '10' ? 'tick' : '' }}"></span>
+                                        </span>
+                                    </p>
+                                    <p class="dot">
+                                        <span>PowerPoint</span>
+                                        <span class="item">
+                                            <span class="{{ $ungvien->powerpoint >= '1' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '2' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '3' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '4' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '5' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '6' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '7' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '8' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '9' ? 'tick' : '' }}"></span>
+                                            <span class="{{ $ungvien->powerpoint >= '10' ? 'tick' : '' }}"></span>
 
 
-                                        </p>
-                                    </div>
+                                    </p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 pad_r">
-                            <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                <h3 class="w-64p">LIÊN HỆ</h3>
-                            </div>
-                            <div class="content_text_one">
-                                <p class="d_flex_center d_flex">
-                                    <span>
-                                        <span><img src="{{ url('assets2/images/sn.png') }}"
-                                                style="margin-top: -7px">{{ getDayVn($ungvien->ngaysinh) }}</span>
-                                    </span>
-                                    <span>
-                                        <img src="{{ url('assets2/images/add_u.png') }}" style="margin-top: -7px">
-                                        {{ (isset($ungvien->address) ? $ungvien->address . ' - ' : '') . (isset($xa->name) ? $xa->name . ' - ' : '') . (isset($huyen->name) ? $huyen->name . ' - ' : '') . 'Quảng Bình' }}
-                                    </span>
-                                </p>
-                                <p class="d_flex_center d_flex">
-                                    <span>
-                                        <span><img src="{{ url('assets2/images/email_u.png') }}"></span>
-                                        <a href="{{ 'mailto:' . $model->email }}">{{ $model->email }}</a>
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                <h3 class="w-64p">KINH NGHIỆM LÀM VIỆC:</h3>
-                            </div>
-                            @if (session('admin') != null)
-                                @if (session('admin')->id == $ungvien->user)
-                                    <a href="#" class="update_infop open-task-iframe"
-                                        onclick="capnhap_kinhnghiem()" style="font-size: 12px;margin-left: 92%"><i
-                                            class="glyphicon glyphicon-pencil"></i>
-                                        Cập nhật</a>
-                                @endif
-                            @endif
-                            <div class="content_text_two">
-
-                                @foreach ($ungvienkinhnghiem as $kinhnghiem)
-                                    <div class="d_flex item_time">
-                                        <div class="time">
-                                            <h4> {{ isset($kinhnghiem->ngayvao) ? 'Từ ' . $kinhnghiem->ngayvao : '' }}<br>
-                                                {{ isset($kinhnghiem->ngaynghi) ? 'Đến ' . $kinhnghiem->ngaynghi : '' }}
-                                            </h4>
-                                        </div>
-                                        <div class="text">
-                                            <h5>{{ $kinhnghiem->chucdanh }}</h5>
-                                            <p style="font-style: italic;">{{ $kinhnghiem->congty }}</p>
-                                            <h5>Mô tả: </h5>
-                                            <p>{{ $kinhnghiem->mota }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="title_p wow fadeInUp">
-                                <h3 class="w-64p">TRÌNH ĐỘ HỌC VẤN:</h3>
-                            </div>
-                            @if (session('admin') != null)
-                                @if (session('admin')->id == $ungvien->user)
-                                    <a href="#" class="update_infop open-task-iframe"
-                                        onclick="capnhap_hocvan()" style="font-size: 12px;margin-left: 92%"><i
-                                            class="glyphicon glyphicon-pencil"></i>
-                                        Cập nhật</a>
-                                @endif
-                            @endif
-                            <div class="content_text_two">
-                                @foreach ($ungvienhocvan as $hocvan)
-                                    <div class="d_flex item_time">
-                                        <div class="time">
-                                            <h4> {{ isset($hocvan->tungay) ? 'Từ ' . $hocvan->tungay : '' }} <br>
-                                                {{ isset($hocvan->denngay) ? 'Đến ' . $hocvan->denngay : '' }}</h4>
-                                        </div>
-                                        <div class="text">
-                                            <p><strong>Trường:</strong> {{ $hocvan->truong }}</p>
-                                            <p><strong>Chuyên ngành:</strong> {{ $hocvan->chuyennganh }} </p>
-                                            <p><strong>Bằng cấp:</strong> {{ $hocvan->bangcap }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 pad_r">
+                        <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                            <h3 class="w-64p">LIÊN HỆ</h3>
+                        </div>
+                        <div class="content_text_one">
+                            <p class="d_flex_center d_flex">
+                                <span>
+                                    <span><img src="{{ url('assets2/images/sn.png') }}"
+                                            style="margin-top: -7px">{{ getDayVn($ungvien->ngaysinh) }}</span>
+                                </span>
+                                <span>
+                                    <img src="{{ url('assets2/images/add_u.png') }}" style="margin-top: -7px">
+                                    {{ (isset($ungvien->address) ? $ungvien->address . ' - ' : '') . (isset($xa->name) ? $xa->name . ' - ' : '') . (isset($huyen->name) ? $huyen->name . ' - ' : '') . 'Quảng Bình' }}
+                                </span>
+                            </p>
+                            <p class="d_flex_center d_flex">
+                                <span>
+                                    <span><img src="{{ url('assets2/images/email_u.png') }}"></span>
+                                    <a href="{{ 'mailto:' . $model->email }}">{{ $model->email }}</a>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                            <h3 class="w-64p">KINH NGHIỆM LÀM VIỆC:</h3>
+                        </div>
+                        @if (session('admin') != null)
+                            @if (session('admin')->id == $ungvien->user)
+                                <a href="#" class="update_infop open-task-iframe"
+                                    onclick="capnhap_kinhnghiem()" style="font-size: 12px;margin-left: 92%"><i
+                                        class="glyphicon glyphicon-pencil"></i>
+                                    Cập nhật</a>
+                            @endif
+                        @endif
+                        <div class="content_text_two">
 
+                            @foreach ($ungvienkinhnghiem as $kinhnghiem)
+                                <div class="d_flex item_time">
+                                    <div class="time">
+                                        <h4> {{ isset($kinhnghiem->ngayvao) ? 'Từ ' . $kinhnghiem->ngayvao : '' }}<br>
+                                            {{ isset($kinhnghiem->ngaynghi) ? 'Đến ' . $kinhnghiem->ngaynghi : '' }}
+                                        </h4>
+                                    </div>
+                                    <div class="text">
+                                        <h5>{{ $kinhnghiem->chucdanh }}</h5>
+                                        <p style="font-style: italic;">{{ $kinhnghiem->congty }}</p>
+                                        <h5>Mô tả: </h5>
+                                        <p>{{ $kinhnghiem->mota }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="title_p wow fadeInUp">
+                            <h3 class="w-64p">TRÌNH ĐỘ HỌC VẤN:</h3>
+                        </div>
+                        @if (session('admin') != null)
+                            @if (session('admin')->id == $ungvien->user)
+                                <a href="#" class="update_infop open-task-iframe" onclick="capnhap_hocvan()"
+                                    style="font-size: 12px;margin-left: 92%"><i
+                                        class="glyphicon glyphicon-pencil"></i>
+                                    Cập nhật</a>
+                            @endif
+                        @endif
+                        <div class="content_text_two">
+                            @foreach ($ungvienhocvan as $hocvan)
+                                <div class="d_flex item_time">
+                                    <div class="time">
+                                        <h4> {{ isset($hocvan->tungay) ? 'Từ ' . $hocvan->tungay : '' }} <br>
+                                            {{ isset($hocvan->denngay) ? 'Đến ' . $hocvan->denngay : '' }}</h4>
+                                    </div>
+                                    <div class="text">
+                                        <p><strong>Trường:</strong> {{ $hocvan->truong }}</p>
+                                        <p><strong>Chuyên ngành:</strong> {{ $hocvan->chuyennganh }} </p>
+                                        <p><strong>Bằng cấp:</strong> {{ $hocvan->bangcap }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
-        <style>
-            .content_text_one p span:first-child {
-                display: flex;
-                align-items: center;
-            }
-        </style>
+    </div>
+    <style>
+        .content_text_one p span:first-child {
+            display: flex;
+            align-items: center;
+        }
+    </style>
     </div>
 
 

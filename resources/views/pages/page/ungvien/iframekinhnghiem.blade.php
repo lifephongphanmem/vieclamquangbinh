@@ -29,7 +29,8 @@
             font-size: 14px;
             z-index: 9999;
         }
-        label{
+
+        label {
             font-size: 12px;
         }
     </style>
@@ -98,27 +99,28 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">Công ty<span
                                                                             class="require">*</span></label>
-                                                                    <input type="text" name="congty" id="congty"
+                                                                    <input type="text" name="congty" id="congty_edit"
                                                                         class="form-control"
-                                                                        placeholder="Ví dụ: Công ty ABC" value="{{$item->congty}}" required>
+                                                                        placeholder="Ví dụ: Công ty ABC"
+                                                                        value="{{ $item->congty }}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Quy mô</label>
-                                                                    <input type="number" name="quymo" id="quymo"
+                                                                    <input type="number" name="quymo" id="quymo_edit"
                                                                         class="form-control" placeholder="Ví dụ: 50"
-                                                                        value="{{$item->quymo}}">
+                                                                        value="{{ $item->quymo }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Lĩnh vực hoạt động của
                                                                         công ty</span></label>
-                                                                    <input type="text" name="linhvuc" id="linhvuc"
+                                                                    <input type="text" name="linhvuc" id="linhvuc_edit"
                                                                         class="form-control"
                                                                         placeholder="Ví dụ: Lĩnh vực vông nghiệp"
-                                                                        value="{{$item->linhvuc}}">
+                                                                        value="{{ $item->linhvuc }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
@@ -126,9 +128,9 @@
                                                                     <label class="control-label">Chức danh<span
                                                                             class="require">*</span></label>
                                                                     <input type="text" name="chucdanh"
-                                                                        id="chucdanh_kn" class="form-control"
+                                                                        id="chucdanh_kn_edit" class="form-control"
                                                                         placeholder="Ví dụ: Kinh doanh quốc tế"
-                                                                        value="{{$item->chucdanh}} "required>
+                                                                        value="{{ $item->chucdanh }}" required>
                                                                 </div>
                                                             </div>
 
@@ -136,26 +138,27 @@
                                                         <div class="row col-md-12">
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Ngày vào<span
-                                                                            class="require">*</span></label>
-                                                                    <input type="date" name="ngayvao"
-                                                                        id="ngayvao" class="form-control" value="{{$item->ngayvao}}">
+                                                                    <label class="control-label">Ngày vào</label>
+                                                                    <input type="date" name="ngayvao_edit"
+                                                                        id="ngayvao" class="form-control"
+                                                                        value="{{ $item->ngayvao }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Ngày xin nghỉ
-                                                                        việc<span class="require">*</span></label>
-                                                                    <input type="date" name="ngaynghi"
-                                                                        id="ngaynghi" class="form-control" value="{{$item->ngaynghi}}">
+                                                                    <label class="control-label">Ngày xin nghỉ</label>
+                                                                    <input type="date" name="ngaynghi_edit"
+                                                                        id="ngaynghi" class="form-control"
+                                                                        value="{{ $item->ngaynghi }}">
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Lý do nghỉ</label>
-                                                                    <input type="text" name="lydo"
-                                                                        id="lydo" class="form-control" value="{{$item->lydo}}">
+                                                                    <input type="text" name="lydo_edit"
+                                                                        id="lydo" class="form-control"
+                                                                        value="{{ $item->lydo }}">
                                                                 </div>
                                                             </div>
 
@@ -163,13 +166,13 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">Chi tiết công
                                                                         việc</label>
-                                                                    <textarea type="text" name="chitiet" id="chitiet" class="form-control" rows="3">{{ $item->chitiet }}</textarea>
+                                                                    <textarea type="text" name="chitiet" id="chitiet_edit" class="form-control" rows="3">{{ $item->chitiet }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Mô tả</label>
-                                                                    <textarea type="text" name="mota" id="mota" class="form-control" rows="3">{{ $item->mota }}</textarea>
+                                                                    <textarea type="text" name="mota" id="mota_edit" class="form-control" rows="3">{{ $item->mota }}</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -217,28 +220,28 @@
                     <div class="form-group">
                         <label class="control-label">Công ty<span class="require">*</span></label>
                         <input type="text" name="congty" id="congty" class="form-control"
-                            placeholder="Ví dụ: Công ty ABC" value="" required>
+                            placeholder="Ví dụ: Công ty ABC" required>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Quy mô</label>
                         <input type="number" name="quymo" id="quymo" class="form-control"
-                            placeholder="Ví dụ: 50" value="">
+                            placeholder="Ví dụ: 50" >
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Lĩnh vực hoạt động của công ty</span></label>
                         <input type="text" name="linhvuc" id="linhvuc" class="form-control"
-                            placeholder="Ví dụ: Lĩnh vực vông nghiệp" value="">
+                            placeholder="Ví dụ: Lĩnh vực vông nghiệp">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Chức danh<span class="require">*</span></label>
                         <input type="text" name="chucdanh" id="chucdanh_kn" class="form-control"
-                            placeholder="Ví dụ: Kinh doanh quốc tế" value="" required>
+                            placeholder="Ví dụ: Kinh doanh quốc tế" required>
                     </div>
                 </div>
 
@@ -246,13 +249,13 @@
             <div class="row col-md-12">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Ngày vào<span class="require">*</span></label>
+                        <label class="control-label">Ngày vào</label>
                         <input type="date" name="ngayvao" id="ngayvao" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Ngày xin nghỉ việc<span class="require">*</span></label>
+                        <label class="control-label">Ngày xin nghỉ việc</label>
                         <input type="date" name="ngaynghi" id="ngaynghi" class="form-control">
                     </div>
                 </div>

@@ -11,6 +11,9 @@
             margin-top: 0px;
             padding: 0px 15px;
         }
+        input{
+            margin-bottom: 5px;
+        }
     </style>
 @stop
 
@@ -26,6 +29,7 @@
             TableManaged3.init();
         });
     </script>
+
 @stop
 @section('content')
     <div class="row">
@@ -38,6 +42,7 @@
                              ứng viên</h3>
                     </div>
                     <div class="card-toolbar">
+                        <a onclick="history.back()" class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     </div>
 
                 </div>
@@ -51,15 +56,12 @@
                                 <div class="col-md-3">
                                     <label>Email (*)</label>
                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                                    <span style="color: red" id="email_error"></span>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Mật khẩu (*)</label>
                                     <input type="text" name="password" id="password" class="form-control" placeholder="Mật khẩu">
-                                </div>
-                                <div class="col-md-3">
-                                    <label>Mật khẩu nhập lại (*)</label>
-                                    <input type="text" name="repassword"  id="repassword" class="form-control"
-                                        placeholder="Nhập lại mật khẩu">
+                                    <span style="color: red" id="password_error"></span>
                                 </div>
                                 <div class="col-md-3">
                                     <label>Trạng thái</label>
@@ -152,8 +154,8 @@
                         </div>
 
                     </div>
-                    <input type="text" name="case" id="case" value="create">
-                    <input name="user" id="user" value="">
+                    <input type="text" name="case" id="case" value="create" hidden>
+                    <input name="user" id="user" value="" hidden>
                     
                     {{-- {!! Form::close() !!} --}}
                     {{-- </form> --}}

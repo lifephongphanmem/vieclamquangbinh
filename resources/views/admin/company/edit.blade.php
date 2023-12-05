@@ -61,214 +61,242 @@
                             @yield('top-menu')
                             {{-- </div> --}}
                         </div>
-                    </div>
-                    <form role="form" method="POST" action="{{ url('/doanhnghiep-up?id=' . $info->id) }}"
-                        enctype='multipart/form-data'>
-                        {{ csrf_field() }}
-                        <table width="100%">
-                            <tr>
-                                <td>Mã số doanh nghiệp </td>
-                                <td>
-                                    <input type="text" size=20 class="form-control" name="masodn"
-                                        value="{{ $info->masodn }}">
+                        {{-- </div> --}}
+                        <form role="form" method="POST" action="{{ url('/doanhnghiep-up?id=' . $info->id) }}"
+                            enctype='multipart/form-data'>
+                            {{ csrf_field() }}
+                            <table width="100%">
+                                <tr>
+                                    <td>Mã số doanh nghiệp </td>
+                                    <td>
+                                        <input type="text" size=20 class="form-control" name="masodn"
+                                            value="{{ $info->masodn }}">
 
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td>Mã số DKKD</td>
-                                <td><input type="text" class="form-control" id="dkkd" name="dkkd"
-                                        value="{{ $info->dkkd }}"></td>
-                            </tr>
-                            <tr>
-                                <td>Tình trạng hoạt động</td>
-                                <td>
-                                    Hoạt động <input type='radio' value='1' name='public' <?php if ($info->public) {
-                                        echo 'checked';
-                                    } ?>>
-                                    Dừng <input type='radio' value='0' name='public' <?php if (!$info->public) {
-                                        echo 'checked';
-                                    } ?>>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Số điện thoại </td>
-                                <td><input type="text" name="phone" class="form-control" value="{{ $info->phone }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Fax</td>
-                                <td><input type="text" name="fax" value="{{ $info->fax }}" class="form-control">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Website</td>
-                                <td><input type="text" name="website" value="{{ $info->website }}" class="form-control">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <td><input type="email" name="email" value="{{ $info->email }}" class="form-control">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Tỉnh</td>
-                                <td>
-                                    <select class="form-control " name="tinh" id='tinh'>
-                                        <option value="44"> Quảng Bình </option>
+                                <tr>
+                                    <td>Mã số DKKD</td>
+                                    <td><input type="text" class="form-control" id="dkkd" name="dkkd"
+                                            value="{{ $info->dkkd }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tình trạng hoạt động</td>
+                                    <td>
+                                        Hoạt động <input type='radio' value='1' name='public' <?php if ($info->public) {
+                                            echo 'checked';
+                                        } ?>>
+                                        Dừng <input type='radio' value='0' name='public' <?php if (!$info->public) {
+                                            echo 'checked';
+                                        } ?>>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Số điện thoại </td>
+                                    <td><input type="text" name="phone" class="form-control"
+                                            value="{{ $info->phone }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fax</td>
+                                    <td><input type="text" name="fax" value="{{ $info->fax }}"
+                                            class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Website</td>
+                                    <td><input type="text" name="website" value="{{ $info->website }}"
+                                            class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><input type="email" name="email" value="{{ $info->email }}"
+                                            class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tỉnh</td>
+                                    <td>
+                                        <select class="form-control " name="tinh" id='tinh'>
+                                            <option value="44"> Quảng Bình </option>
 
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Huyện/Thị xã/Thành phố </td>
-                                <td><select class="form-control " name="huyen" id='huyen'>
-                                        <?php foreach ($dmhc as $dv){
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Huyện/Thị xã/Thành phố </td>
+                                    <td><select class="form-control " name="huyen" id='huyen'>
+                                            <?php foreach ($dmhc as $dv){
 						if ($dv->level == 'Huyện' || $dv->level == 'Thành phố'||$dv->level =="Thị xã"){
 					
 						?>
-                                        @if ($info->tinh == '44')
-                                            <option value='{{ $dv->maquocgia }}' <?php if ($dv->maquocgia == $info->huyen) {
-                                                echo 'selected';
-                                            } ?>>{{ $dv->name }}
-                                            </option>
-                                        @else
-                                            <option value='{{ $dv->maquocgia }}' <?php if ($dv->name == $info->huyen) {
-                                                echo 'selected';
-                                            } ?>>{{ $dv->name }}
-                                            </option>
-                                        @endif
+                                            @if ($info->tinh == '44')
+                                                <option value='{{ $dv->maquocgia }}' <?php if ($dv->maquocgia == $info->huyen) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $dv->name }}
+                                                </option>
+                                            @else
+                                                <option value='{{ $dv->maquocgia }}' <?php if ($dv->name == $info->huyen) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $dv->name }}
+                                                </option>
+                                            @endif
 
 
-                                        <?php  }}?>
+                                            <?php  }}?>
 
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Xã/Phường</td>
-                                <td>
-                                    <select class="form-control" name="xa" id="xa" readonly>
-                                        <?php foreach ($dmhc as $dv){
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Xã/Phường</td>
+                                    <td>
+                                        <select class="form-control" name="xa" id="xa" readonly>
+                                            <?php foreach ($dmhc as $dv){
 						if ($dv->level =="Xã"||$dv->level =="Phường"||$dv->level =="Thị trấn"){
 						?>
-                                        @if ($info->tinh == '44')
-                                            <option value='{{ $dv->maquocgia }}' <?php if ($dv->maquocgia == $info->xa) {
-                                                echo 'selected';
-                                            } ?>>{{ $dv->name }}
-                                            </option>
-                                        @else
-                                            <option value='{{ $dv->maquocgia }}' <?php if ($dv->name == $info->xa) {
-                                                echo 'selected';
-                                            } ?>>{{ $dv->name }}
-                                            </option>
-                                        @endif
-                                        <?php } }?>
+                                            @if ($info->tinh == '44')
+                                                <option value='{{ $dv->maquocgia }}' <?php if ($dv->maquocgia == $info->xa) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $dv->name }}
+                                                </option>
+                                            @else
+                                                <option value='{{ $dv->maquocgia }}' <?php if ($dv->name == $info->xa) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $dv->name }}
+                                                </option>
+                                            @endif
+                                            <?php } }?>
 
 
-                                    </select>
-                                    Thành thị <input type='radio' value='1' name='khuvuc' <?php if ($info->khuvuc) {
-                                        echo 'checked';
-                                    } ?>>
-                                    Nông thôn <input type='radio' value='0' name='khuvuc' <?php if (!$info->khuvuc) {
-                                        echo 'checked';
-                                    } ?>>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Địa chỉ</td>
-                                <td>
-                                    <textarea type="text" class="form-control" name="adress">{{ $info->adress }}</textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Khu công nghiệp</td>
-                                <td><select class="form-control" name="khucn">
-                                        <option value=0> Chọn khu công nghiệp </option>
-                                        <?php foreach ($kcn as $dv){
+                                        </select>
+                                        Thành thị <input type='radio' value='1' name='khuvuc' <?php if ($info->khuvuc) {
+                                            echo 'checked';
+                                        } ?>>
+                                        Nông thôn <input type='radio' value='0' name='khuvuc' <?php if (!$info->khuvuc) {
+                                            echo 'checked';
+                                        } ?>>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Địa chỉ</td>
+                                    <td>
+                                        <textarea type="text" class="form-control" name="adress">{{ $info->adress }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Khu công nghiệp</td>
+                                    <td><select class="form-control" name="khucn">
+                                            <option value=0> Chọn khu công nghiệp </option>
+                                            <?php foreach ($kcn as $dv){
 					
 						?>
-                                        <option value='{{ $dv->id }}' <?php if ($dv->id == $info->khucn) {
-                                            echo 'selected';
-                                        } ?>>{{ $dv->name }}
-                                        </option>
-                                        <?php  }?>
-
-
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Loại hình doanh nghiệp</td>
-                                <td><select class="form-control" name="loaihinh">
-                                        @if ($info->tinh == '44')
-                                            <?php foreach ($ctype2 as $dv){
-						?>
-                                            <option value='{{ $dv->madmlhkt }}' <?php if ($dv->madmlhkt == $info->loaihinh) {
-                                                echo 'selected';
-                                            } ?>>{{ $dv->tenlhkt }}
-                                            </option>
-                                            <?php  }?>
-                                        @else
-                                            <?php foreach ($ctype as $dv){
-						?>
-                                            <option value='{{ $dv->id }}' <?php if ($dv->id == $info->loaihinh) {
+                                            <option value='{{ $dv->id }}' <?php if ($dv->id == $info->khucn) {
                                                 echo 'selected';
                                             } ?>>{{ $dv->name }}
                                             </option>
                                             <?php  }?>
-                                        @endif
+
+
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Loại hình doanh nghiệp</td>
+                                    <td><select class="form-control" name="loaihinh">
+                                            @if ($info->tinh == '44')
+                                                <?php foreach ($ctype2 as $dv){
+						?>
+                                                <option value='{{ $dv->madmlhkt }}' <?php if ($dv->madmlhkt == $info->loaihinh) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $dv->tenlhkt }}
+                                                </option>
+                                                <?php  }?>
+                                            @else
+                                                <?php foreach ($ctype as $dv){
+						?>
+                                                <option value='{{ $dv->id }}' <?php if ($dv->id == $info->loaihinh) {
+                                                    echo 'selected';
+                                                } ?>>
+                                                    {{ $dv->name }}
+                                                </option>
+                                                <?php  }?>
+                                            @endif
 
 
 
 
-                                    </select> </td>
-                            </tr>
-                            <tr>
-                                <td>Ngành nghề</td>
-                                <td> <select class="form-control" name="nganhnghe">
-                                        <?php foreach ($cfield as $dv){
+                                        </select> </td>
+                                </tr>
+                                <tr>
+                                    <td>Ngành nghề</td>
+                                    <td> <select class="form-control" name="nganhnghe">
+                                            <?php foreach ($cfield as $dv){
 					
 						?>
-                                        <option value='{{ $dv->id }}' <?php if ($dv->id == $info->nganhnghe) {
-                                            echo 'selected';
-                                        } ?>>{{ $dv->name }}
-                                        </option>
-                                        <?php  }?>
+                                            <option value='{{ $dv->id }}' <?php if ($dv->id == $info->nganhnghe) {
+                                                echo 'selected';
+                                            } ?>>{{ $dv->name }}
+                                            </option>
+                                            <?php  }?>
 
 
-                                    </select> </td>
-                            </tr>
+                                        </select> </td>
+                                </tr>
 
+                                <tr>
+                                    <td>Ảnh giấy DKKD</td>
+                                    <td>
+                                        <input type="file" name="image" value="{{ $info->email }}"
+                                            class="form-control">
+                                    </td>
+                                </tr>
+                            </table>
 
-                        </table>
+                            <div class="form-actions mt-5">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-12 text-center">
 
-                        <div class="form-actions mt-5">
-                            <div class="row">
-                                <div class="col-md-offset-4 col-md-12 text-center">
+                                        <button type="submit" class="btn btn-success">Lưu hồ sơ</button>
 
-                                    <button type="submit" class="btn btn-success">Lưu hồ sơ</button>
-
-                                    <a href="{{ url(
-                                        '/doanhnghiep-ba?dm_filter=' .
-                                            $dm_filter .
-                                            '&public_filter=' .
-                                            $public_filter .
-                                            '&khaibao=' .
-                                            $khaibao .
-                                            '&quymo_min_filter=' .
-                                            $quymo_min_filter .
-                                            '&quymo_max_filter=' .
-                                            $quymo_max_filter,
-                                    ) }}"
-                                        class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                                        <a href="{{ url(
+                                            '/doanhnghiep-ba?dm_filter=' .
+                                                $dm_filter .
+                                                '&public_filter=' .
+                                                $public_filter .
+                                                '&khaibao=' .
+                                                $khaibao .
+                                                '&quymo_min_filter=' .
+                                                $quymo_min_filter .
+                                                '&quymo_max_filter=' .
+                                                $quymo_max_filter,
+                                        ) }}"
+                                            class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                                    </div>
                                 </div>
                             </div>
+
+
+                        </form>
+
+                        <div class="col-xl-4 ">
+
+                            <div>
+                                <img style="position: absolute;  bottom: 8%;left: 5%;;" class="col-xl-12"
+                                    src="{{ $info->image }}">
+                            </div>
+
                         </div>
-
-
-                    </form>
+                    </div>
+                    
                 </div>
+
             </div>
 
         </div>
@@ -335,8 +363,6 @@
                             <div>{{ $key }} : {{ $val }}</div>
                             <?php } ?>
 
-
-
                         </div>
                     </div>
                 </div>
@@ -399,8 +425,8 @@
                         </div>
                     </div>
                 </div>
- </div>
             </div>
         </div>
- 
-    @endsection
+    </div>
+
+@endsection
