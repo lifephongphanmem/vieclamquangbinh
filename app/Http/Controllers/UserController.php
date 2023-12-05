@@ -273,7 +273,13 @@ class UserController extends Controller
 			return view('errors.noperm')->with('machucnang', 'taikhoan');
 		}
 		$inputs = $request->all();
-		$m_taikhoan = User::where('username', $inputs['tendangnhap'])->first();
+		if($inputs['phanloaitk']==2){
+			$m_taikhoan = User::where('email', $inputs['tendangnhap'])->first();
+			$m_taikhoan->username=$m_taikhoan->email;
+		}else{
+			$m_taikhoan = User::where('username', $inputs['tendangnhap'])->first();
+		}
+
 		$m_phanquyen = dstaikhoan_phanquyen::where('tendangnhap', $inputs['tendangnhap'])->get();
 		$m_chucnang = Chucnang::where('trangthai', '1')->get();
 
@@ -299,6 +305,7 @@ class UserController extends Controller
 			return view('errors.noperm')->with('machucnang', 'taikhoan');
 		}
 		$inputs = $request->all();
+		// dd($inputs);
 		$inputs['phanquyen'] = isset($inputs['phanquyen']) ? 1 : 0;
 		$inputs['danhsach'] = isset($inputs['danhsach']) ? 1 : 0;
 		$inputs['thaydoi'] = isset($inputs['thaydoi']) ? 1 : 0;
@@ -321,13 +328,14 @@ class UserController extends Controller
 				'thaydoi' => $inputs['thaydoi'],
 				'hoanthanh' => $inputs['hoanthanh'],
 			];
+			// dd($chk);
 			if ($chk == null) {
 				dstaikhoan_phanquyen::create($a_kq);
 			} else {
 				$chk->update($a_kq);
 			}
 		}
-		return redirect('/TaiKhoan/PhanQuyen?tendangnhap=' . $inputs['tendangnhap'])
+		return redirect('/TaiKhoan/PhanQuyen?tendangnhap=' . $inputs['tendangnhap'].'&phanloaitk='.$inputs['phanloaitk'])
 			->with('success', 'Phân quyền thành công');
 	}
 

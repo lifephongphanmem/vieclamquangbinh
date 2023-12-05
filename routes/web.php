@@ -95,6 +95,9 @@ Route::post('/tuyendung-fs', [TuyendungController::class, 'save']);
 Route::post('/tuyendung-fru', [TuyendungController::class, 'updatebaocao']);
 Route::get('/tuyendung-fr/{tdid}', [TuyendungController::class, 'baocao']);
 Route::get('/tuyendung-get_vitri_page', [TuyendungController::class, 'get_vitri']); //get vt page
+
+Route::get('/tuyendung-hosodanop', [TuyendungController::class, 'hosodanop']); // danh sách hồ sơ ứng tuyển
+
 // messenger
 
 Route::group(['prefix' => 'messages'], function () {
@@ -168,6 +171,8 @@ Route::get('/tuyendung-bu/{tdid}', [AdminTuyendung::class, 'duyet']); // duyet
 
 Route::get('/tuyendung-be/{tdid}', [AdminTuyendung::class, 'edit']); // edit
 Route::get('/tuyendung-viectimnguoi/{cid?}', [AdminTuyendung::class, 'viectimnguoi']); // việc tìm người
+
+
 
 // Dieu tra
 

@@ -224,14 +224,14 @@
                 </tr>
             @endif
         @endforeach
-        <tr>
+
+        {{-- <tr>
             <td>d</td>
             <td colspan="4">Chia theo ngành nghề</td>
         </tr>
-        <?php $d = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U']; ?>
         @foreach ($m_nganhnghe as $key => $val)
             <tr>
-                <td>{{ $d[$key] }}</td>
+                <td>{{ $val->madm }}</td>
                 <td>{{ $val->tendm }}</td>
                 <td style="text-align: center;">Người</td>
                 <td style="text-align: center;">
@@ -239,8 +239,7 @@
                 <td style="text-align: center;">
                     {{ dinhdangso(count($model_hientai_nuocngoai->where('nganhnghemongmuon', $val->madm))) }}</td>
             </tr>
-        @endforeach
-
+        @endforeach --}}
 
         <?php
         $model_truoc_hocnghe = $model_truoc->whereNotNull('nganhnghemuonhoc');

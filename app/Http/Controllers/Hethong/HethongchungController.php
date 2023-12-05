@@ -19,6 +19,7 @@ use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\tonghopcunglaodong;
+use App\Models\ungvien;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -170,8 +171,9 @@ class HethongchungController extends Controller
 				$user->mahuyen = $cty->huyen;
 			}else{
 				$user->id = $user->id;
-				$user->name = $user->name;
 				$user->email = $user->email;
+				$ungvien = ungvien::where('user', $user->id)->first();
+				$user->name = $ungvien->hoten;
 			}
 		} else {
 			//$ttuser->chucnang = array('SSA');

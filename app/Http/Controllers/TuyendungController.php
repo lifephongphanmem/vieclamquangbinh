@@ -223,6 +223,11 @@ class TuyendungController extends Controller
 		$html .= '</ol>';
 		return response()->json($html);
 	}
+
+	public function hosodanop(){
+	
+		return view('pages.tuyendung.hosodanop');
+	}
 }
 
 ?>

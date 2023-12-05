@@ -199,9 +199,7 @@ class dsnhomtaikhoanController extends Controller
         // }
 
         $inputs = $request->all();
-
         $model = User::where('manhomchucnang', $inputs['manhomchucnang'])->get();
-        
         $model_phanquyen = dsnhomtaikhoan_phanquyen::where('manhomchucnang', $inputs['manhomchucnang'])->get();
         $a_phanquyen = [];
         foreach ($model as $taikhoan) {
@@ -217,7 +215,8 @@ class dsnhomtaikhoanController extends Controller
             }
         }
         // dd($a_phanquyen);
-        foreach (array_chunk(array_column($model->toarray(), 'username'), 100) as $data) {
+        $a_data=$inputs['manhomchucnang'] == 1671467299?array_column($model->toarray(),'email'):array_column($model->toarray(),'username');
+        foreach (array_chunk($a_data, 100) as $data) {
             dstaikhoan_phanquyen::wherein('tendangnhap', $data)->delete();
         }
         foreach (array_chunk($a_phanquyen, 200) as $data) {

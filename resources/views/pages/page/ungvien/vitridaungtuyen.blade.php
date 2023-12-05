@@ -1,5 +1,5 @@
 <head>
-    <title>Ứng viên {{ $ungvien->hoten }}</title>
+    <title>Vị trí đã ứng tuyển</title>
     <meta name="robots" content="noindex, nofollow">
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/png" href="/static/media/images/siteinfo/2020_08_04/untitled-1.png">
@@ -109,10 +109,10 @@
                                     <p class="av" style="position: relative;">
                                         <img src="{{ '/assets2/media/images/default/s200_200/defaultimage.jpg' }}"
                                             alt="{{ $ungvien->hoten }}" style="height: 100%;">
-                                        <a class="editin-img open-task-iframe"
+                                        {{-- <a class="editin-img open-task-iframe"
                                             style="border: 0px; background-color: #6199b8;color: white;width: 100%;position: absolute;bottom: 0%;left: 0;"><i
                                                 class="glyphicon glyphicon-pencil"></i> <span>cập nhật thông tin
-                                            </span></a>
+                                            </span></a> --}}
                                     </p>
 
                                     <h2>{{ $ungvien->hoten }}</h2>
@@ -210,84 +210,61 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 pad_r">
-                            <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                <h3 class="w-64p">LIÊN HỆ</h3>
-                            </div>
-                            <div class="content_text_one">
-                                <p class="d_flex_center d_flex">
-                                    <span>
-                                        <span><img src="{{ url('assets2/images/sn.png') }}"
-                                                style="margin-top: -7px">{{ getDayVn($ungvien->ngaysinh) }}</span>
-                                    </span>
-                                    <span>
-                                        <img src="{{ url('assets2/images/add_u.png') }}" style="margin-top: -7px">
-                                        {{ (isset($ungvien->address) ? $ungvien->address . ' - ' : '') . (isset($xa->name) ? $xa->name . ' - ' : '') . (isset($huyen->name) ? $huyen->name . ' - ' : '') . 'Quảng Bình' }}
-                                    </span>
-                                </p>
-                                <p class="d_flex_center d_flex">
-                                    <span>
-                                        <span><img src="{{ url('assets2/images/email_u.png') }}"></span>
-                                        <a href="{{ 'mailto:' . $model->email }}">{{ $model->email }}</a>
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                <h3 class="w-64p">KINH NGHIỆM LÀM VIỆC:</h3>
-                            </div>
-                            @if (session('admin') != null)
-                                @if (session('admin')->id == $ungvien->user)
-                                    <a href="#" class="update_infop open-task-iframe"
-                                        onclick="capnhap_kinhnghiem()" style="font-size: 12px;margin-left: 92%"><i
-                                            class="glyphicon glyphicon-pencil"></i>
-                                        Cập nhật</a>
-                                @endif
-                            @endif
-                            <div class="content_text_two">
 
-                                @foreach ($ungvienkinhnghiem as $kinhnghiem)
-                                    <div class="d_flex item_time">
-                                        <div class="time">
-                                            <h4> {{ isset($kinhnghiem->ngayvao) ? 'Từ ' . $kinhnghiem->ngayvao : '' }}<br>
-                                                {{ isset($kinhnghiem->ngaynghi) ? 'Đến ' . $kinhnghiem->ngaynghi : '' }}
-                                            </h4>
-                                        </div>
-                                        <div class="text">
-                                            <h5>{{ $kinhnghiem->chucdanh }}</h5>
-                                            <p style="font-style: italic;">{{ $kinhnghiem->congty }}</p>
-                                            <h5>Mô tả: </h5>
-                                            <p>{{ $kinhnghiem->mota }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 pad_r">
+                            <style>
+                                .section-summary table {
+                                    width: 100%;
+                                    font-size: 14px;
+                                }
+
+                                .section-summary table td,
+                                .section-summary table th {
+                                    padding: 6px 15px;
+                                }
+
+                                .remove-apply {
+                                    cursor: pointer;
+                                }
+                            </style>
+                            <div class="title_p wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                                <h3 class="w-64p">Đơn đã ứng tuyển</h3>
                             </div>
-                            <div class="title_p wow fadeInUp">
-                                <h3 class="w-64p">TRÌNH ĐỘ HỌC VẤN:</h3>
+                            <div class="section-summary section-edit-user">
+                                <div class="view-control">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên công ty</th>
+                                                <th>Vị trí ứng tuyển</th>
+                                                <th>Ngày ứng tuyển</th>
+                                                <th>Hủy bỏ</th>
+                                            </tr>
+                                            @foreach ($vitriungtuyen as $key => $item)
+                                                <tr>
+                                                    <td>{{ ++$key }}</td>
+                                                    <td>
+                                                        <a target="_bank" href="">
+                                                            {{ $item->tencongty }}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a title="tìm việc: test" target="_bank"
+                                                            href="">{{ $item->tenvitri }}</a>
+                                                    </td>
+                                                    <td>{{ getDayVn($item->created_at) }}</td>
+                                                    <td><a class="remove-apply" href="{{'/page/ungvien/delete_apply?id='.$item->id}}"  title="Xóa đơn"><i class="fa fa-times"
+                                                                aria-hidden="true"></i></a></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            @if (session('admin') != null)
-                                @if (session('admin')->id == $ungvien->user)
-                                    <a href="#" class="update_infop open-task-iframe"
-                                        onclick="capnhap_hocvan()" style="font-size: 12px;margin-left: 92%"><i
-                                            class="glyphicon glyphicon-pencil"></i>
-                                        Cập nhật</a>
-                                @endif
-                            @endif
-                            <div class="content_text_two">
-                                @foreach ($ungvienhocvan as $hocvan)
-                                    <div class="d_flex item_time">
-                                        <div class="time">
-                                            <h4> {{ isset($hocvan->tungay) ? 'Từ ' . $hocvan->tungay : '' }} <br>
-                                                {{ isset($hocvan->denngay) ? 'Đến ' . $hocvan->denngay : '' }}</h4>
-                                        </div>
-                                        <div class="text">
-                                            <p><strong>Trường:</strong> {{ $hocvan->truong }}</p>
-                                            <p><strong>Chuyên ngành:</strong> {{ $hocvan->chuyennganh }} </p>
-                                            <p><strong>Bằng cấp:</strong> {{ $hocvan->bangcap }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+
                         </div>
+
                     </div>
 
                 </div>
@@ -303,66 +280,9 @@
 
 
     @include('pages.page.includes.footer')
-    <div id="hocvan" style="display: none">
-        <div id="box-img-view" class="box-img-view open">
-            <div id="box-img-view-in" class="box-img-view-in">
-                <a href="" style="color: red"><span class="close-box-img-view" onclick="close_hocvan()"><i
-                            class="fa fa-times"></i></span></a>
-                <div class="input-img " id="input-img">
-                    <iframe src="{{ '/page/ungvien/iframe_hocvan?user=' . $ungvien->user }}"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="kinhnghiem" style="display: none">
-        <div id="box-img-view" class="box-img-view open">
-            <div id="box-img-view-in" class="box-img-view-in">
-                <a href="" style="color: red"> <span class="close-box-img-view"
-                        onclick="close_kinhnghiem()"><i class="fa fa-times"></i></span></a>
-                <div class="input-img " id="input-img">
-                    <iframe src="{{ '/page/ungvien/iframe_kinhnghiem?user=' . $ungvien->user }}"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="coban" style="display: none">
-        <div id="box-img-view" class="box-img-view open">
-            <div id="box-img-view-in" class="box-img-view-in">
-                <a href="" style="color: red"><span class="close-box-img-view" onclick="close_coban()"><i
-                            class="fa fa-times"></i></span></a>
-                <div class="input-img " id="input-img">
-                    <iframe src="{{ '/page/ungvien/iframe_coban?user=' . $ungvien->user }}"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
 </body>
 
 <script>
-    function capnhap_hocvan() {
-        $("#hocvan").css("display", "block");
-    }
 
-    function close_hocvan() {
-
-        $("#hocvan").css("display", "none");
-    }
-
-    function capnhap_kinhnghiem() {
-        $("#kinhnghiem").css("display", "block");
-    }
-
-    function close_kinhnghiem() {
-
-        $("#kinhnghiem").css("display", "none");
-    }
-
-    function capnhap_coban() {
-        $("#coban").css("display", "block");
-    }
-
-    function close_coban() {
-
-        $("#coban").css("display", "none");
-    }
 </script>

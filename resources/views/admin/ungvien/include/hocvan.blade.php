@@ -3,12 +3,24 @@
         @if (isset($ungvienhocvan))
         <table  class="table  table-bordered table-hover dataTable no-footer">
             @foreach ($ungvienhocvan as $item)
+
                 <tr>
                     <td width="80%">
-                        {{$item->truong}} ----- {{$item->tungay}} - {{$item->dengay}}
-                    </td>
-                    <td width="20%">
-                        <a  onclick="deletehocvan('{{$item->id}}')"class="btn btn-sm btn-clean btn-icon" ><i class="icon-lg flaticon-delete text-danger"></i></a>
+                        <span style="color: ">
+                            {{ $item->truong }} &emsp;&emsp;&emsp;
+                        </span>
+                        <span >
+                           {{ getDayVn($item->tungay) }} {{isset($item->denngay) ? ' - '.getDayVn($item->denngay) :"" }}
+                        </span>
+
+                        <span class="pull-right">
+                            <a class="btn btn-primary edit-inp"><i class="glyphicon glyphicon-pencil"></i> Cật
+                                nhật</a>
+                            <a onclick="deletehocvan('{{ $item->id }}')"
+                                class="btn btn-danger deletedata"><i class="glyphicon glyphicon-remove"></i>
+                                Xóa</a>
+                        </span>
+
                     </td>
                 </tr>
             @endforeach
