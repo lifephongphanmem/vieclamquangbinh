@@ -319,7 +319,7 @@
     <div class="card-footer">
         <div class="row text-center">
             <div class="col-lg-12">
-                <a href="{{ url('/TaiKhoan/DanhSach?madv=' . $m_taikhoan->madv) }}"
+                <a href="{{ url('/TaiKhoan/ThongTin?phanloaitk=' . $m_taikhoan->phanloaitk) }}"
                     class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
             </div>
         </div>
@@ -329,6 +329,7 @@
 <!--Modal thông tin chi tiết -->
 {!! Form::open(['url' => '/TaiKhoan/PhanQuyen', 'id' => 'frm_modify']) !!}
 <input type="hidden" name="tendangnhap" value="{{ $m_taikhoan->username }}" />
+<input type="hidden" name="phanloaitk" value="{{ $m_taikhoan->phanloaitk }}" />
 <input type="hidden" name="machucnang" />
 <div id="modify-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
     <div class="modal-dialog modal-lg">

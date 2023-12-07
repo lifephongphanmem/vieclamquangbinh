@@ -386,7 +386,6 @@
         <?php
         $model_truoc_hocnghe = $model_truoc->whereNotNull('nganhnghemuonhoc');
         $model_hientai_hocnghe = $model_hientai->whereNotNull('nganhnghemuonhoc');
-        
         ?>
         <tr>
             <td style="font-weight: bold;">1.3</td>

@@ -499,6 +499,9 @@
 		
 					</form> --}}
                     <div class="card-body">
+                        @if (session('error'))
+    <div class="alert alert-danger text-center">{{ session('error') }}</div>
+@endif
                         <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                             <thead>
                                 <td width="2%"> # </td>

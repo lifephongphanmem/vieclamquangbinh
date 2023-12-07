@@ -895,13 +895,12 @@ class baocaotonghopController extends Controller
 
         // if (isset($inputs['madv'])) {
             $maquocgia_huyen = $m_danhmuc->where('madv',$inputs['madv'])->first()->maquocgia;
+
             $tenhuyen = $m_danhmuc->where('madv',$inputs['madv'])->first()->name;
+
             $ds_xa = $m_danhmuc->where('parent',$maquocgia_huyen);
             $ds_maxa = array_column( $ds_xa->ToArray(),'madv' );
-        // }else{
-        //     $ds_maxa = '';
-        // }
-      
+
         $model = nhankhauModel::select('hoten','gioitinh','ngaysinh','cccd','diachi','uutien','dantoc','trinhdogiaoduc','chuyenmonkythuat',
         'chuyennganh','doituongtimvieclam','vieclammongmuon','nganhnghemuonhoc','trinhdochuyenmonmuonhoc','madv','sdt','nganhnghemongmuon','thitruonglamviec')
         ->where('kydieutra', $inputs['kydieutra'])

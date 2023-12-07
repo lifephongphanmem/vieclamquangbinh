@@ -1423,6 +1423,24 @@ class AdminDieutra extends Controller
             $m_huyen = null;
             $m_tinh =  null;
         }
+        //Xuất danh sách lỗi k có chuyenmonkt
+    //    $ds= $model->wherenull('chuyenmonkythuat');
+    //    $tendv=array_column($ds_danhmuc->toarray(), 'name','madv');
+    // //    dd($tendv);
+    //    return view('admin.dieutra.dsloicmkt')
+    //    // return view('admin.dieutra.mau01b_test')
+    //    ->with('ds', $ds)
+    //    ->with('inputs', $inputs)
+    //    ->with('tendv', $tendv)
+    //    ->with('a_cmkt', $a_cmkt)
+    //    ->with('pageTitle', 'Tổng hợp cung lao động')
+    //    ->with('a_gdpt', $a_gdpt)
+    //    ->with('a_dtut', $a_dtut)
+    //    ->with('m_huyen', $m_huyen)
+    //    ->with('m_tinh', $m_tinh)
+    //    ->with('ds_danhmuc', $ds_danhmuc)
+    //    ->with('m_danhmuc', $m_danhmuc);
+        // dd($ds->take(10));
         // dd($ds_danhmuc);
         return view('admin.dieutra.mau01bhuyen')
             // return view('admin.dieutra.mau01b_test')

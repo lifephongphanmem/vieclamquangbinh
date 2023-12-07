@@ -707,21 +707,30 @@ class Employer extends Model
 			for ($j = 0; $j < $nfield; $j++) {
 				$data[$arr_col[$j]] = $arr[$i][$j + 0] ?? '';
 			}
-
 			$data['company'] = session('admin')->company_id;
+			$ngaysinh=array_reverse(explode('/',$data['ngaysinh']));
+			$data['ngaysinh']=implode('-',$ngaysinh);
+			$arr_ngaythang=['bdhopdong','kthopdong','bddochai','ktdochai','bdbhxh','ktbhxh'];
+			foreach($arr_ngaythang as $nt){
+				$ngaythang=array_reverse(explode('/',$data[$nt]));
+				if(count($ngaythang) != 3 && $data[$nt] != ''){
+					array_push($ngaythang,'01');
+				}
+				$data[$nt]=implode('-',$ngaythang);
+			}
+			// dd($data);
+			$data['cmnd']=trim($data['cmnd'],"'");
 			$nld = nguoilaodong::where('company', $data['company'])->where('cmnd', (string)$data['cmnd'])->first();
-
 			if (isset($nld)) {
 				$count_error += 1;
 			} else {
-				
-				nguoilaodong::create($data);
-			
+					nguoilaodong::create($data);			
 				$count_success += 1;
 			}
 
 			// DB::table('nguoilaodong')->insert($data);
 		}
+	
 		// dd($count_success);
 		$RetArray = array();
 		$RetArray['count_success'] = $count_success;
