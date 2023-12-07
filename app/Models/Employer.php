@@ -724,7 +724,7 @@ class Employer extends Model
 			if (isset($nld)) {
 				$count_error += 1;
 			} else {
-					nguoilaodong::create($data);;			
+					nguoilaodong::create($data);			
 				$count_success += 1;
 			}
 
