@@ -181,15 +181,16 @@ class EmployerController extends Controller
     catch (Exception $e) {
 
       return redirect('/doanhnghieppanel')->with('error' , 'Dữ liệu nhập không hợp lệ');
+
     }
 
     if ($count_success >0) {
       return redirect('/doanhnghieppanel')->with('success' , 'Đã thêm mới '. $count_success .' Người lao động');
-    }{
+    }else{
       return redirect('/doanhnghieppanel')->with('error' , 'Hãy kiểm tra lại dữ liệu ');
     }
 
-    return redirect('/doanhnghieppanel');
+    // return redirect('/doanhnghieppanel');
   }
 
   // public function import()
