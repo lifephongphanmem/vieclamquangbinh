@@ -317,7 +317,7 @@
                                                             <div class="form-group">
                                                                 <label>Chức vụ</label>
                                                                 <input type="text" name="chucvu"
-                                                                    value="{{ $ld->chucvu }}" class="form-control">`
+                                                                    value="{{ $ld->chucvu }}" class="form-control">
                                                             </div>
                                                         </div>
 
