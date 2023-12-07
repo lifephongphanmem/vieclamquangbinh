@@ -547,8 +547,8 @@ class AdminCompany extends Controller
 				$val->nhaquanly = false;
 			}
 		}
-
-		// dd($model);
+			
+		// dd($model->first());
 		// dd($a_vitrikhac);
 		// $a_vitri=array_column($list_nghe->toarray(),'name','id');
 		$a_chucvu = array_column(dmchucvu::all()->toarray(), 'tencv', 'id');
