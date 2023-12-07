@@ -28,7 +28,6 @@ class AdminEmployer extends Controller
 	public function show_all($cid = null)
 	{
 		$request = request();
-
 		//filter
 		$search = $request->search;
 		$gioitinh_filter = $request->gioitinh_filter;
@@ -58,16 +57,18 @@ class AdminEmployer extends Controller
 				return $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > " . $age_filter);
 			})
 			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
-
+			->where('state',1)
 			->get();
+			
 		// $lds=DB::table('nguoilaodong')->select('id','hoten','cmnd','ngaysinh','company','tinh')->get();
-
+			// dd($request->cid);
 		$a_congty = array_column(DB::table('company')->get()->toarray(), 'name', 'id');
 		// foreach($lds as $ld){
-
+	
 		// 	$cty= DB::table('company')->where('id',$ld->company)->get()->first();
 		// 	$ld->ctyname=$cty->name;
-		// }		
+		// }
+
 		return view('admin.employer.all')
 			->with('lds', $lds)
 			->with('baocao', getdulieubaocao())

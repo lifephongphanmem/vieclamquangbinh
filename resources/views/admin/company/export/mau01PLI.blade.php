@@ -40,20 +40,27 @@
             </td>
         </tr>
     </table>
-<div id=data_body style="font-size:12px;">
-    <p style="text-align: left;font-weight: bold;font-size:14px">1. Thông tin chung về doanh nghiệp, cơ
-        quan, tổ chức:</p>
-        <p style="margin-left: 110px;">Tên doanh nghiệp, cơ quan tổ chức: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->tendn:''}}</span>
-        <p style="margin-left: 110px;">Địa chỉ:<span style="font-weight:normal !important; text-transform:none;">{{isset($m_dv)?$m_dv->diachi:''}}</span></p>
-        <p style="margin-left: 110px;">Điện thoại: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->phone:''}}</span></p>
-        <p style="margin-left: 110px;">Fax: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->fax:''}}</span></p>
-        <p style="margin-left: 110px;">Email: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->email:''}}</span></p>
-        <p style="margin-left: 110px;">Mã số đăng ký doanh nghiệp: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->dkkd:''}}</span></p>
+    <div id=data_body style="font-size:12px;">
+        <p style="text-align: left;font-weight: bold;font-size:14px">1. Thông tin chung về doanh nghiệp, cơ
+            quan, tổ chức:</p>
+        <p style="margin-left: 110px;">Tên doanh nghiệp, cơ quan tổ chức: <span
+                style="font-weight:normal !important;text-transform:none;">{{ isset($m_dv) ? $m_dv->tendn : '' }}</span>
+        <p style="margin-left: 110px;">Địa chỉ:<span
+                style="font-weight:normal !important; text-transform:none;">{{ isset($m_dv) ? $m_dv->diachi : '' }}</span></p>
+        <p style="margin-left: 110px;">Điện thoại: <span
+                style="font-weight:normal !important;text-transform:none;">{{ isset($m_dv) ? $m_dv->phone : '' }}</span></p>
+        <p style="margin-left: 110px;">Fax: <span
+                style="font-weight:normal !important;text-transform:none;">{{ isset($m_dv) ? $m_dv->fax : '' }}</span></p>
+        <p style="margin-left: 110px;">Email: <span
+                style="font-weight:normal !important;text-transform:none;">{{ isset($m_dv) ? $m_dv->email : '' }}</span></p>
+        <p style="margin-left: 110px;">Mã số đăng ký doanh nghiệp: <span
+                style="font-weight:normal !important;text-transform:none;">{{ isset($m_dv) ? $m_dv->dkkd : '' }}</span></p>
         {{-- <p style="margin-left: 110px;">Lĩnh vực hoạt động: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->loaihinh:''}}</span></p> --}}
-        <p style="margin-left: 110px;">Ngành, nghề kinh doanh chính: <span style="font-weight:normal !important;text-transform:none;">{{isset($m_dv)?$m_dv->nganhnghe:''}}</span></p>
+        <p style="margin-left: 110px;">Ngành, nghề kinh doanh chính: <span
+                style="font-weight:normal !important;text-transform:none;">{{ isset($m_dv) ? $m_dv->nganhnghe : '' }}</span></p>
 
         <p style="text-align: left;font-weight: bold;font-size:14px">2.Thông tin tình hình sử dụng lao động của đơn vị</p>
-</div>
+    </div>
 
 
     <table id="data_body1" class="money" cellspacing="0" cellpadding="0" border="1"
@@ -63,13 +70,13 @@
                 <th style="width: 3%;" rowspan="3">S</br>T</br>T</th>
                 <th style="width: 5%;" rowspan="3">Họ và tên</th>
                 <th rowspan="3">Mã số</br>BHXH</th>
-                <th rowspan="3">Ngày sinh</th>
+                <th rowspan="3">Ngày tháng</br> năm sinh</th>
                 <th rowspan="3" style="width: 3%;">Giới tính</th>
-                <th rowspan="3">CCCD/</br>CMND</th>
-                <th style="width: 5%;" rowspan="3">Chức vụ</th>
+                <th rowspan="3">Số CCCD/</br>CMND/</br>Hộ chiếu</th>
+                <th style="width: 5%;" rowspan="3">Cấp bậc,</br> chức vụ,</br> chức danh</br> nghề, nơi</br>làm việc</th>
                 <th style="width: 20%;" colspan="4">Vị trí việc làm</th>
                 <th colspan="6">Tiền lương</th>
-                <th colspan="2" rowspan="2">Ngành nghề nặng nhọc,</br>độc hại</th>
+                <th colspan="2" rowspan="2">Ngành/nghề nặng nhọc,</br>độc hại</th>
                 <th colspan="5">Loại và hiệu lực hợp đồng lao động</th>
                 <th rowspan="3" style="width: 5%;">Thời điểm</br>đơn vị</br>bắt đầu</br>đóng BHXH</th>
                 <th rowspan="3" style="width: 5%;">Thời điểm</br>đơn vị</br>kết thúc</br>đóng BHXH</th>
@@ -84,12 +91,12 @@
                 <th colspan="5" style="width: 3%;">Phụ cấp</th>
                 <th rowspan="2" style="width: 3%;">Ngày</br>bắt đầu</br>HĐLĐ</br>không</br>xác định</br>thời hạn</th>
                 <th colspan="2" style="width: 3%;">Hiệu lực HĐLĐ<br>xác định thời hạn</th>
-                <th colspan="2" style="width: 3%;">Hiệu lực HĐLĐ<br>khác</th>
+                <th colspan="2" style="width: 3%;">Hiệu lực HĐLĐ<br>khác (dưới 1 tháng, thử việc)</th>
             </tr>
             <tr>
                 <th style="width: 3%;">Chức vụ</th>
-                <th style="width: 3%;">Thâm</br>niên</br>vượt</br>khung</th>
-                <th style="width: 3%;">Thâm</br>niên</br>nghề</th>
+                <th style="width: 3%;">Thâm</br>niên</br>vượt</br>khung </br>(%)</th>
+                <th style="width: 3%;">Thâm</br>niên</br>nghề</br> (%)</th>
                 <th style="width: 3%;">Phụ</br>cấp</br>lương</th>
                 <th style="width: 3%;">Các</br>khoản</br>bổ</br>sung</th>
                 <th style="width: 3%;">Ngày</br>bắt</br>đầu</th>
@@ -102,31 +109,36 @@
 
         </thead>
         <tbody>
+            <tr  class="text-center">
+                @for ($i = 1; $i < 28; $i++)
+                    <td>{{ $i }}</td>
+                @endfor
+            </tr>
             @foreach ($model as $key => $ct)
                 <tr class="text-center">
                     <td>{{ ++$key }}</td>
                     <td>{{ $ct->hoten }}</td>
                     <td>{{ $ct->sobaohiem }}</td>
-                    <td>{{getDayVn($ct->ngaysinh) }}</td>
+                    <td>{{ getDayVn($ct->ngaysinh) }}</td>
                     <td>{{ $ct->gioitinh }}</td>
                     <td>{{ $ct->cmnd }}</td>
-                    <td>{{ $ct->chucvu}}</td>
+                    <td>{{ $ct->chucvu }}</td>
                     <td>
-                        {{$ct->nhaquanly==true?'X':''}}
+                        {{ $ct->nhaquanly == true ? 'X' : '' }}
                     </td>
                     @foreach ($a_vitri as $key => $val)
                         <td>{{ $key == $ct->vitri ? 'X' : '' }}</td>
                     @endforeach
                     <td>{{ in_array($ct->vitri, $a_vitrikhac) ? 'X' : '' }}</td>
-                    <td></td>
-                    <td>{{ $ct->pcchucvu }}</td>
-                    <td>{{ $ct->pcthamnien }}</td>
-                    <td>{{ $ct->pcthamniennghe }}</td>
-                    <td>{{ $ct->pcluong }}</td>
-                    <td>{{ $ct->pcbosung }}</td>
+                     <td>{{ dinhdangso($ct->luong) }}</td>
+                    <td>{{ dinhdangso($ct->pcchucvu) }}</td>
+                    <td>{{ dinhdangso($ct->pcthamnien) }}</td>
+                    <td>{{ dinhdangso($ct->pcthamniennghe) }}</td>
+                    <td>{{ dinhdangso($ct->pcluong) }}</td>
+                    <td>{{ dinhdangso($ct->pcbosung) }}</td>
                     <td>{{ getDayVn($ct->bddochai) }}</td>
                     <td>{{ getDayVn($ct->ktdochai) }}</td>
-                    <td>{{ $ct->loaihdld == 'Không xác định thời hạn'?getDayVn($ct->bdhopdong):'' }}
+                    <td>{{ $ct->loaihdld == 'Không xác định thời hạn' ? getDayVn($ct->bdhopdong) : '' }}
                     </td>
                     @if ($ct->loaihdld != 'Không xác định thời hạn')
                         <td>{{ getDayVn($ct->bdhopdong) }}</td>
@@ -136,8 +148,8 @@
                         <td></td>
                     @endif
 
-                        <td></td>
-                        <td></td>
+                    <td></td>
+                    <td></td>
                     <td>{{ getDayVn($ct->bdbhxh) }}</td>
                     <td>{{ getDayVn($ct->ktbhxh) }}</td>
                     <td></td>
