@@ -180,7 +180,8 @@ class EmployerController extends Controller
     } 
     catch (Exception $e) {
 
-      return redirect('/doanhnghieppanel')->with('error' , 'Dữ liệu nhập không hợp lệ');
+      // return redirect('/doanhnghieppanel')->with('error' , 'Dữ liệu nhập không hợp lệ');
+      return redirect('/doanhnghieppanel')->with('error' , $e->getMessage());
 
     }
 
