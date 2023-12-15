@@ -43,10 +43,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
 
     <script type="text/javascript" src="{{ url('js/sheet.js') }}"></script>
-<!-- use version 0.19.2 -->
-        <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.19.2/package/dist/xlsx.full.min.js"></script>
+    <!-- use version 0.19.2 -->
+    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.19.2/package/dist/xlsx.full.min.js"></script>
 
     <!-- END THEME STYLES -->
     {{-- <link rel="shortcut icon" href="{{ url('images/LIFESOFT.png') }}" type="image/x-icon"> --}}
@@ -56,11 +57,12 @@
             padding-top: 0px;
             padding-bottom: 5px;
         }        */
-        
+
         table tr td:first-child {
             text-align: center;
             /* font-size: 25px; */
         }
+
         /* table  {
             font-size: 12px;
         } */
@@ -162,8 +164,6 @@
             document.body.removeChild(fileDownload);
         }
 
-
-
         // function exportExcel(TableName, color, fineName) {
 
         //     if (TableName.trim() === "") {
@@ -211,9 +211,9 @@
         //     }
         // }
 
-        function exportTableToExcel(type) {
+        function exportTableToExcel() {
 
-             var downloadLink;
+            var downloadLink;
             //var dataType = 'application/vnd.ms-excel';
             var dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             // var dataType = 'application/x-xls';
@@ -222,57 +222,80 @@
             var tableHTML = '';
             //Tiêu đề
             var data_header = document.getElementById('data_header');
+
             if (data_header) {
                 tableHTML = tableHTML + data_header.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_header.outerHTML;
             }
 
             //Nội dung 1
             var data_body = document.getElementById('data_body');
             if (data_body) {
                 tableHTML = tableHTML + data_body.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_body.outerHTML;
             }
             //Nội dung 2
             var data_body1 = document.getElementById('data_body1');
             if (data_body1) {
                 tableHTML = tableHTML + data_body1.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_body1.outerHTML;
             }
             //Nội dung 3
             var data_body2 = document.getElementById('data_body2');
             if (data_body2) {
                 tableHTML = tableHTML + data_body2.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_body2.outerHTML;
             }
             //Nội dung 4
             var data_body3 = document.getElementById('data_body3');
             if (data_body3) {
                 tableHTML = tableHTML + data_body3.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_body3.outerHTML;
             }
             //Nội dung 5
             var data_body4 = document.getElementById('data_body4');
             if (data_body4) {
                 tableHTML = tableHTML + data_body4.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_body4.outerHTML;
             }
             //Nội dung 6
             var data_body5 = document.getElementById('data_body5');
             if (data_body5) {
                 tableHTML = tableHTML + data_body5.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_body5.outerHTML;
             }
             //Chữ ký
             var data_footer = document.getElementById('data_footer');
             if (data_footer) {
                 tableHTML = tableHTML + data_footer.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_footer.outerHTML;
             }
             //Xác nhận
             var data_footer1 = document.getElementById('data_footer1');
             if (data_footer1) {
                 tableHTML = tableHTML + data_footer1.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_footer1.outerHTML;
             }
             // Specify file name
 
-             var filename = $('#title').val() + '.xls' ;
+            var filename = $('#title').val() + '.xls';
 
-            // Create download link element
+
+            // console.log(data_header);
+            //test
+            //  let table = document.getElementsByTagName("table");
+            // console.log(table[0]);
+
+            // TableToExcel.convert(data_header, {
+            //     name: `UserManagement.xlsx`,
+            //     sheet: {
+            //         name: 'Usermanagement'
+            //     }
+            // });
+
+            //Create download link element
             downloadLink = document.createElement("a");
-            
+
             document.body.appendChild(downloadLink);
 
             if (navigator.msSaveOrOpenBlob) {
@@ -287,10 +310,10 @@
 
                 // Setting the file name
                 downloadLink.download = filename;
-
                 //triggering the function
                 downloadLink.click();
-            }
+            }   
+
         }
     </script>
 

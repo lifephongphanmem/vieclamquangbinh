@@ -1425,6 +1425,7 @@ class AdminDieutra extends Controller
         }
         //Xuất danh sách lỗi k có chuyenmonkt
     //    $ds= $model->wherenull('chuyenmonkythuat');
+    //    dd($ds->take(50));
     //    $tendv=array_column($ds_danhmuc->toarray(), 'name','madv');
     // //    dd($tendv);
     //    return view('admin.dieutra.dsloicmkt')
