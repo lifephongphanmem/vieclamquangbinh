@@ -112,7 +112,7 @@ class AdminTuyendung extends Controller
 				return $query->where('company.id', $cid);
 			})
 
-			->where('state','1')
+			// ->where('state','1')
 			->select('tuyendung.*', 'company.name','company.madv')
 			->orderBy('tuyendung.id', 'desc')
 			->get();

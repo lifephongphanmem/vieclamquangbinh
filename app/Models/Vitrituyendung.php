@@ -40,6 +40,7 @@ class Vitrituyendung extends Model
 	{	
 		$request=request();
 		$data=$request->all();
+		unset($data['anhtuyendung']);
 		$qty=$request->quantity;
 		
 		

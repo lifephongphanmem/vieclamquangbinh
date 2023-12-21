@@ -111,11 +111,11 @@ class TuyendungController extends Controller
 		$list_hdld=$this->getParamsByNametype('Loại hợp đồng lao động');
 		
 		
-		
 		$td=Tuyendung::find($tdid);
+		// dd($td);
 		$vtmodel = new Vitrituyendung;
 		$vitris= $vtmodel->getVitris($td->id);
-		
+		// dd($vitris);
 		return view ('pages.tuyendung.edit')
 			->with('td', $td)
 			
