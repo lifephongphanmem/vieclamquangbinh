@@ -39,7 +39,7 @@
                         <h3 class="card-label text-uppercase">Đăng tin tuyển dụng</h3>
                     </div>
                     <div class="card-toolbar">
-                        <a href="{{url('/Mẫu số 01 - TT11_2022.docx')}}" class="btn btn-success"><i class="fa fa-download"></i> Mẫu giấy đăng ký tuyển dụng</a>
+                        <a href="{{url('/Mẫu số 01 - TT11_2022.docx')}}" class="btn btn-success"><i class="fa fa-download"></i> Mẫu phiếu đăng ký tuyển dụng</a>
                     </div>
 
                 </div>
@@ -109,7 +109,7 @@
                                             <div class="row">
                                                 <label class="col-xl-12"></label>
                                                 <div class="col-lg-9 col-xl-12">
-                                                    <h5 class="font-weight-bold mb-6">Ảnh giấy đăng ký tuyển dụng</h5>
+                                                    <h5 class="font-weight-bold mb-6">Ảnh phiếu đăng ký tuyển dụng</h5>
                                                 </div>
                                             </div>
                                             <div class="form-group row">

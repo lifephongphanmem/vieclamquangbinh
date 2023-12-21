@@ -73,7 +73,7 @@
 								<div class="row">
 									<label class="col-xl-12"></label>
 									<div class="col-lg-9 col-xl-12">
-										<h5 class="font-weight-bold mb-6">Ảnh giấy đăng ký tuyển dụng</h5>
+										<h5 class="font-weight-bold mb-6">Ảnh phiếu đăng ký tuyển dụng</h5>
 									</div>
 								</div>
 								<div class="form-group row">
