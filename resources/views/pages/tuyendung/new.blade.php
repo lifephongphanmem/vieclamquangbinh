@@ -116,7 +116,7 @@
                                                 {{-- <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label> --}}
                                                 <div class="col-lg-9 col-xl-12">
                                                     <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url({{url('assets/media/users/no-image.jpg')}})">
-                                                        <div class="image-input-wrapper" style="width:270px; height:255px;"></div>
+                                                        <div class="image-input-wrapper"></div>
                                                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change image">
                                                             <i class="fa fa-pen icon-sm text-muted"></i>
                                                             <input type="file" name="anhtuyendung" accept=".png, .jpg, .jpeg" />
