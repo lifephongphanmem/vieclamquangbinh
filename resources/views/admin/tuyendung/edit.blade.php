@@ -56,11 +56,42 @@
 
                         <div class="row">
                             <legend>Thông tin chung</legend>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nội dung tuyển dụng </label>
-                                    <textarea name="noidung" rows=5 required class="form-control">{{ $td->noidung }}"</textarea>
+                            <div class="col-md-12 row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>Nội dung tuyển dụng </label>
+                                        <textarea name="noidung" rows=12 required class="form-control">{{ $td->noidung }}"</textarea>
+                                    </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="row">
+                                        <label class="col-xl-12"></label>
+                                        <div class="col-lg-9 col-xl-12">
+                                            <h5 class="font-weight-bold mb-6">Ảnh giấy đăng ký tuyển dụng</h5>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        {{-- <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label> --}}
+                                        <div class="col-lg-9 col-xl-12">
+                                            <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url('{{$td->anhtuyendung != null?url($td->anhtuyendung):url('assets/media/users/no-image.jpg')}}')">
+                                                <div class="image-input-wrapper" style="width:240px; height:240px;"></div>
+                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change image">
+                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                    <input type="file" name="anhtuyendung" accept=".png, .jpg, .jpeg" />
+                                                    <input type="hidden" name="profile_avatar_remove" />
+                                                </label>
+                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel image">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
+                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove image">
+                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                </span>
+                                            </div>
+                                            <span class="form-text text-muted text-center">Loại tệp: png, jpg, jpeg.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-3">
@@ -147,42 +178,42 @@
 
                                         </select>
                                     </div>
-                            
+
                                 </div>
                             </div>
-						</div>
-                            <hr>
-                            <div class="vitri" id='dynamicTable'>
-                                <?php
+                        </div>
+                        <hr>
+                        <div class="vitri" id='dynamicTable'>
+                            <?php
 									$i=0;
 								foreach ($vitris as $vitri) { $i++; ?>
-                                <div class="row" id="1stld">
-                                    <div class="col-sm-4 col-sm-offset-2">
-                                        <div><a href="#"> Vị trí {{ $i }} </a> </div>
-                                        <label> Tên công việc </label>
-                                        <input type="text" name="name[]" class="form-control" size=40
-                                            value="{{ $vitri->name }}" required>
+                            <div class="row" id="1stld">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <div><a href="#"> Vị trí {{ $i }} </a> </div>
+                                    <label> Tên công việc </label>
+                                    <input type="text" name="name[]" class="form-control" size=40
+                                        value="{{ $vitri->name }}" required>
 
-                                        <label>Số lượng tuyển</label>
-                                        <input type="text" name="soluong[]" class="form-control" size=10
-                                            value="{{ $vitri->soluong }}" required>
-                                    </div>
-                                    <div class="col-sm-8 ">
-                                        <label> Mô tả công việc </label>
-                                        <textarea rows=5 cols=30 name="description[]" class="form-control" required> {{ $vitri->description }} </textarea>
-                                    </div>
+                                    <label>Số lượng tuyển</label>
+                                    <input type="text" name="soluong[]" class="form-control" size=10
+                                        value="{{ $vitri->soluong }}" required>
                                 </div>
-								<hr>
-                           
-                            <?php } ?>
-                             </div>
-                        </div>
+                                <div class="col-sm-8 ">
+                                    <label> Mô tả công việc </label>
+                                    <textarea rows=5 cols=30 name="description[]" class="form-control" required> {{ $vitri->description }} </textarea>
+                                </div>
+                            </div>
+                            <hr>
 
-                    </form>
+                            <?php } ?>
+                        </div>
                 </div>
+
+                </form>
             </div>
         </div>
-         </div>
-        </div>
-     </div>         {{-- </section>					 --}}
- @endsection
+    </div>
+    </div>
+    </div>
+    </div> {{-- </section>					 --}}
+@endsection
