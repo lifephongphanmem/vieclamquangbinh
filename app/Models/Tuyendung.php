@@ -49,8 +49,8 @@ class Tuyendung extends Model
 		if (isset($data['anhtuyendung'])) {
 			$file = $data['anhtuyendung'];
 			$name = time() . $file->getClientOriginalName();
-			$file->move('uploads/anh/', $name);
-			$data['anhtuyendung'] = 'uploads/anh/' . $name;
+			$file->move('uploads/anhtuyendung/', $name);
+			$data['anhtuyendung'] = 'uploads/anhtuyendung/' . $name;
 		}
 		$td->fill($data);
 		$td->save();
