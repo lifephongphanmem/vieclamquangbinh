@@ -865,18 +865,24 @@ class baocaotonghopController extends Controller
                 ->with('a_cmkt',$a_cmkt)
                 ->with('pageTitle','Thông tin cung lao động');
     }
-    public function mau_03lpi(Request $request)
+    public function mau_03pli(Request $request)
     {
         $tuyendung = tuyendungModel::find($request->id);
+        $vitritd = Vitrituyendung::where('idtuyendung',$tuyendung->id)->first();
+        // dd($vitritd);
+        // dd($tuyendung);
         $company =Company::where('user',$tuyendung->user)->first();
         $kcn = $this->getParamsByNametype("Khu công nghiệp")->where('id',$company->khucn)->first();// lấy danh mục khu công nghiệp
 		// $ctype = $this->getParamsByNametype("Loại hình doanh nghiệp");// lấy loại hình doanh nghiệp
 		$ctype=dmloaihinhhdkt::all();
-		$nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp")->where('id',$company->nganhnghe)->first();// lấy ngành nghề doanh nghiệp
+		// $nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp")->where('id',$company->nganhnghe)->first();// lấy ngành nghề doanh nghiệp
+		$nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp");// lấy ngành nghề doanh nghiệp
 
         // dd($nganhnghe);
-        return view('admin.baocao.mau03pli')
+        // return view('admin.baocao.mau03pli')
+        return view('pages.tuyendung.mau01')
         ->with('tuyendung' ,$tuyendung  )
+        ->with('vitritd' ,$vitritd  )
         ->with('company' ,$company  )
         ->with('kcn' ,$kcn  )
         ->with('ctype' ,$ctype  )

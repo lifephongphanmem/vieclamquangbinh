@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Tuyendung;
 use App\Models\Vitrituyendung;
 use App\Models\Report;
-
+use App\Models\vitrituyendungModel;
+use Illuminate\Support\Facades\File;
 
 class TuyendungController extends Controller
 {
@@ -224,6 +225,35 @@ class TuyendungController extends Controller
 		return response()->json($html);
 	}
 
+	public function get_vitri1(Request $request)
+	{		
+        $model = Vitrituyendung::where('idtuyendung',$request->id)->get();
+		
+		$html=' <ol id = "vt1">';
+		foreach($model as $ct){
+
+			$html.='<li> <a href="/mau01?id='.$request->id.'" target="_blank" >'.$ct->name.'</a> </li>';
+		};
+		$html .= '</ol>';
+		return response()->json($html);
+	}
+	public function get_vitri_upanh(Request $request)
+	{		
+        $model = Vitrituyendung::where('idtuyendung',$request->id)->get();
+		
+		$html=' <div id = "vt2">';
+		$html .='<label class="control-label">Vị trí</label>';
+		$html .='<select name="vitri" id="" class="form-control select2basic"
+			style="width:100%">';
+		
+		foreach($model as $ct){
+			$html.='<option value="'.$ct->id.'">'.$ct->name.'</option>';
+		};
+		$html .= '</select>';
+		$html .= '</div>';
+		return response()->json($html);
+	}
+
 	public function hosodanop(Request $request){
 		$inputs = $request->all();
 	
@@ -244,6 +274,58 @@ class TuyendungController extends Controller
 		return view('pages.tuyendung.hosodanop')
 		->with('model',$model)
 		->with('inputs',$inputs);
+	}
+
+	public function uploadanh(Request $request){
+		$inputs=$request->all();
+		// dd($inputs);
+		$model=vitrituyendungModel::findOrFail($inputs['vitri']);
+		// dd($model);
+				//file hình ảnh
+				if ($inputs['loaianh'] == 'anhtuyendung') {
+					if(isset($model->anhtuyendung)){
+						$anh=explode(';',$model->anhtuyendung);
+						foreach($anh as $val){
+							if(File::exists($val)){
+								File::Delete($val);
+							}
+						}
+					}
+					// dd(2);
+					$file = $inputs['fileanh'];
+					$fileanh=[];
+					foreach($file as $ct){
+						$name = time() . $ct->getClientOriginalName();
+						$ct->move('uploads/anhtuyendung/', $name);
+						$anhtuyendung = 'uploads/anhtuyendung/' . $name;
+						array_push($fileanh,$anhtuyendung);
+					}
+					$inputs['anhtuyendung']=implode(';',$fileanh);
+					$model->update(['anhtuyendung'=>$inputs['anhtuyendung']]);
+				}else{
+					if(isset($model->anhdontuyendung)){
+						$anh=explode(';',$model->anhdontuyendung);
+						foreach($anh as $val){
+							if(File::exists($val)){
+								File::Delete($val);
+							}
+						}
+					}
+					$file = $inputs['fileanh'];
+					$fileanh=[];
+					foreach($file as $ct){
+						$name = time() . $ct->getClientOriginalName();
+						$ct->move('uploads/anhdontuyendung/', $name);
+						$anhdontuyendung = 'uploads/anhdontuyendung/' . $name;
+						array_push($fileanh,$anhdontuyendung);
+					}
+					$inputs['anhdontuyendung']=implode(';',$fileanh);
+					$model->update(['anhdontuyendung'=>$inputs['anhdontuyendung']]);
+				}
+
+		return redirect('/tuyendung-fa')
+				->with('success','Tải ảnh thành công');
+
 	}
 }
 

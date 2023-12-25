@@ -45,13 +45,7 @@ class Tuyendung extends Model
 
 		$data = $request->all();
 		$data['user'] = $uid;
-		//file hình ảnh
-		if (isset($data['anhtuyendung'])) {
-			$file = $data['anhtuyendung'];
-			$name = time() . $file->getClientOriginalName();
-			$file->move('uploads/anhtuyendung/', $name);
-			$data['anhtuyendung'] = 'uploads/anhtuyendung/' . $name;
-		}
+
 		$td->fill($data);
 		$td->save();
 
