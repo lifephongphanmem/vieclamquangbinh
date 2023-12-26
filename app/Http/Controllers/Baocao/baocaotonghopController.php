@@ -887,7 +887,8 @@ class baocaotonghopController extends Controller
         ->with('kcn' ,$kcn  )
         ->with('ctype' ,$ctype  )
         ->with('nganhnghe' ,$nganhnghe  )
-        ->with(  'pageTitle','Báo cáo thông tin thị trường lao động');
+        // ->with(  'pageTitle','Báo cáo thông tin thị trường lao động');
+        ->with(  'pageTitle','Mẫu 01');
 
     }
 
