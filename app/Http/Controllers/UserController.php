@@ -507,6 +507,10 @@ class UserController extends Controller
 		$model = User::findOrFail($id);
 		$model->delete();
 		if ($inputs['phanloaitk'] == 2) {
+			$company=Company::where('user',$id)->first();
+			if(isset($company)){
+				$company->delete();
+			}
 			return redirect('/TaiKhoan/ThongTin?phanloaitk=2');
 		} else {
 			return redirect('/TaiKhoan/DanhSach?madv=' . $model->madv);
