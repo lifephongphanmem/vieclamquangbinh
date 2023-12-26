@@ -95,8 +95,13 @@ Route::post('/tuyendung-fs', [TuyendungController::class, 'save']);
 Route::post('/tuyendung-fru', [TuyendungController::class, 'updatebaocao']);
 Route::get('/tuyendung-fr/{tdid}', [TuyendungController::class, 'baocao']);
 Route::get('/tuyendung-get_vitri_page', [TuyendungController::class, 'get_vitri']); //get vt page
+Route::get('/tuyendung/vitri', [TuyendungController::class, 'get_vitri1']); //get vt page
+Route::get('/tuyendung/vitri_upanh', [TuyendungController::class, 'get_vitri_upanh']); //get vt page
+
+Route::post('/tuyendung/uploadanh',[TuyendungController::class,'uploadanh']);
 
 Route::get('/tuyendung-hosodanop', [TuyendungController::class, 'hosodanop']); // danh sách hồ sơ ứng tuyển
+Route::get('/mau01',[baocaotonghopController::class,'mau_03pli']);
 
 // messenger
 

@@ -104,7 +104,7 @@
                                                     </select>
                                                 </div>                                           
                                         </div>
-                                        {{-- <div class="col-sm-2 ">
+                                        <div class="col-sm-2 ">
 
                                             <div class="row">
                                                 <label class="col-xl-12"></label>
@@ -113,6 +113,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                {{-- <label class="col-xl-3 col-lg-3 col-form-label">Avatar</label> --}}
                                                 <div class="col-lg-9 col-xl-12">
                                                     <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url({{url('assets/media/users/no-image.jpg')}})">
                                                         <div class="image-input-wrapper"></div>
@@ -131,7 +132,7 @@
                                                     <span class="form-text text-muted text-center">Loại tệp: png, jpg, jpeg.</span>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
 
                                 </fieldset>
 
