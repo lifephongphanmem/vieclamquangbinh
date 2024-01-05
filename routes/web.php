@@ -97,6 +97,7 @@ Route::get('/tuyendung-fr/{tdid}', [TuyendungController::class, 'baocao']);
 Route::get('/tuyendung-get_vitri_page', [TuyendungController::class, 'get_vitri']); //get vt page
 Route::get('/tuyendung/vitri', [TuyendungController::class, 'get_vitri1']); //get vt page
 Route::get('/tuyendung/vitri_upanh', [TuyendungController::class, 'get_vitri_upanh']); //get vt page
+Route::get('/tuyendung/del/{id}',[TuyendungController::class,'destroy']);
 
 Route::post('/tuyendung/uploadanh',[TuyendungController::class,'uploadanh']);
 

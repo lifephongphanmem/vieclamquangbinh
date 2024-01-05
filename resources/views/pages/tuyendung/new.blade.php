@@ -162,7 +162,18 @@
                                                     <textarea class="form-control" rows=6 cols=30 name="description[]" required></textarea>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td style="color: #313444;">Chức vụ</td>
+                                                <td>
+                                                    <select class="form-control " name="chucvu[]">
+                                                        <option value=''>--Không có thì không cần chọn--</option>
+                                                        @foreach (getchucvu() as $k=>$ct )
+                                                        <option value='{{$k}}'>{{$ct}}</option>
+                                                        @endforeach
+                                                    </select>
 
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td style="color: #313444;">Trình độ văn hóa</td>
                                                 <td>
@@ -251,6 +262,18 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td style="color: #313444;">Đối tượng ưu tiên</td>
+                                                <td>
+                                                    <select class="form-control " name="uutien[]">
+                                                        <option value=''>--Không có thì không cần chọn--</option>
+                                                        @foreach (uutien() as $k=>$ct )
+                                                        <option value='{{$k}}'>{{$ct}}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </td>
+                                            </tr>
 
 
                                         </table>
@@ -305,18 +328,44 @@
                                                         <option value='2 đên 5 năm'>2 đên 5 năm</option>
                                                         <option value='Trên 5 năm'>Trên 5 năm</option>
 
+
                                                     </select>
 
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="color: #313444;">Nơi làm việc dự kiến (*)</td>
+                                                <td style="color: #313444;">Loại hợp đồng LĐ</td>
                                                 <td>
-
-                                                    <input class="form-control "  type="text" size=40 name="diadiem[]" required>
+                                                    <select class="form-control " name="loaihopdong[]">
+                                                        <option value=''>-- Chọn loại hợp đồng --</option>
+                                                        @foreach (getHDLD() as $key=>$item )
+                                                        <option value='{{$key}}'>{{$item}}</option>
+                                                        @endforeach
+                                                  </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #313444;">Yêu cầu thêm</td>
+                                                <td>
+                                                    <select class="form-control " name="yeucauthem[]">
+                                                        <option value=''>-- Chọn yêu cầu thêm --</option>
+                                                        @foreach (getYeucauthem() as $key=>$item )
+                                                        <option value='{{$key}}'>{{$item}}</option>
+                                                        @endforeach
+                                                  </select>
                                                 </td>
                                             </tr>
 
+                                            <tr>
+                                                <td style="color: #313444;">Hình thức làm việc</td>
+                                                <td>
+                                                    <select class="form-control " name="hinhthuclv[]">
+                                                        <option value='Toàn thời gian' selected>Toàn thời gian</option>
+                                                        <option value='Bán thời gian'>Bán thời gian</option>
+
+                                                    </select>
+                                                </td>
+                                            </tr>
 
                                             <tr>
                                                 <td style="color: #313444;">Hình thức làm việc</td>
@@ -394,6 +443,40 @@
 
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td style="color: #313444;" rowspan="7">Điều kiện làm việc</td>
+                                                <td style="color: #313444;">Nơi làm việc <br>
+                                                    <select class="form-control " name="noilamviec[]">
+                                                        <option value=''>-- Không có thì không cần chọn--</option>
+                                                        @foreach (getNoilamviec() as $key=>$item )
+                                                        <option value='{{$key}}'>{{$item}}</option>
+                                                        @endforeach
+                                                  </select>
+                                                </td>
+                                                {{-- <td>
+                                                    <select class="form-control " name="noilamviec[]">
+                                                        <option value=''>-- Chọn yêu cầu thêm --</option>
+                                                        @foreach (getNoilamviec() as $key=>$item )
+                                                        <option value='{{$key}}'>{{$item}}</option>
+                                                        @endforeach
+                                                  </select>
+                                                </td> --}}
+                                            </tr>
+                                            @foreach (getDklamviec() as $k=>$val )
+                                            <tr>
+                                                {{-- <td style="color: #313444;">Điều kiện làm việc</td> --}}
+                                                <td style="color: #313444;">{{DKLV()[$k]}}<br>
+                                                    <select class="form-control" name="{{$k.'[]'}}">
+                                                        <option value=''>-- Không có thì không cần chọn --</option>
+                                                        @foreach ($val as $key=>$item )
+                                                        <option value='{{$key}}'>{{$item}}</option>
+                                                        @endforeach
+                                                  </select>
+                                                </td>
+
+                                            </tr>
+                                            @endforeach
+
                                         </table>
                                     </div>
                             </div>

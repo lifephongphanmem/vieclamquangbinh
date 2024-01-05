@@ -53,3 +53,5 @@ class vitrituyendungModel extends Model
       ,'anhdontuyendung'
     ];
 }
+
+//Loại hợp đồng lđ: 1: không xác định thời hạn; 2: xác định thời hạn dưới 12 tháng; 3: Từ 12-36 tháng

@@ -256,3 +256,95 @@ function ckdulieuloi($id){
 return $maloi;
 }
 
+function getHDLD(){
+    return [
+        '1'=>'Không xác định thời hạn',
+        '2'=>'Xác định thời hạn dưới 12 tháng',
+        '3'=>'Xác định thời hạn từ 12 tháng đến 36 tháng'
+    ];
+}
+
+function getYeucauthem(){
+    return [
+        '1'=>'Làm ca',
+        '2'=>'Đi công tác',
+        '3'=>'Đi biết phái'
+    ];
+}
+
+function getNoilamviec(){
+    return [
+        '1'=>'Trong nhà',
+        '2'=>'Ngoài trời',
+        '3'=>'Hỗn hợp'
+    ];
+}
+
+function getDklamviec(){
+    return [
+        // 'noilamviec'=> [
+        //     '1'=>'Trong nhà',
+        //     '2'=>'Ngoài trời',
+        //     '3'=>'Hỗn hợp'
+        // ],
+        'trongluongnang'=>[
+            '1'=>'Dưới 5kg',
+            '2'=>'5 - 20 kg',
+            '3'=>'Trên 20kg'
+        ],
+        'dungvadilai'=>[
+            '1'=>'Hầu như không có',
+            '2'=>'Mức trung bình',
+            '3'=>'Cần đứng/đi lại nhiều'
+        ],
+        'nghenoi'=>[
+            '1'=>'Không cần thiết',
+            '2'=>'Nghe nói cơ bản',
+            '3'=>'Quan trọng'
+        ],
+        'thiluc'=>[
+            '1'=>'Mức bình thường',
+            '2'=>'Nhìn được vật/chi tiết nhỏ'
+        ],
+        'thaotactay'=>[
+            '1'=>'Lắp ráp đồ vật lớn',
+            '2'=>'Lắp ráp đồ vật nhỏ',
+            '3'=>'Lắp ráp đồ vật rất nhỏ'
+        ],
+        'dungtay'=>[
+            '1'=>'Cần 2 tay',
+            '2'=>'Đôi khi cần 2 tay',
+            '3'=>'Chỉ cần 1 tay',
+            '4'=>'Trái',
+            '5'=>'Phải'
+        ]
+    ];
+}
+function DKLV(){
+    return [
+        'trongluongnang'=>'Trọng lượng nâng',
+        'dungvadilai'=>'Đứng hoặc là đi lại',
+        'nghenoi'=>'Nghe nói',
+        'thiluc'=>'Thị lực',
+        'thaotactay'=>'Thao tác bằng tay',
+        'dungtay'=>'Dùng 2 tay'
+    ];
+}
+
+function uutien(){
+    return [
+        '1'=>'Người khuyết tật',
+        '2'=>'Bộ đội xuất ngủ',
+        '3'=>'Người thuộc hộ nghèo, cận nghèo',
+        '4'=>'Người dân tộc thiểu số'
+    ];
+}
+
+function getchucvu(){
+    return [
+        '1'=>'Nhân viên',
+        '2'=>'Quản lý',
+        '3'=>'Lãnh đạo'
+    ];
+}
+
