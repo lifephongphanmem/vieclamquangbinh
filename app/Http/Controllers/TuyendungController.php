@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Tuyendung;
 use App\Models\Vitrituyendung;
 use App\Models\Report;
+use App\Models\tuyendungModel;
 use App\Models\vitrituyendungModel;
 use Illuminate\Support\Facades\File;
 
@@ -326,6 +327,21 @@ class TuyendungController extends Controller
 		return redirect('/tuyendung-fa')
 				->with('success','Tải ảnh thành công');
 
+	}
+
+	public function destroy($id){
+		$model = tuyendungModel::findOrFail($id);
+
+		if(isset($model)){
+			$vitri=vitrituyendungModel::where('idtuyendung',$id)->first();
+			if(isset($vitri)){
+				$vitri->delete();
+			}
+			$model->delete();
+		}
+
+		return redirect('/tuyendung-fa')
+				->with('success','Xóa thành công');
 	}
 }
 

@@ -61,7 +61,7 @@
                     {{-- <div class="row "> --}}
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead class="text-center">
-                            <td width="5%"> # </td>
+                            <td width="2%"> # </td>
                             <td width="20%"> Nội dung</td>
                             <td width="20%"> Vị trí</td>
                             <td width="8%"> Thời hạn</td>
@@ -117,6 +117,12 @@
                                         class="btn btn-sm btn-clean btn-icon">
                                         <i class="fas fa-upload text-primary"></i>
                                     </button>
+                                    <button title="Xóa thông tin" type="button"
+                                    onclick="cfDel('{{'/tuyendung/del/'.$td->id}}')"
+                                    class="btn btn-sm btn-clean btn-icon ml-3" data-target="#delete-modal-confirm"
+                                    data-toggle="modal">
+                                    <i class="icon-lg flaticon-delete text-danger"></i>
+                                </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -126,6 +132,31 @@
             </div>
         </div>
     </div>
+
+            <!--Model delete-->
+            <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+                <form id="frmDelete" method="GET" action="#" accept-charset="UTF-8" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xóa</h4>
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                            </div>
+                            {{-- <div class="modal-body">
+                                <label> <b>Nếu xóa thì sẽ xóa tất cả các nhân khẩu thuộc xã trên phần mềm trong kỳ điều tra
+                                        này</b></label>
+                            </div> --}}
+    
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                                <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng
+                                    ý</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
     <!-- Modal In báo cáo -->
     <div id="modal-inbaocao" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form action="{{ '/vanban/mauso_03a_pl1' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8"
@@ -275,5 +306,13 @@
                 }
             });
         }
+
+        function cfDel(url) {
+                $('#frmDelete').attr('action', url);
+            }
+
+            function subDel() {
+                $('#frmDelete').submit();
+            }
     </script>
 @endsection
