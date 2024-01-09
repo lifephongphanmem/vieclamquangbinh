@@ -868,7 +868,13 @@ class baocaotonghopController extends Controller
     public function mau_03pli(Request $request)
     {
         $tuyendung = tuyendungModel::find($request->id);
+        $tuyendung->ngay=Carbon::parse($tuyendung->thoihan)->format('d');
+        $tuyendung->thang=Carbon::parse($tuyendung->thoihan)->format('m');
+        $tuyendung->nam=Carbon::parse($tuyendung->thoihan)->format('Y');
+
         $vitritd = Vitrituyendung::where('idtuyendung',$tuyendung->id)->first();
+        $vitritd->kynangmem= explode(';',$vitritd->kynangmem);
+        $vitritd->phucloi= explode(';',$vitritd->phucloi);
         // dd($vitritd);
         // dd($tuyendung);
         $company =Company::where('user',$tuyendung->user)->first();
@@ -877,13 +883,16 @@ class baocaotonghopController extends Controller
 		$ctype=dmloaihinhhdkt::all();
 		// $nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp")->where('id',$company->nganhnghe)->first();// lấy ngành nghề doanh nghiệp
 		$nganhnghe = $this->getParamsByNametype("Ngành nghề doanh nghiệp");// lấy ngành nghề doanh nghiệp
-
+        $loaihinhdn = $this->getParamsByNametype("Loại hình doanh nghiệp");// lấy loại hình doanh nghiệp
+        $list_tdgd=$this->getParamsByNametype('Trình độ học vấn');
         // dd($nganhnghe);
         // return view('admin.baocao.mau03pli')
         return view('pages.tuyendung.mau01')
         ->with('tuyendung' ,$tuyendung  )
         ->with('vitritd' ,$vitritd  )
         ->with('company' ,$company  )
+        ->with('loaihinhdn' ,$loaihinhdn)
+        ->with('list_tdgd' ,$list_tdgd)
         ->with('kcn' ,$kcn  )
         ->with('ctype' ,$ctype  )
         ->with('nganhnghe' ,$nganhnghe  )
