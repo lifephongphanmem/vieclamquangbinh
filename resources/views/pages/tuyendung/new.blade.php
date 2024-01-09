@@ -310,7 +310,7 @@
                                                     <input type="checkbox" class="kynangmem" value="Thích ứng" >Thích ứng <br>
                                                     <input type="checkbox" class="kynangmem" value="Làm việc nhóm" >Làm việc nhóm
                                                     <input type="checkbox" class="kynangmem" value="Làm việc độc lập" >Làm việc độc lập
-                                                    <input type="checkbox" class="kynangmem" value="Chịu áp lực" >Chịu áp lực
+                                                    <input type="checkbox" class="kynangmem" value="Chịu được áp lực công việc" >Chịu áp lực
                                                     <input type="checkbox" class="kynangmem" value="Theo dõi giám sát" >Theo dõi giám sát
                                                     <input type="checkbox" class="kynangmem" value="Tư duy phản biện" >Tư duy phản biện
                                                      <br>
@@ -367,16 +367,6 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td style="color: #313444;">Hình thức làm việc</td>
-                                                <td>
-                                                    <select class="form-control " name="hinhthuclv[]">
-                                                        <option value='Toàn thời gian' selected>Toàn thời gian</option>
-                                                        <option value='Bán thời gian'>Bán thời gian</option>
-
-                                                    </select>
-                                                </td>
-                                            </tr>
                                             <tr>
                                                 <td style="color: #313444;">Mục đích làm việc</td>
                                                 <td>
@@ -544,7 +534,7 @@
                                 if ($(this).parents(rowid).length == 1) {
                                     return $(this).val();
                                 }
-                            }).get().join("; ");
+                            }).get().join(";");
                             if ($(rowid).find("#checkphucloikhac").first().prop('checked') == true) {
                                 varsphucloi = varsphucloi.concat("; ", $(rowid).find("#phucloikhac").first().val());
                             };
@@ -555,7 +545,7 @@
                                 if ($(this).parents(rowid).length == 1) {
                                     return $(this).val();
                                 }
-                            }).get().join("; ");
+                            }).get().join(";");
                             if ($(rowid).find("#checkkynangmemkhac").first().prop('checked') == true) {
                                 varskynangmem = varskynangmem.concat("; ", $(rowid).find("#kynangmemkhac").first().val());
                             };

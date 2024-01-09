@@ -348,3 +348,9 @@ function getchucvu(){
     ];
 }
 
+function getkynangmem(){
+    return [
+        'Giao tiếp','Thuyết trình','Quản lý thời gian','Quản lý nhân sự','Tổng hợp báo cáo','Thích ứng','Làm việc nhóm','Làm việc độc lập','Chịu được áp lực công việc','Theo dõi giám sát','Tư duy phản biện','Kỹ năng mềm khác :'
+    ];
+}
+

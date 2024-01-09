@@ -35,32 +35,42 @@
         </tr>
         <tr>
             <td colspan="10" style="text-align:left">
-                Tên doanh nghiệp/người tuyển dụng*:
+                Tên doanh nghiệp/người tuyển dụng*:&emsp;
                 {{ isset($company)
                     ? $company->name
                     : '  ............................................................................................................
-                                                                     ...............................................................................................................................................' }}
+                                                                                     ...............................................................................................................................................' }}
 
             </td>
         </tr>
         <tr>
             <td colspan="10" style="text-align:left">
                 Mã số đăng ký/ Mã số
-                thuế/CMND/CCCD*:{{ isset($company) ? $company->dkkd : '...................................................................................................................' }}
+                thuế/CMND/CCCD*:&emsp;{{ isset($company) ? $company->dkkd : '...................................................................................................................' }}
             </td>
         </tr>
         <tr>
             <td colspan="10" style="text-align:left">
-                Loại hình doanh nghiệp*: [ ] Nhà nước [ ] Ngoài nhà nước [ ] Có vốn đầu tư nước ngoài
+                Loại hình doanh nghiệp*: &emsp;
+                @foreach ($loaihinhdn as $k => $ct)
+                    [
+                    @if ($ct->id == $company->loaihinh)
+                        x
+                    @endif
+                    ] {{ $ct->name }}&emsp;&emsp;
+                    @if ($k % 3 == 0 && $k != 0)
+                        <br>
+                    @endif
+                @endforeach
             </td>
         </tr>
         <tr>
             <td colspan="10" style="text-align:left;padding-bottom: 1%">
-                Địa chỉ* : Tỉnh {{ isset($company) ? $company->tinh : '.................................' }}
+                Địa chỉ* :&emsp; Tỉnh {{ isset($company) ? $company->tinh : '.................................' }}
                 &emsp;&emsp;&emsp;
                 {{ isset($company) ? $company->huyen : 'Huyện .................................' }}&emsp;&emsp;&emsp;
                 {{ isset($company) ? $company->xa : 'Xã .................................' }}
-                <br>Địa chỉ cụ thể*:
+                <br>Địa chỉ cụ thể*:&emsp;&emsp;
                 {{ isset($company) ? $company->adress : '.................................' }}
                 <br>[ ] KCN/KKT:
                 @if (isset($kcn))
@@ -70,17 +80,17 @@
         </tr>
         <tr>
             <td colspan="5" style="text-align:left;">
-                Số điện thoại*:
+                Số điện thoại*:&emsp;
                 {{ isset($company) ? $company->phone : '...................................................' }}
             </td>
             <td colspan="5" style="text-align:left;">
-                Email*:
+                Email*:&emsp;
                 {{ isset($company) ? $company->email : '................................................................................................' }}
             </td>
         </tr>
         <tr>
-            <td colspan="5" style="text-align:left;border-right: none">
-                Ngành kinh doanh chính*:
+            <td colspan="10" style="text-align:left;border-right: none">
+                Ngành kinh doanh chính*:&emsp;
                 @foreach ($nganhnghe as $ct)
                     <br>[@if ($company->nganhnghe == $ct->id)
                         x
@@ -88,22 +98,21 @@
                 @endforeach
 
             </td>
-
         </tr>
         <tr>
             <th colspan="10" style="text-align: left;">2. Thông tin về nhu cầu tuyển dụng </th>
         </tr>
         <tr>
-            <td colspan="6" style="text-align: left;"> Tên công việc*: {{ $vitritd->name }}
+            <td colspan="6" style="text-align: left;"> Tên công việc*:&emsp; {{ $vitritd->name }}
             </td>
-            <td colspan="4"> Số lượng tuyển*: {{ $vitritd->soluong }} </td>
+            <td colspan="4"> Số lượng tuyển*:&emsp; {{ $vitritd->soluong }} </td>
         </tr>
         <tr>
-            <td colspan="10" style="text-align: left"> Mô tả công việc*: {{ $vitritd->description }}
+            <td colspan="10" style="text-align: left"> Mô tả công việc*:&emsp; {{ $vitritd->description }}
             </td>
         </tr>
         <tr>
-            <td colspan="10" style="text-align: left"> Mã nghề*:{{ $vitritd->manghe }}
+            <td colspan="10" style="text-align: left"> Mã nghề*:&emsp;{{ $vitritd->manghe }}
             </td>
         </tr>
         <tr>
@@ -120,15 +129,21 @@
             </td>
         </tr>
         <tr>
-            <td colspan="10" style="text-align: left"> Chức vụ*: [ ] Nhân viên &emsp;&emsp;&emsp; [ ] Quản lý
-                &emsp;&emsp;&emsp; [ ] Lãnh đạo
+            <td colspan="10" style="text-align: left"> Chức vụ*: &emsp;&emsp;
+                @foreach (getchucvu() as $k=>$ct)
+                [
+                @if ($k== $vitritd->chucvu)
+                    x
+                @endif
+                ] {{ $ct }} &emsp;&emsp;
+            @endforeach
                 [ ] Khác (ghi rõ):
                 ...........................................................................................
             </td>
         </tr>
         <tr>
             <td colspan="10" style="text-align: left">
-                Trình độ học vấn*:
+                Trình độ học vấn*:&emsp;
                 [ <?php if ($vitritd->tdgd == 'Chưa đi học') {
                     echo 'x ';
                 } ?> ] Chưa đi học &emsp;&emsp;&emsp;
@@ -190,8 +205,7 @@
         </tr>
         <tr>
             <td colspan="10" style="text-align: left">
-                Trình độ kỹ năng
-                nghề:..............................................................................................................................................
+                Trình độ kỹ năng nghề:..............................................................................................................................................
                 Bậc:........................................................................
             </td>
         </tr>
@@ -200,27 +214,27 @@
             <td colspan="9">
                 Ngoại ngữ 1:
                 {{ $vitritd->ngoaingu1 != null ? $vitritd->ngoaingu1 : '.........................................' }}
-                Chứng chỉ
+                &emsp;&emsp;Chứng chỉ:
                 {{ $vitritd->chungchinn1 != null ? $vitritd->chungchinn1 : '.........................................' }}<br>
-                Khả năng sử dụng: [ <?php if ($vitritd->xeploainn1 == 'Tốt' && $vitritd->ngoaingu1 != null ) {
+                Khả năng sử dụng: [ <?php if ($vitritd->xeploainn1 == 'Tốt' && $vitritd->ngoaingu1 != null) {
                     echo 'x ';
                 } ?>]
-                Tốt &emsp;&emsp; [ <?php if ($vitritd->xeploainn1 == 'Khá'&& $vitritd->ngoaingu1 != null) {
+                Tốt &emsp;&emsp; [ <?php if ($vitritd->xeploainn1 == 'Khá' && $vitritd->ngoaingu1 != null) {
                     echo 'x ';
                 } ?>] Khá &emsp;&emsp;[
-                <?php if ($vitritd->xeploainn1 == 'Trung bình'&& $vitritd->ngoaingu1 != null) {
+                <?php if ($vitritd->xeploainn1 == 'Trung bình' && $vitritd->ngoaingu1 != null) {
                     echo 'x ';
                 } ?>] Trung bình &emsp;&emsp;<br>
                 Ngoại ngữ 2:
                 {{ $vitritd->ngoaingu2 != null ? $vitritd->ngoaingu2 : '.........................................' }}
-                Chứng chỉ
+                &emsp;&emsp;Chứng chỉ:
                 {{ $vitritd->chungchinn2 != null ? $vitritd->chungchinn2 : '.........................................' }}<br>
-                Khả năng sử dụng: [ <?php if ($vitritd->xeploainn2 == 'Tốt'&& $vitritd->ngoaingu2 != null) {
+                Khả năng sử dụng: [ <?php if ($vitritd->xeploainn2 == 'Tốt' && $vitritd->ngoaingu2 != null) {
                     echo 'x ';
-                } ?>] Tốt &emsp;&emsp; [ <?php if ($vitritd->xeploainn2 == 'Khá'&& $vitritd->ngoaingu2 != null) {
+                } ?>] Tốt &emsp;&emsp; [ <?php if ($vitritd->xeploainn2 == 'Khá' && $vitritd->ngoaingu2 != null) {
                     echo 'x ';
                 } ?>] Khá &emsp;&emsp; [
-                <?php if ($vitritd->xeploainn2 == 'Trung bình'&& $vitritd->ngoaingu2 != null) {
+                <?php if ($vitritd->xeploainn2 == 'Trung bình' && $vitritd->ngoaingu2 != null) {
                     echo 'x ';
                 } ?>] Trung bình &emsp;&emsp;
             </td>
@@ -252,42 +266,13 @@
         <tr>
             <td style="text-align: left">Kỹ năng mềm </td>
             <td colspan="9">
-                [ <?php if ($vitritd->kynangmem == 'Giao tiếp') {
-                    echo 'x ';
-                } ?> ] Giao tiếp &emsp;&emsp;
-                [ <?php if ($vitritd->kynangmem == 'Thuyết trình') {
-                    echo 'x ';
-                } ?> ] Thuyết trình &emsp;&emsp;
-                [ <?php if ($vitritd->kynangmem == 'Quản lý thời gian') {
-                    echo 'x ';
-                } ?> ] Quản lý thời gian<br>
-                [ <?php if ($vitritd->kynangmem == 'Quản lý nhân sự') {
-                    echo 'x ';
-                } ?> ] Quản lý nhân sự &emsp;&emsp;
-                [ <?php if ($vitritd->kynangmem == 'Tổng hợp báo cáo') {
-                    echo 'x ';
-                } ?> ] Tổng hợp, báo cáo &emsp;&emsp;
-                [<?php if ($vitritd->kynangmem == 'Thích ứng') {
-                    echo 'x ';
-                } ?> ] Thích ứng <br>
-                [<?php if ($vitritd->kynangmem == 'Làm việc nhóm') {
-                    echo 'x ';
-                } ?> ] Làm việc nhóm &emsp;&emsp;
-                [<?php if ($vitritd->kynangmem == 'Làm việc độc lập') {
-                    echo 'x ';
-                } ?> ] Làm việc độc lập &emsp;&emsp;
-                [ <?php if ($vitritd->kynangmem == 'Chịu áp lực') {
-                    echo 'x ';
-                } ?>] Chịu được áp lực công việc <br>
-                [ <?php if ($vitritd->kynangmem == 'Theo dõi giám sát') {
-                    echo 'x ';
-                } ?>] Theo dõi giám sát &emsp;&emsp;
-                [<?php if ($vitritd->kynangmem == 'Tư duy phản biện') {
-                    echo 'x ';
-                } ?> ] Tư duy phản biện<br>
-                [<?php if ($vitritd->kynangmem == 'khác') {
-                    echo 'x ';
-                } ?> ] khác:<br>
+                @foreach (getkynangmem() as $ct)
+                    [
+                    @if (in_array($ct, $vitritd->kynangmem))
+                        x
+                    @endif
+                    ] {{ $ct }} &emsp;&emsp;
+                @endforeach
             </td>
         </tr>
         <tr>
@@ -308,7 +293,6 @@
                 [ <?php if ($vitritd->yeucaukn == 'Trên 5 năm') {
                     echo 'x ';
                 } ?> ] Trên 5 năm
-
             </td>
         </tr>
         <tr>
@@ -318,19 +302,31 @@
         </tr>
         <tr>
             <td colspan="10" style="text-align: left">
-                Loại hợp đồng LĐ: [ ] Không xác định thời hạn &emsp;&emsp; [ ] Xác định thời hạn dưới 12 tháng
-                [ ] Xác định thời hạn từ 12 tháng đến 36 tháng
-
+                Loại hợp đồng LĐ:&emsp;&emsp;
+                @foreach (getHDLD() as $k => $ct)
+                    [
+                    @if ($k == $vitritd->loaihopdong)
+                        x
+                    @endif
+                    ] {{ $ct }} &emsp;&emsp;
+                @endforeach
             </td>
         </tr>
         <tr>
             <td colspan="10" style="text-align: left">
-                Yêu cầu thêm: [ ] Làm ca;&emsp;&emsp; [ ] Đi công tác;&emsp;&emsp; [ ] Đi biệt phái
+                Yêu cầu thêm: &emsp;&emsp;
+                @foreach (getYeucauthem() as $k => $ct)
+                    [
+                    @if ($k == $vitritd->yeucauthem)
+                        x
+                    @endif
+                    ] {{ $ct }} &emsp;&emsp;
+                @endforeach
             </td>
         </tr>
         <tr>
             <td colspan="10" style="text-align: left">
-                Hình thức làm việc*:
+                Hình thức làm việc*:&emsp;&emsp;
                 [ <?php if ($vitritd->hinhthuclv == 'Toàn thời gian') {
                     echo 'x ';
                 } ?>] Toàn thời gian &emsp;&emsp;
@@ -341,7 +337,7 @@
         </tr>
         <tr>
             <td colspan="10" style="text-align: left">
-                Mục đích làm việc:
+                Mục đích làm việc:&emsp;&emsp;
                 [ <?php if ($vitritd->mucdichlv == 'Làm lâu dài') {
                     echo 'x ';
                 } ?>] Làm việc lâu dài; &emsp;&emsp;
@@ -353,26 +349,19 @@
                 } ?>] Làm thêm
             </td>
         </tr>
+        <?php
+        $arr_mucluong = ['Dưới 5 triệu', '5 - 10 triệu', '10 - 20 triệu', '20 - 50 triệu', 'trên 50 triệu', 'Thỏa thuận', 'Hoa hồng'];
+        ?>
         <tr>
             <td colspan="10" style="text-align: left">
-                Mức lương*: - Lương tháng (VN đồng):<br>
-                [ <?php if ($vitritd->mucluong == '< 5 triệu') {
-                    echo 'x ';
-                } ?>] < 5 triệu ;&emsp;&emsp; [ <?php if ($vitritd->mucluong == '5 -10 triệu') {
-                    echo 'x ';
-                } ?> ] 5 -10 triệu;&emsp;&emsp; [
-                    <?php if ($vitritd->mucluong == '10 - 20 triệu') {
-                        echo 'x ';
-                    } ?> ] 10 - 20 triệu;&emsp;&emsp; [ <?php if ($vitritd->mucluong == '20 - 50 triệu') {
-                        echo 'x ';
-                    } ?> ] 20 - 50 triệu;&emsp;&emsp; [
-                    <?php if ($vitritd->mucluong == '> 50 triệu') {
-                        echo 'x ';
-                    } ?> ]> 50 triệu<br>
-                    - [ ] Lương ngày ......................................./ngày<br>
-                    - [ ] Lương giờ ......................................../giờ<br>
-                    - [ ] Thỏa thuận khi phỏng vấn<br>
-                    - [ ] Hoa hồng theo doanh thu/sản phẩm<br>
+                Mức lương*: - Lương tháng (VN đồng):<br>&emsp;&emsp;&emsp;&emsp;
+                @foreach ($arr_mucluong as $k => $ct)
+                    [
+                    @if ($ct == $vitritd->mucluong)
+                        x
+                    @endif
+                    ] {{ $ct }} &emsp;&emsp;
+                @endforeach
             </td>
         </tr>
 
@@ -397,18 +386,67 @@
             </td>
         </tr>
         <tr>
-            <td colspan="9" style="text-align: left">[ ] Đóng BHXH, BHYT, BHTN;&emsp;&emsp; [ ] BH nhân thọ;&emsp;&emsp;
-                [ ] Trợ cấp thôi việc;&emsp;&emsp; [ ] Nhà trẻ</td>
+            <td colspan="9" style="text-align: left">[
+                @if (in_array('Đóng BHXH, BHYT, BHTN', $vitritd->phucloi))
+                    x
+                @endif
+                ] Đóng BHXH, BHYT, BHTN;&emsp;&emsp;
+                [
+                @if (in_array('Đóng BHNT', $vitritd->phucloi))
+                    x
+                @endif
+                ] BH nhân thọ;&emsp;&emsp;
+                [
+                @if (in_array('Trợ cấp thôi việc', $vitritd->phucloi))
+                    x
+                @endif
+                ] Trợ cấp thôi việc;&emsp;&emsp;
+                [
+                @if (in_array('Nhà trẻ', $vitritd->phucloi))
+                    x
+                @endif
+                ] Nhà trẻ
+            </td>
         </tr>
         <tr>
-            <td colspan="9" style="text-align: left">[ ] Xe đưa đón;&emsp;&emsp; [ ] Hỗ trợ đi lại;&emsp;&emsp; [ ] Ký
-                túc xá;&emsp;&emsp; [ ] Hỗ trợ nhà ở;&emsp;&emsp;
-                [ ] Đào tạo</td>
+            <td colspan="9" style="text-align: left">[
+                @if (in_array('Xe đưa đón', $vitritd->phucloi))
+                    x
+                @endif
+                ] Xe đưa đón;&emsp;&emsp;
+                [
+                @if (in_array('Hỗ trợ đi lại', $vitritd->phucloi))
+                    x
+                @endif
+                ] Hỗ trợ đi lại;&emsp;&emsp;
+                [
+                @if (in_array('Ký túc xá', $vitritd->phucloi))
+                    x
+                @endif
+                ] Ký túc xá;&emsp;&emsp;
+                [
+                @if (in_array('Hỗ trợ nhà ở', $vitritd->phucloi))
+                    x
+                @endif
+                ] Hỗ trợ nhà ở;&emsp;&emsp;
+                [
+                @if (in_array('Đào tạo', $vitritd->phucloi))
+                    x
+                @endif
+                ] Đào tạo
+            </td>
         </tr>
         <tr>
-            <td colspan="9" style="text-align: left">[ ] Lối đi/thiết bị hỗ trợ cho người khuyết tật&emsp;&emsp; [ ] Cơ
-                hội thăng
-                tiến<br>
+            <td colspan="9" style="text-align: left">[
+                @if (in_array('Lối đi người khuyết tật', $vitritd->phucloi))
+                    x
+                @endif
+                ] Lối đi/thiết bị hỗ trợ cho người khuyết tật&emsp;&emsp;
+                [
+                @if (in_array('Cơ hội thăng tiến', $vitritd->phucloi))
+                    x
+                @endif
+                ] Cơ hội thăng tiến<br>
                 [ ] Khác
                 ................................................................................
             </td>
@@ -417,41 +455,39 @@
         <tr>
             <td rowspan="7" style="text-align: left">Điều kiện làm việc*</td>
             <td colspan="1"> Nơi làm việc</td>
-            <td colspan="9"> [ ] Trong nhà;&emsp;&emsp; [ ] Ngoài trời;&emsp;&emsp; [ ] Hỗn hợp</td>
-        </tr>
-        <tr>
-            <td colspan="1" style="text-align: left">Trọng lượng nâng</td>
-            <td colspan="9">[ ] Dưới 5 kg &emsp;&emsp;[ ] 5 - 20 kg [ ]&emsp;&emsp; Trên 20 kg</td>
-        </tr>
-        <tr>
-            <td colspan="1" style="text-align: left">Đứng hoặc đi lại</td>
-            <td colspan="9">[ ] Hầu như không có;&emsp;&emsp; [ ] Mức trung bình;&emsp;&emsp; [ ] Cần đứng/đi lại nhiều
+            <td colspan="9">
+                @foreach (getNoilamviec() as $key=>$val)
+                [ 
+                    @if ($key == $vitritd->noilamviec)
+                      x  
+                    @endif
+                ] {{$val}} &emsp;&emsp;
+                @endforeach
             </td>
         </tr>
+        @foreach (getDklamviec() as $k=>$ct)
         <tr>
-            <td colspan="1" style="text-align: left">Nghe nói</td>
-            <td colspan="9">[ ] Không cần thiết;&emsp;&emsp; [ ] Nghe nói cơ bản;&emsp;&emsp; [ ] Quan trọng</td>
+            <td colspan="1" style="text-align: left">{{DKLV()[$k]}}</td>
+            <td colspan="9">
+                @foreach ($ct as $key=>$val)
+                [ 
+                    @if ($key == $vitritd->$k)
+                      x  
+                    @endif
+                ] {{$val}} &emsp;&emsp;
+                @endforeach
+            </td>
         </tr>
+        @endforeach
         <tr>
-            <td colspan="1" style="text-align: left">Thị lực </td>
-            <td colspan="9">[ ] Mức bình thường;&emsp;&emsp; [ ] Nhìn được vật/chi tiết nhỏ;</td>
-        </tr>
-        <tr>
-            <td colspan="1" style="text-align: left">Thao tác bằng tay</td>
-            <td colspan="9"> [ ] Lắp ráp đồ vật lớn;&emsp;&emsp; [ ] Lắp ráp đồ vật nhỏ;&emsp;&emsp; [ ] Lắp ráp đồ vật
-                rất nhỏ</td>
-        </tr>
-        <tr>
-            <td colspan="1" style="text-align: left"> Dùng 2 tay</td>
-            <td colspan="9"> [ ] Cần 2 tay; &emsp;&emsp;[ ] Đôi khi cần 2 tay;&emsp;&emsp; [ ] Chỉ cần 1 tay;
-                &emsp;&emsp;[ ] Trái;&emsp;&emsp; [ ] Phải</td>
-        </tr>
-        <tr>
-            <td colspan="10" style="text-align: left">Đối tượng ưu tiên:
-                [ ] Người khuyết tật;&emsp;&emsp;
-                [ ] Bộ đội xuất ngũ;&emsp;&emsp;
-                [ ] Người thuộc hộ nghèo, cận nghèo<br>
-                [ ] Người dân tộc thiểu số;&emsp;&emsp;
+            <td colspan="10" style="text-align: left">Đối tượng ưu tiên:&emsp;&emsp;
+                @foreach (uutien() as $key=>$val)
+                [ 
+                    @if ($key == $vitritd->uutien)
+                      x  
+                    @endif
+                ] {{$val}} &emsp;&emsp;
+                @endforeach
                 [ ] Khác (ghi rõ:....................)
             </td>
         </tr>
@@ -461,7 +497,7 @@
                 vấn online;&emsp;&emsp; [ ] Nộp CV</td>
         </tr>
         <tr>
-            <td colspan="10" style="text-align: left">Thời hạn tuyển dụng*: ngày tháng năm</td>
+            <td colspan="10" style="text-align: left">Thời hạn tuyển dụng*: ngày {{$tuyendung->ngay}} tháng {{$tuyendung->thang}} năm {{$tuyendung->nam}}</td>
         </tr>
         <tr>
             <th colspan="10" style="text-align: left">3. Thông tin người liên hệ tuyển dụng</th>
