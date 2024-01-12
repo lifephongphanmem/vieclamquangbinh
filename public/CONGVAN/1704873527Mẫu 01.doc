@@ -1,0 +1,552 @@
+
+            <table id="data_header">
+        <tbody><tr>
+            <td style="text-align:left;font-weight: bold;" valign="top" height="70">
+                <p></p>
+            </td>
+            <td style="atext-align:right" valign="top">
+                <p class="text-right">Mẫu số 01</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p style="text-align: center;font-weight: bold;font-size: 20px; text-transform: uppercase;">PHIẾU THÔNG TIN
+                    NHU CẦU TUYỂN DỤNG LAO ĐỘNG
+                    CỦA NGƯỜI SỬ DỤNG LAO ĐỘNG
+                </p>
+                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:right">
+                <p>Mã số:..........</p>
+            </td>
+        </tr>
+
+
+    </tbody></table>
+
+    <table id="data_body" border="1" cellspacing="0" cellpadding="0">
+
+        <tbody><tr>
+            <th colspan="10" style="text-align:left">1. Thông tin người sử dụng lao động</th>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align:left">
+                Tên doanh nghiệp/người tuyển dụng*:
+                Công ty TNHH Ban Mai
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align:left">
+                Mã số đăng ký/ Mã số
+                thuế/CMND/CCCD*:3100301817
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align:left">
+                Loại hình doanh nghiệp*:  
+                                    [
+                                            x
+                                        ] Trách nhiệm hữu hạn  
+                                                        [
+                                        ] Công ty cổ phần có vốn nhà nước  
+                                                        [
+                                        ] Doanh nghiệp 100% vốn nhà nước  
+                                                        [
+                                        ] DN tư nhân  
+                                            <br>
+                                                        [
+                                        ] Công ty Hợp danh  
+                                                        [
+                                        ] Doanh nghiệp lớn hơn 50% vốn nhà nước  
+                                                        [
+                                        ] Công ty cổ phần  không có vốn nhà nước  
+                                            <br>
+                                                        [
+                                        ] Doanh nghiệp 100% vốn nước ngoài  
+                                                        [
+                                        ] Doanh nghiệp liên doanh với nước ngoài  
+                                                        [
+                                        ] Hợp tác xã  
+                                            <br>
+                                                        [
+                                        ] Hộ kinh doanh  
+                                                        [
+                                        ] Cơ quan tổ chức khác  
+                                                </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align:left;padding-bottom: 1%">
+                Địa chỉ* : Tỉnh Quảng Bình
+                   
+                Thành Phố Đồng Hới   
+                Phường Hải Thành
+                <br>Địa chỉ cụ thể*:
+                27 Nguyễn Đình Chiểu
+                <br>[ ] KCN/KKT:
+                            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align:left;">
+                Số điện thoại*:
+                02323810755
+            </td>
+            <td colspan="5" style="text-align:left;">
+                Email*:
+                banmaiquangbinh@gmail.com
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align:left;border-right: none">
+                Ngành kinh doanh chính*:
+                                    <br>[ ] Nông nghiệp, Lâm nghiệp và Thủy sản
+                                    <br>[ ] Khai khoáng
+                                    <br>[ ] Công nghiệp chế biến, chế tạo
+                                    <br>[ ] Sản xuất phân phối điện, khí đốt, nước nóng, hơi nước, điều hòa không khí
+                                    <br>[ ] Cung cấp nước, hoạt động xử lý nước thải, rác thải
+                                    <br>[ ] Xây dựng
+                                    <br>[ ] Bán buôn bán lẻ, sửa chửa mô tô, ô tô, xe máy và các xe có động cơ khác
+                                    <br>[ ] Vận tải, kho bãi
+                                    <br>[                        x
+                     ] Dịch vụ lưu trú và ăn uống
+                                    <br>[ ] Thông tin và truyền thông
+                                    <br>[ ] Hoạt động tài chính, ngân hàng và bảo hiểm
+                                    <br>[ ] Hoạt động kinh doanh bất động sản
+                                    <br>[ ] Hoạt động chuyên môn khoa học và công nghệ
+                                    <br>[ ] Hoạt động hành chính và dịch vụ hỗ trợ
+                                    <br>[ ] Hoạt động của Đảng, QLNN, ANQP, TC-CTXH
+                                    <br>[ ] Giáo dục và đào tạo
+                                    <br>[ ] Y tế và hoạt động trợ giúp xã hội
+                                    <br>[ ] Nghệ thuật, vui chơi, giải trí
+                                    <br>[ ] Hoạt động dịch vụ khác
+                                    <br>[ ] Hoạt động làm thuê trong hộ gia đình
+                                    <br>[ ] Hoạt động của các tổ chức cơ quan quốc tế
+                
+            </td>
+
+        </tr>
+        <tr>
+            <th colspan="10" style="text-align: left;">2. Thông tin về nhu cầu tuyển dụng </th>
+        </tr>
+        <tr>
+            <td colspan="6" style="text-align: left;"> Tên công việc*: ưetttyh
+            </td>
+            <td colspan="4"> Số lượng tuyển*: 1 </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left"> Mô tả công việc*: aweretrt vfghghgh
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left"> Mã nghề*:
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: left;"> Cấp 1:
+                ....................................................................................
+            </td>
+            <td colspan="5"> Cấp 2: .................................................................................
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: left"> Cấp 3:
+                ....................................................................................</td>
+            <td colspan="5">Cấp 4: .................................................................................
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left"> Chức vụ*: [ ] Nhân viên     [ ] Quản lý
+                    [ ] Lãnh đạo
+                [ ] Khác (ghi rõ):
+                ...........................................................................................
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Trình độ học vấn*:
+                [ x  ] Chưa đi học    
+                [  ] Chưa tốt nghiệp tiểu học    
+                [  ] Tốt nghiệp tiểu học    
+                [ ] Tốt nghiệp Trung học cơ sở    
+                [ ] Tốt nghiệp Trung học phổ thông
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left"> Trình độ CMKT*: </td>
+            <td colspan="3">
+                [x  ] Chưa qua đào tạo<br>
+                [  ] Sơ cấp<br>
+                [ ] Cao đẳng<br>
+                [  ] Thạc sĩ<br>
+            </td>
+            <td colspan="3" style="text-align: left">
+                [  ] CNKT không bằng<br>
+                [  ] Trung cấp<br>
+                [  ] Đại học<br>
+                [  ] Tiến sĩ
+            </td>
+            <td colspan="3">
+                Chuyên ngành đào tạo:<br>
+                Xã hội
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left"> Trình độ khác </td>
+            <td colspan="9">
+                1: ..............................................................................................<br>
+                2: ..............................................................................................
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Trình độ kỹ năng
+                nghề:..............................................................................................................................................
+                Bậc:........................................................................
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left"> Trình độ ngoại ngữ </td>
+            <td colspan="9">
+                Ngoại ngữ 1:
+                Tiếng Anh
+                  Chứng chỉ:
+                IELTS 6.5<br>
+                Khả năng sử dụng: [ ]
+                Tốt    [ x ] Khá   [
+                ] Trung bình   <br>
+                Ngoại ngữ 2:
+                Tiếng Trung
+                  Chứng chỉ:
+                .........................................<br>
+                Khả năng sử dụng: [ ] Tốt    [ x ] Khá    [
+                ] Trung bình   
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left"> Trình độ tin học </td>
+            <td colspan="9">
+                [ ] Tin học văn phòng
+                .............................................................................................................................<br>
+                Khả năng sử dụng: [ x ] Tốt    [ ] Khá   [
+                ] Trung bình   <br>
+                [ ] Khác: Các phần mềm quản lý nhà máy điện gió <br>
+                Khả năng sử dụng: [ ] Tốt    [ x ] Khá    [
+                ] Trung bình   
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left">Kỹ năng mềm </td>
+            <td colspan="9">
+                                    [
+                                            x
+                                        ] Giao tiếp   
+                                    [
+                                            x
+                                        ] Thuyết trình   
+                                    [
+                                            x
+                                        ] Quản lý thời gian   
+                                    [
+                                            x
+                                        ] Quản lý nhân sự   
+                                    [
+                                            x
+                                        ] Tổng hợp báo cáo   
+                                    [
+                                            x
+                                        ] Thích ứng   
+                                    [
+                                            x
+                                        ] Làm việc nhóm   
+                                    [
+                                            x
+                                        ] Làm việc độc lập   
+                                    [
+                                        ] Chịu được áp lực công việc   
+                                    [
+                                            x
+                                        ] Theo dõi giám sát   
+                                    [
+                                            x
+                                        ] Tư duy phản biện   
+                                    [
+                                        ] Kỹ năng mềm khác :   
+                            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Yêu cầu kinh nghiệm:<br>
+                [  ] Không yêu cầu   
+                [  ] Dưới 1 năm   
+                [  ] Từ 1 đến 2 năm   
+                [  ] Từ 2 đến 5 năm   
+                [ x  ] Trên 5 năm
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Nơi làm việc dự kiến: 
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Loại hợp đồng LĐ:  
+                                    [
+                                            x
+                                        ] Không xác định thời hạn   
+                                    [
+                                        ] Xác định thời hạn dưới 12 tháng   
+                                    [
+                                        ] Xác định thời hạn từ 12 tháng đến 36 tháng   
+                            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Yêu cầu thêm:   
+                                    [
+                                        ] Làm ca   
+                                    [
+                                            x
+                                        ] Đi công tác   
+                                    [
+                                        ] Đi biết phái   
+                            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Hình thức làm việc*:  
+                [ x ] Toàn thời gian   
+                [ ] Bán thời gian
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Mục đích làm việc:  
+                [ x ] Làm việc lâu dài;   
+                [ ] Làm việc tạm thời;   
+                [ ] Làm thêm
+            </td>
+        </tr>
+                <tr>
+            <td colspan="10" style="text-align: left">
+                Mức lương*: - Lương tháng (VN đồng):<br>    
+                                    [
+                                            x
+                                        ] Dưới 5 triệu   
+                                    [
+                                        ] 5 - 10 triệu   
+                                    [
+                                        ] 10 - 20 triệu   
+                                    [
+                                        ] 20 - 50 triệu   
+                                    [
+                                        ] trên 50 triệu   
+                                    [
+                                        ] Thỏa thuận   
+                                    [
+                                        ] Hoa hồng   
+                            </td>
+        </tr>
+
+        <tr>
+            <td rowspan="4" style="text-align: left"> Chế độ phúc lợi* </td>
+            <td colspan="9">Hỗ trợ ăn:
+                [ ] 1 bữa;  
+                [ ] 2 bữa;  
+                [ ] 3 bữa;  
+                [ ] Bằng tiền: ..........;
+                [ x ] Không hỗ trợ
+            </td>
+        </tr>
+        <tr>
+            <td colspan="9" style="text-align: left">[
+                                    x
+                                ] Đóng BHXH, BHYT, BHTN;  
+                [
+                                    x
+                                ] BH nhân thọ;  
+                [
+                                    x
+                                ] Trợ cấp thôi việc;  
+                [
+                                    x
+                                ] Nhà trẻ
+            </td>
+        </tr>
+        <tr>
+            <td colspan="9" style="text-align: left">[
+                                    x
+                                ] Xe đưa đón;  
+                [
+                                    x
+                                ] Hỗ trợ đi lại;  
+                [
+                                ] Ký túc xá;  
+                [
+                                ] Hỗ trợ nhà ở;  
+                [
+                                ] Đào tạo
+            </td>
+        </tr>
+        <tr>
+            <td colspan="9" style="text-align: left">[
+                                ] Lối đi/thiết bị hỗ trợ cho người khuyết tật  
+                [
+                                ] Cơ hội thăng tiến<br>
+                [ ] Khác
+                ................................................................................
+            </td>
+        </tr>
+
+        <tr>
+            <td rowspan="7" style="text-align: left">Điều kiện làm việc*</td>
+            <td colspan="1"> Nơi làm việc</td>
+            <td colspan="9">
+                                [ 
+                                          x  
+                                    ] Trong nhà   
+                                [ 
+                                    ] Ngoài trời   
+                                [ 
+                                    ] Hỗn hợp   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="1" style="text-align: left">Trọng lượng nâng</td>
+            <td colspan="9">
+                                [ 
+                                    ] Dưới 5kg   
+                                [ 
+                                          x  
+                                    ] 5 - 20 kg   
+                                [ 
+                                    ] Trên 20kg   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="1" style="text-align: left">Đứng hoặc là đi lại</td>
+            <td colspan="9">
+                                [ 
+                                          x  
+                                    ] Hầu như không có   
+                                [ 
+                                    ] Mức trung bình   
+                                [ 
+                                    ] Cần đứng/đi lại nhiều   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="1" style="text-align: left">Nghe nói</td>
+            <td colspan="9">
+                                [ 
+                                    ] Không cần thiết   
+                                [ 
+                                          x  
+                                    ] Nghe nói cơ bản   
+                                [ 
+                                    ] Quan trọng   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="1" style="text-align: left">Thị lực</td>
+            <td colspan="9">
+                                [ 
+                                          x  
+                                    ] Mức bình thường   
+                                [ 
+                                    ] Nhìn được vật/chi tiết nhỏ   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="1" style="text-align: left">Thao tác bằng tay</td>
+            <td colspan="9">
+                                [ 
+                                          x  
+                                    ] Lắp ráp đồ vật lớn   
+                                [ 
+                                    ] Lắp ráp đồ vật nhỏ   
+                                [ 
+                                    ] Lắp ráp đồ vật rất nhỏ   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="1" style="text-align: left">Dùng 2 tay</td>
+            <td colspan="9">
+                                [ 
+                                          x  
+                                    ] Cần 2 tay   
+                                [ 
+                                    ] Đôi khi cần 2 tay   
+                                [ 
+                                    ] Chỉ cần 1 tay   
+                                [ 
+                                    ] Trái   
+                                [ 
+                                    ] Phải   
+                            </td>
+        </tr>
+                <tr>
+            <td colspan="10" style="text-align: left">Đối tượng ưu tiên:  
+                                [ 
+                                    ] Người khuyết tật   
+                                [ 
+                                          x  
+                                    ] Bộ đội xuất ngủ   
+                                [ 
+                                    ] Người thuộc hộ nghèo, cận nghèo   
+                                [ 
+                                    ] Người dân tộc thiểu số   
+                                [ ] Khác (ghi rõ:....................)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">Hình thức tuyển dụng*: [ ] Trực tiếp;   [ ] Qua điện
+                thoại;   [ ] Phỏng
+                vấn online;   [ ] Nộp CV</td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">Thời hạn tuyển dụng*: ngày 24 tháng 01 năm 2024</td>
+        </tr>
+        <tr>
+            <th colspan="10" style="text-align: left">3. Thông tin người liên hệ tuyển dụng</th>
+        </tr>
+
+        <tr>
+            <td colspan="6" style="text-align: left">Họ và tên*: Trương Thị Thắm </td>
+            <td colspan="4">Chức vụ*:
+                ...................................................................................
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" style="text-align: left">Số điện thoại*: 123456789 <br>
+                Nhận SMS thông báo ứng tuyển<br>
+                [ ] Có   [ ] Không
+            </td>
+            <td colspan="4">Email*: test@gmail.com <br>
+                Nhận email thông báo ứng tuyển<br>
+                [ ] Có   [ ] Không
+            </td>
+        </tr>
+        <tr>
+            <td colspan="10" style="text-align: left">
+                Hình thức liên hệ khác (nếu có):
+                .......................................................................................................................................................
+            </td>
+        </tr>
+        
+    </tbody></table>
+    <table id="data_footer" width="96%" cellspacing="0" height="" cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">
+        <tbody><tr>
+            <td width="40%" style="text-align: left; vertical-align: top;">
+            </td>
+            <td style="vertical-align: top;">
+                <i>Ngày......tháng......năm...........</i><br>
+                <b>XÁC NHẬN CỦA NGƯỜI ĐĂNG KÝ</b><br>
+                <i>(Ký tên đóng dấu)</i>
+            </td>
+        </tr>
+    </tbody></table>
+    

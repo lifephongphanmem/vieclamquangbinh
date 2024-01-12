@@ -113,7 +113,10 @@ class MessagesController extends Controller
         $attach_path = "";
         $attach = $request->File('attach');
         if ($attach) {
-            $attach_path = $attach->store('CONGVAN');
+            // $attach_path = $attach->store('CONGVAN');
+            $name = time() . $attach->getClientOriginalName();
+            $attach->move('CONGVAN', $name);
+            $attach_path='CONGVAN/'.$name;
             // $attach_path= $attach->getClientOriginalName();
             // $attach->storeAs('CONGVAN', $attach_path);
         }
@@ -184,5 +187,14 @@ class MessagesController extends Controller
         }
 
         return redirect()->route('messages.show', $id);
+    }
+
+    public function destroy($id){
+        $model=Thread::findOrFail($id);
+        if(isset($model)){
+           $model->delete();
+        }
+        return redirect('/messages')
+                ->with('success','Xóa thành công');
     }
 }

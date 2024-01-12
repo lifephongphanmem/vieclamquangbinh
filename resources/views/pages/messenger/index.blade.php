@@ -90,12 +90,13 @@
                         </div>
                     </form>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
-                        <thead>
+                        <thead class="text-center">
 							<td width="5%"> # </td>
 							<td width="20%"> Tiêu đề</td>
 							<td width="40%"> Nội dung</td>
-							<td width="20%"> File đính kèm</td>
+							<td width="13%"> File đính kèm</td>
 							<td width="15%"> Người gửi</td>
+							<td width="15%"> Thao tác</td>
                         </thead>
                         <tbody>
 							@foreach ($threads as $key=>$thread )
@@ -127,7 +128,7 @@
 											{{-- <a href="../storage/app/{{$thread->attach}}" download> Tải File đính kèm </a> --}}
 											{{-- <a href="{{ Storage::url('/CONGVAN/16809224491677317754Ba_Đồn_ok.xlsx')}}" download> Tải File đính kèm </a> --}}
 											{{-- <a href="{{ URL::to('app/'.$thread->attach) }}" download> Tải File đính kèm </a> --}}
-											<a href="{{'messages/download_url/'.$thread->attach}}">Tải File đính kèm</a>
+											<a href="{{'/'.$thread->attach}}">Tải File đính kèm</a>
 										
 										<?php } ?>	
 									</div>
@@ -140,6 +141,14 @@
 											</p>
 											
 									</div>
+								</td>
+								<td class="text-center">
+									<button title="Xóa thông tin" type="button"
+                                    onclick="cfDel('{{'/messages/del/'.$thread->id}}')"
+                                    class="btn btn-sm btn-clean btn-icon ml-3" data-target="#delete-modal-confirm"
+                                    data-toggle="modal">
+                                    <i class="icon-lg flaticon-delete text-danger"></i>
+                                </button>
 								</td>
 							</tr>
 										
