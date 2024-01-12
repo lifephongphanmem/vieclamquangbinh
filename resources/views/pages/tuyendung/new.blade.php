@@ -355,6 +355,13 @@
                                                   </select>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td style="color: #313444;">Nơi làm việc dự kiến (*)</td>
+                                                <td>
+
+                                                    <input class="form-control "  type="text" size=40 name="diadiem[]" required>
+                                                </td>
+                                            </tr>
 
                                             <tr>
                                                 <td style="color: #313444;">Hình thức làm việc</td>
