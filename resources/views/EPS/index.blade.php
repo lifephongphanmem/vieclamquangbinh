@@ -616,6 +616,26 @@ License: You must have a valid license purchased only from themeforest(the above
             "font-family": "Open Sans"
         };
     </script>
+
+    <!--end::Global Config-->
+    <!--begin::Global Theme Bundle(used by all pages)-->
+    <script src="{{ url('assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ url('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+    <script src="{{ url('assets/js/scripts.bundle.js') }}"></script>
+    <!--end::Global Theme Bundle-->
+    <!--begin::Page Vendors(used by this page)-->
+    <script src="{{ url('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    <!--end::Page Vendors-->
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="{{ url('assets/js/pages/widgets.js') }}"></script>
+    <script src="{{ url('assets/js/pages/main.js') }}"></script>
+    {{-- <script src="{{ url('assets/js/pages/select2.js') }}"></script> --}}
+    @if (Session::has('success'))
+        <script>
+            // toastr.success("{!! Session::get('success') !!}");
+            $('#thongbao-modal-confirm').modal('show');
+        </script>
+    @endif
     <script>
         function getnganh() {
             var manganh = $('#nganhdk').val();
@@ -639,25 +659,6 @@ License: You must have a valid license purchased only from themeforest(the above
             });
         }
     </script>
-    <!--end::Global Config-->
-    <!--begin::Global Theme Bundle(used by all pages)-->
-    <script src="{{ url('assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ url('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
-    <script src="{{ url('assets/js/scripts.bundle.js') }}"></script>
-    <!--end::Global Theme Bundle-->
-    <!--begin::Page Vendors(used by this page)-->
-    <script src="{{ url('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
-    <!--end::Page Vendors-->
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="{{ url('assets/js/pages/widgets.js') }}"></script>
-    <script src="{{ url('assets/js/pages/main.js') }}"></script>
-    {{-- <script src="{{ url('assets/js/pages/select2.js') }}"></script> --}}
-    @if (Session::has('success'))
-        <script>
-            // toastr.success("{!! Session::get('success') !!}");
-            $('#thongbao-modal-confirm').modal('show');
-        </script>
-    @endif
     @yield('custom-script')
     <!--end::Page Scripts-->
 </body>
