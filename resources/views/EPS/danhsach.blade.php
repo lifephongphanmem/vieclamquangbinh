@@ -27,10 +27,12 @@
                         <h3 class="card-label text-uppercase">Danh sách người lao động đăng ký thi EPS</h3>
                     </div>
                     <div class="card-toolbar">
-                        <button title="In tổng hợp" class="btn btn-sm btn-success"
-                            data-target="#modify-modal" data-toggle="modal">
-                            <i class="icon-lg la flaticon2-print"></i> Tổng hợp
-                        </button>
+                        @if (chkPhanQuyen('danhsachdangkyeps', 'hoanthanh'))
+                            <button title="In tổng hợp" class="btn btn-sm btn-success" data-target="#modify-modal"
+                                data-toggle="modal">
+                                <i class="icon-lg la flaticon2-print"></i> Tổng hợp
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -53,30 +55,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($model as $k=>$ct)
+                            @foreach ($model as $k => $ct)
                                 <tr>
-                                    <td>{{++$k}}</td>
-                                    <td style="text-align: center">{{$ct->sobaodanh}}</td>
+                                    <td>{{ ++$k }}</td>
+                                    <td style="text-align: center">{{ $ct->sobaodanh }}</td>
                                     <td>
-                                        <a href="/EPS/Edit/{{$ct->id}}" >{{$ct->hoten}}</a>
+                                        <a href="/EPS/Edit/{{ $ct->id }}">{{ $ct->hoten }}</a>
                                     </td>
-                                    <td>{{getDayVn($ct->ngaysinh)}}</td>
-                                    <td style="text-align: center">{{$ct->gioitinh == 1?'Nam':'Nữ'}}</td>
-                                    <td>{{$ct->cccd}}</td>
-                                    <td >{{NganhDKthi()[$ct->nganhdkthi]}}</td>
-                                    <td style="text-align: center">{{$ct->sdt}}</td>
-                                    <td width="7%">{{$ct->xa}}</td>
-                                    <td width="7%">{{$ct->huyen}}</td>
-                                    <td width="7%">{{$ct->tinh}}</td>
-                                    <td width="10%">{{\Carbon\Carbon::parse($ct->created_at)->format('s:i:h d/m/Y')}}</td>
+                                    <td>{{ getDayVn($ct->ngaysinh) }}</td>
+                                    <td style="text-align: center">{{ $ct->gioitinh == 1 ? 'Nam' : 'Nữ' }}</td>
+                                    <td>{{ $ct->cccd }}</td>
+                                    <td>{{ NganhDKthi()[$ct->nganhdkthi] }}</td>
+                                    <td style="text-align: center">{{ $ct->sdt }}</td>
+                                    <td width="7%">{{ $ct->xa }}</td>
+                                    <td width="7%">{{ $ct->huyen }}</td>
+                                    <td width="7%">{{ $ct->tinh }}</td>
+                                    <td width="10%">{{ \Carbon\Carbon::parse($ct->created_at)->format('s:i:h d/m/Y') }}
+                                    </td>
                                     <td style="text-align: center">
-                                        <button title="In thông tin" type="button" onclick="inphieu('{{$ct->id}}')"
-                                        class="btn btn-sm btn-clean btn-icon" data-target="#mauphieu-modal-confirm"
-                                        data-toggle="modal">
-                                        <i class="icon-lg la flaticon2-print text-primary"></i>
-                                    </button>
-                                    <button title="Xóa thông tin" type="button" onclick="cfDel('{{'/EPS/Del/'.$ct->id}}')" class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm" data-toggle="modal">
-                                        <i class="icon-lg flaticon-delete text-danger"></i></button>
+                                        @if (chkPhanQuyen('danhsachdangkyeps', 'hoanthanh'))
+                                            <button title="In thông tin" type="button"
+                                                onclick="inphieu('{{ $ct->id }}')"
+                                                class="btn btn-sm btn-clean btn-icon" data-target="#mauphieu-modal-confirm"
+                                                data-toggle="modal">
+                                                <i class="icon-lg la flaticon2-print text-primary"></i>
+                                            </button>
+                                        @endif
+                                        @if (chkPhanQuyen('danhsachdangkyeps', 'thaydoi'))
+                                            <button title="Xóa thông tin" type="button"
+                                                onclick="cfDel('{{ '/EPS/Del/' . $ct->id }}')"
+                                                class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
+                                                data-toggle="modal">
+                                                <i class="icon-lg flaticon-delete text-danger"></i></button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -105,17 +116,16 @@
             </div>
         </form>
     </div> --}}
-<!-- Modal tổng hợp -->
+    <!-- Modal tổng hợp -->
     <div id="modify-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        <form id="frmDanhsach" method="POST" action="/EPS/TongHop" accept-charset="UTF-8"
-            enctype="multipart/form-data" target='_blank'>
+        <form id="frmDanhsach" method="POST" action="/EPS/TongHop" accept-charset="UTF-8" enctype="multipart/form-data"
+            target='_blank'>
             @csrf
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Danh sách người lao động</h4>
-                        <button type="button" data-dismiss="modal" aria-hidden="true"
-                            class="close">&times;</button>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12">
@@ -130,8 +140,7 @@
 
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                        <button type="submit" id="submit" name="submit" value="submit"
-                            class="btn btn-primary">Đồng
+                        <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Đồng
                             ý</button>
                     </div>
                 </div>
@@ -141,19 +150,18 @@
 
     <!-- Modal in mẫu phiếu -->
     <div id="mauphieu-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        <form id="frmDanhsach" method="POST" action="/EPS/TongHop" accept-charset="UTF-8"
-            enctype="multipart/form-data" target='_blank'>
+        <form id="frmDanhsach" method="POST" action="/EPS/TongHop" accept-charset="UTF-8" enctype="multipart/form-data"
+            target='_blank'>
             @csrf
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header modal-header-primary">
                         <h4 id="modal-header-primary-label" class="modal-title">Chọn mẫu phiếu in</h4>
-                        <button type="button" data-dismiss="modal" aria-hidden="true"
-                            class="close">&times;</button>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12">
-                                <a href="" id="phieu04" target="_blank">1. Mẫu phụ lục 04</a>
+                            <a href="" id="phieu04" target="_blank">1. Mẫu phụ lục 04</a>
                         </div>
                         <div class="col-lg-12 mt-3">
                             <a href="" id="phieuthu" target="_blank">2. Phiếu thu</a>
@@ -171,12 +179,11 @@
         </form>
     </div>
     <script>
-        function inphieu(id)
-        {
-            var url ='/EPS/Phuluc4?id='+id;
-            var url1 ='/EPS/Phieuthu?id='+id;
-            $('#phieu04').attr('href',url);
-            $('#phieuthu').attr('href',url1);
+        function inphieu(id) {
+            var url = '/EPS/Phuluc4?id=' + id;
+            var url1 = '/EPS/Phieuthu?id=' + id;
+            $('#phieu04').attr('href', url);
+            $('#phieuthu').attr('href', url1);
         }
     </script>
 @endsection

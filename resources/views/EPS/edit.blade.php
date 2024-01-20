@@ -27,7 +27,7 @@
             </div>
         </div>
         <!--begin::Form-->
-        <form action="{{'/EPS/Update'}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ '/EPS/Update' }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="form-group mb-8">
@@ -64,7 +64,7 @@
                             placeholder="Số báo danh" />
                         {{-- <span class="form-text text-muted">VD: Nguyễn Văn A</span> --}}
                     </div>
-                    <input type="hidden" name='id' value="{{$model->id}}">
+                    <input type="hidden" name='id' value="{{ $model->id }}">
                 </div>
                 <div class="row">
                     <div class="form-group col-xl-6">
@@ -106,18 +106,20 @@
                         <label for="exampleSelect1">Phân loại: Người lao động đã từng đi làm
                             việc tại Hàn Quốc chọn
                             <span class="text-danger">*</span></label>
-                        <select class="form-control" name="phanloai" >
-                            @foreach (phanloai() as $k=>$ct)
-                            <option value="{{$k}}" {{ $model->phanloai == $k ? 'selected' : '' }}>{{$ct}}</option>
+                        <select class="form-control" name="phanloai">
+                            @foreach (phanloai() as $k => $ct)
+                                <option value="{{ $k }}" {{ $model->phanloai == $k ? 'selected' : '' }}>
+                                    {{ $ct }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-xl-6">
                         <label for="exampleSelect1">Đối tượng
                             <span class="text-danger">*</span></label>
-                        <select class="form-control" name="doituong" >
-                            @foreach (doituong() as $k=>$ct)
-                            <option value="{{$k}}" {{ $model->doituong == $k ? 'selected' : '' }}>{{$ct}}</option>
+                        <select class="form-control" name="doituong">
+                            @foreach (doituong() as $k => $ct)
+                                <option value="{{ $k }}" {{ $model->doituong == $k ? 'selected' : '' }}>
+                                    {{ $ct }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -158,7 +160,7 @@
                     <div class="form-group col-xl-3">
                         <label>Tỉnh
                             <span class="text-danger">*</span></label>
-                        <input type="text" name="tinh" required value="{{$model->tinh}}" class="form-control"
+                        <input type="text" name="tinh" required value="{{ $model->tinh }}" class="form-control"
                             placeholder="Điền tỉnh" />
                     </div>
                     <div class="form-group col-xl-3">
@@ -176,15 +178,15 @@
                     <div class="form-group col-xl-3">
                         <label>Thôn/ xóm
                             <span class="text-danger">*</span></label>
-                        <input type="text" name="thonxom" value="{{ $model->thonxom }}" required class="form-control"
-                            placeholder="Điền Xã" />
+                        <input type="text" name="thonxom" value="{{ $model->thonxom }}" required
+                            class="form-control" placeholder="Điền Xã" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-xl-6">
                         <label>Số điện thoại
                             <span class="text-danger">*</span></label>
-                        <input type="text" name="sdt" value="{{$model->sdt }}" required class="form-control"
+                        <input type="text" name="sdt" value="{{ $model->sdt }}" required class="form-control"
                             placeholder="Điền số điện thoại" />
                     </div>
                     <div class="form-group col-xl-6">
@@ -192,16 +194,18 @@
                             Quảng Bình
                             <span class="text-danger">*</span></label>
                         <select class="form-control" name="dkhoc" id="dkhoc">
-                            <option value="1" {{$model->dkhoc == 1?'selected':''}}>Đăng ký</option>
-                            <option value="0" {{$model->dkhoc == 0?'selected':''}}>Không</option>
+                            <option value="1" {{ $model->dkhoc == 1 ? 'selected' : '' }}>Đăng ký</option>
+                            <option value="0" {{ $model->dkhoc == 0 ? 'selected' : '' }}>Không</option>
 
                         </select>
                     </div>
                 </div>
             </div>
             <div class="card-footer text-center">
-                <a href="{{'/EPS/DanhSach'}}" style="font-size: 16px" class="btn btn-warning mr-2">Quay lại</a>
-                <button type="submit" style="font-size: 16px" class="btn btn-primary mr-2">Cập nhật</button>
+                <a href="{{ '/EPS/DanhSach' }}" style="font-size: 16px" class="btn btn-warning mr-2">Quay lại</a>
+                @if (chkPhanQuyen('danhsachdangkyeps', 'thaydoi'))
+                    <button type="submit" style="font-size: 16px" class="btn btn-primary mr-2">Cập nhật</button>
+                @endif
             </div>
         </form>
         <!--end::Form-->
