@@ -637,7 +637,7 @@ License: You must have a valid license purchased only from themeforest(the above
             $('#thongbao-modal-confirm').modal('show');
         </script>
     @endif
-    <script>
+    {{-- <script>
         function getnganh() {
             var manganh = $('#nganhdk').val();
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -658,7 +658,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 }
             });
         }
-    </script>
+    </script> --}}
     @yield('custom-script')
     <!--end::Page Scripts-->
 </body>
