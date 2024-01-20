@@ -26,14 +26,13 @@ function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
     }
     // dd(session('phanquyen'));
     return session('phanquyen')[$machucnang][$tenphanquyen] ?? 0;
-    
 }
 
 function chkGiaoDien($machucnang, $tentruong = 'trangthai')
 {
     $chk = session('chucnang')[$machucnang] ?? ['trangthai' => 0, 'tencn' => $machucnang . '()'];
     // if($machucnang == 'quantrihethong'){
-        // dd($chk);
+    // dd($chk);
     // }
     return $chk[$tentruong];
 }
@@ -41,12 +40,12 @@ function chkGiaoDien($machucnang, $tentruong = 'trangthai')
 
 function getParamsByNametype($paramtype)
 {
-  $cats = array();
-  $type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
-  if ($type) {
-    $cats = DB::table('param')->where('type', $type->id)->get();
-  }
-  return $cats;
+    $cats = array();
+    $type = DB::table('paramtype')->where('name', $paramtype)->get()->first();
+    if ($type) {
+        $cats = DB::table('param')->where('type', $type->id)->get();
+    }
+    return $cats;
 }
 
 function getGioiTinh()
@@ -69,7 +68,7 @@ function setArrayAll($array, $noidung = 'Tất cả', $giatri = 'ALL')
 
 function getDonVi($sadmin, $chucnang = null, $tenquyen = null)
 {
-    if (in_array($sadmin, ['SSA', 'ssa','ADMIN'])) {
+    if (in_array($sadmin, ['SSA', 'ssa', 'ADMIN'])) {
         $m_donvi = dmdonvi::all();
     } else {
         $m_donvi = dmdonvi::where('madv', session('admin')->madv)->get();
@@ -97,25 +96,27 @@ function getNgayThang($date)
 
 function getMaXa($mahuyen)
 {
-    $m_donvi=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                                ->select('dmdonvi.madv','danhmuchanhchinh.name','dmdonvi.tendv')
-                                ->where('danhmuchanhchinh.parent',$mahuyen)
-                                ->get();
+    $m_donvi = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('dmdonvi.madv', 'danhmuchanhchinh.name', 'dmdonvi.tendv')
+        ->where('danhmuchanhchinh.parent', $mahuyen)
+        ->get();
     return $m_donvi;
 }
 
-function getiDxa($mahuyen){
-    $id_xa=danhmuchanhchinh::join('dmdonvi','dmdonvi.madiaban','danhmuchanhchinh.id')
-                                    ->join('users','users.madv','dmdonvi.madv')
-                                    ->select('users.id','danhmuchanhchinh.name','dmdonvi.madv','danhmuchanhchinh.parent')
-                                    ->where('danhmuchanhchinh.parent',$mahuyen)
-                                    ->get();
+function getiDxa($mahuyen)
+{
+    $id_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->join('users', 'users.madv', 'dmdonvi.madv')
+        ->select('users.id', 'danhmuchanhchinh.name', 'dmdonvi.madv', 'danhmuchanhchinh.parent')
+        ->where('danhmuchanhchinh.parent', $mahuyen)
+        ->get();
 
-                                    return $id_xa;
+    return $id_xa;
 }
 
-function getKydieutra($kydieutra){
-    $a_kydieutra=explode(';',$kydieutra);
+function getKydieutra($kydieutra)
+{
+    $a_kydieutra = explode(';', $kydieutra);
 
     return $a_kydieutra;
 }
@@ -127,7 +128,8 @@ function getdanhmuc()
     return $dm;
 }
 
-function getdulieubaocao(){
+function getdulieubaocao()
+{
     if (session('admin')->capdo == 'T') {
         $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
             ->select('danhmuchanhchinh.name', 'dmdonvi.madv')
@@ -156,7 +158,7 @@ function getdulieubaocao(){
     $a_khongthamgia = dmtinhtrangthamgiahdktct::where('manhom', 20221220175728)->get();
     $a_thatnghiep = dmtinhtrangthamgiahdktct::where('manhom', 20221220175720)->get();
     $loaihinh = dmloaihinhhdkt::all();
-    $nganhnghe=dmnganhnghe::all();
+    $nganhnghe = dmnganhnghe::all();
     // Session::put('trinhdoGDPT', $trinhdoGDPT);
     // Session::put('trinhdocmkt', $trinhdocmkt);
     // Session::put('dmuutien', $dmuutien);
@@ -188,31 +190,32 @@ function getdulieubaocao(){
 
     // Session::put('m_huyen', $m_huyen);
 
-    $arr=array(
-        'm_xa'=>$m_xa,
-        'm_huyen'=>$m_huyen,
-        'a_kydieutra'=>$a_kydieutra,
-        'kydieutra'=>$kydieutra,
-        'trinhdoGDPT'=>$trinhdoGDPT,
-        'trinhdocmkt'=>$trinhdocmkt,
-        'dmuutien'=>$dmuutien,
-        'dmtinhtranghdkt'=>$dmtinhtranghdkt,
-        'a_khongthamgia'=>$a_khongthamgia,
-        'a_thatnghiep'=>$a_thatnghiep,
-        'loaihinh'=>$loaihinh,
-        'nganhnghe'=>$nganhnghe
-        
+    $arr = array(
+        'm_xa' => $m_xa,
+        'm_huyen' => $m_huyen,
+        'a_kydieutra' => $a_kydieutra,
+        'kydieutra' => $kydieutra,
+        'trinhdoGDPT' => $trinhdoGDPT,
+        'trinhdocmkt' => $trinhdocmkt,
+        'dmuutien' => $dmuutien,
+        'dmtinhtranghdkt' => $dmtinhtranghdkt,
+        'a_khongthamgia' => $a_khongthamgia,
+        'a_thatnghiep' => $a_thatnghiep,
+        'loaihinh' => $loaihinh,
+        'nganhnghe' => $nganhnghe
+
     );
 
     return $arr;
 }
 
-function ckdulieuloi($id){
-    $model=nhankhauModel::findOrFail($id);
-    $maloi=array();
+function ckdulieuloi($id)
+{
+    $model = nhankhauModel::findOrFail($id);
+    $maloi = array();
     //check lỗi loại 1
-    if($model->hoten == '' || $model->ngaysinh == '' || $model->ngaysinh == 0){
-        array_push($maloi,'LOAI1');
+    if ($model->hoten == '' || $model->ngaysinh == '' || $model->ngaysinh == 0) {
+        array_push($maloi, 'LOAI1');
     }
 
     //check lỗi loại 2
@@ -222,15 +225,14 @@ function ckdulieuloi($id){
         'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep'
     );
 
-    if($model->tinhtranghdkt == 3){
+    if ($model->tinhtranghdkt == 3) {
 
         foreach ($a_loi2 as $tentruong) {
             if ($model->$tentruong != '') {
-                array_push($maloi,'LOAI2');
+                array_push($maloi, 'LOAI2');
                 break;
             }
         }
-
     }
 
     //check lỗi loại 3
@@ -242,125 +244,133 @@ function ckdulieuloi($id){
     if ($model->tinhtranghdkt == 2) {
         foreach ($a_loi3 as $tentruong) {
             if ($model->$tentruong != '') {
-                array_push($maloi,'LOAI3');
+                array_push($maloi, 'LOAI3');
             }
         }
-
     };
 
     //check lỗi loại 4
-    if($model->tinhtranghdkt == ''){
-       array_push($maloi,'LOAI4');
+    if ($model->tinhtranghdkt == '') {
+        array_push($maloi, 'LOAI4');
     }
 
-return $maloi;
+    return $maloi;
 }
 
-function getHDLD(){
+function getHDLD()
+{
     return [
-        '1'=>'Không xác định thời hạn',
-        '2'=>'Xác định thời hạn dưới 12 tháng',
-        '3'=>'Xác định thời hạn từ 12 tháng đến 36 tháng'
+        '1' => 'Không xác định thời hạn',
+        '2' => 'Xác định thời hạn dưới 12 tháng',
+        '3' => 'Xác định thời hạn từ 12 tháng đến 36 tháng'
     ];
 }
 
-function getYeucauthem(){
+function getYeucauthem()
+{
     return [
-        '1'=>'Làm ca',
-        '2'=>'Đi công tác',
-        '3'=>'Đi biết phái'
+        '1' => 'Làm ca',
+        '2' => 'Đi công tác',
+        '3' => 'Đi biết phái'
     ];
 }
 
-function getNoilamviec(){
+function getNoilamviec()
+{
     return [
-        '1'=>'Trong nhà',
-        '2'=>'Ngoài trời',
-        '3'=>'Hỗn hợp'
+        '1' => 'Trong nhà',
+        '2' => 'Ngoài trời',
+        '3' => 'Hỗn hợp'
     ];
 }
 
-function getDklamviec(){
+function getDklamviec()
+{
     return [
         // 'noilamviec'=> [
         //     '1'=>'Trong nhà',
         //     '2'=>'Ngoài trời',
         //     '3'=>'Hỗn hợp'
         // ],
-        'trongluongnang'=>[
-            '1'=>'Dưới 5kg',
-            '2'=>'5 - 20 kg',
-            '3'=>'Trên 20kg'
+        'trongluongnang' => [
+            '1' => 'Dưới 5kg',
+            '2' => '5 - 20 kg',
+            '3' => 'Trên 20kg'
         ],
-        'dungvadilai'=>[
-            '1'=>'Hầu như không có',
-            '2'=>'Mức trung bình',
-            '3'=>'Cần đứng/đi lại nhiều'
+        'dungvadilai' => [
+            '1' => 'Hầu như không có',
+            '2' => 'Mức trung bình',
+            '3' => 'Cần đứng/đi lại nhiều'
         ],
-        'nghenoi'=>[
-            '1'=>'Không cần thiết',
-            '2'=>'Nghe nói cơ bản',
-            '3'=>'Quan trọng'
+        'nghenoi' => [
+            '1' => 'Không cần thiết',
+            '2' => 'Nghe nói cơ bản',
+            '3' => 'Quan trọng'
         ],
-        'thiluc'=>[
-            '1'=>'Mức bình thường',
-            '2'=>'Nhìn được vật/chi tiết nhỏ'
+        'thiluc' => [
+            '1' => 'Mức bình thường',
+            '2' => 'Nhìn được vật/chi tiết nhỏ'
         ],
-        'thaotactay'=>[
-            '1'=>'Lắp ráp đồ vật lớn',
-            '2'=>'Lắp ráp đồ vật nhỏ',
-            '3'=>'Lắp ráp đồ vật rất nhỏ'
+        'thaotactay' => [
+            '1' => 'Lắp ráp đồ vật lớn',
+            '2' => 'Lắp ráp đồ vật nhỏ',
+            '3' => 'Lắp ráp đồ vật rất nhỏ'
         ],
-        'dungtay'=>[
-            '1'=>'Cần 2 tay',
-            '2'=>'Đôi khi cần 2 tay',
-            '3'=>'Chỉ cần 1 tay',
-            '4'=>'Trái',
-            '5'=>'Phải'
+        'dungtay' => [
+            '1' => 'Cần 2 tay',
+            '2' => 'Đôi khi cần 2 tay',
+            '3' => 'Chỉ cần 1 tay',
+            '4' => 'Trái',
+            '5' => 'Phải'
         ]
     ];
 }
-function DKLV(){
+function DKLV()
+{
     return [
-        'trongluongnang'=>'Trọng lượng nâng',
-        'dungvadilai'=>'Đứng hoặc là đi lại',
-        'nghenoi'=>'Nghe nói',
-        'thiluc'=>'Thị lực',
-        'thaotactay'=>'Thao tác bằng tay',
-        'dungtay'=>'Dùng 2 tay'
+        'trongluongnang' => 'Trọng lượng nâng',
+        'dungvadilai' => 'Đứng hoặc là đi lại',
+        'nghenoi' => 'Nghe nói',
+        'thiluc' => 'Thị lực',
+        'thaotactay' => 'Thao tác bằng tay',
+        'dungtay' => 'Dùng 2 tay'
     ];
 }
 
-function uutien(){
+function uutien()
+{
     return [
-        '1'=>'Người khuyết tật',
-        '2'=>'Bộ đội xuất ngủ',
-        '3'=>'Người thuộc hộ nghèo, cận nghèo',
-        '4'=>'Người dân tộc thiểu số'
+        '1' => 'Người khuyết tật',
+        '2' => 'Bộ đội xuất ngủ',
+        '3' => 'Người thuộc hộ nghèo, cận nghèo',
+        '4' => 'Người dân tộc thiểu số'
     ];
 }
 
-function getchucvu(){
+function getchucvu()
+{
     return [
-        '1'=>'Nhân viên',
-        '2'=>'Quản lý',
-        '3'=>'Lãnh đạo'
+        '1' => 'Nhân viên',
+        '2' => 'Quản lý',
+        '3' => 'Lãnh đạo'
     ];
 }
 
-function getkynangmem(){
+function getkynangmem()
+{
     return [
-        'Giao tiếp','Thuyết trình','Quản lý thời gian','Quản lý nhân sự','Tổng hợp báo cáo','Thích ứng','Làm việc nhóm','Làm việc độc lập','Chịu được áp lực công việc','Theo dõi giám sát','Tư duy phản biện','Kỹ năng mềm khác :'
+        'Giao tiếp', 'Thuyết trình', 'Quản lý thời gian', 'Quản lý nhân sự', 'Tổng hợp báo cáo', 'Thích ứng', 'Làm việc nhóm', 'Làm việc độc lập', 'Chịu được áp lực công việc', 'Theo dõi giám sát', 'Tư duy phản biện', 'Kỹ năng mềm khác :'
     ];
 }
 
-function NganhDKthi(){
+function NganhDKthi()
+{
     return [
-        'SXCT'=>'SXCT',
-        'XD'=>'Xây dựng',
-        'NgN'=>'Ngư nghiệp',
-        'NN'=>'Nông nghiệp',
-        'KHAC'=>'Mục khác'
+        'SXCT' => 'SXCT',
+        'XD' => 'Xây dựng',
+        'NgN' => 'Ngư nghiệp',
+        'NN' => 'Nông nghiệp',
+        'KHAC' => 'Mục khác'
     ];
 }
 
@@ -385,21 +395,36 @@ function NgheDK(){
         ]
     ];
 }
-function phanloai(){
+function Nghe()
+{
     return [
-        '0'=>'Chưa từng đi làm việc tại Hàn Quốc',
-        '1'=>'Tự nguyện về nước',
-        '2'=>'Về nước đúng hạn'
+        'DODAC' => 'Đo đạc (SXCT)',
+        'NOI' => 'Nối (SXCT)',
+        'LAPRAP' => 'Lắp ráp (SXCT)',
+        'MOC' => 'Mộc (XD)',
+        'THEP' => 'Thép  (XD)',
+        'NTHAISAN' => 'Nuôi trồng hải sản (Ngư nghiệp)',
+        'DBGANBO' => 'Đánh bắt gần bờ (Ngư nghiệp)',
+        'TRONGTROT' => 'Trồng trọt (Nông nghiệp)',
+        'CHANNUOI' => 'Chăn nuôi (Nông nghiệp)'
+
     ];
 }
-function doituong(){
+function phanloai()
+{
     return [
-        '0'=>'Không thuộc các đối tượng trên',
-        '1'=>'Huyện nghèo',
-        '2'=>'Xã bãi ngang, ven biển hải đảo',
-        '3'=>'Hộ nghèo',
-        '4'=>'Dân tộc thiểu số'
+        '0' => 'Chưa từng đi làm việc tại Hàn Quốc',
+        '1' => 'Tự nguyện về nước',
+        '2' => 'Về nước đúng hạn'
     ];
 }
-
-
+function doituong()
+{
+    return [
+        '0' => 'Không thuộc các đối tượng trên',
+        '1' => 'Huyện nghèo',
+        '2' => 'Xã bãi ngang, ven biển hải đảo',
+        '3' => 'Hộ nghèo',
+        '4' => 'Dân tộc thiểu số'
+    ];
+}

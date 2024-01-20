@@ -325,11 +325,12 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 </select>
                                             </div>
                                             <div class="form-group col-xl-6">
-                                                <label for="exampleSelect1">Nghề
+                                                <label for="exampleSelect1">Nghề (đề nghị đăng ký nghề theo từng ngành mình đã đăng ký dự thi)
+
                                                     <span class="text-danger">*</span></label>
                                                 <div id="nghedk">
                                                     <select class="form-control" name="nghe" id='nghe'>
-                                                        @foreach (NgheDK()['SXCT'] as $k => $ct)
+                                                        @foreach (Nghe() as $k => $ct)
                                                             <option value="{{ $k }}">{{ $ct }}
                                                             </option>
                                                         @endforeach
@@ -649,7 +650,6 @@ License: You must have a valid license purchased only from themeforest(the above
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    console.log(data);
                     $('#nghe').remove();
                     $('#nghedk').append(data);
                 },
