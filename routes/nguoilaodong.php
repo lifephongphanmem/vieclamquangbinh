@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Cunglaodong\cunglaodongController;
+use App\Http\Controllers\EPS\epsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Nguoilaodong\nguoilaodongController;
 
@@ -35,4 +36,18 @@ Route::prefix('nguoilaodong')->group(function () {
         Route::get('/XoaTongHop/{id}',[nguoilaodongController::class,'XoaTongHop']);
         Route::get('/InTongHop',[nguoilaodongController::class,'InTongHop']);
     });
+});
+
+Route::prefix('EPS')->group(function(){
+    Route::get('/ThongTin',[epsController::class,'index']);
+    Route::get('/getnghe',[epsController::class,'getnghe']);
+    Route::post('/store',[epsController::class,'store']);
+
+    Route::get('/DanhSach',[epsController::class,'danhsach']);
+    Route::get('/Edit/{id}',[epsController::class,'edit']);
+    Route::post('/Update',[epsController::class,'update']);
+
+    Route::post('/TongHop',[epsController::class,'tonghop']);
+    Route::get('/Phuluc4',[epsController::class,'phuluc4']);
+    Route::get('/Phieuthu',[epsController::class,'phieuthu']);
 });

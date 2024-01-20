@@ -1,0 +1,198 @@
+.header-top {
+    overflow: visible;
+}
+.header-top {
+    background: url(../../images/main/background.png) center center;
+    height: 93px;
+    overflow: hidden;
+}
+.logo_slogan a {
+    display: flex;
+    align-items: center;
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+@media (min-width: 1200px){
+body .logo_slogan a h3 {
+    font-size: 1.1rem;
+    text-align: center;
+}
+body .logo_slogan a h2 {
+    font-size: 1.6rem;
+    line-height: 30px;
+}
+}
+@media  (min-width : 320px) and (max-width : 768px) {
+    /* Styles */
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 8px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 13px;
+    }
+    }
+    /* iPads (portrait and landscape) ----------- */
+@media only screen and (min-width : 768px) and (max-width : 1024px) {
+    /* Styles */
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 20px;
+    }
+    }
+    @media only screen and (min-width : 1024px) and (max-width : 1200px) {
+        /* Styles */
+        body .logo_slogan a h3 {
+            font-size: 9px;
+            text-align: center;
+        }
+        body .logo_slogan a h2 {
+            font-size: 12px;
+            line-height: 18px;
+        }
+        }
+@media (max-width: 321px){
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 8px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 10px;
+    }
+}
+/* @media (max-width: 600px){
+    .logo_slogan a h3 {
+        font-size: 1rem;
+    }
+    .logo_slogan a h2 {
+        font-size: 1.4rem;
+    }
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 11px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 13px;
+    }
+} */
+/* #kt_header_mobile {
+    height: 93px;
+} */
+/* @media (max-width: 768px){
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 20px;
+    }
+} */
+/* @media (max-width: 820px){
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 22px;
+    }
+} */
+/* @media (max-width: 1024px){
+    #kt_header_mobile .text h3 {
+        color: #FFFFFF;
+        font-size: 19px;
+        font-weight: 300;
+    }
+    #kt_header_mobile .text h2 {
+        color: #FFFFFF;
+        font-size: 26px;
+    }
+} */
+.logo_slogan a h3 {
+    font-weight: normal;
+    font-size: 1.4rem;
+    line-height: 19px;
+    margin: 0px;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+}
+
+.logo_slogan a h2 {
+    font-weight: 900;
+    font-size: 1.6rem;
+    line-height: 25px;
+    margin: 0px;
+    color: #FFFFFF;
+}
+.logo_slogan a img:first-child {
+    max-height: 71px;
+}
+.logo_slogan a img {
+    margin-right: 10px;
+}
+.logo_slogan a .text {
+    margin-right: 30px;
+}
+.hotline_account {
+    right: 15px;
+}
+.hotline_account {
+    float: right;
+    /* position: absolute; */
+    margin-left: 120px;
+    right: 0;
+    width: 220px;
+    top: 0;
+    height: 93px;
+    width: 320px;
+    justify-content: space-between;
+}
+.hotline_account a {
+    color: #fff;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    color: #FFFFFF;
+}
+.hotline_account a p {
+    margin-top: 13px;
+}
+.hotline_account a p strong {
+    /* margin-bottom: 4px; */
+    font-size: 12px;
+    display: block;
+    display: block;
+    white-space: nowrap;
+}
+.hotline_account a p span {
+    display: block;
+    white-space: nowrap;
+    font-size: 14px;
+}
+.hotline_account a img {
+    margin-right: 10px;
+}
+img {
+    vertical-align: middle;
+}
+.d_flex {
+    display: flex;
+}
+.d_flex_center {
+    align-items: center;
+}
