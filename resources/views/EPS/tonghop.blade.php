@@ -70,7 +70,7 @@
                     @if ($ct->nganhdkthi == 'KHAC')
                         {{ $ct->nghekhac }}
                     @else
-                        {{ NgheDK()[$ct->nganhdkthi][$ct->nghe] }}
+                        {{ Nghe()[$ct->nghe] }}
                     @endif
                 </td>
                 <td class="text-center">{{ $ct->sdt }}</td>
