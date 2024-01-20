@@ -149,7 +149,18 @@ class epsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!chkPhanQuyen('danhsachdangkyeps', 'thaydoi')) {
+            return view('errors.noperm')->with('machucnang', 'danhsachdangkyeps');
+        }
+        $model=nguoilaodongEPS::findOrFail($id);
+        if(isset($model)){
+            $model->delete();
+            return redirect('/EPS/DanhSach')
+                            ->with('success','Xóa thành công');
+        }else{
+            return redirect('/EPS/DanhSach')
+            ->with('error','Lỗi!!! Xóa thất bại');
+        }
     }
 
     public function getnghe(Request $request){

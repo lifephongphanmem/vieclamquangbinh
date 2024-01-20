@@ -69,12 +69,14 @@
                                     <td width="7%">{{$ct->huyen}}</td>
                                     <td width="7%">{{$ct->tinh}}</td>
                                     <td width="10%">{{\Carbon\Carbon::parse($ct->created_at)->format('s:i:h d/m/Y')}}</td>
-                                    <td>
+                                    <td style="text-align: center">
                                         <button title="In thông tin" type="button" onclick="inphieu('{{$ct->id}}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#mauphieu-modal-confirm"
                                         data-toggle="modal">
                                         <i class="icon-lg la flaticon2-print text-primary"></i>
                                     </button>
+                                    <button title="Xóa thông tin" type="button" onclick="cfDel('{{'/EPS/Del/'.$ct->id}}')" class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm" data-toggle="modal">
+                                        <i class="icon-lg flaticon-delete text-danger"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -84,6 +86,25 @@
             </div>
         </div>
     </div>
+    @include('includes.delete')
+    <!-- Modal xóa -->
+    {{-- <div id="delete-modal-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+        <form id="frmDelete" method="GET" action="#" accept-charset="UTF-8">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">Đồng ý xoá?</h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true"
+                                class="close">&times;</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Hủy thao tác</button>
+                        <button type="submit" onclick="subDel()" data-dismiss="modal" class="btn btn-primary">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div> --}}
 <!-- Modal tổng hợp -->
     <div id="modify-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form id="frmDanhsach" method="POST" action="/EPS/TongHop" accept-charset="UTF-8"
