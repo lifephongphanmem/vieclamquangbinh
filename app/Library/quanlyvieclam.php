@@ -354,3 +354,52 @@ function getkynangmem(){
     ];
 }
 
+function NganhDKthi(){
+    return [
+        'SXCT'=>'SXCT',
+        'XD'=>'Xây dựng',
+        'NgN'=>'Ngư nghiệp',
+        'NN'=>'Nông nghiệp',
+        'KHAC'=>'Mục khác'
+    ];
+}
+
+function NgheDK(){
+    return [
+        'SXCT'=>[
+            'DODAC'=>'Đo đạc',
+            'NOI'=>'Nối',
+            'LAPRAP'=>'Lắp ráp'
+        ],
+        'XD'=>[
+            'MOC'=>'Mộc',
+            'THEP'=>'Thép'
+        ],
+        'NgN'=>[
+            'NTHAISAN'=>'Nuôi trồng hải sản',
+            'DBGANBO'=>'Đánh bắt gần bờ'
+        ],
+        'NN'=>[
+            'TRONGTROT'=>'Trồng trọt',
+            'CHANNUOI'=>'Chăn nuôi'
+        ]
+    ];
+}
+function phanloai(){
+    return [
+        '0'=>'Chưa từng đi làm việc tại Hàn Quốc',
+        '1'=>'Tự nguyện về nước',
+        '2'=>'Về nước đúng hạn'
+    ];
+}
+function doituong(){
+    return [
+        '0'=>'Không thuộc các đối tượng trên',
+        '1'=>'Huyện nghèo',
+        '2'=>'Xã bãi ngang, ven biển hải đảo',
+        '3'=>'Hộ nghèo',
+        '4'=>'Dân tộc thiểu số'
+    ];
+}
+
+
