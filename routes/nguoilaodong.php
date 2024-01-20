@@ -46,6 +46,7 @@ Route::prefix('EPS')->group(function(){
     Route::get('/DanhSach',[epsController::class,'danhsach']);
     Route::get('/Edit/{id}',[epsController::class,'edit']);
     Route::post('/Update',[epsController::class,'update']);
+    Route::get('/Del/{id}',[epsController::class,'destroy']);
 
     Route::post('/TongHop',[epsController::class,'tonghop']);
     Route::get('/Phuluc4',[epsController::class,'phuluc4']);
