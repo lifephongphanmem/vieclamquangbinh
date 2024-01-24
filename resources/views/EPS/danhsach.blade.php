@@ -75,7 +75,7 @@
                                     <td width="7%">{{ $ct->xa }}</td>
                                     <td width="7%">{{ $ct->huyen }}</td>
                                     <td width="7%">{{ $ct->tinh }}</td>
-                                    <td width="10%">{{ \Carbon\Carbon::parse($ct->created_at)->format('s:i:h d/m/Y') }}
+                                    <td width="10%">{{ \Carbon\Carbon::parse($ct->created_at) }}
                                     </td>
                                     <td style="text-align: center">
                                         @if (chkPhanQuyen('danhsachdangkyeps', 'hoanthanh'))

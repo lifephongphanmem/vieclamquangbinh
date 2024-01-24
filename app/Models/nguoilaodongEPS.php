@@ -27,7 +27,7 @@ class nguoilaodongEPS extends Model
         'dkhoc',
         'nguoicapnhat',
         'nghekhac',
-        'create_at',
+        'created_at',
         'updated_at'
     ];
 

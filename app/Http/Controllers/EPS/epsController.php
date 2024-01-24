@@ -70,9 +70,12 @@ class epsController extends Controller
         ], [
             'cccd.unique' => 'Số CCCD hoặc hộ chiếu đã được sử dụng'
         ]);
-        $time=Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString();
+        $time=Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+
+        // $time=Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString();
         $inputs['created_at']=$time;
         $inputs['updated_at']=$time;
+
         nguoilaodongEPS::create($inputs);
         
         return redirect('/EPS/ThongTin')->with('success','Đăng ký thành công');
@@ -129,7 +132,8 @@ class epsController extends Controller
         $model=nguoilaodongEPS::findOrFail($inputs['id']);
        
         if(isset($model)){
-            $time=Carbon::now('Asia/Ho_Chi_Minh')->toDateTimeString();
+            $time=Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+
             $inputs['nguoicapnhat']= session('admin')->id;
             $inputs['updated_at']=$time;
             $model->update($inputs);
