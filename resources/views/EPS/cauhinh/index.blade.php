@@ -31,11 +31,11 @@
                     <div class="card-toolbar">
                         <a href="{{ '/EPS/DanhSach' }}"  class="btn btn-success mr-2"><i class="fa fa-reply"></i>Quay lại</a>
                         {{-- <a href="" class="btn btn-xs btn-success mr-2">Tạo mới</a> --}}
-                        {{-- @if (chkPhanQuyen('chucvu', 'thaydoi')) --}}
-                        {{-- <button type="button" onclick="add()" class="btn btn-success btn-sm" data-target="#modify-modal"
+                        @if (count($model)<0)
+                        <button type="button" onclick="add()" class="btn btn-success btn-sm" data-target="#modify-modal"
                         data-toggle="modal" title="Thêm mới">
-                        <i class="fa fa-plus"></i>Thêm mới</button> --}}
-                        {{-- @endif --}}
+                        <i class="fa fa-plus"></i>Thêm mới</button>
+                        @endif
                     {{-- </button>
                         <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
