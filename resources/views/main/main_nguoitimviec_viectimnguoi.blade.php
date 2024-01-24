@@ -7,7 +7,7 @@
         </a>
         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
             <ul class="menu-subnav">
-                {{-- @if (chkPhanQuyen('nhankhau', 'phanquyen')) --}}
+                @if (chkPhanQuyen('danhsachnhankhau', 'phanquyen'))
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ URL::to('/nguoitimviec/danhsach') }}" class="menu-link">
                             <span class="svg-icon menu-icon">
@@ -20,7 +20,7 @@
                             <span class="menu-text">Người tìm việc</span>
                         </a>
                     </li>
-                {{-- @endif --}}
+                @endif
 
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ URL::to('tuyendung-viectimnguoi') }}" class="menu-link">
@@ -35,6 +35,7 @@
                         <span class="menu-text">Việc tìm người</span>
                     </a>
                 </li>
+                @if (chkPhanQuyen('biendong', 'phanquyen'))
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ '/biendong?madv=' . '&kydieutra=' . $baocao['kydieutra'] }}" class="menu-link">
                         <span class="svg-icon menu-icon">
@@ -47,6 +48,8 @@
                         <span class="menu-text">Biến động</span>
                     </a>
                 </li>
+                @endif
+                @if (chkPhanQuyen('baocao', 'phanquyen'))
                 <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                     <a href="javascript:;" class="menu-link menu-toggle">
                         <span class="svg-icon menu-icon">
@@ -168,20 +171,18 @@
                         </ul>
                     </div>
                 </li>
+                @endif
+                @if (chkPhanQuyen('cauhinheps', 'phanquyen'))
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{ '/EPS/DanhSach' }}" class="menu-link">
                         <span class="svg-icon menu-icon">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-clipboard-pulse" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1H3a1 1 0 0 0-1 1V14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5a1 1 0 0 0-1-1h-1v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Zm6.979 3.856a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.895-.133L4.232 10H3.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 .416-.223l1.41-2.115 1.195 3.982a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h1.5a.5.5 0 0 0 0-1h-1.128L9.979 5.356Z" />
-                            </svg> --}}
                             <i class="icon-xl la fab la-leanpub"></i>
                         </span>
 
                         <span class="menu-text">Đăng ký EPS</span>
                     </a>
                 </li>
+                @endif
                 {{-- <li class="menu-item" aria-haspopup="true">
                     <a href="{{ '/ungvien' }}" class="menu-link">
                         <i class="far fa-address-card menu-icon"  width="16" height="16"></i>

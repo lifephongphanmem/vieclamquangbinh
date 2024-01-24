@@ -41,7 +41,6 @@ class epsController extends Controller
             return view('errors.noperm')->with('machucnang', 'danhsachdangkyeps');
         }
         $model=nguoilaodongEPS::all();
-
         return view('EPS.danhsach')
                     ->with('model',$model)
                     ->with('baocao', getdulieubaocao())
