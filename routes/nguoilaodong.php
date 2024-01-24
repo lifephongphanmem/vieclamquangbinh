@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Cunglaodong\cunglaodongController;
+use App\Http\Controllers\EPS\cauhinhepsController;
 use App\Http\Controllers\EPS\epsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Nguoilaodong\nguoilaodongController;
@@ -51,4 +52,9 @@ Route::prefix('EPS')->group(function(){
     Route::post('/TongHop',[epsController::class,'tonghop']);
     Route::get('/Phuluc4',[epsController::class,'phuluc4']);
     Route::get('/Phieuthu',[epsController::class,'phieuthu']);
+    Route::prefix('CauHinh')->group(function(){
+        Route::get('/ThongTin',[cauhinhepsController::class,'index']);
+        Route::post('/Update/{id}',[cauhinhepsController::class,'update']);
+        Route::post('/Store',[cauhinhepsController::class,'store']);
+    });
 });

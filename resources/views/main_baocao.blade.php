@@ -228,6 +228,17 @@
                 // tableHTML = tableHTML + data_header.outerHTML;
             }
 
+            var data_header1 = document.getElementById('data_header1');
+            if (data_header1) {
+                tableHTML = tableHTML + data_header.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_header.outerHTML;
+            }
+            var data_header2 = document.getElementById('data_header2');
+            if (data_header2) {
+                tableHTML = tableHTML + data_header.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_header.outerHTML;
+            }
+
             //Nội dung 1
             var data_body = document.getElementById('data_body');
             if (data_body) {
@@ -273,6 +284,11 @@
             //Xác nhận
             var data_footer1 = document.getElementById('data_footer1');
             if (data_footer1) {
+                tableHTML = tableHTML + data_footer1.outerHTML.replace(/ /g, '%20');
+                // tableHTML = tableHTML + data_footer1.outerHTML;
+            }
+            var data_footer2 = document.getElementById('data_footer2');
+            if (data_footer2) {
                 tableHTML = tableHTML + data_footer1.outerHTML.replace(/ /g, '%20');
                 // tableHTML = tableHTML + data_footer1.outerHTML;
             }

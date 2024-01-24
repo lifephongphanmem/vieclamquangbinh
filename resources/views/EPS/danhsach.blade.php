@@ -27,6 +27,9 @@
                         <h3 class="card-label text-uppercase">Danh sách người lao động đăng ký thi EPS</h3>
                     </div>
                     <div class="card-toolbar">
+                        <a href="{{'/EPS/CauHinh/ThongTin'}}" title="Cấu hình" class="btn btn-sm btn-success mr-3" >
+                            <i class="icon-lg la flaticon-cogwheel"></i></i> Cấu hình
+                    </a>
                         @if (chkPhanQuyen('danhsachdangkyeps', 'hoanthanh'))
                             <button title="In tổng hợp" class="btn btn-sm btn-success" data-target="#modify-modal"
                                 data-toggle="modal">

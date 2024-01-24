@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\EPS;
 
 use App\Http\Controllers\Controller;
+use App\Models\cauhinheps;
 use App\Models\nguoilaodongEPS;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -224,10 +225,13 @@ class epsController extends Controller
         }
         $id=$request->id;
         $model=nguoilaodongEPS::findOrFail($id);
+        $cauhinh=cauhinheps::first();
         // $model->hoten=strtoupper($model->hoten);
-        $model->hoten=mb_convert_case($model->hoten, MB_CASE_UPPER ,'utf-8');
+        // $model->hoten=mb_convert_case($model->hoten, MB_CASE_UPPER ,'utf-8');
+        $model->hoten=ucwords($model->hoten);
         return view('EPS.phieuthu')
                     ->with('model',$model)
+                    ->with('cauhinh',$cauhinh)
                     ->with('pageTitle','Phiếu thu');
     }
 }
