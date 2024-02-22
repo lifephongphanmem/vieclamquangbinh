@@ -226,7 +226,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label class="control-label">File ảnh</label>
-                                    <input type="file" accept="image/*" class="form-control" name="fileanh[]" multiple required>
+                                    <input type="file" class="form-control" name="fileanh[]" multiple required>
                                     </select>
                                 </div>
                             </div>
