@@ -29,9 +29,10 @@ class cauhinhepsController extends Controller
             return view('errors.noperm')->with('machucnang', 'cauhinheps');
         }
         $model=cauhinheps::all();
-
+        $count=count($model);
         return view('EPS.cauhinh.index')
                     ->with('model',$model)
+                    ->with('count',$count)
                     ->with('baocao', getdulieubaocao())
                     ->with('pageTitle','Cấu hình');
     }
