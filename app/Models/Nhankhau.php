@@ -52,7 +52,6 @@ class Nhankhau extends Model
 		$dataObj = new ColectionImport();
 		$theArray = Excel::toArray($dataObj, $file);
 		$arr = $theArray[0];
-		// dd($arr);
 		$arr_col = array('hoten', 'gioitinh', 'ngaysinh', 'cccd', 'bhxh', 'thuongtru', 'diachi', 'uutien', 'dantoc', 'trinhdogiaoduc', 'chuyenmonkythuat', 'chuyennganh', 'tinhtranghdkt', 'nguoicovieclam', 'congvieccuthe', 'thamgiabhxh', 'hdld', 'noilamviec', 'loaihinhnoilamviec', 'diachinoilamviec', 'thatnghiep', 'thoigianthatnghiep', 'khongthamgiahdkt', 'mqh');
 		// check file excel
 		$lds = array();
