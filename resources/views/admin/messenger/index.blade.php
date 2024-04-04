@@ -75,9 +75,9 @@
 
                             </thead>
                             <tbody>
-
+                                @if(count($threads)>0)
                                 @each('admin.messenger.partials.thread', $threads, 'thread', 'admin.messenger.partials.no-threads')
-
+                                @endif
                             </tbody>
                         </table>
                     </div>
