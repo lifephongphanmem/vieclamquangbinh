@@ -1,4 +1,6 @@
-<?php $class = $thread->isUnread(session('admin')->id) ? 'alert-info' : ''; ?>
+<?php $class = $thread->isUnread(session('admin')->id) ? 'alert-info' : '';
+
+?>
 <tr style="font-size: 25px">
 	<td>
 	
@@ -32,7 +34,7 @@
 		<div class=" {{ $class }}">
 
 				<p>
-					{{ $thread->creator()->name }}
+					{{ $thread->creator()->name??'' }}
 				</p>
 		</div>
 	</td>
