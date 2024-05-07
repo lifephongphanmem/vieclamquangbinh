@@ -1,7 +1,7 @@
 @if (chkPhanQuyen('doanhnghiep', 'phanquyen'))
     <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
         <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="menu-text">DOANH NGHIỆP</span>
+            <span class="menu-text">QUẢN LÝ DOANH NGHIỆP</span>
             <span class="menu-desc"></span>
             <i class="menu-arrow"></i>
         </a>
