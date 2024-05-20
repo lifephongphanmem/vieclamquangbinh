@@ -298,4 +298,5 @@ class Nhankhau extends Model
 		$RetArray['loi_loai3'] = $loi_loai3;
 		return $RetArray;
 	}
+
 }

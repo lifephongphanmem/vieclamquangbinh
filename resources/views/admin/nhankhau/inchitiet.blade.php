@@ -55,13 +55,22 @@
                 <th rowspan="2">Người thất nghiệp</th>
                 <th rowspan="2"  style="width:3%">Thời gian thất nghiệp (Ghi theo mã số từ 1-3)</th>
                 <th rowspan="2"  style="width:3%">Không tham gia HĐKT (Ghi theo mã số từ 1-5)</th>
+                <th colspan="3">Nhu cầu tìm kiếm việc làm</th>
+                <th colspan="2">Nhu cầu học nghề</th>
             </tr>
             <tr>
                 <th>Nam</th>
                 <th>Nữ</th>
+
+                <th>Đối tượng tìm kiếm việc làm</th>
+                <th>Việc làm mong muốn</th>
+                <th>Số điện thoại</th>
+
+                <th>Ngành nghề muốn học</th>
+                <th>Trình độ chuyên môn muốn học</th>
             </tr>
             <tr >
-                @for ($i=1;$i<25;$i++)
+                @for ($i=1;$i<30;$i++)
                     <td style="font-weight:bold; text-decoration: underline;font-style: italic;text-align: center">{{$i}}</td>
                 @endfor
             </tr>
@@ -76,12 +85,12 @@
                     <td style="vertical-align: middle">{{ $item->hoten }}</td>
 
                     @if ($item->gioitinh == 'Nam')
-                        <td style="text-align: center ; vertical-align: middle">{{ $item->ngaysinh }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ getDayVn($item->ngaysinh) }}</td>
                     @else
                         <td></td>
                     @endif
                     @if ($item->gioitinh == 'Nữ')
-                        <td style="text-align: center ; vertical-align: middle">{{ $item->ngaysinh }}</td>
+                        <td style="text-align: center ; vertical-align: middle">{{ getDayVn($item->ngaysinh) }}</td>
                     @else
                         <td></td>
                     @endif
@@ -105,7 +114,13 @@
                     <td style="vertical-align: middle">{{ $item->diachinoilamviec }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->thatnghiep }}</td>
                     <td style="text-align: center ; vertical-align: middle">{{ $item->thoigianthatnghiep }}</td>
-                    <td style="text-align: center ; vertical-align: middle">{{ $item->khongthamgiahdkt }}</td> 
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->khongthamgiahdkt }}</td>
+
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->doituongtimvieclam }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->vieclammongmuon }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->sdt }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->nganhnghemuonhoc }}</td>
+                    <td style="text-align: center ; vertical-align: middle">{{ $item->trinhdochuyenmonmuonhoc }}</td>
                 </tr>
             @endforeach
 

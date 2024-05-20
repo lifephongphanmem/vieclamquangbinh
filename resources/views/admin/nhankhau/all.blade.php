@@ -69,7 +69,7 @@
                             <button onclick="Inchitiet('{{ $inputs['madv'] }}','{{ $inputs['kydieutra'] }}')"
                                 data-target="#in-modal-confirm" data-toggle="modal" title="In"
                                 class="btn btn-sm btn-success ml-3">
-                                <i class="icon-lg la flaticon2-print text-primary"></i>Danh sách lỗi
+                                <i class="icon-lg la flaticon2-print text-primary"></i>In Danh Sách
                             </button>
                         @endif
                     </div>
