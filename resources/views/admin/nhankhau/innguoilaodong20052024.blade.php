@@ -9,7 +9,7 @@
                 <p>Quận/huyện/thị xã: </p>
                 <p>Xã/phường/thị trấn: </p>
             </td>
-            <td class="text-right" style="font-style:italic">Mẫu số 01</td>
+            <td class="text-right" style="font-style:italic">Mẫu số 01a</td>
         </tr>
 
         <tr>
@@ -44,8 +44,7 @@
             <td style="text-align: left"><b>4. Số CCCD/CMND: </b> {{ $model->cccd }} </td>
         </tr>
         <tr>
-            {{-- <td style="text-align: left"><b>5.Số điện thoại liên hệ</b> {{ $model->cccd }} </td> --}}
-            <td style="text-align: left"><b>5.Mã số BHXH</b> {{ $model->bhxh }} </td>
+            <td style="text-align: left"><b>5.Số điện thoại liên hệ</b> {{ $model->cccd }} </td>
         </tr>
         <tr>
             <td style="text-align: left"><b>6.Nơi đăng ký hộ khẩu thường trú:</b> {{ $model->thuongtru }} </td>
@@ -53,7 +52,7 @@
         <tr>
             <td style="text-align: left"><b>7.Nơi ở hiện tại: </b> {{ $model->diachi }} </td>
         </tr>
-        {{-- <tr>
+        <tr>
             <td style="text-align: left"><b>7.1 Khu vực:</b>
                 @if ($model->khuvuc == 1)
                     &ensp; &#x2611; Thành thị&emsp; &#x2610;Nông thôn
@@ -61,8 +60,7 @@
                     &ensp;&#x2610; Thành thị&emsp; &#x2611; Nông thôn
                 @endif
             </td>
-        </tr> --}}
-
+        </tr>
         <tr>
             <td style="text-align: left"><b>8.Đối tượng ưu tiên (nếu có):</b>
                 @if ($model->uutien == 4)
@@ -114,161 +112,17 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align: left"><b>10.1 Chuyên ngành đào tạo: </b>{{ isset($model) ? $model->chuyennganh : '' }}</td>
+            <td style="text-align: left"><b>10.1 Chuyên ngành đào tạo: </b>{{ isset($model)?$model->chuyennganh:'' }}</td>
         </tr>
         <tr>
-            <td style="text-align: left"><b>11.Tình trạng tham gia hoạt động kinh tế:</b><br>
-                @foreach ($dmtinhtrangthamgiahdkt as $k => $item)
-                    @if ($k == 3)
-                        <br>
-                    @endif
-                    @if ($model->tinhtranghdkt == $item->stt)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item->tentgkt }}&ensp;
-                    @if ($item->stt == '3')
-                        ,lý do: @foreach ($khongthamgiahdkt as $val)
-                            @if ($model->khongthamgiahdkt == $val->stt)
-                                &#x2611;
-                            @else
-                                &#x2610;
-                            @endif
-                            {{ $val->tentgktct }}
-                        @endforeach
-                    @endif
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left"><b>12. Người có việc làm: </b> </td>
-        </tr>
-        <tr>
-            <td style="text-align: left">12.1.Vị thế việc làm:<br>
-                @foreach ($dmvithevieclam as $k => $item)
-                    @if ($k == 4)
-                        <br>
-                    @endif
-                    @if ($model->nguoicovieclam == $item->stt)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item->tentgktct2 }}&ensp;
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left">12.2. Công việc cụ thể đang làm: {{ isset($model) ? $model->congvieccuthe : '' }}</td>
-        </tr>
-        <tr>
-            <td style="text-align: left"><b>a. Tham gia BHXH:</b><br>
-                @foreach ($bhxh as $k => $item)
-                    @if ($k == 4)
-                        <br>
-                    @endif
-                    @if ($model->thamgiabhxh == $k)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item }}&ensp;
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left"><b>b. Hợp đồng lao động (HĐLĐ):</b>
-                @if (isset($model->hdld)&& $model->hdld != '3')
-                    &#x2611;
-                @else
-                    &#x2610;
-                @endif
-                Có&ensp;
-
-                @if (!isset($model->hdld) || $model->hdld == '3')
-                    &#x2611;
-                @else
-                    &#x2610;
-                @endif
-                Không&ensp;
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left">Loại hợp đồng lao động:&ensp;
-                @foreach ($hdld as $k => $item)
-                    @if ($k == 4)
-                        <br>
-                    @endif
-                    @if ($model->hdld == $item->stt)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item->tenlhl }}&ensp;
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left">Thời gian bắt đầu thực hiện HĐLĐ (ngày/tháng/năm): ...../....../......</td>
-        </tr>
-        <tr>
-            <td style="text-align: left">12.3. Nơi làm việc: {{ isset($model) ? $model->noilamviec : '' }}</td>
-        </tr>
-        <tr>
-            <td style="text-align: left">a. Loại hình nơi làm việc:<br>
-                @foreach ($loaihinhkt as $k => $item)
-                    @if ($k == 4 || $k == 8)
-                        <br>
-                    @endif
-                    @if ($model->loaihinhnoilamviec == $item->stt)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item->tenlhkt }}&ensp;
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left">b. Địa chỉ nơi làm việc: {{ isset($model) ? $model->diachinoilamviec : '' }}</td>
-        </tr>
-        <tr>
-            <td style="text-align: left"><b> 13.Người thất nghiệp:</b>
-                @foreach ($dmthatnggiep as $k => $item)
-                    @if ($model->thatnghiep == $item->stt)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item->tentgktct }}&ensp;
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left">13.1.Thời gian thất nghiệp:
-                @foreach ($tgthatnghiep as $k => $item)
-                    @if ($k == 4)
-                        <br>
-                    @endif
-                    @if ($model->thoigianthatnghiep == $item->stt)
-                        &#x2611;
-                    @else
-                        &#x2610;
-                    @endif
-                    {{ $item->tentgtn }}&ensp;
-                @endforeach
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left"><b>14. Nhu cầu tìm kiếm việc làm: </b> </td>
+            <td style="text-align: left"><b>11. Nhu cầu tìm kiếm việc làm: </b> </td>
         </tr>
 
         <tr>
-            <td style="text-align: left">14.1 Đối tượng tìm kiếm việc làm </td>
+            <td style="text-align: left">11.1 Đối tượng tìm kiếm việc làm </td>
         </tr>
         <tr>
-            <td style="text-align: left">14.1.1
+            <td style="text-align: left">11.1.1
                 @if ($model->doituongtimvieclam == 1)
                     &#x2611;
                 @else
@@ -283,43 +137,42 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align: left">14.2 Việc làm mong muốn </td>
+            <td style="text-align: left">11.2 Việc làm mong muốn </td>
         </tr>
         <tr>
-            <td style="text-align: left">14.2.1
+            <td style="text-align: left">11.2.1
                 @if ($model->vieclammongmuon == 1 || $model->vieclammongmuon == 3)
                     &#x2611;
                 @else
                     &#x2610;
                 @endif Trong tỉnh, trong nước &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 Ngành
-                nghề: {{ isset($model->nganhnghemongmuon) ? $a_nganhnghe[$model->nganhnghemongmuon] : '' }}
-
+                nghề: {{ isset($model->nganhnghemongmuon)?$a_nganhnghe[$model->nganhnghemongmuon]:'' }}
+                
             </td>
 
         </tr>
         <tr>
             <td style="text-align: left">
-                14.2.2
-                @if ($model->vieclammongmuon == 2 || $model->vieclammongmuon == 3)
+                12.2.2
+                @if ($model->vieclammongmuon == 2 || $model->vieclammongmuon == 3 )
                     &#x2611;
                 @else
                     &#x2610;
-                @endif Đi làm việc ở nước ngoài &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;Thị trường:
-                {{ isset($model->thitruonglamviec) ? getCountries()[$model->thitruonglamviec] : '' }}
+                @endif Đi làm việc ở nước ngoài &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;Thị trường: {{isset($model->thitruonglamviec)?getCountries()[$model->thitruonglamviec]:''}}
             </td>
         </tr>
 
         <tr>
-            <td style="text-align: left"><b> 15. Nhu cầu học nghề ? </b></td>
+            <td style="text-align: left"><b> 12. Nhu cầu học nghề ? </b></td>
         </tr>
         <tr>
-            <td style="text-align: left">15.1 Ngành nghề muốn
-                học(5): {{ isset($model->nganhnghemuonhoc) ? $a_nganhnghe[$model->nganhnghemuonhoc] : '' }}
+            <td style="text-align: left">12.1 Ngành nghề muốn
+                học(5): {{ isset($model->nganhnghemuonhoc)?$a_nganhnghe[$model->nganhnghemuonhoc]:'' }}
             </td>
         </tr>
         <tr>
-            <td style="text-align: left"> 15.2 Trình độ chuyên môn muốn học:</td>
+            <td style="text-align: left"> 12.2 Trình độ chuyên môn muốn học:</td>
         </tr>
         <tr>
             <td style="text-align: left">
