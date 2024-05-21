@@ -888,23 +888,26 @@ class AdminNhankhau extends Controller
         $soluong = $danhsach->soluong - 1;
         $tonghopcld = tonghopcunglaodong::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->first();
 
-        $ldtren15 = $tonghopcld->ldtren15 - 1;
+        $ldtren15 = isset($tonghopcld->ldtren15)?($tonghopcld->ldtren15 - 1):0;
 
         if ($model->vieclammongmuon == '1') {
-            $xa['trongnuoc'] = $tonghopcld->trongnuoc - 1;
+            $xa['trongnuoc'] = isset($tonghopcld->ldtren15)?($tonghopcld->trongnuoc - 1):0;
+            if(isset($tonghopcld))
             $tonghopcld->update(['ldtren15' => $ldtren15, 'trongnuoc' => $xa['trongnuoc']]);
         }
         if ($model->vieclammongmuon == '2') {
-            $xa['nuocngoai'] = $tonghopcld->nuocngoai - 1;
+            $xa['nuocngoai'] = isset($tonghopcld->ldtren15)?($tonghopcld->nuocngoai - 1):0;
             $tonghopcld->update(['ldtren15' => $ldtren15, 'nuocngoai' => $xa['nuocngoai']]);
         }
         if ($model->vieclammongmuon == '3') {
-            $xa['trongnuoc'] = $tonghopcld->trongnuoc - 1;
-            $xa['nuocngoai'] = $tonghopcld->nuocngoai - 1;
+            $xa['trongnuoc'] = isset($tonghopcld->ldtren15)?($tonghopcld->trongnuoc - 1):0;
+            $xa['nuocngoai'] = isset($tonghopcld->ldtren15)?($tonghopcld->nuocngoai - 1):0;
+            if(isset($tonghopcld))
             $tonghopcld->update(['ldtren15' => $ldtren15, 'trongnuoc' => $xa['trongnuoc'], 'nuocngoai' => $xa['nuocngoai']]);
         }
         if (isset($model->nganhnghemuonhoc)) {
-            $xa['hocnghe'] = $tonghopcld->hocnghe - 1;
+            $xa['hocnghe'] = isset($tonghopcld->ldtren15)?($tonghopcld->hocnghe - 1):0;
+            if(isset($tonghopcld))
             $tonghopcld->update(['ldtren15' => $ldtren15, 'hocnghe' => $xa['hocnghe']]);
         }
 
