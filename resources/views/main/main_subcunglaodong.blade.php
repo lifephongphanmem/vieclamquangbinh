@@ -75,11 +75,7 @@
                     </a>
                 </li> --}}
                 @if (chkPhanQuyen('hopthuttdvvl', 'phanquyen'))
-                    <?php $count = \App\Models\hopthu::where('matinh', 'ttdvvl')
-                        ->where('trangthai', 'DAGUI')
-                        ->where('loaithu', 2)
-                        ->where('status', 0)
-                        ->count(); ?>
+                    <?php $count = \App\Models\hopthu::where('matinh', 'ttdvvl')->where('trangthai', 'DAGUI')->where('loaithu', 2)->where('status', 0)->count(); ?>
                     <li class="menu-item" aria-haspopup="true">
                         <a href="{{ '/hopthu' }}" class="menu-link">
                             <span class="svg-icon menu-icon">
@@ -122,26 +118,37 @@
                         <div class="menu-submenu menu-submenu-classic menu-submenu-right">
                             <ul class="menu-subnav">
 
-                                @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
-                                <li class="menu-item" aria-haspopup="true">
-                                    <a data-target="#modify-modal-huyen-mau03" data-toggle="modal" class="menu-link">
+                                {{-- <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#modify-modal-tinh" data-toggle="modal" class="menu-link">
                                         <i class="menu-bullet menu-bullet-dot">
                                             <span></span>
                                         </i>
-                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Huyện)</span>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03</span>
+
                                     </a>
-                                </li>
-                            @endif
-                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
-                            <li class="menu-item" aria-haspopup="true">
-                                <a data-target="#modify-modal-xa-mau03" data-toggle="modal" class="menu-link">
-                                    <i class="menu-bullet menu-bullet-dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span>
-                                </a>
-                            </li>
-                        @endif
+                                </li> --}}
+                                @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                                    <li class="menu-item" aria-haspopup="true">
+                                        <a data-target="#modify-modal-huyen" data-toggle="modal" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03
+                                                (Huyện)</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+                                    <li class="menu-item" aria-haspopup="true">
+                                        <a data-target="#modify-modal-xa" data-toggle="modal" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03
+                                                (Xã)</span>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </li>

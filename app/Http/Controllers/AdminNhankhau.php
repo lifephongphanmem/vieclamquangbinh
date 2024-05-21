@@ -70,6 +70,7 @@ class AdminNhankhau extends Controller
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
         $a_kydieutra = array_column(danhsach::where('kydieutra', 2022)->get()->toarray(), 'kydieutra', 'kydieutra');
+        // $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
         $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
@@ -159,7 +160,8 @@ class AdminNhankhau extends Controller
         }
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-        $a_kydieutra = array_column(danhsach::where('kydieutra', '!=', 2022)->get()->toarray(), 'kydieutra', 'kydieutra');
+        // $a_kydieutra = array_column(danhsach::where('kydieutra', '!=', 2022)->get()->toarray(), 'kydieutra', 'kydieutra');
+        $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::where('kydieutra', '!=', 2022)->orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
         $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
