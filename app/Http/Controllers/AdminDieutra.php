@@ -1536,7 +1536,12 @@ class AdminDieutra extends Controller
         // $ma_thanhthi = array_column($ds_xa->whereNotIn('level','Xã')->toarray(),'madv');
         // $ma_nongthon = array_column($ds_xa->whereIn('level','Xã')->toarray(),'madv');
 
-        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])->where('kydieutra', '!=', '2022')
+        $model = nhankhauModel::wherein('kydieutra', [$inputs['kydieutra'], $inputs['kydieutra'] - 1])
+            ->where(function($q) use($inputs){
+                if($inputs['kydieutra'] != '2022'){
+                    $q->where('kydieutra','!=','2022');
+                }
+            })
             ->where('loaibiendong', '!=', 2)
             ->select('madv', 'kydieutra', 'gioitinh', 'chuyenmonkythuat', 'vieclammongmuon', 'thitruonglamviec', 'khuvuc', 'nganhnghemongmuon', 'nganhnghemuonhoc')->get();
 

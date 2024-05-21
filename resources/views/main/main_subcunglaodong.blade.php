@@ -104,8 +104,48 @@
                         <span class="menu-text">Danh sách thất nghiệp </span>
                     </a>
                 </li> --}}
+                @if (chkPhanQuyen('baocao', 'phanquyen'))
+                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <span class="svg-icon menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                    <path
+                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                    <path
+                                        d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                </svg>
+                            </span>
+                            <span class="menu-text">Báo cáo</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                            <ul class="menu-subnav">
 
-
+                                @if (chkPhanQuyen('baocaohuyen', 'phanquyen'))
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a data-target="#modify-modal-huyen-mau03" data-toggle="modal" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Huyện)</span>
+                                    </a>
+                                </li>
+                            @endif
+                            @if (chkPhanQuyen('baocaoxa', 'phanquyen'))
+                            <li class="menu-item" aria-haspopup="true">
+                                <a data-target="#modify-modal-xa-mau03" data-toggle="modal" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">Báo cáo thông tin cung lao động - Mẫu 03 (Xã)</span>
+                                </a>
+                            </li>
+                        @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
             </ul>
         </div>
     </li>
