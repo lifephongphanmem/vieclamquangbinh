@@ -396,13 +396,13 @@ class AdminNhankhau extends Controller
         $countries_list = getCountries();
         // get params
         $dmhc = $this->getdanhmuc();
-        // $list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
-        // $list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
+        $list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
+        $list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
         $list_cmkt = dmtrinhdokythuat::all();
         $list_tdgd = dmtrinhdogdpt::all();
         $list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
-        // $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
-        // $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
+        $list_vithe = $this->getParamsByNametype('Vị thế việc làm');
+        $list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
         $list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
         $m_uutien = dmdoituonguutien::all();
         $m_tinhtrangvl = dmtinhtrangthamgiahdkt::all();
@@ -448,22 +448,22 @@ class AdminNhankhau extends Controller
                 ->with('baocao', getdulieubaocao())
                 ->with('inputs', $inputs)
                 ->with('m_uutien', $m_uutien)
-                // ->with('m_tinhtrangvl', $m_tinhtrangvl)
-                // ->with('m_vithevl', $m_vithevl)
-                // ->with('lydo', $lydo)
-                // ->with('m_hopdongld', $m_hopdongld)
-                // ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
-                // ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
-                // ->with('m_loaihinhkt', $m_loaihinhkt)
-                // ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
+                ->with('m_tinhtrangvl', $m_tinhtrangvl)
+                ->with('m_vithevl', $m_vithevl)
+                ->with('lydo', $lydo)
+                ->with('m_hopdongld', $m_hopdongld)
+                ->with('m_thoigianthatnghiep', $m_thoigianthatnghiep)
+                ->with('m_nguoithatnghiep', $m_nguoithatnghiep)
+                ->with('m_loaihinhkt', $m_loaihinhkt)
+                ->with('a_thamgiabaohiem', $a_thamgiabaohiem)
                 ->with('countries_list', $countries_list)
                 ->with('dmhc', $dmhc)
                 ->with('list_cmkt', $list_cmkt)
                 ->with('list_tdgd', $list_tdgd)
                 ->with('list_nghe', $list_nghe)
                 ->with('m_nganhnghe', $m_nganhnghe)
-                // ->with('list_vithe', $list_vithe)
-                // ->with('list_linhvuc', $list_linhvuc)
+                ->with('list_vithe', $list_vithe)
+                ->with('list_linhvuc', $list_linhvuc)
                 ->with('list_hdld', $list_hdld);
         }
     }
@@ -557,7 +557,7 @@ class AdminNhankhau extends Controller
             $khuvuc = 'thanhthi';
         }
         $m_nganhnghe = dmnganhnghe::all();
-        $loaihinhkt=dmloaihinhhdkt::all();
+        $loaihinhkt = dmloaihinhhdkt::all();
         $a_nganhnghe = array_column($m_nganhnghe->toarray(), 'tendm', 'madm');
         return view('admin.nhankhau.innguoilaodong', compact(
             'model',
@@ -887,50 +887,47 @@ class AdminNhankhau extends Controller
         $danhsach = danhsach::where('user_id', $model->madv)->where('kydieutra', $model->kydieutra)->first();
         $soluong = $danhsach->soluong - 1;
         $tonghopcld = tonghopcunglaodong::where('madv', $model->madv)->where('kydieutra', $model->kydieutra)->first();
+        if (isset($tonghopcld)) {
+            $ldtren15 = $tonghopcld->ldtren15 - 1;
 
-        $ldtren15 = isset($tonghopcld->ldtren15)?($tonghopcld->ldtren15 - 1):0;
+            if ($model->vieclammongmuon == '1') {
+                $xa['trongnuoc'] = $tonghopcld->trongnuoc - 1;
+                    $tonghopcld->update(['ldtren15' => $ldtren15, 'trongnuoc' => $xa['trongnuoc']]);
+            }
+            if ($model->vieclammongmuon == '2') {
+                $xa['nuocngoai'] = $tonghopcld->nuocngoai - 1;
+                $tonghopcld->update(['ldtren15' => $ldtren15, 'nuocngoai' => $xa['nuocngoai']]);
+            }
+            if ($model->vieclammongmuon == '3') {
+                $xa['trongnuoc'] = $tonghopcld->trongnuoc - 1;
+                $xa['nuocngoai'] = $tonghopcld->nuocngoai - 1;
+                    $tonghopcld->update(['ldtren15' => $ldtren15, 'trongnuoc' => $xa['trongnuoc'], 'nuocngoai' => $xa['nuocngoai']]);
+            }
+            if (isset($model->nganhnghemuonhoc)) {
+                $xa['hocnghe'] = $tonghopcld->hocnghe - 1;
+                    $tonghopcld->update(['ldtren15' => $ldtren15, 'hocnghe' => $xa['hocnghe']]);
+            }
 
-        if ($model->vieclammongmuon == '1') {
-            $xa['trongnuoc'] = isset($tonghopcld->ldtren15)?($tonghopcld->trongnuoc - 1):0;
-            if(isset($tonghopcld))
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'trongnuoc' => $xa['trongnuoc']]);
+            if ($model->tinhtranghdkt == '1') {
+                $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
+                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldcovieclam' => $xa['ldcovieclam']]);
+            }
+            if ($model->tinhtranghdkt == '2') {
+                $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
+                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa['ldcovieclam']]);
+            }
+            if ($model->tinhtranghdkt == '3') {
+                $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
+                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa['ldcovieclam']]);
+            }
+            // if ($model->tinhtranghdkt == null) {
+
+            //     $tonghopcld->update(['ldtren15' => $ldtren15]);
+            // }
+
+            $model->update(['loaibiendong' => 2, 'lydo' => $request->lydo]);
+            $danhsach->update(['soluong' => $soluong]);
         }
-        if ($model->vieclammongmuon == '2') {
-            $xa['nuocngoai'] = isset($tonghopcld->ldtren15)?($tonghopcld->nuocngoai - 1):0;
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'nuocngoai' => $xa['nuocngoai']]);
-        }
-        if ($model->vieclammongmuon == '3') {
-            $xa['trongnuoc'] = isset($tonghopcld->ldtren15)?($tonghopcld->trongnuoc - 1):0;
-            $xa['nuocngoai'] = isset($tonghopcld->ldtren15)?($tonghopcld->nuocngoai - 1):0;
-            if(isset($tonghopcld))
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'trongnuoc' => $xa['trongnuoc'], 'nuocngoai' => $xa['nuocngoai']]);
-        }
-        if (isset($model->nganhnghemuonhoc)) {
-            $xa['hocnghe'] = isset($tonghopcld->ldtren15)?($tonghopcld->hocnghe - 1):0;
-            if(isset($tonghopcld))
-            $tonghopcld->update(['ldtren15' => $ldtren15, 'hocnghe' => $xa['hocnghe']]);
-        }
-
-        // if ($model->tinhtranghdkt == '1') {
-        //     $xa['ldcovieclam'] = $tonghopcld->ldcovieclam - 1;
-        //     $tonghopcld->update(['ldtren15' => $ldtren15, 'ldcovieclam' => $xa['ldcovieclam']]);
-        // }
-        // if ($model->tinhtranghdkt == '2') {
-        //     $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
-        //     $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa['ldcovieclam']]);
-        // }
-        // if ($model->tinhtranghdkt == '3') {
-        //     $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
-        //     $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa['ldcovieclam']]);
-        // }
-        // if ($model->tinhtranghdkt == null) {
-
-        //     $tonghopcld->update(['ldtren15' => $ldtren15]);
-        // }
-
-        $model->update(['loaibiendong' => 2, 'lydo' => $request->lydo]);
-        $danhsach->update(['soluong' => $soluong]);
-
         return redirect('/biendong/danhsach_biendong?madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&loaibiendong=2')
             ->with('success', 'Báo giảm thành công');
     }
