@@ -351,10 +351,9 @@
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label>Đối tượng tìm kiếm việc làm <span
-                                                                        class="text-danger">*</span></label>
+                                                                <label>Đối tượng tìm kiếm việc làm</label>
                                                                 <select name="doituongtimvieclam[]"
-                                                                    class="form-control selec2basic" required>
+                                                                    class="form-control selec2basic">
                                                                     <option value="">---Chọn đối tượng tìm kiếm việc
                                                                         làm---</option>
                                                                     <option value="1">Chưa từng làm việc</option>
@@ -364,8 +363,7 @@
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label>Việc làm mong muốn <span
-                                                                        class="text-danger">*</span></label>
+                                                                <label>Việc làm mong muốn</label>
                                                                 <select name="vieclammongmuon[]" class="form-control">
                                                                     <option value="">---Chọn việc làm mong muốn---</option>
                                                                     <option value="3">Tất cả</option>
@@ -408,8 +406,7 @@
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label>Ngành nghề muốn học<span
-                                                                        class="text-danger">*</span> </label>
+                                                                <label>Ngành nghề muốn học</label>
                                                                 <select name="nganhnghemuonhoc[]"
                                                                     class="form-control selec2basic">
                                                                     <option value="">---Chọn ngành nghề muốn học---
@@ -423,8 +420,7 @@
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label>Trình độ chuyên môn muốn học<span
-                                                                        class="text-danger">*</span> </label>
+                                                                <label>Trình độ chuyên môn muốn học</label>
                                                                 <select name="trinhdochuyenmonmuonhoc[]"
                                                                     class="form-control selec2basic">
                                                                     <option value="">---Chọn trình độ chuyên môn muốn
