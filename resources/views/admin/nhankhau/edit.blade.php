@@ -178,7 +178,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Tình trạng tham gia hoạt động kinh tế <span class="text-danger">*</span></label>
-                                        <select name="tinhtranghdkt[]" class="form-control selec2basic">
+                                        <select name="tinhtranghdkt" class="form-control selec2basic">
                                             <option value="">---Chọn tình trạng HĐKT---</option>
                                             @foreach ($m_tinhtrangvl as $val)
                                                 <option value="{{$val->stt}}" {{$ld->tinhtranghdkt == $val->stt?'selected':''}}>{{$val->tentgkt}}</option>
@@ -189,7 +189,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Người có việc làm</label>
-                                        <select name="nguoicovieclam[]" class="form-control selec2basic">
+                                        <select name="nguoicovieclam" class="form-control selec2basic">
                                             <option value="">---Chọn---</option>
                                             @foreach ($m_vithevl as $val)
                                                 <option value="{{$val->stt}}" {{$ld->nguoicovieclam == $val->stt?'selected':''}}>{{$val->tentgktct2}}</option>
@@ -200,14 +200,14 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Công việc cụ thể đang làm</label>
-                                        <input type="text" name="congvieccuthe[]" value="{{$ld->convieccuthe}}"
+                                        <input type="text" name="congvieccuthe" value="{{$ld->convieccuthe}}"
                                         class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Tham gia BHXH</label>
-                                        <select name="bhxh[]" class="form-control selec2basic">
+                                        <select name="bhxh" class="form-control selec2basic">
                                             <option value="">---Chọn---</option>
                                             @foreach ($a_thamgiabaohiem as $key=>$val)
                                                 <option value="{{$key}}" {{$ld->bhxh == $key?'selected':''}}>{{$val}}</option>
@@ -221,7 +221,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>HĐLĐ </label>
-                                        <select name="hdld[]" class="form-control selec2basic">
+                                        <select name="hdld" class="form-control selec2basic">
                                             <option value="">---Chọn HĐLĐ---</option>
                                             @foreach ($m_hopdongld as $key=>$val)
                                                 <option value="{{$val->stt}}" {{$ld->hdld == $val->stt?'selected':''}}>{{$val->tenlhl}}</option>
@@ -232,14 +232,14 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Nơi làm việc </label>
-                                        <input type="text" name="noilamviec[]" value="{{$ld->noilamviec}}"
+                                        <input type="text" name="noilamviec" value="{{$ld->noilamviec}}"
                                         class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Loại hình nơi làm việc</label>
-                                        <select name="loaihinhnoilamviec[]" class="form-control selec2basic">
+                                        <select name="loaihinhnoilamviec" class="form-control selec2basic">
                                             <option value="">---Chọn HĐLĐ---</option>
                                             @foreach ($m_loaihinhkt as $key=>$val)
                                                 <option value="{{$val->stt}}" {{$ld->loaihinhnoilamviec == $val->stt?'selected':''}}>{{$val->tenlhkt}}</option>
@@ -250,7 +250,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Địa chỉ nơi làm việc</label>
-                                        <input type="text" name="diachinoilamviec[]" value="{{$ld->diachinoilamviec}}"
+                                        <input type="text" name="diachinoilamviec" value="{{$ld->diachinoilamviec}}"
                                        class="form-control">
                                     </div>
                                 </div>
@@ -259,7 +259,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Người thất nghiệp</label>
-                                        <select name="thatnghiep[]" class="form-control selec2basic">
+                                        <select name="thatnghiep" class="form-control selec2basic">
                                             <option value="">---Chọn người thất nghiệp---</option>
                                             @foreach ($m_nguoithatnghiep as $key=>$val)
                                                 <option value="{{$val->stt}}" {{$ld->thatnghiep == $val->stt?'selected':''}}>{{$val->tentgktct}}</option>
@@ -270,7 +270,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Thời gian thất nghiệp</label>
-                                        <select name="thoigianthatnghiep[]" class="form-control selec2basic">
+                                        <select name="thoigianthatnghiep" class="form-control selec2basic">
                                             <option value="">---Chọn thời gian thất nghiệp---</option>
                                             @foreach ($m_thoigianthatnghiep as $key=>$val)
                                                 <option value="{{$val->stt}}" {{$ld->thoigianthatnghiep == $val->stt?'selected':''}}>{{$val->tentgtn}}</option>
@@ -281,7 +281,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Không tham gia HĐKT</label>
-                                        <select name="khongthamgiahdkt[]" class="form-control selec2basic">
+                                        <select name="khongthamgiahdkt" class="form-control selec2basic">
                                             <option value="">---Chọn lý do không tham gia---</option>
                                             @foreach ($lydo as $key=>$val)
                                                 <option value="{{$val->stt}}" {{$ld->khongthamgiahdkt == $val->stt?'selected':''}}>{{$val->tentgktct}}</option>
@@ -309,8 +309,8 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Đối tượng tìm kiếm việc làm <span class="text-danger">*</span></label>
-                                        <select name="doituongtimvieclam" class="form-control" required>
+                                        <label>Đối tượng tìm kiếm việc làm</label>
+                                        <select name="doituongtimvieclam" class="form-control">
                                             <option value="">---Chọn đối tượng tìm kiếm việc làm---</option>
                                             <option value="1" {{ $ld->doituongtimvieclam == 1 ? 'selected' : '' }}>
                                                 Chưa
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Việc làm mong muốn <span class="text-danger">*</span></label>
+                                        <label>Việc làm mong muốn</label>
                                         <select name="vieclammongmuon" class="form-control">
                                             <option value="">---Chọn việc làm mong muốn---</option>
                                             <option value="3">Tất cả</option>
@@ -338,7 +338,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Ngành nghề mong muốn <span class="text-danger">*</span></label>
+                                        <label>Ngành nghề mong muốn</label>
                                         <select name="nganhnghemongmuon" class="form-control ">
                                             <option value="">---Chọn ngành nghề mong muốn---</option>
                                             @foreach ($m_nganhnghe as $val)
@@ -368,7 +368,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Ngành nghề muốn học <span class="text-danger">*</span></label>
+                                            <label>Ngành nghề muốn học</label>
                                             <select name="nganhnghemuonhoc" class="form-control">
                                                 <option value="">---Chọn ngành nghề muốn học---</option>
                                                 @foreach ($m_nganhnghe as $val)
@@ -381,7 +381,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Trình độ chuyên môn muốn học <span class="text-danger">*</span></label>
+                                            <label>Trình độ chuyên môn muốn học</label>
                                             <select name="trinhdochuyenmonmuonhoc" class="form-control selec2basic">
                                                 <option value="">---Chọn trình độ chuyên môn muốn học---</option>
                                                 <option value="1"

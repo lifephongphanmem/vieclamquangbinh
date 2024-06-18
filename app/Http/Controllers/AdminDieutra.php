@@ -754,7 +754,7 @@ class AdminDieutra extends Controller
         $xa['nam'] = $tonghopcung_xa->nam ?? 0;
         $xa['nu'] = $tonghopcung_xa->nu ?? 0;
         // dd($xa);
-        if(isset($tonghopcung_xa)){
+        if (isset($tonghopcung_xa)) {
             $tonghopcung_xa->update($xa);
         }
 
@@ -771,7 +771,7 @@ class AdminDieutra extends Controller
             $tmp['kydieutra'] = $inputs['kydieutra'];
             $tmp['ho'] = $inputs['ho'];
             $cccd = nhankhauModel::where('cccd', $tmp['cccd'])->where('madv', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->where('loaibiendong', '!=', 2)->first();
-            
+
             if (isset($cccd)) {
                 continue;
             }
@@ -841,15 +841,17 @@ class AdminDieutra extends Controller
             if (!isset($cccd)) {
                 $xa['ldtren15'] += 1;
             }
-            if ($tmp['vieclammongmuon'] == '1') {
-                $xa['trongnuoc'] += 1;
-            }
-            if ($tmp['vieclammongmuon'] == '2') {
-                $xa['nuocngoai'] += 1;
-            }
-            if ($tmp['vieclammongmuon'] == '3') {
-                $xa['trongnuoc'] += 1;
-                $xa['nuocngoai'] += 1;
+            if (isset($tmp['vieclammongmuon'])) {
+                if ($tmp['vieclammongmuon'] == '1') {
+                    $xa['trongnuoc'] += 1;
+                }
+                if ($tmp['vieclammongmuon'] == '2') {
+                    $xa['nuocngoai'] += 1;
+                }
+                if ($tmp['vieclammongmuon'] == '3') {
+                    $xa['trongnuoc'] += 1;
+                    $xa['nuocngoai'] += 1;
+                }
             }
             if (isset($tmp['nganhnghemuonhoc'])) {
                 $xa['hocnghe'] += 1;
@@ -861,17 +863,16 @@ class AdminDieutra extends Controller
             $xa['nongthon'] = $inputs['quantity'];
         }
         // dd($xa);
-        if(isset($tonghopcung_xa)){
+        if (isset($tonghopcung_xa)) {
             $tonghopcung_xa->update($xa);
-        }else{
-            $xa['kydieutra']=$inputs['kydieutra'];
-            $xa['madv']=$inputs['madv'];
-            $donvi=dmdonvi::where('madv',$inputs['madv'])->first();
-            $xa['tendv']=$donvi->tendv??'';
-            $xa['capdo']='X';
+        } else {
+            $xa['kydieutra'] = $inputs['kydieutra'];
+            $xa['madv'] = $inputs['madv'];
+            $donvi = dmdonvi::where('madv', $inputs['madv'])->first();
+            $xa['tendv'] = $donvi->tendv ?? '';
+            $xa['capdo'] = 'X';
             // dd($xa);
             tonghopcunglaodong::create($xa);
-            
         }
         nhankhauModel::create($tmp);
         $model = danhsach::where('user_id', $inputs['madv'])->where('kydieutra', $inputs['kydieutra'])->first();

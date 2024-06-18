@@ -581,15 +581,19 @@ class AdminNhankhau extends Controller
     {
         // dd($request->all());
         $inputs = $request->all();
+        // dd($inputs);
         $loailoi = $inputs['loailoi'] ?? '';
         $kydieutra = $inputs['kydieutra'];
         // $model=DB::table('nhankhau')->where('id',$id)->first();
         $model = nhankhauModel::findOrFail($id);
+
         unset($inputs['_token'], $inputs['kydieutra']);
         if (isset($inputs['loailoi'])) {
             $sualoi = strtoupper(chuyenkhongdau(str_replace(' ', '', $inputs['loailoi'])));
+
             unset($inputs['loailoi']);
             $a_maloi = explode(';', $model->maloailoi);
+
             $maloi = '';
             foreach ($a_maloi as $val) {
                 if ($val != $sualoi) {
@@ -618,6 +622,7 @@ class AdminNhankhau extends Controller
                     break;
             }
         }
+
         $note = '';
         $model->fill($inputs);
         $dirty = $model->getDirty();
@@ -636,6 +641,7 @@ class AdminNhankhau extends Controller
                 $biendong = true;
             }
         }
+
         // dd($danhsach);
         $user = User::where('madv', $model->madv)->first()->id;
         $model_check = nhankhauModel::findOrFail($id);
@@ -676,6 +682,7 @@ class AdminNhankhau extends Controller
                 $xa['hocnghe'] = $tonghopcld->hocnghe + 1;
             }
         }
+
         if (isset($xa)) {
             $tonghopcld->update($xa);
         }
@@ -747,11 +754,14 @@ class AdminNhankhau extends Controller
 
             // $ch = nhankhauModel::where('madv', $model->madv)->where('kydieutra', $kydieutra)->where('ho', $model->ho)->where('mqh', 'CH')->first();
             // if(ckdulieuloi($id) != []){
+
             $maloi = implode(';', ckdulieuloi($id));
+
             $model->update(['maloailoi' => $maloi]);
             // }
 
         }
+
         // dd($inputs);
         $model->update($inputs);
         if (isset($sualoi)) {
