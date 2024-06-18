@@ -32,7 +32,7 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Thông tin nhân khẩu</h3>
+                        <h3 class="card-label text-uppercase">Thông tin đối tượng</h3>
                     </div>
                     <div class="card-toolbar">
                     </div>
