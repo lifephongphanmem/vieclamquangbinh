@@ -100,9 +100,16 @@ class ServeCommand extends Command
                 return [$key => $value];
             }
 
-            return in_array($key, ['APP_ENV', 'LARAVEL_SAIL'])
-                    ? [$key => $value]
-                    : [$key => false];
+            return in_array($key, [
+                'APP_ENV',
+                'LARAVEL_SAIL',
+                'PHP_CLI_SERVER_WORKERS',
+                'PHP_IDE_CONFIG',
+                'SYSTEMROOT',
+                'XDEBUG_CONFIG',
+                'XDEBUG_MODE',
+                'XDEBUG_SESSION',
+            ]) ? [$key => $value] : [$key => false];
         })->all());
 
         $process->start(function ($type, $buffer) {
@@ -134,7 +141,9 @@ class ServeCommand extends Command
      */
     protected function host()
     {
-        return $this->input->getOption('host');
+        [$host, ] = $this->getHostAndPort();
+
+        return $host;
     }
 
     /**
@@ -144,9 +153,30 @@ class ServeCommand extends Command
      */
     protected function port()
     {
-        $port = $this->input->getOption('port') ?: 8000;
+        $port = $this->input->getOption('port');
+
+        if (is_null($port)) {
+            [, $port] = $this->getHostAndPort();
+        }
+
+        $port = $port ?: 8000;
 
         return $port + $this->portOffset;
+    }
+
+    /**
+     * Get the host and port from the host option string.
+     *
+     * @return array
+     */
+    protected function getHostAndPort()
+    {
+        $hostParts = explode(':', $this->input->getOption('host'));
+
+        return [
+            $hostParts[0],
+            $hostParts[1] ?? null,
+        ];
     }
 
     /**

@@ -80,3 +80,4 @@ Route::prefix('ungtuyen')->group(function () {
 
 Route::get('TraCuu', [AdminNhankhau::class, 'TraCuu']);
 Route::post('TraCuu', [AdminNhankhau::class, 'KetQuaTraCuu']);
+Route::get('ChiTietTraCuu/{id}', [AdminNhankhau::class, 'ChiTietTraCuu']);

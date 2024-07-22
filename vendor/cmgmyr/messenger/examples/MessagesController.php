@@ -53,7 +53,7 @@ class MessagesController extends Controller
         // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
 
         // don't show the current user in list
-        $userId = session('admin')->id;
+        $userId = Auth::id();
         $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
 
         $thread->markAsRead($userId);
@@ -97,7 +97,7 @@ class MessagesController extends Controller
         Participant::create([
             'thread_id' => $thread->id,
             'user_id' => Auth::id(),
-            'last_read' => new Carbon,
+            'last_read' => new Carbon(),
         ]);
 
         // Recipients
@@ -138,7 +138,7 @@ class MessagesController extends Controller
             'thread_id' => $thread->id,
             'user_id' => Auth::id(),
         ]);
-        $participant->last_read = new Carbon;
+        $participant->last_read = new Carbon();
         $participant->save();
 
         // Recipients

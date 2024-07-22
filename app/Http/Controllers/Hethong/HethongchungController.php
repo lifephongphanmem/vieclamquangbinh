@@ -258,6 +258,11 @@ class HethongchungController extends Controller
 		//gán phân quyền của User
 		Session::put('phanquyen', dstaikhoan_phanquyen::where('tendangnhap', $inputs['username'])->get()->keyBy('machucnang')->toArray());
 
+		//Chạy cập nhật dự liệu cho từng xã
+		// if(session('admin')->capdo == 'X')
+		// {
+		// 	capnhatdulieu(session('admin')->madv);
+		// }
 		// if (session('admin')->capdo == 'T') {
         //     $m_xa = dmdonvi::join('danhmuchanhchinh', 'danhmuchanhchinh.id', 'dmdonvi.madiaban')
         //         ->select('danhmuchanhchinh.name', 'dmdonvi.madv')

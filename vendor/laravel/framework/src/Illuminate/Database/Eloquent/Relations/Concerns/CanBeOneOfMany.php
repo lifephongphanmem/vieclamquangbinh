@@ -26,6 +26,13 @@ trait CanBeOneOfMany
     protected $relationName;
 
     /**
+     * The one of many inner join subselect query builder instance.
+     *
+     * @var \Illuminate\Database\Eloquent\Builder|null
+     */
+    protected $oneOfManySubQuery;
+
+    /**
      * Add constraints for inner join subselect for one of many relationships.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -89,14 +96,20 @@ trait CanBeOneOfMany
             }
 
             $subQuery = $this->newOneOfManySubQuery(
-                isset($previous) ? $previous['column'] : $this->getOneOfManySubQuerySelectColumns(),
+                $this->getOneOfManySubQuerySelectColumns(),
                 $column, $aggregate
             );
 
             if (isset($previous)) {
                 $this->addOneOfManyJoinSubQuery($subQuery, $previous['subQuery'], $previous['column']);
-            } elseif (isset($closure)) {
+            }
+
+            if (isset($closure)) {
                 $closure($subQuery);
+            }
+
+            if (! isset($previous)) {
+                $this->oneOfManySubQuery = $subQuery;
             }
 
             if (array_key_last($columns) == $column) {
@@ -107,6 +120,14 @@ trait CanBeOneOfMany
                 'subQuery' => $subQuery,
                 'column' => $column,
             ];
+        }
+
+        $this->addConstraints();
+
+        $columns = $this->query->getQuery()->columns;
+
+        if (is_null($columns) || $columns === ['*']) {
+            $this->select([$this->qualifyColumn('*')]);
         }
 
         return $this;
@@ -124,7 +145,7 @@ trait CanBeOneOfMany
     {
         return $this->ofMany(collect(Arr::wrap($column))->mapWithKeys(function ($column) {
             return [$column => 'MAX'];
-        })->all(), 'MAX', $relation ?: $this->guessRelationship());
+        })->all(), 'MAX', $relation);
     }
 
     /**
@@ -139,7 +160,7 @@ trait CanBeOneOfMany
     {
         return $this->ofMany(collect(Arr::wrap($column))->mapWithKeys(function ($column) {
             return [$column => 'MIN'];
-        })->all(), 'MIN', $relation ?: $this->guessRelationship());
+        })->all(), 'MIN', $relation);
     }
 
     /**
@@ -166,14 +187,15 @@ trait CanBeOneOfMany
     protected function newOneOfManySubQuery($groupBy, $column = null, $aggregate = null)
     {
         $subQuery = $this->query->getModel()
-            ->newQuery();
+            ->newQuery()
+            ->withoutGlobalScopes($this->removedScopes());
 
         foreach (Arr::wrap($groupBy) as $group) {
             $subQuery->groupBy($this->qualifyRelatedColumn($group));
         }
 
         if (! is_null($column)) {
-            $subQuery->selectRaw($aggregate.'('.$column.') as '.$column);
+            $subQuery->selectRaw($aggregate.'('.$subQuery->getQuery()->grammar->wrap($subQuery->qualifyColumn($column)).') as '.$subQuery->getQuery()->grammar->wrap($column.'_aggregate'));
         }
 
         $this->addOneOfManySubQueryConstraints($subQuery, $groupBy, $column, $aggregate);
@@ -191,10 +213,14 @@ trait CanBeOneOfMany
      */
     protected function addOneOfManyJoinSubQuery(Builder $parent, Builder $subQuery, $on)
     {
-        $parent->joinSub($subQuery, $this->relationName, function ($join) use ($on) {
-            $join->on($this->qualifySubSelectColumn($on), '=', $this->qualifyRelatedColumn($on));
+        $parent->beforeQuery(function ($parent) use ($subQuery, $on) {
+            $subQuery->applyBeforeQueryCallbacks();
 
-            $this->addOneOfManyJoinSubQueryConstraints($join, $on);
+            $parent->joinSub($subQuery, $this->relationName, function ($join) use ($on) {
+                $join->on($this->qualifySubSelectColumn($on.'_aggregate'), '=', $this->qualifyRelatedColumn($on));
+
+                $this->addOneOfManyJoinSubQueryConstraints($join, $on);
+            });
         });
     }
 
@@ -206,9 +232,31 @@ trait CanBeOneOfMany
      */
     protected function mergeOneOfManyJoinsTo(Builder $query)
     {
-        $query->getQuery()->joins = $this->query->getQuery()->joins;
+        $query->getQuery()->beforeQueryCallbacks = $this->query->getQuery()->beforeQueryCallbacks;
 
-        $query->addBinding($this->query->getBindings(), 'join');
+        $query->applyBeforeQueryCallbacks();
+    }
+
+    /**
+     * Get the query builder that will contain the relationship constraints.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function getRelationQuery()
+    {
+        return $this->isOneOfMany()
+            ? $this->oneOfManySubQuery
+            : $this->query;
+    }
+
+    /**
+     * Get the one of many inner join subselect builder instance.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|void
+     */
+    public function getOneOfManySubQuery()
+    {
+        return $this->oneOfManySubQuery;
     }
 
     /**

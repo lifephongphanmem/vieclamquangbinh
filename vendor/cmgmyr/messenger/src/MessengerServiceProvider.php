@@ -6,6 +6,7 @@ use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Models;
 use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 
 class MessengerServiceProvider extends ServiceProvider
@@ -14,8 +15,9 @@ class MessengerServiceProvider extends ServiceProvider
      * Bootstrap the application services.
      *
      * @return void
+     * @throws BindingResolutionException
      */
-    public function boot(): void
+    public function boot()
     {
         $this->offerPublishing();
         $this->setMessengerModels();
@@ -27,17 +29,17 @@ class MessengerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register(): void
+    public function register()
     {
         $this->configure();
     }
 
     /**
-     * Setup the configuration for Messenger.
+     * Set up the configuration for Messenger.
      *
      * @return void
      */
-    protected function configure(): void
+    protected function configure()
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/config.php',
@@ -46,11 +48,11 @@ class MessengerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Setup the resource publishing groups for Messenger.
+     * Set up the resource publishing groups for Messenger.
      *
      * @return void
      */
-    protected function offerPublishing(): void
+    protected function offerPublishing()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -67,9 +69,9 @@ class MessengerServiceProvider extends ServiceProvider
      * Define Messenger's models in registry.
      *
      * @return void
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
-    protected function setMessengerModels(): void
+    protected function setMessengerModels()
     {
         $config = $this->app->make('config');
 
@@ -88,9 +90,9 @@ class MessengerServiceProvider extends ServiceProvider
      * Define User model in Messenger's model registry.
      *
      * @return void
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
-    protected function setUserModel(): void
+    protected function setUserModel()
     {
         $config = $this->app->make('config');
 
@@ -101,7 +103,7 @@ class MessengerServiceProvider extends ServiceProvider
         Models::setUserModel($model);
 
         Models::setTables([
-            'users' => (new $model)->getTable(),
+            'users' => (new $model())->getTable(),
         ]);
     }
 }

@@ -74,7 +74,7 @@
                                 <i class="icon-lg la flaticon2-print text-primary"></i>In Danh Sách
                             </button>
                         @endif
-                        <a href="{{'/TraCuu'}}" class="btn btn-sm btn-success ml-3"><i class="icon-lg la flaticon2-search text-primary"></i>Tra cứu
+                        <a href="{{'/TraCuu?madv='.$inputs['madv']}}" class="btn btn-sm btn-success ml-3"><i class="icon-lg la flaticon2-search text-primary"></i>Tra cứu
                     </a>
                     </div>
                 </div>

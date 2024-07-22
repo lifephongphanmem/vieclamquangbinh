@@ -326,7 +326,7 @@
                                         <label>Việc làm mong muốn</label>
                                         <select name="vieclammongmuon" class="form-control">
                                             <option value="">---Chọn việc làm mong muốn---</option>
-                                            <option value="3">Tất cả</option>
+                                            <option value="3" {{ $ld->vieclammongmuon == 3 ? 'selected' : '' }}>Tất cả</option>
                                             <option value="1" {{ $ld->vieclammongmuon == 1 ? 'selected' : '' }}>Trong
                                                 tỉnh,
                                                 trong nước</option>

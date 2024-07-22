@@ -1,14 +1,6 @@
-name: Laravel Messenger - PostgreSQL Tests
-on:
-  push:
-    branches:
-      - master
-      - develop
-      - feature/**
-  pull_request:
-    branches:
-      - master
-      - develop
+name:  PostgreSQL Tests
+
+on: [push, pull_request]
 
 jobs:
   laravel-tests:
@@ -37,18 +29,23 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: [ '8.0' ]
+        php-versions: [ '8.2', '8.1' ]
         dependency-stability: [ prefer-stable ]
 
-        laravel: [ '8.*' ]
+        laravel: [ '10.*', '9.*']
         include:
-          - laravel:  8.*
-            testbench: 6.*
+          - laravel: 10.*
+            testbench: 8.*
+          - laravel:  9.*
+            testbench: 7.*
+        exclude:
+          - laravel: 10.*
+            php-versions: 8.0
 
     name: P${{ matrix.php-versions }} - L${{ matrix.laravel }} - ${{ matrix.dependency-stability }} - ${{ matrix.operating-system}}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install PHP versions
         uses: shivammathur/setup-php@v2
         with:
@@ -56,8 +53,8 @@ jobs:
       - name: Get Composer Cache Directory 2
         id: composer-cache
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - uses: actions/cache@v2
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
         id: actions-cache
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
@@ -65,7 +62,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
       - name: Cache PHP dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: vendor-cache
         with:
           path: vendor
