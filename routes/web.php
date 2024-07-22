@@ -39,6 +39,7 @@ use App\Http\Controllers\Baocao\baocaotonghopController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\dangkytimviecController;
 use App\Http\Controllers\dsthatnghiepController;
+use App\Http\Controllers\Hethong\HethongchungController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HopThuController;
 use App\Http\Controllers\kybaocaoController;
@@ -425,4 +426,9 @@ Route::group(['prefix' => 'dangkytimviec'], function () {
     Route::get('/bcchitiet', [dangkytimviecController::class, 'bcchitiet']);
     Route::get('/bctonghop', [dangkytimviecController::class, 'bctonghop']);
     Route::post('/importexcel', [dangkytimviecController::class, 'importexcel']);
+});
+
+Route::prefix('TongHopSoLieu')->group(function(){
+    Route::get('ThongTin',[HethongchungController::class,'tonghopsolieu_index']);
+    Route::post('tonghopsolieu',[HethongchungController::class,'tonghopsolieu']);
 });

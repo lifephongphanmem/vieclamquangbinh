@@ -164,8 +164,10 @@ class AdminNhankhau extends Controller
         $a_kydieutra = array_column(danhsach::all()->toarray(), 'kydieutra', 'kydieutra');
         $kydieutra = danhsach::where('kydieutra', '!=', 2022)->orderBy('id', 'desc')->first();
         $inputs['kydieutra'] = $inputs['kydieutra'] ?? (isset($kydieutra) ? $kydieutra->kydieutra : '');
+        $inputs['vieclammongmuon'] = $inputs['vieclammongmuon'] ?? 'ALL';
+        $inputs['tinhtranghdkt'] = $inputs['tinhtranghdkt'] ?? 'ALL';
         $lds = nhankhauModel::where('kydieutra', $inputs['kydieutra'])
-            ->where('madv', $inputs['madv'])->where('loaibiendong', '!=', 2)->get();
+            ->where('madv', $inputs['madv'])->where('loaibiendong', '!=', 2);
         $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
@@ -196,6 +198,15 @@ class AdminNhankhau extends Controller
                 ->where('parent', $inputs['mahuyen'])->get();
         }
         // dd($inputs);
+
+
+        if($inputs['vieclammongmuon'] != 'ALL'){
+            $lds->wherein('vieclammongmuon',[$inputs['vieclammongmuon'],'3']);
+        }
+        if($inputs['tinhtranghdkt'] != 'ALL'){
+            $lds->where('tinhtranghdkt',$inputs['tinhtranghdkt']);
+        }
+        $lds=$lds->get();
         foreach ($lds as $ct) {
             $ct->tenxa = ucwords($m_xa->name);
             $ct->tenhuyen = ucwords($m_huyen->name);
@@ -209,6 +220,7 @@ class AdminNhankhau extends Controller
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
         $danhsach = danhsach::all();
+        $m_tinhtrangvl = dmtinhtrangthamgiahdkt::all();
         return view('admin.nguoitimviec.index', compact('danhsach', 'dmdonvi'))
             ->with('lds', $lds)
             ->with('baocao', getdulieubaocao())
@@ -219,6 +231,7 @@ class AdminNhankhau extends Controller
             ->with('danhsachtinhtrangvl', danhsachtinhtrangvl())
             ->with('a_kydieutra', $a_kydieutra)
             ->with('m_diaban', $m_diaban)
+            ->with('m_tinhtrangvl', $m_tinhtrangvl)
             ->with('m_donvi', $m_donvi)
             ->with('dmhc', $dmhc_list)
             ->with('search', $search)
@@ -649,7 +662,7 @@ class AdminNhankhau extends Controller
 
         if ($model_check->vieclammongmuon == '1') {
             if ($inputs['vieclammongmuon'] == '2') {
-                $xa['trongnuoc'] = $tonghopcld->trongnuoc - 1;
+                $xa['trongnuoc'] = $tonghopcld->trongnuoc == 0?0:$tonghopcld->trongnuoc - 1;
                 $xa['nuocngoai'] = $tonghopcld->nuocngoai + 1;
             }
             if ($inputs['vieclammongmuon'] == '3') {
@@ -659,7 +672,7 @@ class AdminNhankhau extends Controller
         if ($model_check->vieclammongmuon == '2') {
             if ($inputs['vieclammongmuon'] == '1') {
                 $xa['trongnuoc'] = $tonghopcld->trongnuoc + 1;
-                $xa['nuocngoai'] = $tonghopcld->nuocngoai - 1;
+                $xa['nuocngoai'] =  $tonghopcld->nuocngoai == 0?0:$tonghopcld->nuocngoai - 1;
             }
             if ($inputs['vieclammongmuon'] == '3') {
                 $xa['trongnuoc'] = $tonghopcld->trongnuoc + 1;
@@ -667,15 +680,15 @@ class AdminNhankhau extends Controller
         }
         if ($model_check->vieclammongmuon == '3') {
             if ($inputs['vieclammongmuon'] == '1') {
-                $xa['nuocngoai'] = $tonghopcld->nuocngoai - 1;
+                $xa['nuocngoai'] = $tonghopcld->nuocngoai == 0?0:$tonghopcld->nuocngoai - 1;
             }
             if ($inputs['vieclammongmuon'] == '2') {
-                $xa['trongnuoc'] = $tonghopcld->trongnuoc - 1;
+                $xa['trongnuoc'] =  $tonghopcld->trongnuoc == 0?0:$tonghopcld->trongnuoc - 1;
             }
         }
         if ($model_check->nganhnghemuonhoc != null) {
             if ($inputs['nganhnghemuonhoc'] == null) {
-                $xa['hocnghe'] = $tonghopcld->hocnghe - 1;
+                $xa['hocnghe'] = $tonghopcld->hocnghe == 0?0:$tonghopcld->hocnghe - 1;
             }
         } else {
             if ($inputs['nganhnghemuonhoc'] != null) {
@@ -940,5 +953,22 @@ class AdminNhankhau extends Controller
         }
         return redirect('/biendong/danhsach_biendong?madv=' . $model->madv . '&kydieutra=' . $model->kydieutra . '&loaibiendong=2')
             ->with('success', 'Báo giảm thành công');
+    }
+
+    public function TraCuu()
+    {
+        $m_tinhtrangvl = dmtinhtrangthamgiahdkt::all();
+        return view('admin.nguoitimviec.tracuu.index')
+        ->with('m_tinhtrangvl',$m_tinhtrangvl)
+        ->with('baocao', getdulieubaocao())
+                ->with('pageTitle','Tra cứu thông tin người tìm việc');
+    }
+
+    public function KetQuaTraCuu(Request $request)
+    {
+        $inputs=$request->all();
+
+
+        return response()->json($inputs);
     }
 }

@@ -18,6 +18,7 @@ use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\Hethong\dstaikhoan_phanquyen;
+use App\Models\nhankhauModel;
 use App\Models\tonghopcunglaodong;
 use App\Models\ungvien;
 use Illuminate\Support\Facades\Auth;
@@ -393,6 +394,34 @@ class HethongchungController extends Controller
 		return view('mail.xacthuc')
 			->with('email',$inputs['email'])
 			->with('pageTitle','Xác thực tài khoản');
+	}
+	public function tonghopsolieu_index()
+	{
+		return view('HeThong.tonghop.index')
+				->with('pageTitle','Tổng hợp số liệu');
+	}
+
+	public function tonghopsolieu(Request $request)
+	{
+			$inputs=$request->all();
+			$model=tonghopcunglaodong::where('kydieutra',$inputs['nam'])->get();
+			foreach($model as $key=>$ct)
+			{
+									//Tổng hợp lại danh sách của từng đơn vị
+				$laodong=nhankhauModel::where('madv',$ct->madv)->where('kydieutra',$inputs['nam'])->where('loaibiendong','<>','2')->get();
+				$ct->ldtren15=count($laodong);
+				$ct->trongnuoc=count($laodong->wherein('vieclammongmuon',['1','3']));
+				$ct->nuocngoai=count($laodong->wherein('vieclammongmuon',['2','3']));
+				$ct->hocnghe=count($laodong->wherenotnull('nganhnghemuonhoc'));
+				$ct->ldcovieclam=count($laodong->where('tinhtranghdkt','1'));
+				$ct->ldthatnghiep=count($laodong->where('tinhtranghdkt','2'));
+				$ct->ldkhongthamgia=count($laodong->where('tinhtranghdkt','3'));
+				$ct->nam=count($laodong->wherein('gioitinh',['Nam','nam']));
+				$ct->nu=count($laodong->wherenotin('gioitinh',['Nam','nam']));
+				$ct->save();
+			}
+
+			return redirect('/TongHopSoLieu/ThongTin');
 	}
 
 }
