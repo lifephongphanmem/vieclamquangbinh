@@ -11,6 +11,7 @@ use App\Models\Danhmuc\dmtrinhdogdpt;
 use App\Models\Danhmuc\dmtrinhdokythuat;
 use App\Models\danhsach;
 use App\Models\nhankhauModel;
+use App\Models\tonghopcunglaodong;
 
 function chkPhanQuyen($machucnang = null, $tenphanquyen = null)
 {
@@ -374,24 +375,25 @@ function NganhDKthi()
     ];
 }
 
-function NgheDK(){
+function NgheDK()
+{
     return [
-        'SXCT'=>[
-            'DODAC'=>'Đo đạc',
-            'NOI'=>'Nối',
-            'LAPRAP'=>'Lắp ráp'
+        'SXCT' => [
+            'DODAC' => 'Đo đạc',
+            'NOI' => 'Nối',
+            'LAPRAP' => 'Lắp ráp'
         ],
-        'XD'=>[
-            'MOC'=>'Mộc',
-            'THEP'=>'Thép'
+        'XD' => [
+            'MOC' => 'Mộc',
+            'THEP' => 'Thép'
         ],
-        'NgN'=>[
-            'NTHAISAN'=>'Nuôi trồng hải sản',
-            'DBGANBO'=>'Đánh bắt gần bờ'
+        'NgN' => [
+            'NTHAISAN' => 'Nuôi trồng hải sản',
+            'DBGANBO' => 'Đánh bắt gần bờ'
         ],
-        'NN'=>[
-            'TRONGTROT'=>'Trồng trọt',
-            'CHANNUOI'=>'Chăn nuôi'
+        'NN' => [
+            'TRONGTROT' => 'Trồng trọt',
+            'CHANNUOI' => 'Chăn nuôi'
         ]
     ];
 }
@@ -427,4 +429,29 @@ function doituong()
         '3' => 'Hộ nghèo',
         '4' => 'Dân tộc thiểu số'
     ];
+}
+
+function capnhatdulieu($madv)
+{
+    $a_kydieutra = array(
+        date('Y'), (date('Y') - 1)
+    );
+    // dd($a_kydieutra);
+    $model = tonghopcunglaodong::where('madv',$madv)->wherein('kydieutra', $a_kydieutra)->get();
+    foreach ($model as $ct) {
+      
+        $laodong = nhankhauModel::select('kydieutra', 'vieclammongmuon', 'nganhnghemuonhoc', 'tinhtranghdkt', 'gioitinh')->where('madv',$madv)->where('kydieutra', $ct->kydieutra)->where('loaibiendong', '<>', '2')->get(); 
+            //Tổng hợp lại danh sách của từng đơn vị
+            $ct->ldtren15 = count($laodong);
+            $ct->trongnuoc = count($laodong->wherein('vieclammongmuon', ['1', '3']));
+            $ct->nuocngoai = count($laodong->wherein('vieclammongmuon', ['2', '3']));
+            $ct->hocnghe = count($laodong->wherenotnull('nganhnghemuonhoc'));
+            $ct->ldcovieclam = count($laodong->where('tinhtranghdkt', '1'));
+            $ct->ldthatnghiep = count($laodong->where('tinhtranghdkt', '2'));
+            $ct->ldkhongthamgia = count($laodong->where('tinhtranghdkt', '3'));
+            $ct->nam = count($laodong->wherein('gioitinh', ['Nam', 'nam']));
+            $ct->nu = count($laodong->wherenotin('gioitinh', ['Nam', 'nam']));
+            $ct->save();
+        
+    }
 }

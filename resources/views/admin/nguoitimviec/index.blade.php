@@ -15,22 +15,24 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
-            $('#madv').change(function() {
-                // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                //     '&kydieutra=' + $('#kydieutra').val();
+            // $('#madv').change(function() {
+            //     // window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+            //     //     '&kydieutra=' + $('#kydieutra').val();
+            //     window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+            //         '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val()+ '&vieclammongmuon=' + $('#vieclammongmuon').val()+ '&tinhtranghdkt=' + $('#tinhtranghdkt').val();
+            // });
+            // $('#mahuyen').change(function() {
+            //     window.location.href = "{{ $inputs['url'] }}" + '?madv=' +
+            //         '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val()+ '&vieclammongmuon=' + $('#vieclammongmuon').val()+ '&tinhtranghdkt=' + $('#tinhtranghdkt').val();
+            // });
+            // $('#kydieutra').change(function() {
+            //     window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
+            //         '&kydieutra=' + $('#kydieutra').val()+ '&vieclammongmuon=' + $('#vieclammongmuon').val()+ '&tinhtranghdkt=' + $('#tinhtranghdkt').val();
+            // });
+            $('#madv, #mahuyen, #kydieutra, #vieclammongmuon, #tinhtranghdkt ').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
+                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val()+ '&vieclammongmuon=' + $('#vieclammongmuon').val()+ '&tinhtranghdkt=' + $('#tinhtranghdkt').val();
             });
-            $('#mahuyen').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' +
-                    '&kydieutra=' + $('#kydieutra').val() + '&mahuyen=' + $('#mahuyen').val();
-            });
-            $('#kydieutra').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val() +
-                    '&kydieutra=' + $('#kydieutra').val();
-            });
-            // getxa();
-            // getdulieu();
 
         });
     </script>
@@ -72,6 +74,8 @@
                                 <i class="icon-lg la flaticon2-print text-primary"></i>In Danh Sách
                             </button>
                         @endif
+                        <a href="{{'/TraCuu?madv='.$inputs['madv']}}" class="btn btn-sm btn-success ml-3"><i class="icon-lg la flaticon2-search text-primary"></i>Tra cứu
+                    </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -113,6 +117,31 @@
                             </select>
                         </div>
 
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Việc làm mong muốn</label>
+
+                            <select name="vieclammongmuon" class="form-control" id='vieclammongmuon'>
+                                <option value="ALL">Tất cả</option>
+                                <option value="1" {{$inputs['vieclammongmuon'] == 1?'selected':''}} >Trong
+                                    tỉnh,
+                                    trong nước</option>
+                                <option value="2" {{$inputs['vieclammongmuon'] == 2?'selected':''}} >Đi
+                                    làm việc
+                                    ở nước ngoài</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Tình trạng hoạt động kinh tế</label>
+                                <select name="tinhtranghdkt" class="form-control selec2basic" id='tinhtranghdkt'>
+                                    <option value="ALL">Tất cả</option>
+                                    @foreach ($m_tinhtrangvl as $val)
+                                        <option value="{{$val->stt}}" {{$inputs['tinhtranghdkt'] == $val->stt?'selected':''}}>{{$val->tentgkt}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
                     </div>
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>

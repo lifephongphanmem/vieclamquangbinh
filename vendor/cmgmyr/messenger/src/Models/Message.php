@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Message.
- *
- * @method static Builder|self unreadForUser(int $userId)
+ * @method static Builder|self unreadForUser(mixed $userId)
  */
 class Message extends Eloquent
 {
@@ -39,13 +37,6 @@ class Message extends Eloquent
     protected $fillable = ['thread_id', 'user_id', 'body'];
 
     /**
-     * The attributes that should be mutated to date's.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
      * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
@@ -58,11 +49,11 @@ class Message extends Eloquent
     /**
      * Thread relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      *
      * @codeCoverageIgnore
      */
-    public function thread(): BelongsTo
+    public function thread()
     {
         return $this->belongsTo(Models::classname(Thread::class), 'thread_id', 'id');
     }
@@ -70,11 +61,11 @@ class Message extends Eloquent
     /**
      * User relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      *
      * @codeCoverageIgnore
      */
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(Models::user(), 'user_id');
     }
@@ -82,11 +73,11 @@ class Message extends Eloquent
     /**
      * Participants relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      *
      * @codeCoverageIgnore
      */
-    public function participants(): HasMany
+    public function participants()
     {
         return $this->hasMany(Models::classname(Participant::class), 'thread_id', 'thread_id');
     }
@@ -94,9 +85,9 @@ class Message extends Eloquent
     /**
      * Recipients of this message.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function recipients(): HasMany
+    public function recipients()
     {
         return $this->participants()->where('user_id', '!=', $this->user_id);
     }
@@ -104,11 +95,11 @@ class Message extends Eloquent
     /**
      * Returns unread messages given the userId.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @param mixed $userId
+     * @return Builder
      */
-    public function scopeUnreadForUser(Builder $query, int $userId): Builder
+    public function scopeUnreadForUser(Builder $query, $userId)
     {
         return $query->has('thread')
             ->where('user_id', '!=', $userId)

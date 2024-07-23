@@ -25,11 +25,11 @@ class Participant extends Eloquent
     protected $fillable = ['thread_id', 'user_id', 'last_read'];
 
     /**
-     * The attributes that should be mutated to date's.
+     * The attributes that should be cast.
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'last_read'];
+    protected $casts = ['last_read' => 'datetime'];
 
     /**
      * {@inheritDoc}
@@ -44,11 +44,11 @@ class Participant extends Eloquent
     /**
      * Thread relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      *
      * @codeCoverageIgnore
      */
-    public function thread(): BelongsTo
+    public function thread()
     {
         return $this->belongsTo(Models::classname(Thread::class), 'thread_id', 'id');
     }
@@ -56,11 +56,11 @@ class Participant extends Eloquent
     /**
      * User relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      *
      * @codeCoverageIgnore
      */
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(Models::user(), 'user_id');
     }

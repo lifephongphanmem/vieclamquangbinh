@@ -14,7 +14,9 @@ class DbCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'db {connection? : The database connection that should be used}';
+    protected $signature = 'db {connection? : The database connection that should be used}
+               {--read : Connect to the read connection}
+               {--write : Connect to the write connection}';
 
     /**
      * The console command description.
@@ -62,6 +64,20 @@ class DbCommand extends Command
 
         if (! empty($connection['url'])) {
             $connection = (new ConfigurationUrlParser)->parseConfiguration($connection);
+        }
+
+        if ($this->option('read')) {
+            if (is_array($connection['read']['host'])) {
+                $connection['read']['host'] = $connection['read']['host'][0];
+            }
+
+            $connection = array_merge($connection, $connection['read']);
+        } elseif ($this->option('write')) {
+            if (is_array($connection['write']['host'])) {
+                $connection['write']['host'] = $connection['write']['host'][0];
+            }
+
+            $connection = array_merge($connection, $connection['write']);
         }
 
         return $connection;
@@ -127,8 +143,8 @@ class DbCommand extends Command
             '--user='.$connection['username'],
         ], $this->getOptionalArguments([
             'password' => '--password='.$connection['password'],
-            'unix_socket' => '--socket='.$connection['unix_socket'],
-            'charset' => '--default-character-set='.$connection['charset'],
+            'unix_socket' => '--socket='.($connection['unix_socket'] ?? ''),
+            'charset' => '--default-character-set='.($connection['charset'] ?? ''),
         ], $connection), [$connection['database']]);
     }
 
