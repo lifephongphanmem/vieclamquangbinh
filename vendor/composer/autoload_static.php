@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
+class ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -3677,6 +3677,7 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
         'Mockery\\CountValidator\\AtLeast' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/AtLeast.php',
         'Mockery\\CountValidator\\AtMost' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/AtMost.php',
         'Mockery\\CountValidator\\CountValidatorAbstract' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/CountValidatorAbstract.php',
+        'Mockery\\CountValidator\\CountValidatorInterface' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/CountValidatorInterface.php',
         'Mockery\\CountValidator\\Exact' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/Exact.php',
         'Mockery\\CountValidator\\Exception' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CountValidator/Exception.php',
         'Mockery\\Exception' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception.php',
@@ -6490,6 +6491,7 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
         'Symfony\\Contracts\\Service\\ServiceSubscriberInterface' => __DIR__ . '/..' . '/symfony/service-contracts/ServiceSubscriberInterface.php',
         'Symfony\\Contracts\\Service\\ServiceSubscriberTrait' => __DIR__ . '/..' . '/symfony/service-contracts/ServiceSubscriberTrait.php',
         'Symfony\\Contracts\\Service\\Test\\ServiceLocatorTest' => __DIR__ . '/..' . '/symfony/service-contracts/Test/ServiceLocatorTest.php',
+        'Symfony\\Contracts\\Service\\Test\\ServiceLocatorTestCase' => __DIR__ . '/..' . '/symfony/service-contracts/Test/ServiceLocatorTestCase.php',
         'Symfony\\Contracts\\Translation\\LocaleAwareInterface' => __DIR__ . '/..' . '/symfony/translation-contracts/LocaleAwareInterface.php',
         'Symfony\\Contracts\\Translation\\Test\\TranslatorTest' => __DIR__ . '/..' . '/symfony/translation-contracts/Test/TranslatorTest.php',
         'Symfony\\Contracts\\Translation\\TranslatableInterface' => __DIR__ . '/..' . '/symfony/translation-contracts/TranslatableInterface.php',
@@ -6575,10 +6577,10 @@ class ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitea9d6f1e56691f84e5f173248cbf2a42::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d::$classMap;
 
         }, null, ClassLoader::class);
     }
