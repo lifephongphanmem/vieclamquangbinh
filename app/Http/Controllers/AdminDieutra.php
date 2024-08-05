@@ -823,20 +823,22 @@ class AdminDieutra extends Controller
             } else {
                 $xa['nu'] += 1;
             }
-            switch ($tmp['tinhtranghdkt']) {
-                case '1': {
-                        $xa['ldcovieclam'] += 1;
-                        break;
-                    }
-                case '2': {
-                        $xa['ldthatnghiep'] += 1;
-                        break;
-                    }
-                case '3': {
-                        $xa['ldkhongthamgia'] += 1;
-                        break;
-                    }
-            }
+            if (isset($tmp['tinhtranghdkt'])) {
+                switch ($tmp['tinhtranghdkt']) {
+                    case '1': {
+                            $xa['ldcovieclam'] += 1;
+                            break;
+                        }
+                    case '2': {
+                            $xa['ldthatnghiep'] += 1;
+                            break;
+                        }
+                    case '3': {
+                            $xa['ldkhongthamgia'] += 1;
+                            break;
+                        }
+                }
+            };
 
             if (!isset($cccd)) {
                 $xa['ldtren15'] += 1;

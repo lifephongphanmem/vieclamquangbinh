@@ -662,43 +662,54 @@ class AdminNhankhau extends Controller
 
         if ($model_check->vieclammongmuon == '1') {
             if ($inputs['vieclammongmuon'] == '2') {
-                $xa['trongnuoc'] = $tonghopcld->trongnuoc == 0 ? 0 : $tonghopcld->trongnuoc - 1;
-                $xa['nuocngoai'] = $tonghopcld->nuocngoai + 1;
+                // $xa['trongnuoc'] = $tonghopcld->trongnuoc == 0 ? 0 : $tonghopcld->trongnuoc - 1;
+                // $xa['nuocngoai'] = $tonghopcld->nuocngoai + 1;
+                $tonghopcld->trongnuoc = $tonghopcld->trongnuoc == 0 ? 0 : $tonghopcld->trongnuoc - 1;
+                $tonghopcld->nuocngoai = $tonghopcld->nuocngoai + 1;
             }
             if ($inputs['vieclammongmuon'] == '3') {
-                $xa['nuocngoai'] = $tonghopcld->nuocngoai + 1;
+                // $xa['nuocngoai'] = $tonghopcld->nuocngoai + 1;
+                $tonghopcld->nuocngoai = $tonghopcld->nuocngoai + 1;
             }
         }
         if ($model_check->vieclammongmuon == '2') {
             if ($inputs['vieclammongmuon'] == '1') {
-                $xa['trongnuoc'] = $tonghopcld->trongnuoc + 1;
-                $xa['nuocngoai'] =  $tonghopcld->nuocngoai == 0 ? 0 : $tonghopcld->nuocngoai - 1;
+                // $xa['trongnuoc'] = $tonghopcld->trongnuoc + 1;
+                // $xa['nuocngoai'] =  $tonghopcld->nuocngoai == 0 ? 0 : $tonghopcld->nuocngoai - 1;
+                $tonghopcld->trongnuoc = $tonghopcld->trongnuoc + 1;
+                $tonghopcld->nuocngoai =  $tonghopcld->nuocngoai == 0 ? 0 : $tonghopcld->nuocngoai - 1;
             }
             if ($inputs['vieclammongmuon'] == '3') {
-                $xa['trongnuoc'] = $tonghopcld->trongnuoc + 1;
+                // $xa['trongnuoc'] = $tonghopcld->trongnuoc + 1;
+                $tonghopcld->trongnuoc = $tonghopcld->trongnuoc + 1;
             }
         }
         if ($model_check->vieclammongmuon == '3') {
             if ($inputs['vieclammongmuon'] == '1') {
-                $xa['nuocngoai'] = $tonghopcld->nuocngoai == 0 ? 0 : $tonghopcld->nuocngoai - 1;
+                // $xa['nuocngoai'] = $tonghopcld->nuocngoai == 0 ? 0 : $tonghopcld->nuocngoai - 1;
+                $tonghopcld->nuocngoai = $tonghopcld->nuocngoai == 0 ? 0 : $tonghopcld->nuocngoai - 1;
             }
             if ($inputs['vieclammongmuon'] == '2') {
-                $xa['trongnuoc'] =  $tonghopcld->trongnuoc == 0 ? 0 : $tonghopcld->trongnuoc - 1;
+                // $xa['trongnuoc'] =  $tonghopcld->trongnuoc == 0 ? 0 : $tonghopcld->trongnuoc - 1;
+                $tonghopcld->trongnuoc =  $tonghopcld->trongnuoc == 0 ? 0 : $tonghopcld->trongnuoc - 1;
             }
         }
         if ($model_check->nganhnghemuonhoc != null) {
             if ($inputs['nganhnghemuonhoc'] == null) {
-                $xa['hocnghe'] = $tonghopcld->hocnghe == 0 ? 0 : $tonghopcld->hocnghe - 1;
+                // $xa['hocnghe'] = $tonghopcld->hocnghe == 0 ? 0 : $tonghopcld->hocnghe - 1;
+                $tonghopcld->hocnghe = $tonghopcld->hocnghe == 0 ? 0 : $tonghopcld->hocnghe - 1;
             }
         } else {
             if ($inputs['nganhnghemuonhoc'] != null) {
-                $xa['hocnghe'] = $tonghopcld->hocnghe + 1;
+                // $xa['hocnghe'] = $tonghopcld->hocnghe + 1;
+                $tonghopcld->hocnghe = $tonghopcld->hocnghe + 1;
             }
         }
-
-        if (isset($xa)) {
-            $tonghopcld->update($xa);
-        }
+        $tonghopcld->save();
+        // if (isset($xa)) {
+        //     $tonghopcld->update($xa);
+           
+        // }
 
 
 
@@ -937,11 +948,11 @@ class AdminNhankhau extends Controller
             }
             if ($model->tinhtranghdkt == '2') {
                 $xa['ldthatnghiep'] = $tonghopcld->ldthatnghiep - 1;
-                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa['ldcovieclam']]);
+                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldthatnghiep' => $xa['ldthatnghiep']]);
             }
             if ($model->tinhtranghdkt == '3') {
                 $xa['ldkhongthamgia'] = $tonghopcld->ldkhongthamgia - 1;
-                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa['ldcovieclam']]);
+                $tonghopcld->update(['ldtren15' => $ldtren15, 'ldkhongthamgia' => $xa['ldkhongthamgia']]);
             }
             // if ($model->tinhtranghdkt == null) {
 

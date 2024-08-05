@@ -196,7 +196,7 @@
                                                                 <label>Trình độ CMKT <span
                                                                         class="text-danger">*</span></label>
                                                                 <select name="chuyenmonkythuat[]"
-                                                                    class="form-control selec2basic">
+                                                                    class="form-control selec2basic" required>
                                                                     <option value="">---Chọn trình độ CMKT---
                                                                     </option>
                                                                     @foreach ($list_cmkt as $val)
@@ -211,7 +211,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label>Tình trạng tham gia hoạt động kinh tế <span class="text-danger">*</span></label>
-                                                                <select name="tinhtranghdkt[]" class="form-control selec2basic">
+                                                                <select name="tinhtranghdkt[]" class="form-control selec2basic" required>
                                                                     <option value="">---Chọn tình trạng HĐKT---</option>
                                                                     @foreach ($m_tinhtrangvl as $val)
                                                                         <option value="{{$val->stt}}">{{$val->tentgkt}}</option>
