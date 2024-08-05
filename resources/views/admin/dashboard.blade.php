@@ -493,9 +493,7 @@
                                             @endif
                                         </div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có
-                                            việc
-                                            làm</a>
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có nhu cầu làm việc trong nước</a>
                                     </div>
                                 </div>
                             </div>
@@ -529,8 +527,7 @@
                                             @endif
                                         </div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ thất
-                                            nghiệp</a>
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có nhu cầu làm việc nước ngoài</a>
                                     </div>
                                 </div>
                             </div>
@@ -564,9 +561,7 @@
                                             @endif
                                         </div>
                                         <a href="#"
-                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ
-                                            không tham
-                                            gia HĐKT</a>
+                                            class="text-inverse-primary font-weight-bold font-size-lg mt-1">LĐ có nhu cầu học nghề</a>
                                     </div>
                                 </div>
                             </div>
