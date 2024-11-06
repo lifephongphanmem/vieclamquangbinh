@@ -261,7 +261,7 @@ class UserController extends Controller
 		$inputs['phanloaitk'] = 1;
 		// $inputs['email']='a@gmail.com';
 		$inputs['status'] = 1;
-		$inputs['phanloai'] == 'tonghop' ? $inputs['tonghop'] = 1 : $inputs['taikhoan'] = 1;
+		$inputs['phanloai'] == 'tonghop' ? $inputs['tonghop'] = 1 : $inputs['nhaplieu'] = 1;
 		// dd($inputs);
 		User::create($inputs);
 		return redirect('/TaiKhoan/DanhSach/?madv=' . $inputs['madv']);

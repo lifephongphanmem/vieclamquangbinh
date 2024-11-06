@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Danhmuc;
 use App\Http\Controllers\Controller;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdonvi;
+use App\Models\Danhmuc\dsnhomtaikhoan;
+use App\Models\Danhmuc\dsnhomtaikhoan_phanquyen;
 use App\Models\Hethong\dstaikhoan_phanquyen;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,9 +16,12 @@ class canboController extends Controller
     public function index(Request $request)
     {
         $inputs = $request->all();
+        
         $m_donvi = getDonVi(session('admin')->sadmin);
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
-        $model = User::wherenotnull('mataikhoan')->get();
+ 
+        $model = User::where('madv',$inputs['madv'])->wherenotnull('mataikhoan')->get();
+        // dd($model);
         $model_dv = dmdonvi::where('madv', $inputs['madv'])->first();
         $m_xa = danhmuchanhchinh::where('id', $model_dv->madiaban)->first();
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
@@ -44,10 +49,13 @@ class canboController extends Controller
                 ->select('dmdonvi.madv', 'danhmuchanhchinh.name')
                 ->where('parent', $inputs['mahuyen'])->get();
         }
+        $a_nhomchucnang = array_column(dsnhomtaikhoan::all()->toarray(), 'tennhomchucnang', 'manhomchucnang');
+        $inputs['url']='/danh_muc/canbo/ThongTin';
         return view('danhmuc.canbo.index')
             ->with('model', $model)
             ->with('a_huyen', $a_huyen)
             ->with('a_xa', $a_xa)
+            ->with('a_nhomchucnang', $a_nhomchucnang)
             ->with('inputs', $inputs)
             ->with('baocao', getdulieubaocao());
     }
@@ -55,20 +63,43 @@ class canboController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        $user=User::where('username',$inputs['username'])->first();
-        if(isset($user)){
-			return view('errors.tontai_dulieu')
-				->with('message', 'Tên tài khoản đã tồn tại')
-				->with('furl', '/danh_muc/canbo/ThongTin');
+
+        $user = User::where('username', $inputs['username'])->first();
+        if (isset($inputs['password'])) {
+            $inputs['password'] = md5($inputs['password']);
         }
-        $inputs['mataikhoan'] = getdate()[0];
-        $inputs['phanloaitk'] = 1;
-        $inputs['password'] = md5($inputs['password']);
-        // dd($inputs);
-        User::create($inputs);
+        $inputs['phanloai'] == 'tonghop' ? $inputs['tonghop'] = 1 : $inputs['nhaplieu'] = 1;
+        if ($inputs['id'] != null) {
+            User::FindOrFail($inputs['id'])->update($inputs);
+        } else {
+            if (isset($user)) {
+                return view('errors.tontai_dulieu')
+                    ->with('message', 'Tên tài khoản đã tồn tại')
+                    ->with('furl', '/danh_muc/canbo/ThongTin');
+            }
+            $inputs['mataikhoan'] = getdate()[0];
+            $inputs['phanloaitk'] = 1;
+
+
+            // dd($inputs);
+            User::create($inputs);
+            //Phân quyền cho tài khoản dựa trên nhóm chức năng
+            $a_phanquyen = [];
+            foreach (dsnhomtaikhoan_phanquyen::where('manhomchucnang', $inputs['manhomchucnang'])->get() as $phanquyen) {
+                $a_phanquyen[] = [
+                    "tendangnhap" => $inputs['username'],
+                    "machucnang" => $phanquyen->machucnang,
+                    "phanquyen" => $phanquyen->phanquyen,
+                    "danhsach" => $phanquyen->danhsach,
+                    "thaydoi" => $phanquyen->thaydoi,
+                    "hoanthanh" => $phanquyen->hoanthanh,
+                ];
+            }
+            dstaikhoan_phanquyen::insert($a_phanquyen);
+        }
 
         return redirect('/danh_muc/canbo/ThongTin')
-            ->with('success', 'Thêm thành công');
+            ->with('success', 'Thao tác thành công');
     }
 
     public function destroy($id)
@@ -82,5 +113,30 @@ class canboController extends Controller
 
         return redirect('/danh_muc/canbo/ThongTin')
             ->with('success', 'Xóa thành công');
+    }
+    public function kiemtra(Request $request)
+    {
+        $inputs = $request->all();
+        $model = User::where('username', $inputs['taikhoan'])->first();
+        $result = array(
+            'status' => false,
+            'message' => null
+        );
+        if (isset($model)) {
+            //tài khoản tồn tại
+            $result['message'] = '<p id="thongbao" class="text-danger">Tài khoản đã tồn tại</p>';
+        } else {
+            $result['message'] = '<p id="thongbao" class="text-success">Tài khoản hợp lệ</p>';
+        }
+        $result['status'] = true;
+
+        return response()->json($result);
+    }
+
+    public function edit(Request $request)
+    {
+        $inputs = $request->all();
+        $model = User::FindOrFail($inputs['id']);
+        return response()->json($model);
     }
 }

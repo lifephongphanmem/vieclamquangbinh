@@ -14,6 +14,9 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            $('#madv_cb').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv_cb').val() ;
+            });
         });
     </script>
 @stop
@@ -34,8 +37,8 @@
                         {{-- <button onclick="create()" data-toggle="modal" data-target="#create_edit_modal"
                             class="btn btn-m btn-success mr-2" title="Thêm mới"><i class="fa fa-plus"></i>Thêm mới</button> --}}
                         {{-- @endif --}}
-                        <button onclick="create()"
-                        class="btn btn-m btn-success mr-2" title="Thêm mới"><i class="fa fa-plus"></i>Thêm mới</button>
+                        <button onclick="create()" class="btn btn-m btn-success mr-2" title="Thêm mới"><i
+                                class="fa fa-plus"></i>Thêm mới</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -79,22 +82,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($model as $k=>$ct)
+                            @foreach ($model as $k => $ct)
                                 <tr>
-                                    <td>{{++$k}}</td>
-                                    <td>{{$ct->name}}</td>
-                                    <td>{{getDayVn($ct->ngaysinh)}}</td>
-                                    <td>{{$ct->cccd}}</td>
-                                    <td>{{$ct->sdt}}</td>
-                                    <td>{{$ct->diachi}}</td>
+                                    <td>{{ ++$k }}</td>
+                                    <td>{{ $ct->name }}</td>
+                                    <td>{{ getDayVn($ct->ngaysinh) }}</td>
+                                    <td>{{ $ct->cccd }}</td>
+                                    <td>{{ $ct->sdt }}</td>
+                                    <td>{{ $ct->diachi }}</td>
                                     <td></td>
                                     <td>
-                                        <button title="Sửa thông tin" data-toggle="modal" data-target="#create_edit_modal" type="button" 
-                                        onclick="edit('{{$ct->id}}')" class="btn btn-sm btn-clean btn-icon">
+                                        <button title="Sửa thông tin" data-toggle="modal" data-target="#create_edit_modal"
+                                            type="button" onclick="edit('{{ $ct->id }}')"
+                                            class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la flaticon-edit-1 text-primary"></i>
                                         </button>
-                                        <button title="Xóa thông tin" data-toggle="modal" data-target="#delete-modal-confirm" type="button" 
-                                         onclick="cfDel('{{'/danh_muc/canbo/delete/'.$ct->id}}')"  class="btn btn-sm btn-clean btn-icon">
+                                        <button title="Xóa thông tin" data-toggle="modal"
+                                            data-target="#delete-modal-confirm" type="button"
+                                            onclick="cfDel('{{ '/danh_muc/canbo/delete/' . $ct->id }}')"
+                                            class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg flaticon-delete text-danger"></i>
                                         </button>
                                     </td>
@@ -140,21 +146,52 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Họ tên*</b></label>
                                 <input type="text" id="hoten" name="name" class="form-control"
-                                    onchange="taotk()" />
+                                    onkeyup="taotk()" />
                             </div>
                         </div>
                         <div class="col-xl-4">
                             <div class="form-group fv-plugins-icon-container">
-                                <label><b>Tài khoản</b></label>
+                                <label><b>Tài khoản</b></label><span style="float: right"><a onclick="Kiemtra()"
+                                        class="btn btn-link-success font-weight-bold">Kiểm tra</a></span>
                                 <input type="text" id="username" name="username" placeholder="Viết liền không dấu"
                                     class="form-control" />
+                                <p id='thongbao'></p>
                             </div>
-                        </div>                       
-                         <div class="col-xl-4">
+                        </div>
+                        <div class="col-xl-4">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Mật khẩu</b></label>
-                                <input type="password" id="password" name="password" value="123456abc"
+                                <input type="password" id="password" name="password" placeholder="Không thay đổi thì không cần điền" value="123456abc"
                                     class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Phân loại</b></label>
+                                <select class="form-control" name="phanloai">
+                                    <option value="tonghop">Tổng hợp</option>
+                                    <option value="nhaplieu">Nhập liệu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Cấp độ</b></label>
+                                <select class="form-control" name="capdo">
+                                    <option value="T">Tài khoản cấp Tỉnh</option>
+                                    <option value="H">Tài khản cấp Huyện</option>
+                                    <option value="X">Tài khản cấp Xã</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Nhóm chức năng</b></label>
+                                <select class="form-control" name="manhomchucnang">
+                                    @foreach ($a_nhomchucnang as $key => $val)
+                                        <option value="{{ $key }}">{{ $val }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -172,7 +209,7 @@
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Giới tính</b></label>
-                                <select type="text" id="gioitimj" name="gioitimj" class="form-control">
+                                <select type="text" name="gioitinh" class="form-control">
                                     <option value="0">Nam</option>
                                     <option value="1">Nữ</option>
                                 </select>
@@ -202,14 +239,16 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
-                    <button type="submit"  class="btn btn-danger font-weight-bold">Đồng ý</button>
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
                 </div>
                 {!! Form::close() !!}
 
             </div>
         </div>
     </div>
+
 
     @include('includes.delete')
     <script>
@@ -238,7 +277,7 @@
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-                url: '/danh_muc/dm_trinh_do_gdpt/edit/' + id,
+                url: '/danh_muc/canbo/edit',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
@@ -246,33 +285,78 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
+                    var phanloai='';
+                    if(data.tonghop == 1){
+                        phanloai='tonghop'
+                    }else if(data.nhaplieu == 1){
+                        phanloai='nhaplieu';
+                    }
                     var form = $('#frm_create_edit');
                     form.find("[name='id']").val(data.id);
-                    form.find("[name='tengdpt']").val(data.tengdpt);
-                    form.find("[name='trangthai']").val(data.trangthai).trigger('change');
-                    form.find("[name='stt']").val(data.stt);
+                    form.find("[name='madv']").val(data.madv);
+                    form.find("[name='name']").val(data.name);
+                    form.find("[name='password']").val('');
+                    form.find("[name='ngaysinh']").val(data.ngaysinh);
+                    form.find("[name='username']").val(data.username);
+                    form.find("[name='sdt']").val(data.sdt);
+                    form.find("[name='cccd']").val(data.cccd);
+                    form.find("[name='diachi']").val(data.diachi);
+                    form.find("[name='gioitinh']").val(data.gioitinh).trigger('change');
+                    form.find("[name='capdo']").val(data.capdo).trigger('change');
+                    form.find("[name='phanloai']").val(phanloai).trigger('change');
+                    form.find("[name='nhomchucnang']").val(data.nhomchucnang).trigger('change');
+ 
                 },
                 error: function(message) {
                     toastr.error(message, 'Lỗi!');
                 }
             });
         }
+
         function create() {
-            var madv=$('#madv_cb').val();
-            if(madv == ''){
+            var madv = $('#madv_cb').val();
+            if (madv == '') {
                 toastr.error('Chọn xã trước khi thêm mới', 'Lỗi!');
-            }else{
+            } else {
                 $('#create_edit_modal').modal('show');
                 var form = $('#frm_create_edit');
-            form.find("[name='id']").val(null);
-            form.find("[name='hoten']").val('');
-            form.find("[name='ngaysinh']").val('');
-            form.find("[name='name']").val('');
-            form.find("[name='sdt']").val('');
-            form.find("[name='cccd']").val('');
-            form.find("[name='madv']").val(madv);
+                form.find("[name='id']").val(null);
+                form.find("[name='hoten']").val('');
+                form.find("[name='ngaysinh']").val('');
+                form.find("[name='name']").val('');
+                form.find("[name='sdt']").val('');
+                form.find("[name='cccd']").val('');
+                form.find("[name='madv']").val(madv);
             }
 
+        }
+
+        function Kiemtra() {
+            var taikhoan = $('#username').val();
+            console.log(taikhoan);
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/danh_muc/canbo/kiemtra',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    taikhoan: taikhoan
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.status) {
+                        $('#thongbao').replaceWith(data.message)
+                    }
+                    // var form = $('#frm_create_edit');
+                    // form.find("[name='id']").val(data.id);
+                    // form.find("[name='tengdpt']").val(data.tengdpt);
+                    // form.find("[name='trangthai']").val(data.trangthai).trigger('change');
+                    // form.find("[name='stt']").val(data.stt);
+                },
+                error: function(message) {
+                    toastr.error(message, 'Lỗi!');
+                }
+            });
         }
     </script>
 @endsection

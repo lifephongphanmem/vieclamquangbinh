@@ -179,6 +179,8 @@ Route::prefix('danh_muc')->group(function () {
         Route::get('/ThongTin',[canboController::class,'index']);
         Route::post('/store',[canboController::class,'store']);
         Route::get('/delete/{id}',[canboController::class,'destroy']);
+        Route::get('/kiemtra',[canboController::class,'kiemtra']);
+        Route::get('/edit',[canboController::class,'edit']);
         
     });
 });
