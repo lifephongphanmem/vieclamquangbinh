@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Danhmuc\canboController;
 use App\Http\Controllers\Danhmuc\capbacController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Danhmuc\dmchucvuController;
@@ -173,5 +174,11 @@ Route::prefix('danh_muc')->group(function () {
         Route::post('/store_update', [capbacController::class, 'store_update']);
         Route::get('/edit/{id}', [capbacController::class, 'edit']);
         Route::get('/delete/{id}', [capbacController::class, 'delete']);
+    });
+    Route::prefix('canbo')->group(function(){
+        Route::get('/ThongTin',[canboController::class,'index']);
+        Route::post('/store',[canboController::class,'store']);
+        Route::get('/delete/{id}',[canboController::class,'destroy']);
+        
     });
 });

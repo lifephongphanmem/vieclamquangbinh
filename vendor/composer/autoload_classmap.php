@@ -34,6 +34,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Customer' => $baseDir . '/app/Http/Controllers/Customer.php',
     'App\\Http\\Controllers\\Danhmuc\\DmdonviController' => $baseDir . '/app/Http/Controllers/Danhmuc/DmdonviController.php',
+    'App\\Http\\Controllers\\Danhmuc\\canboController' => $baseDir . '/app/Http/Controllers/Danhmuc/canboController.php',
     'App\\Http\\Controllers\\Danhmuc\\capbacController' => $baseDir . '/app/Http/Controllers/Danhmuc/capbacController.php',
     'App\\Http\\Controllers\\Danhmuc\\danhmuchanhchinhController' => $baseDir . '/app/Http/Controllers/Danhmuc/danhmuchanhchinhController.php',
     'App\\Http\\Controllers\\Danhmuc\\dmchucvuController' => $baseDir . '/app/Http/Controllers/Danhmuc/dmchucvuController.php',
