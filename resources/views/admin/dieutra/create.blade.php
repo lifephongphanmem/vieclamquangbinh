@@ -139,6 +139,16 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
+                                                                <label>Mối quan hệ</label>
+                                                                <select class="form-control" name="mqh[]">
+                                                                    <option value="CH">Chủ hộ</option>
+                                                                    <option value="VO">Vợ</option>
+                                                                    <option value="CON">Con</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
                                                                 <label>Tham gia BHXH</label>
                                                                 <select name="bhxh[]" class="form-control selec2basic">
                                                                     <option value="">---Chọn---</option>

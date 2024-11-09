@@ -214,8 +214,8 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Giới tính</b></label>
                                 <select type="text" name="gioitinh" class="form-control">
-                                    <option value="0">Nam</option>
-                                    <option value="1">Nữ</option>
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
                                 </select>
                             </div>
                         </div>

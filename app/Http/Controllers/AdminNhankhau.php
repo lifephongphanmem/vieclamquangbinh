@@ -353,9 +353,12 @@ class AdminNhankhau extends Controller
     public function editho(Request $request, $nkid)
     {
         $request = request();
+        $inputs=$request->all();
+        // dd($nkid);
         $model = new Nhankhau();
 
         $ld = $model::find($nkid);
+    
         $inputs = $request->all();
         //filter
         $search = $request->search;
@@ -366,28 +369,32 @@ class AdminNhankhau extends Controller
 
         $dm_filter = $request->dm_filter;
 
-        $lds = DB::table('nhankhau')
-            ->when($search, function ($query, $search) {
-                return $query->whereRaw("(hoten like  '%" . $search . "%' OR cmnd like '%" . $search . "%')");
-            })
+        // $lds = DB::table('nhankhau')
+        //     ->when($search, function ($query, $search) {
+        //         return $query->whereRaw("(hoten like  '%" . $search . "%' OR cmnd like '%" . $search . "%')");
+        //     })
 
 
-            ->when($gioitinh_filter, function ($query, $gioitinh_filter) {
-                return $query->where('nhankhau.gioitinh', 'like', '%' . $gioitinh_filter . '%');
-            })
+        //     ->when($gioitinh_filter, function ($query, $gioitinh_filter) {
+        //         return $query->where('nhankhau.gioitinh', 'like', '%' . $gioitinh_filter . '%');
+        //     })
 
-            ->when($ld, function ($query, $ld) {
-                return $query->where('nhankhau.ho', '=', $ld->ho);
-            })
-            ->when($ld, function ($query, $ld) {
-                return $query->where('nhankhau.danhsach_id', '=', $ld->danhsach_id);
-            })
-            ->when($age_filter, function ($query, $age_filter) {
-                return $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > " . $age_filter);
-            })
-            ->where('kydieutra', 'like', '%' . $inputs['kydieutra'] . '%')
-            ->get();
+        //     ->when($ld, function ($query, $ld) {
+        //         return $query->where('nhankhau.ho', '=', $ld->ho);
+        //     })
+        //     ->when($ld, function ($query, $ld) {
+        //         return $query->where('nhankhau.danhsach_id', '=', $ld->danhsach_id);
+        //     })
+        //     ->when($age_filter, function ($query, $age_filter) {
+        //         return $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > " . $age_filter);
+        //     })
+        //     ->where('kydieutra', 'like', '%' . $inputs['kydieutra'] . '%')
+        //     ->get();
+        // dd($ld->ho);
+        $lds=nhankhauModel::where('ho',$ld->ho)->where('kydieutra',$inputs['kydieutra'])->where('madv',$inputs['madv'])->get();
+        // dd($lds);
         $inputs['nkid'] = $nkid;
+        // dd($lds);
         return view('admin.nhankhau.editho')
             ->with('lds', $lds)
             ->with('baocao', getdulieubaocao())

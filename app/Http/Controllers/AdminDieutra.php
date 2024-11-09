@@ -712,6 +712,7 @@ class AdminDieutra extends Controller
     {
         // dd($request->all());
         $inputs = $request->all();
+        // dd($inputs);
         // $inputs['vieclammongmuon']=implode(';',$inputs['vieclammongmuon']);
         // nhankhauModel::create($inputs);
         $note = '';
