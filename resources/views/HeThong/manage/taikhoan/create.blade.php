@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-lg-3">
                         <label>Tài khoản truy cập<span class="require">*</span></label>
-                        <input class="form-control" name="username" type="text">
+                        <input class="form-control" name="username" placeholder="Viết liền ký tự không dấu" type="text">
                     </div>
                 </div>
 

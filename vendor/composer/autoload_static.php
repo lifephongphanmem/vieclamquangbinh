@@ -344,8 +344,8 @@ class ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -597,6 +597,7 @@ class ComposerStaticInit5001df8ac6cdc4f154e6cacdf451cb3d
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Customer' => __DIR__ . '/../..' . '/app/Http/Controllers/Customer.php',
         'App\\Http\\Controllers\\Danhmuc\\DmdonviController' => __DIR__ . '/../..' . '/app/Http/Controllers/Danhmuc/DmdonviController.php',
+        'App\\Http\\Controllers\\Danhmuc\\canboController' => __DIR__ . '/../..' . '/app/Http/Controllers/Danhmuc/canboController.php',
         'App\\Http\\Controllers\\Danhmuc\\capbacController' => __DIR__ . '/../..' . '/app/Http/Controllers/Danhmuc/capbacController.php',
         'App\\Http\\Controllers\\Danhmuc\\danhmuchanhchinhController' => __DIR__ . '/../..' . '/app/Http/Controllers/Danhmuc/danhmuchanhchinhController.php',
         'App\\Http\\Controllers\\Danhmuc\\dmchucvuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Danhmuc/dmchucvuController.php',

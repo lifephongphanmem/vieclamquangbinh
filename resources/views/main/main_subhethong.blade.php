@@ -204,6 +204,16 @@
                                     </a>
                                 </li>
                                 {{-- @endif --}}
+                                {{-- @if (chkPhanQuyen('capbac', 'phanquyen')) --}}
+                                <li class="menu-item" aria-haspopup="true">
+                                    <a href="{{ url('/danh_muc/canbo/ThongTin') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Cán bộ</span>
+                                    </a>
+                                </li>
+                                {{-- @endif --}}
                             </ul>
                         </div>
                     </li>

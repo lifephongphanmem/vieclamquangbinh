@@ -70,7 +70,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv"  class="form-control select2basic" style="width:100%">
                             @if (session('admin')->capdo == 'T')
                                 <option value="">Tất cả</option>
                             @endif
@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic" style="width:100%">
+                        <select name="kydieutra"  class="form-control select2basic" style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}">
                                     {{ $ct }}</option>
@@ -130,7 +130,7 @@
                     <div class="col-lg-12">
                         <div class="col-lg-10 d-none mt-2" id='gt_xa'>
                             <label class="control-label">Giới tính</label>
-                            <select name="gioitinh" id="" class="form-control select2basic"
+                            <select name="gioitinh"  class="form-control select2basic"
                                 style="width:100%">
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='hdkt_xa'>
                             <label class="control-label">Tình trạng HĐKT</label>
-                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                            <select name="tinhtranghdkt"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -148,7 +148,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='ut_xa'>
                             <label class="control-label">Đối tượng UT</label>
-                            <select name="uutien" id="" class="form-control select2basic"
+                            <select name="uutien" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmuutien'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -158,7 +158,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='gdpt_xa'>
                             <label class="control-label">Trình độ DGPT</label>
-                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                            <select name="trinhdogiaoduc"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdoGDPT'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -168,7 +168,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='cmkt_xa'>
                             <label class="control-label">Trình độ CMKT</label>
-                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                            <select name="chuyenmonkythuat" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdocmkt'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -181,7 +181,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -207,7 +207,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv"  class="form-control select2basic" style="width:100%">
                             @if (session('admin')->capdo == 'T')
                                 <option value="">Tất cả</option>
                             @endif
@@ -221,7 +221,7 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}">
@@ -268,7 +268,7 @@
                     <div class="col-lg-12">
                         <div class="col-lg-10 d-none mt-2" id='gt_huyen'>
                             <label class="control-label">Giới tính</label>
-                            <select name="gioitinh" id="" class="form-control select2basic"
+                            <select name="gioitinh" class="form-control select2basic"
                                 style="width:100%">
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
@@ -276,7 +276,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='hdkt_huyen'>
                             <label class="control-label">Tình trạng HĐKT</label>
-                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                            <select name="tinhtranghdkt" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -286,7 +286,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='ut_huyen'>
                             <label class="control-label">Đối tượng UT</label>
-                            <select name="uutien" id="" class="form-control select2basic"
+                            <select name="uutien" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmuutien'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -296,7 +296,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='gdpt_huyen'>
                             <label class="control-label">Trình độ DGPT</label>
-                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                            <select name="trinhdogiaoduc"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdoGDPT'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -306,7 +306,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='cmkt_huyen'>
                             <label class="control-label">Trình độ CMKT</label>
-                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                            <select name="chuyenmonkythuat" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdocmkt'] as $val)
                                     <option value="{{ $val->stt }}">
@@ -318,7 +318,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -343,7 +343,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra" class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}">{{ $ct }}</option>
@@ -388,7 +388,7 @@
                     <div class="col-lg-12">
                         <div class="col-lg-10 d-none mt-2" id='gt'>
                             <label class="control-label">Giới tính</label>
-                            <select name="gioitinh" id="" class="form-control select2basic"
+                            <select name="gioitinh" class="form-control select2basic"
                                 style="width:100%">
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
@@ -396,7 +396,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='hdkt'>
                             <label class="control-label">Tình trạng HĐKT</label>
-                            <select name="tinhtranghdkt" id="" class="form-control select2basic"
+                            <select name="tinhtranghdkt" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmtinhtranghdkt'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tentgkt }}</option>
@@ -405,7 +405,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='ut'>
                             <label class="control-label">Đối tượng UT</label>
-                            <select name="uutien" id="" class="form-control select2basic"
+                            <select name="uutien" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmuutien'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tendoituong }}</option>
@@ -414,7 +414,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='gdpt'>
                             <label class="control-label">Trình độ DGPT</label>
-                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                            <select name="trinhdogiaoduc" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdoGDPT'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tengdpt }}</option>
@@ -423,7 +423,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='cmkt'>
                             <label class="control-label">Trình độ CMKT</label>
-                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                            <select name="chuyenmonkythuat" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdocmkt'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tentdkt }}</option>
@@ -435,7 +435,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit" name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -460,7 +460,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
@@ -471,7 +471,7 @@
 
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv"  class="form-control select2basic" style="width:100%">
                             @if (session('admin')->capdo == 'T')
                                 {{-- <option value="">Tất cả</option> --}}
                             @endif
@@ -486,7 +486,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -511,7 +511,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
@@ -522,7 +522,7 @@
 
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv"  class="form-control select2basic" style="width:100%">
                             @if (session('admin')->capdo == 'T')
                                 <option value="">Tất cả</option>
                             @endif
@@ -538,7 +538,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -563,7 +563,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%" >
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
@@ -590,7 +590,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit" name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -599,7 +599,7 @@
     </div>
 </form>
 <!-- modal in báo cáo xã mẫu 01b-->
-<form method="POST" action="{{ '/dieutra/intonghop-mau01b' }}" accept-charset="UTF-8" id="frm_modify_xa"
+<form method="POST" action="{{ '/dieutra/intonghop-mau01b' }}" accept-charset="UTF-8" id="frm_modify_xa_mau01b"
     target="_blank">
     @csrf
     <div id="modify-modal-xa-mau01b" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
@@ -615,7 +615,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv"  class="form-control select2basic" style="width:100%">
                             @if (session('admin')->capdo == 'T')
                                 {{-- <option value="">Tất cả</option> --}}
                             @endif
@@ -628,7 +628,7 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
@@ -727,7 +727,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -737,7 +737,7 @@
 </form>
 
 <!-- modal in bao cáo huyện mẫu 01b-->
-<form method="POST" action="{{ '/dieutra/inbaocaohuyen-mau01b' }}" accept-charset="UTF-8" id="frm_modify_huyen"
+<form method="POST" action="{{ '/dieutra/inbaocaohuyen-mau01b' }}" accept-charset="UTF-8" id="frm_modify_huyen_mau01b"
     target="_blank">
     @csrf
     <div id="modify-modal-huyen-mau01b" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
@@ -752,7 +752,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic" style="width:100%">
+                        <select name="madv"  class="form-control select2basic" style="width:100%">
                             @if (session('admin')->capdo == 'T')
                                 {{-- <option value="">Tất cả</option> --}}
                             @endif
@@ -766,7 +766,7 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra" class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}" {{ $key == date('Y') ? 'selected' : '' }}>
@@ -863,7 +863,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -914,7 +914,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -924,7 +924,7 @@
 </form>
 <!--Model thị trường cung lao động-->
 <div id="thitruongld-cung-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-    <form id="frmDanhsach" method="POST" action="{{ '/baocao_tonghop/thongtincunglaodong' }}"
+    <form id="frmDanhsach_thitruonglaodong" method="POST" action="{{ '/baocao_tonghop/thongtincunglaodong' }}"
         accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
         @csrf
         <div class="modal-dialog">
@@ -963,7 +963,7 @@
 
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -973,7 +973,7 @@
 </div>
 <!--Model về thông tin cung lao động-->
 <div id="thongtin-cung-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-    <form id="frmDanhsach" method="POST" action="{{ '/mau03_xa' }}" accept-charset="UTF-8"
+    <form id="frmDanhsach_mau03" method="POST" action="{{ '/mau03_xa' }}" accept-charset="UTF-8"
         enctype="multipart/form-data" target='_blank'>
         @csrf
         <div class="modal-dialog">
@@ -986,7 +986,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Năm điều tra</label>
-                        <select class="form-control select2basic" id="nam" name="kydieutra"
+                        <select class="form-control select2basic" id="nam_mau03" name="kydieutra"
                             style="width:100%">
                             <?php $nam_start = date('Y') - 2;
                             $nam_stop = date('Y') + 2; ?>
@@ -1000,7 +1000,7 @@
 
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -1010,7 +1010,7 @@
 </div>
 <!--Model thị trường lao động-->
 <div id="thitruongld-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-    <form id="frmDanhsach" method="GET" action="{{ '/bao_cao_tong_hop/thong_tin_thi_truong_ld' }}"
+    <form id="frmDanhsach_mau04" method="GET" action="{{ '/bao_cao_tong_hop/thong_tin_thi_truong_ld' }}"
         accept-charset="UTF-8" enctype="multipart/form-data" target='_blank'>
         @csrf
         <div class="modal-dialog">
@@ -1022,7 +1022,7 @@
                 <div class="modal-body">
                     <div class="col-lg-12 mb-2">
                         <label class="control-label">Năm điều tra</label>
-                        <select class="form-control select2basic" id="nam" name="nam" style="width:100%">
+                        <select class="form-control select2basic" id="nam_mau04" name="nam" style="width:100%">
                             <?php $nam_start = date('Y') - 5;
                             $nam_stop = date('Y'); ?>
                             @for ($i = $nam_start; $i <= $nam_stop; $i++)
@@ -1035,7 +1035,7 @@
 
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -1046,7 +1046,7 @@
 <!-- modal tổng hợp -->
 <form method="POST"
     action="{{ session('admin')->capdo == 'T' ? '/baocao_tonghop/tonghoptinh' : '/baocao_tonghop/tonghop' }}"
-    accept-charset="UTF-8" id="frm_modify_tinh" target="_blank">
+    accept-charset="UTF-8" id="frm_modify_tinh_th" target="_blank">
     @csrf
     <div id="modify-modal-tonghop" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
         aria-hidden="true">
@@ -1060,7 +1060,7 @@
                     @if (session('admin')->capdo == 'T')
                         <div class="col-lg-12 mb-2">
                             <label class="control-label">Đơn vị</label>
-                            <select name="madv" id="" class="form-control select2basic"
+                            <select name="madv"  class="form-control select2basic"
                                 style="width:100%">
                                 @if (session('admin')->capdo == 'T')
                                     {{-- <option value="">Tất cả</option> --}}
@@ -1077,7 +1077,7 @@
 
                     <div class="col-lg-12">
                         <label class="control-label" style="font-weight: bold">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}">{{ $ct }}</option>
@@ -1153,7 +1153,7 @@
                     <div class="col-lg-12">
                         <div class="col-lg-10 d-none mt-2" id='gt_th'>
                             <label class="control-label" style="font-weight: bold">Giới tính</label>
-                            <select name="gioitinh" id="" class="form-control select2basic"
+                            <select name="gioitinh"  class="form-control select2basic"
                                 style="width:100%">
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
@@ -1168,7 +1168,7 @@
                             </div> --}}
                         <div class="col-lg-10 d-none mt-2" id='hdkt_th'>
                             <label class="control-label" style="font-weight: bold">Đối tượng tìm kiếm việc làm</label>
-                            <select name="doituongtimvieclam" id="" class="form-control select2basic"
+                            <select name="doituongtimvieclam"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['a_thatnghiep'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tentgktct }}</option>
@@ -1177,7 +1177,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='ut_th'>
                             <label class="control-label" style="font-weight: bold">Đối tượng UT</label>
-                            <select name="uutien" id="" class="form-control select2basic"
+                            <select name="uutien"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['dmuutien'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tendoituong }}</option>
@@ -1186,7 +1186,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='gdpt_th'>
                             <label class="control-label" style="font-weight: bold">Trình độ DGPT</label>
-                            <select name="trinhdogiaoduc" id="" class="form-control select2basic"
+                            <select name="trinhdogiaoduc" class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdoGDPT'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tengdpt }}</option>
@@ -1195,7 +1195,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='cmkt_th'>
                             <label class="control-label" style="font-weight: bold">Trình độ CMKT</label>
-                            <select name="chuyenmonkythuat" id="" class="form-control select2basic"
+                            <select name="chuyenmonkythuat"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['trinhdocmkt'] as $val)
                                     <option value="{{ $val->stt }}">{{ $val->tentdkt }}</option>
@@ -1204,7 +1204,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='lh'>
                             <label class="control-label" style="font-weight: bold">Chuyên ngành đào tạo</label>
-                            <select name="chuyennganh" id="" class="form-control select2basic"
+                            <select name="chuyennganh"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['nganhnghe'] as $val)
                                     <option value="{{ $val->madm }}">{{ $val->tendm }}</option>
@@ -1213,7 +1213,7 @@
                         </div>
                         <div class="col-lg-10 d-none mt-2" id='thatn'>
                             <label class="control-label" style="font-weight: bold">Việc làm mong muốn</label>
-                            <select name="vieclammongmuon" id="" class="form-control select2basic"
+                            <select name="vieclammongmuon"  class="form-control select2basic"
                                 style="width:100%">
                                 <option value="1">Trong tỉnh, trong nước</option>
                                 <option value="2">Đi làm việc ở nước ngoài</option>
@@ -1222,7 +1222,7 @@
 
                         <div class="col-lg-10 d-none mt-2" id='khongthamgiahdkt'>
                             <label class="control-label" style="font-weight: bold">Ngành nghề muốn học</label>
-                            <select name="nganhnghemuonhoc" id="" class="form-control select2basic"
+                            <select name="nganhnghemuonhoc"  class="form-control select2basic"
                                 style="width:100%">
                                 @foreach ($baocao['nganhnghe'] as $val)
                                     <option value="{{ $val->madm }}">{{ $val->tendm }}</option>
@@ -1232,7 +1232,7 @@
                         <div class="col-lg-10 d-none mt-2" id='trinhdochuyenmonmuonhoc'>
                             <label class="control-label" style="font-weight: bold">Trình độ chuyên môn muốn
                                 học</label>
-                            <select name="trinhdochuyenmonmuonhoc" id=""
+                            <select name="trinhdochuyenmonmuonhoc"
                                 class="form-control select2basic" style="width:100%">
                                 <option value="1">Sơ cấp</option>
                                 <option value="2">Trung cấp</option>
@@ -1245,7 +1245,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit"  name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
@@ -1269,7 +1269,7 @@
 
                     <div class="col-lg-12">
                         <label class="control-label">Kỳ điều tra</label>
-                        <select name="kydieutra" id="" class="form-control select2basic"
+                        <select name="kydieutra"  class="form-control select2basic"
                             style="width:100%">
                             @foreach ($baocao['a_kydieutra'] as $key => $ct)
                                 <option value="{{ $key }}">{{ $ct }}</option>
@@ -1278,7 +1278,7 @@
                     </div>
                     <div class="col-lg-12 mb-2 mt-2">
                         <label class="control-label">Đơn vị</label>
-                        <select name="madv" id="" class="form-control select2basic"
+                        <select name="madv"  class="form-control select2basic"
                             style="width:100%">
                             <option value="all">Tất cả</option>
                             @if (session('admin')->capdo == 'T')
@@ -1298,7 +1298,7 @@
                     </div>
                     <div class="col-lg-12">
                         <label class="control-label mt-3">Biến động</label>
-                        <select name="biendong" id="" class="form-control select2basic"
+                        <select name="biendong"  class="form-control select2basic"
                             style="width:100%">
                             <option value="all">Tất cả</option>
                             <option value="1">Báo tăng</option>
@@ -1310,7 +1310,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="submit" id="submit" name="submit" value="submit"
+                    <button type="submit" name="submit" value="submit"
                         class="btn btn-primary">Đồng
                         ý</button>
                 </div>
