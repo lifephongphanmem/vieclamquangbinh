@@ -50,12 +50,18 @@ class canboController extends Controller
                 ->where('parent', $inputs['mahuyen'])->get();
         }
         $a_nhomchucnang = array_column(dsnhomtaikhoan::all()->toarray(), 'tennhomchucnang', 'manhomchucnang');
+        $a_trangthai=array(
+            0 => "Chưa kích hoạt",
+            1 => "Kích hoạt",
+            2 => "Đang khóa"
+        );
         $inputs['url']='/danh_muc/canbo/ThongTin';
         return view('danhmuc.canbo.index')
             ->with('model', $model)
             ->with('a_huyen', $a_huyen)
             ->with('a_xa', $a_xa)
             ->with('a_nhomchucnang', $a_nhomchucnang)
+            ->with('a_trangthai', $a_trangthai)
             ->with('inputs', $inputs)
             ->with('baocao', getdulieubaocao());
     }
@@ -67,6 +73,8 @@ class canboController extends Controller
         $user = User::where('username', $inputs['username'])->first();
         if (isset($inputs['password'])) {
             $inputs['password'] = md5($inputs['password']);
+        }else{
+            unset($inputs['password']);
         }
         $inputs['phanloai'] == 'tonghop' ? $inputs['tonghop'] = 1 : $inputs['nhaplieu'] = 1;
         if ($inputs['id'] != null) {
@@ -138,5 +146,30 @@ class canboController extends Controller
         $inputs = $request->all();
         $model = User::FindOrFail($inputs['id']);
         return response()->json($model);
+    }
+    public function In(Request $request)
+    {
+        $inputs=$request->all();
+        // dd($inputs);
+        //In danh sách theo huyện xã
+        $m_xa = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('dmdonvi.madv', 'danhmuchanhchinh.name','danhmuchanhchinh.parent');
+        $model_huyen = danhmuchanhchinh::where('capdo', 'H');
+        if($inputs['madv_huyen'] != 'ALL'){
+            $m_xa=$m_xa->where('parent', $inputs['madv_huyen']);
+            $model_huyen=$model_huyen->where('maquocgia',$inputs['madv_huyen']);
+        }
+        $m_xa=$m_xa->get();
+        // dd($m_xa);
+        $m_huyen=$model_huyen->get();
+        // dd($m_huyen);
+        $a_xa=array_column($m_xa->toarray(),'madv');
+        $model=User::wherenotnull('mataikhoan')->wherein('madv',$a_xa)->get();
+        return view('danhmuc.canbo.danhsach')
+                    ->with('model',$model)
+                    ->with('m_xa',$m_xa)
+                    ->with('m_huyen',$m_huyen)
+                    ->with('pageTitle', 'Danh sách cán bộ')
+                    ->with('baocao', getdulieubaocao());
     }
 }

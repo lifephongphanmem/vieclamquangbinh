@@ -14,8 +14,9 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
-            $('#madv_cb').change(function() {
-                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv_cb').val() ;
+            $('#madv_cb, #mahuyen_cb').change(function() {
+                window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv_cb').val() +
+                    '&mahuyen=' + $('#mahuyen_cb').val();
             });
         });
     </script>
@@ -39,6 +40,8 @@
                         {{-- @endif --}}
                         <button onclick="create()" class="btn btn-m btn-success mr-2" title="Thêm mới"><i
                                 class="fa fa-plus"></i>Thêm mới</button>
+                        <button class="btn btn-m btn-success mr-2" data-toggle="modal" data-target="#in_modal"
+                            title="In danh sách"><i class=" text-dark-50 flaticon2-print"></i></i>In danh sách</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -77,7 +80,7 @@
                                 <th width="8%">CCCD</th>
                                 <th width="8%">Điện thoại</th>
                                 <th>Địa chỉ</th>
-                                <th width="8%">Trạng thái</th>
+                                {{-- <th width="8%">Trạng thái</th> --}}
                                 <th width="8%">Thao tác</th>
                             </tr>
                         </thead>
@@ -90,7 +93,7 @@
                                     <td>{{ $ct->cccd }}</td>
                                     <td>{{ $ct->sdt }}</td>
                                     <td>{{ $ct->diachi }}</td>
-                                    <td></td>
+                                    {{-- <td>{{$a_trangthai[$ct->status]}}</td> --}}
                                     <td>
                                         <button title="Sửa thông tin" data-toggle="modal" data-target="#create_edit_modal"
                                             type="button" onclick="edit('{{ $ct->id }}')"
@@ -161,7 +164,8 @@
                         <div class="col-xl-4">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Mật khẩu</b></label>
-                                <input type="password" id="password" name="password" placeholder="Không thay đổi thì không cần điền" value="123456abc"
+                                <input type="password" id="password" name="password"
+                                    placeholder="Không thay đổi thì không cần điền" value="123456abc"
                                     class="form-control" />
                             </div>
                         </div>
@@ -227,15 +231,6 @@
                                 <input type="text" id="diachi" name="diachi" class="form-control" />
                             </div>
                         </div>
-                        {{-- <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label><b>Trạng thái*</b></label>
-                                <select type="text" id="trangthai" name="trangthai" class="form-control">
-                                    <option value="kh">Kích hoạt</option>
-                                    <option value="kkh">Không kích hoạt</option>
-                                </select>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -248,7 +243,45 @@
             </div>
         </div>
     </div>
+<!-- modal in danh sách -->
+<form method="POST" action="{{ '/danh_muc/canbo/In' }}" accept-charset="UTF-8" id="frm_modify_in"
+    target="_blank">
+    @csrf
+    <div id="in_modal" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">In danh sách cán bộ
+                    </h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 mb-2">
+                        <label class="control-label">Chọn huyện</label>
+                        <select name="madv_huyen" class="form-control" style="width:100%">
+                            <option value="ALL">Tất cả</option>
+                            @foreach ($a_huyen as $key => $ct)
+                            <option value="{{ $key }}">
+                                {{ $ct }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-12 mb-2" id="chon_xa_mau03">
 
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" name="submit" value="submit"
+                        class="btn btn-primary">Đồng
+                        ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
     @include('includes.delete')
     <script>
@@ -285,11 +318,11 @@
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    var phanloai='';
-                    if(data.tonghop == 1){
-                        phanloai='tonghop'
-                    }else if(data.nhaplieu == 1){
-                        phanloai='nhaplieu';
+                    var phanloai = '';
+                    if (data.tonghop == 1) {
+                        phanloai = 'tonghop'
+                    } else if (data.nhaplieu == 1) {
+                        phanloai = 'nhaplieu';
                     }
                     var form = $('#frm_create_edit');
                     form.find("[name='id']").val(data.id);
@@ -305,7 +338,7 @@
                     form.find("[name='capdo']").val(data.capdo).trigger('change');
                     form.find("[name='phanloai']").val(phanloai).trigger('change');
                     form.find("[name='nhomchucnang']").val(data.nhomchucnang).trigger('change');
- 
+
                 },
                 error: function(message) {
                     toastr.error(message, 'Lỗi!');

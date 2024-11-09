@@ -181,6 +181,7 @@ Route::prefix('danh_muc')->group(function () {
         Route::get('/delete/{id}',[canboController::class,'destroy']);
         Route::get('/kiemtra',[canboController::class,'kiemtra']);
         Route::get('/edit',[canboController::class,'edit']);
+        Route::post('/In',[canboController::class,'In']);
         
     });
 });
