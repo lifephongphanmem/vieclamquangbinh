@@ -116,7 +116,7 @@
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cmnd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ getDayVn($ld->ngaysinh) }}</td>
                                 {{-- <td><span class="text-ellipsis"> </span>{{ $ld->ctyname }}</td> --}}
-                                <td><span class="text-ellipsis"> </span>{{ $ld->company != null?$a_congty[$ld->company]:'' }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ $ld->company != null?$a_congty[$ld->company]??'':'' }}</td>
 
                                 <td><span class="text-ellipsis"> </span>{{ $ld->tinh }}</td>
                             </tr>
