@@ -45,12 +45,17 @@
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
+
                         @if (chkPhanQuyen('danhsachdieutra', 'thaydoi') && $inputs['kydieutra'] == date('Y'))
                             <div class="card-toolbar">
                                 <a onclick="themmoi('{{ $inputs['madv'] }}','{{ $inputs['kydieutra'] }}')"
                                     class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i> &ensp;Thêm</a>
                             </div>
                         @endif
+                        <button data-target="#taonhanh-modal-confirm" data-toggle="modal"
+                            class="btn btn-xs btn-success mr-3">
+                            <i class=" flaticon-paper-plane"></i>Tạo nhanh
+                        </button>
                         @if (session('admin')->capdo == 'H')
                             <button title="In danh sách lỗi" class="btn btn-sm btn-success" onclick="indanhsachloi()"
                                 data-target="#modify-modal-dsloi" data-toggle="modal">
@@ -89,7 +94,9 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label style="font-weight: bold">Xã</label>
+                            {{-- Tạm thay đổi để làm cho dự án PT --}}
+                            {{-- <label style="font-weight: bold">Xã</label> --}}
+                            <label style="font-weight: bold">Đơn vị</label>
                             <select name="madv" id="madv" class="form-control select2basic">
                                 @if (in_array(session('admin')->capdo, ['T', 'H']))
                                     <option value="">----Chọn xã---</option>
@@ -102,7 +109,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        {{-- Tạm ẩn đề làm dự án --}}
+                        <div class="col-md-4" style="display: none">
                             <label style="font-weight: bold">Huyện</label>
                             <select name="mahuyen" id="mahuyen" class="form-control select2basic">
                                 @foreach ($a_huyen as $key => $ct)
@@ -249,6 +257,7 @@
                 </div>
                 <div class="modal-body">
                     <a href="" id='mau01' target="_blank">1. Danh sách điều tra</a></br>
+
                     <form id="dsloi" method="POST" action="" accept-charset="UTF-8"
                         enctype="multipart/form-data" target='_blank'>
                         @csrf
@@ -256,6 +265,8 @@
                             style="border: none;background-color:transparent;color:#6993FF;margin-left: -8px">2. Danh sách
                             lỗi</button>
                     </form>
+                    <a href="" id='ds_khongthongtin' target="_blank">3. Danh sách công dân chưa có thông tin cung
+                        lao động</a></br>
                     <input type="hidden" name='madv' id='madonvi'>
                     <input type="hidden" name='kydieutra' id='ky_dieu_tra'>
                 </div>
@@ -308,6 +319,84 @@
         </form>
     </div>
 
+        <!--create Modal-->
+        <div class="modal fade" id="taonhanh-modal-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin cung lao động
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                {!! Form::open([
+                    'url' => '',
+                    'method' => 'post',
+                    'id' => 'frm_create_edit',
+                ]) !!}
+                {{-- @csrf --}}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Họ tên*</b></label>
+                                <input type="text" id="hoten" name="name" class="form-control"/>
+                            </div>
+                        </div>
+                        {{-- <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Quốc tịch</b></label>
+                                <select class="form-control" name="nation">
+                                    @foreach ( getCountries() as $k=>$ct)
+                                    <option value="{{$k}}" {{$k == 'VN'?'selected':''}}>{{$ct}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Ngày sinh</b></label>
+                                <input type="date" id="ngaysinh" name="ngaysinh" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>CCCD</b></label>
+                                <input type="text" id="cccd" name="cmnd" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Điện thoại</b></label>
+                                <input type="text" id="sdt" name="sdt" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Tình trạng hdkt</b></label>
+                                <select class="form-control" name="tinhtranghdkt">
+                                    @foreach ($m_tinhtrangvl as $k=>$ct)
+                                        <option value="{{$ct->stt}}">{{$ct->tentgkt}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </div>
+
     <script>
         function Inchitiet(madv, kydieutra) {
             var url1 = '/nhankhau-in?madv=' + madv + '&kydieutra=' + kydieutra;
@@ -315,6 +404,9 @@
 
             var url2 = '/dieutra/indanhsachloi?madv=' + madv + '&kydieutra=' + kydieutra;
             $('#dsloi').attr('action', url2);
+
+            var url3 = '/nhankhau-dskhongthongtin?madv=' + madv + '&kydieutra=' + kydieutra;
+            $('#ds_khongthongtin').attr('href', url3);
         }
 
         function indanhsachloi() {
@@ -365,7 +457,7 @@
                 toastr.warning('Bạn chưa chọn xã');
             } else {
                 huyen = $('#mahuyen').val();
-                
+
                 xa = $('#madv').val();
                 console.log(madv);
                 url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;

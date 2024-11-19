@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Doanhnghiep\CompanyController;
+use App\Http\Controllers\CompanyController;
 
 
 
@@ -16,4 +16,5 @@ Route::prefix('doanh_nghiep')->group(function () {
     Route::get('/in', [CompanyController::class, 'intonghop']);
     Route::get('/in/{id}', [CompanyController::class, 'indanhsach']);
     Route::get('/thongtin', [CompanyController::class, 'thongtin']);
+    Route::get('/thongtindaidien',[CompanyController::class,'thongtindaidien']);
 });

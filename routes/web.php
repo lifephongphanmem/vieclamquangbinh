@@ -53,7 +53,8 @@ include('danhmuc.php');
 include('baocao.php');
 include('nguoitimviec.php');
 include('nguoilaodong.php');
-// include('doanhnghiep.php');
+include('doanhnghiep.php');
+include('cauhinh.php');
 // Route::get('/', [UserController::class, 'show_login' ]);
 
 // Route::get('/home',[UserController::class, 'show_login' ]);
@@ -164,6 +165,8 @@ Route::prefix('nguoilaodong')->group(function () {
     Route::get('/danhsach', [AdminEmployer::class, 'show_all']);
     Route::get('/ChiTiet/{id}', [AdminEmployer::class, 'edit']);
     Route::post('/update', [AdminEmployer::class, 'update']);
+    Route::get('/taonhanh', [AdminEmployer::class, 'taonhanh']);
+    Route::get('/ds_khongthongtin', [AdminEmployer::class, 'ds_khongthongtin']);
 });
 
 Route::prefix('laodongnuocngoai')->group(function () {
@@ -229,6 +232,7 @@ Route::get('/nhankhau-be/{nkid}', [AdminNhankhau::class, 'edit']); // edit
 Route::get('/nhankhau-in', [AdminNhankhau::class, 'inchitiet']); // in chi tiết
 Route::get('/nhankhau-inhgd', [AdminNhankhau::class, 'inchitiethgd']); // in chi tiết
 Route::get('/nhankhau-innguoilaodong', [AdminNhankhau::class, 'innguoilaodong']); // in chi tiết
+Route::get('/nhankhau-dskhongthongtin', [AdminNhankhau::class, 'dskhongthongtin']); // in chi tiết
 Route::prefix('nhankhau')->group(function () {
     Route::get('/danhsach/{cid?}', [AdminNhankhau::class, 'show_all']); // all
     Route::get('/hogiadinh/{cid?}', [AdminNhankhau::class, 'show_ho']); // all

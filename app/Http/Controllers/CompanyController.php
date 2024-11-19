@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmloaihinhhdkt;
 use Illuminate\Http\Request;
@@ -216,6 +217,14 @@ class CompanyController extends Controller
 					->with('loaihinh',$ctype)
 					->with('dmhanhchinh',$dmhanhchinh)
 					->with('nganhnghe',$cfield);
+	}
+	public function thongtindaidien(Request $request)
+	{
+		$inputs=$request->all();
+		$model=Company::findOrFail($inputs['id']);
+
+		return view('pages.thongtindaidien',compact('model'))
+				->with('pageTitle','Thông tin người đại diện');
 	}
 	
 }

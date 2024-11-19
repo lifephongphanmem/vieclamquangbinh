@@ -47,10 +47,10 @@
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label style="font-weight: bold">Xã</label>
+                            <label style="font-weight: bold">Đơn vị</label>
                             <select name="madv" id="madv_cb" class="form-control select2basic">
                                 @if (in_array(session('admin')->capdo, ['T', 'H']))
-                                    <option value="">----Chọn xã---</option>
+                                    <option value="">----Chọn đơn vị---</option>
                                 @endif
 
                                 @foreach ($a_xa as $key => $ct)
@@ -60,7 +60,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="display:none">
                             <label style="font-weight: bold">Huyện</label>
                             <select name="mahuyen" id="mahuyen_cb" class="form-control select2basic">
                                 @foreach ($a_huyen as $key => $ct)

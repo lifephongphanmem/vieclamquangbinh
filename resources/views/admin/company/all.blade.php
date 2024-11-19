@@ -165,6 +165,10 @@
                                         data-toggle="modal">
                                         <i class="icon-lg la flaticon2-print text-primary"></i>
                                     </button>
+                                    <a href="{{'/doanh_nghiep/thongtindaidien?id='.$cty->id}}" title="Thông tin người đại diện" 
+                                    class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                    <i class="icon-lg la flaticon-edit-1 text-primary"></i>
+                                </a>
                                     @if ($cty->user == null)
                                         <button title="Xóa thông tin" data-toggle="modal"
                                             data-target="#delete-modal-confirm" type="button"

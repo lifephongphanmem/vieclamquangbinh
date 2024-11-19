@@ -9,6 +9,7 @@ use App\Models\nguoilaodong;
 use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Exports\AdminEmployersExport;
+use App\Models\Company;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -57,14 +58,14 @@ class AdminEmployer extends Controller
 				return $query->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > " . $age_filter);
 			})
 			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
-			->where('state',1)
+			->where('state', 1)
 			->get();
-			
+
 		// $lds=DB::table('nguoilaodong')->select('id','hoten','cmnd','ngaysinh','company','tinh')->get();
-			// dd($request->cid);
+		// dd($request->cid);
 		$a_congty = array_column(DB::table('company')->get()->toarray(), 'name', 'id');
 		// foreach($lds as $ld){
-	
+
 		// 	$cty= DB::table('company')->where('id',$ld->company)->get()->first();
 		// 	$ld->ctyname=$cty->name;
 		// }
@@ -116,13 +117,9 @@ class AdminEmployer extends Controller
 		$dn->pbnghenghiep = $em->getPhanbo($dn->id, 9);
 		return $dn;
 	}
-	public function new()
-	{
-	}
+	public function new() {}
 
-	public function save(Request $request)
-	{
-	}
+	public function save(Request $request) {}
 
 
 	public function edit($eid)
@@ -174,9 +171,7 @@ class AdminEmployer extends Controller
 		return redirect('/nguoilaodong/danhsach')->with('message', " thành công ");
 	}
 
-	public function delete($catid)
-	{
-	}
+	public function delete($catid) {}
 
 	public function getdanhmuc()
 	{
@@ -203,14 +198,34 @@ class AdminEmployer extends Controller
 			$cty = DB::table('company')->where('id', $ld->company)->get()->first();
 			$ld->ctyname = $cty->name;
 		}
+		$company=array_column(DB::table('company')->get()->toarray(),'name','id');
 		return view('admin.employer.laodongnuocngoai.danhsach')
 			->with('model', $model)
+			->with('company', $company)
 			->with('baocao', getdulieubaocao());
 	}
 
 	public function ThemMoi_NN()
 	{
-		return view('admin.employer.laodongnuocngoai.create');
+		$countries_list = getCountries();
+		// get params
+		$dmhc = $this->getdanhmuc();
+		$list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
+		$list_tdgd = $this->getParamsByNametype('Trình độ học vấn');
+		$list_nghe = $this->getParamsByNametype('Nghề nghiệp người lao động');
+		$list_vithe = $this->getParamsByNametype('Vị thế việc làm');
+		$list_linhvuc = $this->getParamsByNametype('Lĩnh vực đào tạo');
+		$list_hdld = $this->getParamsByNametype('Loại hợp đồng lao động');
+
+		// $model = new Employer();
+
+		// $ld = $model::find($eid);
+		// Thông tin doanh nghiệp
+		$company = array_column(Company::all()->toarray(), 'name', 'id');
+		// dd($ld);
+		$dmhanhchinh = danhmuchanhchinh::all();
+		return view('admin.employer.laodongnuocngoai.create',compact('countries_list','dmhc','list_cmkt','list_tdgd','list_nghe','list_vithe','list_linhvuc','list_hdld','company','dmhanhchinh'))
+		->with('baocao', getdulieubaocao());
 	}
 
 	public function indanhsach()
@@ -227,5 +242,27 @@ class AdminEmployer extends Controller
 			->with('model', $model)
 			->with('baocao', getdulieubaocao())
 			->with('pageTitle', 'danh sách người lao động nước ngoài');
+	}
+	public function taonhanh(Request $request)
+	{
+		$inputs = $request->all();
+		$model = DB::table('nguoilaodong')->where('id', $inputs['id'])->first();
+		$company = array_column(Company::all()->toarray(), 'name', 'id');
+
+		return view('admin.employer.chitiet_nguoilaodong', compact('model', 'inputs', 'company'))
+			->with('pageTitle', 'Chi tiết người lao động');
+	}
+
+	public function Ds_khongthongtin(Request $request)
+	{
+		$model = nguoilaodong::wherenull('hoten')
+			->orwherenull('ngaysinh')
+			->wherenull('gioitinh')
+			->wherenull('cmnd')
+			->wherenull('cmnd')
+			->get();
+		$company = array_column(Company::all()->toarray(), 'name', 'id');
+		return view('admin.employer.ds_khongthongtin',compact('model','company'))
+				->with('pageTitle','Danh sách lao động không có thông tin');
 	}
 }

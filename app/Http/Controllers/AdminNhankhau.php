@@ -119,7 +119,8 @@ class AdminNhankhau extends Controller
         // dd($inputs['madv']);
         $dmdonvi = dmdonvi::all();
         $danhsach = danhsach::all();
-        return view('admin.nhankhau.all', compact('danhsach', 'dmdonvi'))
+        $m_tinhtrangvl = dmtinhtrangthamgiahdkt::all();
+        return view('admin.nhankhau.all', compact('danhsach', 'dmdonvi','m_tinhtrangvl'))
             ->with('lds', $lds)
             ->with('baocao', getdulieubaocao())
             ->with('a_huyen', $a_huyen)
@@ -1046,5 +1047,71 @@ class AdminNhankhau extends Controller
             if(isset($model)){
 
             }
+    }
+
+    public function dskhongthongtin(Request $request)
+    {
+
+        $inputs=$request->all();
+        $model= nhankhauModel::wherenull('hoten')
+                                ->orwherenull('ngaysinh')
+                                ->wherenull('gioitinh')
+                                ->wherenull('cccd')
+                                ->wherenull('trinhdogiaoduc')
+                                ->wherenull('chuyenmonkythuat')
+                                ->wherenull('tinhtranghdkt')
+                                ->wherenull('tinhtranghdkt')
+                                ->where('madv',$inputs['madv'])
+                                ->where('kydieutra',$inputs['kydieutra'])
+                                ->get();
+        $uutien = dmdoituonguutien::all();
+        $trinhdogdpt = dmtrinhdogdpt::all();
+        $trinhdocmkt = dmtrinhdokythuat::all();
+        $dmtinhtrangthamgiahdkt = dmtinhtrangthamgiahdkt::all();
+        $dmvithevieclam = dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get();
+        $dmthatnggiep = dmtinhtrangthamgiahdktct::where('manhom', '20221220175720')->get();
+        $tgthatnghiep = dmthoigianthatnghiep::all();
+        $khongthamgiahdkt = dmtinhtrangthamgiahdktct::where('manhom', '20221220175728')->get();
+        $hdld = dmloaihieuluchdld::all();
+        $bhxh = [1 => 'Bắt buộc', 2 => 'Tự nguyện', 3 => 'Không tham gia'];
+
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+            ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+            ->where('capdo', 'X')
+            ->where('level', 'Xã')
+            ->get();
+        if (count($m_danhmuc) > 0) {
+            $khuvuc = 'nongthon';
+        } else {
+            $khuvuc = 'thanhthi';
+        }
+        $m_nganhnghe = dmnganhnghe::all();
+        $loaihinhkt = dmloaihinhhdkt::all();
+        $a_nganhnghe = array_column($m_nganhnghe->toarray(), 'tendm', 'madm');
+        $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
+        ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+        ->get();
+
+    $m_donvi = $m_danhmuc->where('madv', $inputs['madv'])->first();
+    $m_donvi->huyen = $m_danhmuc->where('maquocgia', $m_donvi->parent)->first()->name;
+        return view('admin.nhankhau.danhsach_khongthongtin', compact(
+            'model',
+            'uutien',
+            'trinhdogdpt',
+            'trinhdocmkt',
+            'dmtinhtrangthamgiahdkt',
+            'dmvithevieclam',
+            'dmthatnggiep',
+            'tgthatnghiep',
+            'khongthamgiahdkt',
+            'hdld',
+            'bhxh',
+            'khuvuc',
+            'a_nganhnghe',
+            'loaihinhkt',
+            'm_donvi',
+            'inputs'
+        ))
+            ->with('pageTitle', 'Thông tin chi tiết người lao động');
     }
 }
