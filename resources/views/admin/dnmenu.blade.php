@@ -8,6 +8,7 @@
 								<li class="col-md-3"><a href="{{URL::to('report-detail?user='.$info->user.'')}}"><i class="fa fa-star"></i> Biến động DN </a></li>
 								<li class="col-md-3"><a href="{{URL::to('tuyendung-ba').'/'.$info->id}}"><i class="fa fa-star"></i> Tuyển dụng </a></li>
 								<li class="col-md-3"><a href="{{URL::to('doanhnghiep-br').'/'.$info->id}}"><i class="fa fa-star"></i> Tình hình sử dụng lao động </a></li>
+								<li class="col-md-3 mt-3"><a href="{{URL::to('SuDungLD/ThongTin').'?company='.$info->id}}"><i class="fa fa-star"></i> Nhu cầu sử dụng lao động </a></li>
 							</ul>
 		{{-- </div> --}}
 @endsection				

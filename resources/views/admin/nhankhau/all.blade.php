@@ -41,7 +41,8 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3>
+                        {{-- <h3 class="card-label text-uppercase">Danh sách nhân khẩu</h3> --}}
+                        <h3 class="card-label text-uppercase">Danh sách cung lao động</h3>
                     </div>
                     <div class="card-toolbar">
                         {{-- <a href="{{URL::to('nhankhau-ba') }}" class="btn btn-xs btn-success"><i class="fa fa-file-import"></i> &ensp;Nhận excel</a> --}}
@@ -99,7 +100,8 @@
                             <label style="font-weight: bold">Đơn vị</label>
                             <select name="madv" id="madv" class="form-control select2basic">
                                 @if (in_array(session('admin')->capdo, ['T', 'H']))
-                                    <option value="">----Chọn xã---</option>
+                                    {{-- <option value="">----Chọn xã---</option> --}}
+                                    <option value="">----Chọn đơn vị---</option>
                                 @endif
 
                                 @foreach ($a_xa as $key => $ct)
@@ -319,9 +321,9 @@
         </form>
     </div>
 
-        <!--create Modal-->
-        <div class="modal fade" id="taonhanh-modal-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <!--create Modal-->
+    <div class="modal fade" id="taonhanh-modal-confirm" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -343,14 +345,14 @@
                         <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Họ tên*</b></label>
-                                <input type="text" id="hoten" name="name" class="form-control"/>
+                                <input type="text" id="hoten" name="name" class="form-control" />
                             </div>
                         </div>
                         {{-- <div class="col-xl-6">
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Quốc tịch</b></label>
                                 <select class="form-control" name="nation">
-                                    @foreach ( getCountries() as $k=>$ct)
+                                    @foreach (getCountries() as $k => $ct)
                                     <option value="{{$k}}" {{$k == 'VN'?'selected':''}}>{{$ct}}</option>
                                     @endforeach
                                 </select>
@@ -378,8 +380,8 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label><b>Tình trạng hdkt</b></label>
                                 <select class="form-control" name="tinhtranghdkt">
-                                    @foreach ($m_tinhtrangvl as $k=>$ct)
-                                        <option value="{{$ct->stt}}">{{$ct->tentgkt}}</option>
+                                    @foreach ($m_tinhtrangvl as $k => $ct)
+                                        <option value="{{ $ct->stt }}">{{ $ct->tentgkt }}</option>
                                     @endforeach
                                 </select>
                             </div>

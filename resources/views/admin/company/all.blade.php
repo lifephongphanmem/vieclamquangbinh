@@ -85,10 +85,10 @@
                                     <option value="ckt" <?php if ($khaibao == 'ckt') {
                                         echo 'selected';
                                     } ?>>Chưa khai trình</option>
-                                       <option value="ddk" <?php if ($khaibao == 'ddk') {
+                                    <option value="ddk" <?php if ($khaibao == 'ddk') {
                                         echo 'selected';
                                     } ?>>Đã đăng ký</option>
-                                       <option value="kbld" <?php if ($khaibao == 'kbld') {
+                                    <option value="kbld" <?php if ($khaibao == 'kbld') {
                                         echo 'selected';
                                     } ?>>Khai báo lần đầu</option>
                                 </select>
@@ -139,8 +139,20 @@
                                 <td>{{ ++$key }} </td>
                                 <td>{{ $cty->dkkd }}</td>
                                 <td><a
-                                        href="{{ URL::to('doanhnghiep-be?cid=' . $cty->id . '&dm_filter=' . $dm_filter . '&public_filter=' . $public_filter 
-                                        . '&khaibao=' . $khaibao . '&quymo_min_filter=' . $quymo_min_filter . '&quymo_max_filter=' . $quymo_max_filter) }}">{{ $cty->name }}</a>
+                                        href="{{ URL::to(
+                                            'doanhnghiep-be?cid=' .
+                                                $cty->id .
+                                                '&dm_filter=' .
+                                                $dm_filter .
+                                                '&public_filter=' .
+                                                $public_filter .
+                                                '&khaibao=' .
+                                                $khaibao .
+                                                '&quymo_min_filter=' .
+                                                $quymo_min_filter .
+                                                '&quymo_max_filter=' .
+                                                $quymo_max_filter,
+                                        ) }}">{{ $cty->name }}</a>
                                 </td>
                                 <td>{{ $cty->diachi }}</td>
 
@@ -159,16 +171,21 @@
                                         href="{{ URL::to('tuyendung-ba/' . $cty->id) }}">Tin
                                         tuyển dụng</a></td>
                                 <td>
+                                    <button data-target="#taonhanh-modal-confirm" onclick="taonhanh('{{$cty->id}}')" data-toggle="modal"
+                                        class="btn btn-sm btn-clean btn-icon mr-3" title="Tạo nhanh">
+                                        <i class=" flaticon-paper-plane text-primary"></i>
+                                    </button>
                                     <button title="In thông tin" type="button"
                                         onclick="xuatexel('{{ $cty->id }}','{{ $cty->user }}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#danhsach-modal-confirm"
                                         data-toggle="modal">
                                         <i class="icon-lg la flaticon2-print text-primary"></i>
                                     </button>
-                                    <a href="{{'/doanh_nghiep/thongtindaidien?id='.$cty->id}}" title="Thông tin người đại diện" 
-                                    class="btn btn-sm btn-clean btn-icon" target="_blank">
-                                    <i class="icon-lg la flaticon-edit-1 text-primary"></i>
-                                </a>
+                                    <a href="{{ '/doanh_nghiep/thongtindaidien?id=' . $cty->id }}"
+                                        title="Thông tin người đại diện" class="btn btn-sm btn-clean btn-icon"
+                                        target="_blank">
+                                        <i class="icon-lg la flaticon-edit-1 text-primary"></i>
+                                    </a>
                                     @if ($cty->user == null)
                                         <button title="Xóa thông tin" data-toggle="modal"
                                             data-target="#delete-modal-confirm" type="button"
@@ -253,10 +270,117 @@
         {{-- </form> --}}
     </div>
 
+    <!--create Modal-->
+    <div class="modal fade" id="taonhanh-modal-confirm" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Tạo nhanh nhu cầu sử dụng lao động
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                {!! Form::open([
+                    'url' => '/SuDungLD/Them',
+                    'method' => 'post',
+                    'id' => 'frm_create_edit',
+                ]) !!}
+                {{-- @csrf --}}
+                <div class="modal-body">
+                    <input type="hidden" name="company" >
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Tổng số lao động cần bổ sung</b></label>
+                                <input type="text" id="tongbosung" name="tong" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Thời gian bổ sung lao động</b></label>
+                                <select class="form-control" name="thoigianbosung">
+                                    <option value="0">Ngắn hạn</option>
+                                    <option value="1">Dài hạn</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                            <label><b>Số lượng vị trí</b></label>
+                            <input type="text" name="quantity" id="quantity" class="form-control"
+                            readonly value="1">
+                        </div>
+                    </div>
+                    </div>
+                        <div class="vitri" id='dynamicTable'>
+                        <div class="row" id="1stld">
+                            <div class="col-xl-6">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b>Vị trí cần cần bổ sung</b></label>
+                                    <input type="text" id="vitri_bosung" name="vitri[]"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <label><b>Số lượng</b></label>
+                                    <input type="text" id="soluong_bosung" name="soluong[]"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-xl-12">
+                        <button type="button" name="add" id="add" class="btn btn-success"> Thêm vị
+                            trí</button>
+                        <button type="button" class="btn btn-danger" id='remove'>Giảm vị trí</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </div>
+
     <script>
         function xuatexel(id, user) {
             var url = '/doanhnghiep/mau01pli/' + id + '?user=' + user;
             $('#mau01').attr('href', url);
+        }
+        var i = 0;
+        $("#add").click(function() {
+            console.log("#row" + 1);
+            document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value, 10) + 1;
+            ++i;
+            firstld = document.getElementById("1stld").innerHTML + '';
+            nextld = "<div class='row' id ='row" + i + "' >" + firstld + "</div>"
+            $("#dynamicTable").append(nextld);
+
+            // $("#row" + i).find(".phucloi").checked = false;
+        });
+        $("#remove").click(function() {
+            if ($("#quantity").val() > 1) {
+                document.getElementById("quantity").value = parseInt(document.getElementById("quantity").value,
+                    10) - 1;
+                delrowid = "row" + i;
+                document.getElementById(delrowid).remove();
+                --i;
+            }
+
+        });
+        function taonhanh(id){
+            $('#frm_create_edit').find("[name='company']").val(id);
         }
     </script>
 
@@ -264,4 +388,3 @@
 
     @include('includes.delete')
 @endsection
-

@@ -55,6 +55,7 @@ include('nguoitimviec.php');
 include('nguoilaodong.php');
 include('doanhnghiep.php');
 include('cauhinh.php');
+include('nhucausudungld.php');
 // Route::get('/', [UserController::class, 'show_login' ]);
 
 // Route::get('/home',[UserController::class, 'show_login' ]);
@@ -101,6 +102,8 @@ Route::get('/tuyendung-get_vitri_page', [TuyendungController::class, 'get_vitri'
 Route::get('/tuyendung/vitri', [TuyendungController::class, 'get_vitri1']); //get vt page
 Route::get('/tuyendung/vitri_upanh', [TuyendungController::class, 'get_vitri_upanh']); //get vt page
 Route::get('/tuyendung/del/{id}',[TuyendungController::class,'destroy']);
+//nhu cầu sử dụng lao động
+
 
 Route::post('/tuyendung/uploadanh',[TuyendungController::class,'uploadanh']);
 
@@ -167,6 +170,8 @@ Route::prefix('nguoilaodong')->group(function () {
     Route::post('/update', [AdminEmployer::class, 'update']);
     Route::get('/taonhanh', [AdminEmployer::class, 'taonhanh']);
     Route::get('/ds_khongthongtin', [AdminEmployer::class, 'ds_khongthongtin']);
+    Route::get('TraCuu', [AdminEmployer::class, 'TraCuu']);
+    Route::post('TraCuu', [AdminEmployer::class, 'KetQuaTraCuu']);
 });
 
 Route::prefix('laodongnuocngoai')->group(function () {

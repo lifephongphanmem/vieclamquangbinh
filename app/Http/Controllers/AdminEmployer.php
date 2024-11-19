@@ -198,7 +198,7 @@ class AdminEmployer extends Controller
 			$cty = DB::table('company')->where('id', $ld->company)->get()->first();
 			$ld->ctyname = $cty->name;
 		}
-		$company=array_column(DB::table('company')->get()->toarray(),'name','id');
+		$company = array_column(DB::table('company')->get()->toarray(), 'name', 'id');
 		return view('admin.employer.laodongnuocngoai.danhsach')
 			->with('model', $model)
 			->with('company', $company)
@@ -224,8 +224,8 @@ class AdminEmployer extends Controller
 		$company = array_column(Company::all()->toarray(), 'name', 'id');
 		// dd($ld);
 		$dmhanhchinh = danhmuchanhchinh::all();
-		return view('admin.employer.laodongnuocngoai.create',compact('countries_list','dmhc','list_cmkt','list_tdgd','list_nghe','list_vithe','list_linhvuc','list_hdld','company','dmhanhchinh'))
-		->with('baocao', getdulieubaocao());
+		return view('admin.employer.laodongnuocngoai.create', compact('countries_list', 'dmhc', 'list_cmkt', 'list_tdgd', 'list_nghe', 'list_vithe', 'list_linhvuc', 'list_hdld', 'company', 'dmhanhchinh'))
+			->with('baocao', getdulieubaocao());
 	}
 
 	public function indanhsach()
@@ -262,7 +262,74 @@ class AdminEmployer extends Controller
 			->wherenull('cmnd')
 			->get();
 		$company = array_column(Company::all()->toarray(), 'name', 'id');
-		return view('admin.employer.ds_khongthongtin',compact('model','company'))
-				->with('pageTitle','Danh sách lao động không có thông tin');
+		return view('admin.employer.ds_khongthongtin', compact('model', 'company'))
+			->with('pageTitle', 'Danh sách lao động không có thông tin');
+	}
+
+	public function TraCuu(Request $request)
+	{
+		$inputs = $request->all();
+		$company = array_column(Company::all()->toarray(), 'name', 'id');
+		return view('admin.employer.tracuu.index', compact('company'))
+			->with('baocao', getdulieubaocao())
+			->with('inputs', $inputs)
+			->with('pageTitle', 'Tra cứu thông tin người tìm việc');
+	}
+
+	public function KetQuaTraCuu(Request $request)
+	{
+		$inputs = $request->all();
+		$company = array_column(Company::all()->toarray(), 'name', 'id');
+		$model = nguoilaodong::orderBy('id');
+		if (isset($inputs['hoten'])) {
+			$model = $model->where('hoten', 'like', '%' . $inputs['hoten'] . '%');
+		}
+
+		if (isset($inputs['cccd'])) {
+			$model = $model->where('cmnd', 'like', '%' . $inputs['cccd'] . '%');
+		}
+		if ($inputs['gioitinh'] != 'ALL') {
+			if ($inputs['gioitinh'] == 'nam') {
+				$model = $model->wherein('gioitinh', ['Nam', 'nam']);
+			} else {
+				$model = $model->wherenotin('gioitinh', ['Nam', 'nam']);
+			}
+
+		}
+		if ($inputs['company'] != 'ALL') {
+			$model = $model->where('company', $inputs['company']);
+		}
+
+		$model = $model->get();
+		$result = '<div class="row" id="ketqua">';
+		$result .= '<div class="col-md-12">';
+		$result .= '<table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">';
+		$result .= '<thead>';
+		$result .= '<tr class="text-center">';
+		$result .= '<th width="5%"> STT </th>';
+		$result .= ' <th>Tên</th>';
+		$result .= ' <th>CMND/CCCD</th>';
+		$result .= ' <th>Ngày sinh</th>';
+		$result .= ' <th>Địa chỉ</th>';
+		$result .= ' <th>Công ty</th>';
+		$result .= ' </tr>';
+		$result .= '</thead>';
+		$result .= ' <tbody>';
+		foreach ($model as $key => $ct) {
+			$result .= '<tr>';
+			$result .= '<td>' . (++$key) . ' </td>';
+			$result .= '<td><a href="">' . $ct->hoten . '</a></td>';
+			$result .= '<td><span class="text-center"> </span>' . $ct->cmnd . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . getDayVn($ct->ngaysinh) . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . $ct->address . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . ($company[$ct->company]??"") . '</td>';
+			$result .= '</tr>';
+		}
+		$result .= ' </tbody>';
+		$result .= '</table>';
+		$result .= '</div>';
+		$result .= '</div>';
+
+		return response()->json($result);
 	}
 }
