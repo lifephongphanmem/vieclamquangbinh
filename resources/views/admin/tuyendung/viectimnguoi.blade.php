@@ -36,6 +36,14 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách việc tìm người</h3>
                     </div>
+                    <div class="card-toolbar">
+                        {{-- <button data-target="#taonhanh-modal-confirm" data-toggle="modal"
+                            class="btn btn-xs btn-success mr-3">
+                            <i class=" flaticon-paper-plane"></i>Tạo nhanh
+                        </button> --}}
+                        <a href="{{'/tuyendung/TraCuu'}}" class="btn btn-sm btn-success ml-3"><i class="icon-lg la flaticon2-search text-primary"></i>Tra cứu
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form class="form-inline" method="GET">

@@ -53,6 +53,10 @@
                                     class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i> &ensp;Thêm</a>
                             </div>
                         @endif
+                        <button data-target="#taonhanh-modal-confirm" data-toggle="modal"
+                        class="btn btn-xs btn-success mr-3">
+                        <i class=" flaticon-paper-plane"></i>Tạo nhanh
+                    </button>
                         @if (session('admin')->capdo == 'H')
                             <button title="In danh sách lỗi" class="btn btn-sm btn-success" onclick="indanhsachloi()"
                                 data-target="#modify-modal-dsloi" data-toggle="modal">
@@ -333,6 +337,79 @@
             </div>
 
         </form>
+    </div>
+        <!--create Modal-->
+        <div class="modal fade" id="taonhanh-modal-confirm" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin việc cần tìm
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                {!! Form::open([
+                    'url' => '',
+                    'method' => 'post',
+                    'id' => 'frm_create_edit',
+                ]) !!}
+                {{-- @csrf --}}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Họ tên*</b></label>
+                                <input type="text" id="hoten" name="name" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Vị trí</b></label>
+                                <input type="text" id="vitri" name="vitri" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Kinh nghiệm</b></label>
+                                <input type="text" id="kinhnghiem" name="kinhnghiem" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Trình độ</b></label>
+                                <select class="form-control" name="trinhdo">
+                                    <option value="daihoc">Không yêu cầu</option>
+                                    <option value="daihoc">Đại học</option>
+                                    <option value="caodang">Cao đẳng</option>
+                                    <option value="trungcap">Trung cấp</option>
+                                    <option value="cap3">Tốt nghiệp cấp 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Hình thức làm việc</b></label>
+                                <select class="form-control" name="hinhthuclamviec">
+                                    <option value="0">Toàn thời gian</option>
+                                    <option value="1">Bán thời gian</option>
+                                    <option value="2">Theo ca</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+                {!! Form::close() !!}
+
+            </div>
+        </div>
     </div>
 
     <script>

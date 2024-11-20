@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Danhmuc\danhmuchanhchinh;
 use App\Models\Danhmuc\dmdonvi;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Session;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Tuyendung;
 use App\Models\Vitrituyendung;
+use App\Models\vitrituyendungModel;
 
 session_start();
 
@@ -32,14 +34,14 @@ class AdminTuyendung extends Controller
 		$request = request();
 		// $dmhc_list = $this->getDmhc();
 		$m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-		->select('danhmuchanhchinh.*', 'dmdonvi.madv')
-	   ->get();
-	   $dmhc_list =$m_danhmuc->where('capdo','H');
+			->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+			->get();
+		$dmhc_list = $m_danhmuc->where('capdo', 'H');
 		//filter
 		$search = $request->search;
 		$public_filter = $request->public_filter;
 		$dm_filter = $request->dm_filter;
-		$ds_ma_xa = array_column($m_danhmuc->where('parent', $dm_filter)->toarray(),'madv');
+		$ds_ma_xa = array_column($m_danhmuc->where('parent', $dm_filter)->toarray(), 'madv');
 		// dd($dm_filter);
 		$tds = DB::table('tuyendung')->join('company', 'tuyendung.user', '=', 'company.user')
 			->when($search, function ($query, $search) {
@@ -85,17 +87,17 @@ class AdminTuyendung extends Controller
 	{
 		$request = request();
 		// $dmhc_list = $this->getDmhc();
-		
+
 		$m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
-		->select('danhmuchanhchinh.*', 'dmdonvi.madv')
-	   ->get();
-	   	$dmhc_list =$m_danhmuc->where('capdo','H');
+			->select('danhmuchanhchinh.*', 'dmdonvi.madv')
+			->get();
+		$dmhc_list = $m_danhmuc->where('capdo', 'H');
 		//filter
 		$search = $request->search;
 		$public_filter = $request->public_filter;
 		$dm_filter = $request->dm_filter;
-	
-		$ds_ma_xa = array_column($m_danhmuc->where('parent', $dm_filter)->toarray(),'madv');
+
+		$ds_ma_xa = array_column($m_danhmuc->where('parent', $dm_filter)->toarray(), 'madv');
 		// dd($ds_ma_xa);
 		$tds = DB::table('tuyendung')->join('company', 'tuyendung.user', '=', 'company.user')
 			->when($search, function ($query, $search) {
@@ -113,7 +115,7 @@ class AdminTuyendung extends Controller
 			})
 
 			// ->where('state','1')
-			->select('tuyendung.*', 'company.name','company.madv')
+			->select('tuyendung.*', 'company.name', 'company.madv')
 			->orderBy('tuyendung.id', 'desc')
 			->get();
 		// dd($tds);
@@ -188,5 +190,87 @@ class AdminTuyendung extends Controller
 		};
 		$html .= '</ol>';
 		return response()->json($html);
+	}
+
+	public function TraCuu(Request $request)
+	{
+		$inputs = $request->all();
+		$company = array_column(Company::all()->toarray(), 'name', 'id');
+		return view('admin.tuyendung.tracuu.index', compact('company'))
+			->with('baocao', getdulieubaocao())
+			->with('inputs', $inputs)
+			->with('pageTitle', 'Tra cứu thông tin việc cần tìm');
+	}
+
+	public function KetQuaTraCuu(Request $request)
+	{
+		$inputs = $request->all();
+		// $company = array_column(Company::all()->toarray(), 'name', 'id');
+		$model = Tuyendung::join('company', 'tuyendung.user', '=', 'company.user')
+							->select('tuyendung.*','company.name AS congty');
+		if (isset($inputs['company'])) {
+			$model = $model->where('company.name', 'like', '%' . $inputs['company'] . '%');
+		}
+		if (isset($inputs['noidung'])) {
+			$model = $model->where('tuyendung.noidung', 'like', '%' . $inputs['noidung'] . '%');
+		}
+		if (isset($inputs['hannop'])) {
+			$model = $model->where('tuyendung.thoihan', '<', $inputs['hannop']);
+		}
+
+		$model = $model->get();
+		$a_model = array_column($model->toarray(), 'id');
+		$vitri = vitrituyendungModel::wherein('idtuyendung', $a_model);
+		if ($inputs['vitri']) {
+			$vitri = $vitri->where('name', 'like', '%' . $inputs['vitri'] . '%');
+		}
+		$vitri = $vitri->get();
+		foreach ($model as $k=>$td) {
+			$vitris = $vitri->where('idtuyendung', $td->id);
+			if ($vitris->isEmpty()) {
+				$model->forget($k);
+				continue;
+			}
+			$td->desc = "";
+			$td->sltuyen = 0;
+			foreach ($vitris as $vt) {
+				$td->desc .= $vt->name . ". ";
+				$td->sltuyen += $vt->soluong;
+			}
+		}
+
+		$result = '<div class="row" id="ketqua">';
+		$result .= '<div class="col-md-12">';
+		$result .= '<table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">';
+		$result .= '<thead>';
+		$result .= '<tr class="text-center">';
+		$result .= '<th width="5%"> STT </th>';
+		$result .= ' <th>Doanh nghiệp</th>';
+		$result .= ' <th>Tên công việc</th>';
+		$result .= ' <th>Vị trí</th>';
+		$result .= ' <th>Số lượng</th>';
+		$result .= ' <th width="8%">Ngày đăng</th>';
+		$result .= ' <th width="8%">Hạn cuối</th>';
+		$result .= ' </tr>';
+		$result .= '</thead>';
+		$result .= ' <tbody>';
+		foreach ($model as $key => $ct) {
+
+			$result .= '<tr>';
+			$result .= '<td>' . (++$key) . ' </td>';
+			$result .= '<td><a href="">' . $ct->congty . '</a></td>';
+			$result .= '<td><span class="text-center"> </span>' . $ct->noidung . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . $ct->desc  . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . $ct->sltuyen . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . (date('d-m-Y', strtotime($td->created_at))) . '</td>';
+			$result .= '<td><span class="text-center"> </span>' . (date('d-m-Y', strtotime($td->thoihan))) . '</td>';
+			$result .= '</tr>';
+		}
+		$result .= ' </tbody>';
+		$result .= '</table>';
+		$result .= '</div>';
+		$result .= '</div>';
+
+		return response()->json($result);
 	}
 }

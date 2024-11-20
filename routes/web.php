@@ -188,6 +188,10 @@ Route::get('/tuyendung-bu/{tdid}', [AdminTuyendung::class, 'duyet']); // duyet
 
 Route::get('/tuyendung-be/{tdid}', [AdminTuyendung::class, 'edit']); // edit
 Route::get('/tuyendung-viectimnguoi/{cid?}', [AdminTuyendung::class, 'viectimnguoi']); // việc tìm người
+Route::prefix('tuyendung')->group(function(){
+    Route::get('TraCuu', [AdminTuyendung::class, 'TraCuu']);
+    Route::post('TraCuu', [AdminTuyendung::class, 'KetQuaTraCuu']);
+});
 
 
 

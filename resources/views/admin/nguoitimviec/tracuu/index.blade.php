@@ -39,11 +39,19 @@
                             <label style="font-weight: bold">Họ và tên</label>
                             <input type="text" class="form-control" name='hoten' id='hoten'>
                         </div>
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <label style="font-weight: bold">CCCD/CMND</label>
                             <input type="text" class="form-control" name='cccd' id='cccd'>
+                        </div> --}}
+                        <div class="col-md-4">
+                            <label style="font-weight: bold">Vị trí</label>
+                            <input type="text" class="form-control" name='vitri' id='vitri'>
                         </div>
                         <div class="col-md-4">
+                            <label style="font-weight: bold">Kinh nghiệm</label>
+                            <input type="text" class="form-control" name='kinhnghiem' id='kinhnghiem'>
+                        </div>
+                        {{-- <div class="col-md-4">
                             <label style="font-weight: bold">Kỳ điều tra</label>
 
                             <select name="kydieutra" id="kydieutra" class="form-control select2basic">
@@ -52,10 +60,28 @@
                                         {{ $ct }}</option>
                                 @endforeach
                             </select>
+                        </div> --}}
+                        <div class="col-md-4">
+                            <label><b>Trình độ</b></label>
+                            <select class="form-control" name="trinhdo">
+                                <option value="daihoc">Không yêu cầu</option>
+                                <option value="daihoc">Đại học</option>
+                                <option value="caodang">Cao đẳng</option>
+                                <option value="trungcap">Trung cấp</option>
+                                <option value="cap3">Tốt nghiệp cấp 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label><b>Hình thức làm việc</b></label>
+                            <select class="form-control" name="hinhthuclamviec">
+                                <option value="0">Toàn thời gian</option>
+                                <option value="1">Bán thời gian</option>
+                                <option value="2">Theo ca</option>
+                            </select>
                         </div>
 
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <div class="col-md-4">
                             <label style="font-weight: bold">Việc làm mong muốn</label>
 
@@ -80,7 +106,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <hr>
                     <div class="row" id="ketqua">
                         <div class="col-md-12">
@@ -90,13 +116,17 @@
                                     <tr class="text-center">
                                         <th width="5%"> STT </th>
                                         <th>Tên</th>
-                                        <th>CMND/CCCD</th>
+                                        {{-- <th>CMND/CCCD</th>
                                         <th>Ngày sinh</th>
                                         <th>Điện thoại</th>
-                                        <th>Địa chỉ</th>
+                                        <th>Địa chỉ</th> --}}
                                         {{-- <th>Tình trạng việc làm</th>
                                 <th>Nơi làm việc</th> --}}
-                                        <th>Thao tác</th>
+                                        {{-- <th>Thao tác</th> --}}
+                                        <th>Vị trí</th>
+                                        <th>Kinh nghiệm</th>
+                                        <th>Trình độ</th>
+                                        <th>Hình thức làm việc</th>
                                     </tr>
                                 </thead>
                                 <tbody>
