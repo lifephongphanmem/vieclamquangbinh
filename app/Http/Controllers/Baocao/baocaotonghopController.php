@@ -469,7 +469,7 @@ class baocaotonghopController extends Controller
         foreach ($tuyendung as $ct) {
             $ct->nam = Carbon::parse($ct->thoihan)->year;
             $dn = $doanhnghiep->where('user', $ct->user)->first();
-            $ct->loaihinh = $dn->loaihinh;
+            $ct->loaihinh = $dn->loaihinh??'';
         }
 
         // foreach($loaihinhdn as $k=>$val){
