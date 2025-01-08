@@ -821,6 +821,31 @@ class baocaotonghopController extends Controller
         $denngay2 = Carbon::parse($denngay)->addDays();
 
         $reports = DB::table('report')->where('time', '>=', $tungay)->where('time', '<=', $denngay2)->whereNotin('datatable', ['nhankhau', 'users'])->get();
+        $a_cty=array_column($reports->unique('user')->toarray(),'user');
+        $emodel= new Employer();
+		$htxinfo=$emodel->getTypeCompanyInfo('Hợp tác xã',$a_cty);
+		$hkdinfo=$emodel->getTypeCompanyInfo('Hộ kinh doanh',$a_cty);
+		$tcinfo=$emodel->getTypeCompanyInfo('Cơ quan tổ chức khác',$a_cty);
+		// $einfo=$emodel->getEmployerState();
+		$einfo=$emodel->getEmployerStateByArray($a_cty);
+        $ctys=DB::table('company')->where('user',null)->where('user',array_column($reports->toArray() ,'user'))->get();
+        $einfo['tong']+=$ctys->sum('sld');
+        $einfo['bhxh']+=$ctys->sum('sld');
+        $einfo['hdcothoihan']+=$ctys->sum('sld');
+	   return view('admin.baocao.mau02pli', [
+            'einfo' => $einfo ,
+            'htxinfo' => $htxinfo ,
+            'hkdinfo' => $hkdinfo ,
+            'tcinfo' => $tcinfo ,
+            'pageTitle'=>'Báo cáo thông tin thị trường lao động'
+        ]);
+    }
+    public function mau02_08012025(Request $request){
+        $tungay = $request->tungay;
+        $denngay = $request->denngay;
+        $denngay2 = Carbon::parse($denngay)->addDays();
+
+        $reports = DB::table('report')->where('time', '>=', $tungay)->where('time', '<=', $denngay2)->whereNotin('datatable', ['nhankhau', 'users'])->get();
 
         $emodel= new Employer();
 		$htxinfo=$emodel->getTypeCompanyInfo('Hợp tác xã');
@@ -839,7 +864,6 @@ class baocaotonghopController extends Controller
             'pageTitle'=>'Báo cáo thông tin thị trường lao động'
         ]);
     }
-
 
     public function mau03_xa(Request $request){
 
