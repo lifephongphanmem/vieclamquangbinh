@@ -104,48 +104,53 @@ class Employer extends Model
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')//Chỉ lấy lao động đang hoạt động để khớp với danh sách người lao động 28/03/2025
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		// Tổng nữ	
 		$info['nu'] = DB::table('nguoilaodong')
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->where('nguoilaodong.gioitinh', 'like', '%Nữ%')
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		// Tuổi trên 35
 		$info['age'] = DB::table('nguoilaodong')
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->whereRaw("YEAR(GETDATE())-YEAR(ngaysinh) > 35")
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		// số LĐ tham gia BHXH
 		$info['bhxh'] = DB::table('nguoilaodong')
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->whereNotNull('bdbhxh')
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		// số lượng Nhà quản lý	
 		$quanlys = DB::table('nguoilaodong')
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->where(function ($query) {
 				$query->whereIn('nguoilaodong.chucvu', ['Giám đốc', 'Nhà lãnh đạo', 'Quản lý'])
 					->orWhere('nguoilaodong.chucvu', 'like', '%Trưởng%')
 					->orWhere('nguoilaodong.chucvu', 'like', '%Phó%');
 			})
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd)')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd)')
 			->pluck('id')->toArray();
 
 
@@ -156,23 +161,25 @@ class Employer extends Model
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->where('trinhdocmkt', 'Đại học trở lên')
 			->whereNotIn('id', $quanlys)
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		// số LĐ CMKT bậc trung
 		$info['cmkttrung'] = DB::table('nguoilaodong')
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->where(function ($query) {
 				$query->Where('nguoilaodong.trinhdocmkt', 'like', '%Cao đẳng%')
 					->orWhere('nguoilaodong.trinhdocmkt', 'like', '%Trung cấp%');
 			})
 			->whereNotIn('id', $quanlys)
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		//		
 		// số LĐ có HDLD không thời hạn
@@ -181,9 +188,10 @@ class Employer extends Model
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->where('nguoilaodong.loaihdld', 'Không xác định thời hạn')
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 
 		// số LĐ có HDLD có thời hạn
@@ -192,9 +200,10 @@ class Employer extends Model
 			->when($cid, function ($query, $cid) {
 				return $query->where('nguoilaodong.company', $cid);
 			})
-			->whereIn('nguoilaodong.state', [1, 2])
+			// ->whereIn('nguoilaodong.state', [1, 2])
+			->where('nguoilaodong.state', '1')
 			->whereIn('nguoilaodong.loaihdld', ['Đủ 12 đến 36 tháng', 'Đủ 3 đến 12 tháng'])
-			// ->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
+			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 
 		$info['hdkhac'] =	$info['tong'] - $info['hdcothoihan'] - $info['hdkhongthoihan'];

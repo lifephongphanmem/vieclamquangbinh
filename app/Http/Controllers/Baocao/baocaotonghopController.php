@@ -643,7 +643,7 @@ class baocaotonghopController extends Controller
             // })
             ->wherein('madv', $madv)
             ->get();
-// dd($model->take(10));
+
         $m_danhmuc = danhmuchanhchinh::join('dmdonvi', 'dmdonvi.madiaban', 'danhmuchanhchinh.id')
             ->select('danhmuchanhchinh.*', 'dmdonvi.madv')
             ->get();
@@ -822,6 +822,7 @@ class baocaotonghopController extends Controller
 
         $reports = DB::table('report')->where('time', '>=', $tungay)->where('time', '<=', $denngay2)->whereNotin('datatable', ['nhankhau', 'users'])->get();
         $a_cty=array_column($reports->unique('user')->toarray(),'user');
+        // dd($a_cty);
         $emodel= new Employer();
 		$htxinfo=$emodel->getTypeCompanyInfo('Hợp tác xã',$a_cty);
 		$hkdinfo=$emodel->getTypeCompanyInfo('Hộ kinh doanh',$a_cty);
