@@ -516,4 +516,24 @@ class UserController extends Controller
 			return redirect('/TaiKhoan/DanhSach?madv=' . $model->madv);
 		}
 	}
+	public function XuatExcel(Request $request)
+	{
+		$inputs=$request->all();
+		$m_donvi=dmdonvi::join('danhmuchanhchinh','danhmuchanhchinh.id','dmdonvi.madiaban')
+		->select('dmdonvi.madv','dmdonvi.tendv','danhmuchanhchinh.capdo')
+		->where('capdo',$inputs['phanloai'])
+		->get();
+		$a_madv=array_column($m_donvi->toarray(),'madv');
+		if(in_array($inputs['phanloai'],['H','X'])){	
+			$taikhoan=User::where('phanloaitk',1)->wherein('madv',$a_madv)
+							->select('name','username','madv')
+							->get();
+		}else{
+			$taikhoan=User::where('phanloaitk',2)->get();
+		}
+		$a_donvi=array_column(dmdonvi::all()->toarray(),'tendv','madv');
+		return view('HeThong.manage.taikhoan.xuatexcel',compact('taikhoan','a_donvi','m_donvi','inputs'))
+		->with('baocao', getdulieubaocao())
+			->with('pageTitle','Xuất excel');
+	}
 }

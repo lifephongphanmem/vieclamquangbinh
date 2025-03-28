@@ -75,14 +75,14 @@ function getDonVi($sadmin, $chucnang = null, $tenquyen = null)
         $m_donvi = dmdonvi::where('madv', session('admin')->madv)->get();
     }
 
-    // if ($chucnang != null) {
-    //     $a_tk = App\Model\DanhMuc\dstaikhoan::wherein('madonvi', array_column($m_donvi->toarray(), 'madonvi'))->get('tendangnhap');
-    //     $a_tk_pq = App\Model\DanhMuc\dstaikhoan_phanquyen::where('machucnang', $chucnang)->where('phanquyen', '1')
-    //         ->wherein('tendangnhap', $a_tk)->get('tendangnhap');
-    //     $m_donvi = App\Model\View\viewdiabandonvi::wherein('madonvi', function ($qr) use ($a_tk_pq) {
-    //         $qr->select('madonvi')->from('dstaikhoan')->wherein('tendangnhap', $a_tk_pq)->distinct();
-    //     })->get();
-    // }
+    if ($chucnang != null) {
+        $a_tk = App\Model\DanhMuc\dstaikhoan::wherein('madonvi', array_column($m_donvi->toarray(), 'madonvi'))->get('tendangnhap');
+        $a_tk_pq = App\Model\DanhMuc\dstaikhoan_phanquyen::where('machucnang', $chucnang)->where('phanquyen', '1')
+            ->wherein('tendangnhap', $a_tk)->get('tendangnhap');
+        $m_donvi = App\Model\View\viewdiabandonvi::wherein('madonvi', function ($qr) use ($a_tk_pq) {
+            $qr->select('madonvi')->from('dstaikhoan')->wherein('tendangnhap', $a_tk_pq)->distinct();
+        })->get();
+    }
     return $m_donvi;
 }
 

@@ -28,7 +28,7 @@
             $('#madv').change(function() {
                 window.location.href = "{{ $inputs['url'] }}" + '?madv=' + $('#madv').val();
             });
-            $('#kydieutra').change(function(){
+            $('#kydieutra').change(function() {
                 $('#ky_dieu_tra').val($('#kydieutra').val());
             });
         });
@@ -46,18 +46,18 @@
                 </div>
                 <div class="card-body">
                     <form role="form" method="POST" action="{{ URL::to('dieutra-bs') }}" enctype='multipart/form-data'>
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <label style="font-weight: bold">Đơn vị</label>
-                            {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label style="font-weight: bold">Đơn vị</label>
+                                {!! Form::select('madv', $a_dsdv, $inputs['madv'], ['class' => 'form-control select2basic', 'id' => 'madv']) !!}
+                            </div>
                         </div>
-                    </div>
-                  
-                        {{ csrf_field() }}
-                        <div class="row">
-                            <div class="col-sm-4 col-sm-offset-2">
 
-                                {{-- <div class="form-group">
+                        {{ csrf_field() }}
+                        {{-- <div class="row"> --}}
+                        {{-- <div class="col-sm-4 col-sm-offset-2"> --}}
+
+                            {{-- <div class="form-group">
                                     <table>
                                         <tr>
                                             <td>Tỉnh</td>
@@ -100,80 +100,83 @@
                                         </tr>
                                     </table>
                                 </div> --}}
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label style="font-weight: bold">Tỉnh</label>
-                                        <select name="tinh" id="tinh" class="form-control" aria-readonly="true">
-                                            <option value="44">Quảng Bình</option>
-                                        </select>
-                                    </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <label style="font-weight: bold">Tỉnh</label>
+                                    <select name="tinh" id="tinh" class="form-control" aria-readonly="true">
+                                        <option value="44">Quảng Bình</option>
+                                    </select>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label style="font-weight: bold">Huyện</label>
-                                        {{-- {!! Form::select('huyen',$m_huyen->name,null , ['class' => 'form-control', 'id' => 'madv']) !!} --}}
-                                        <select name="huyen" id="huyen" class="form-control" aria-readonly="true">
-                                            @if (isset($m_huyen))
-                                            <option value="{{$m_huyen->maquocgia}}">{{$m_huyen->name}}</option> 
-                                            @endif
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label style="font-weight: bold">Xã</label>
-                                        <select name="xa" id="xa" class="form-control" aria-readonly="true">
-                                        @if (isset($m_xa))
-                                        <option value="{{$m_xa->maquocgia}}">{{$m_xa->name}}</option>
+                                <div class="col-md-4">
+                                    <label style="font-weight: bold">Huyện</label>
+                                    {{-- {!! Form::select('huyen',$m_huyen->name,null , ['class' => 'form-control', 'id' => 'madv']) !!} --}}
+                                    <select name="huyen" id="huyen" class="form-control" aria-readonly="true">
+                                        @if (isset($m_huyen))
+                                            <option value="{{ $m_huyen->maquocgia }}">{{ $m_huyen->name }}</option>
                                         @endif
- 
-                                           
-                                        </select>
-                                    </div>
+
+                                    </select>
                                 </div>
+                                <div class="col-md-4">
+                                    <label style="font-weight: bold">Xã</label>
+                                    <select name="xa" id="xa" class="form-control" aria-readonly="true">
+                                        @if (isset($m_xa))
+                                            <option value="{{ $m_xa->maquocgia }}">{{ $m_xa->name }}</option>
+                                        @endif
 
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                    <label for="exampleInputFile">File điều tra </label>
-                                    <input type="file" id="import_file" name="import_file" required>
-                                    </div>
 
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Kỳ điều tra </label>
-                                    {{-- <input type="year" id="kydieutra" name="kydieutra" size='30' style="width:50%;"
-                                        class="form-control"> --}}
-                                    {{Form::select('kydieutra',getNam(),date('Y'),['class'=>'form-control select2basic', 'id' => 'kydieutra'])}}
+                            {{-- <div class="form-group">
 
+                            </div>
+                            <div class="form-group">
+
+                            </div> --}}
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label style="font-weight: bold">Kỳ điều tra </label>
+                                    {{ Form::select('kydieutra', getNam(), date('Y'), ['class' => 'form-control select2basic', 'id' => 'kydieutra']) }}
                                 </div>
-                                <div class="form-group">
-                                    <label>Ghi chú</label>
-                                    <textarea name="ghichu" rows='5' class="form-control"></textarea>
+                                <div class="col-md-6">
+                                    <label style="font-weight: bold">File điều tra </label>
+                                    <input type="file" id="import_file" name="import_file" class="form-control" >
                                 </div>
 
-                                <input type="hidden" name="isnew" value='1'>
-                                <input type="hidden" name="id" value='0'>
-                               
+                            </div>
+                        {{-- </div> --}}
+                        {{-- <div class="col-sm-4"> --}}
 
-                                <button type="submit" class="btn btn-info">Upload Excel</button>
+                            <div class="form-group">
+                                <label style="font-weight: bold">Ghi chú</label>
+                                <textarea name="ghichu" rows='5' class="form-control"></textarea>
+                            </div>
+
+                            <input type="hidden" name="isnew" value='1'>
+                            <input type="hidden" name="id" value='0'>
+
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-12 text-center">
+                                <button type="submit" class="btn btn-success">Đồng ý</button>
+                                </div>
+                            </div>
                                 {{-- <a onclick="themmoi()" class="btn btn-success">Add</a> --}}
-                            </div>
+                        {{-- </div> --}}
                     </form>
+                    {{-- </div> --}}
                 </div>
             </div>
         </div>
     </div>
-</div>
     <script>
-        function themmoi(){
-            madv=$('#madv').val();
-            kydieutra=$('#kydieutra').val();
-            huyen=$('#huyen').val();
-            xa=$('#xa').val();
-            url='/dieutra/create?madv='+madv+'&kydieutra='+kydieutra+'&huyen='+huyen+'&xa='+xa;
+        function themmoi() {
+            madv = $('#madv').val();
+            kydieutra = $('#kydieutra').val();
+            huyen = $('#huyen').val();
+            xa = $('#xa').val();
+            url = '/dieutra/create?madv=' + madv + '&kydieutra=' + kydieutra + '&huyen=' + huyen + '&xa=' + xa;
             window.location.href = url;
         }
     </script>

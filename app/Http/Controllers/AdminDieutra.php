@@ -127,7 +127,7 @@ class AdminDieutra extends Controller
         // dd($inputs);
         // dd($m_xa);
         // dd($m_donvi);
-        return view('admin.dieutra.all')
+        return view('admin.dieutra.ThongTin')
             ->with('dss', $dss)
             ->with('baocao', getdulieubaocao())
             ->with('data_loi', $data_loi)
@@ -181,7 +181,7 @@ class AdminDieutra extends Controller
             ->first();
         // dd($m_xa);
         $m_huyen = danhmuchanhchinh::where('maquocgia', $m_xa->parent)->first();
-
+        // dd($m_huyen);
         // $a_xa=isset($m_xa)?array_column($m_xa->toarray(), 'name', 'maquocgia'):[];
         // $a_huyen=isset($m_huyen)?array_column($m_huyen->toarray(), 'name', 'maquocgia'):[];
         // dd($a_xa);

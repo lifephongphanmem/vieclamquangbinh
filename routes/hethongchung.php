@@ -52,6 +52,7 @@ Route::prefix('TaiKhoan')->group(function () {
     Route::post('/NhomChucNang',[UserController::class,'NhomChucNang']);
     Route::get('/DoiMatKhau',[UserController::class,'DoiMatKhau']);
     Route::post('/DoiMatKhau',[UserController::class,'capnhatdoimatkhau']);
+    Route::post('XuatExcel',[UserController::class,'XuatExcel']);
 });
 
 //danh mục chức năng

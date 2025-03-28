@@ -38,13 +38,17 @@
                     <div class="card-title">
                         <h3 class="card-label text-uppercase">Danh sách tài khoản</h3>
                     </div>
-                    {{-- <div class="card-toolbar">
-                        <a href="" class="btn btn-xs btn-success mr-2">Tạo mới</a>
+                    <div class="card-toolbar">
+                        {{-- <a href="" class="btn btn-xs btn-success mr-2">Tạo mới</a>
                         <button class="btn btn-xs btn-icon btn-success mr-2" title="Nhận dữ liệu từ file Excel"
                             data-target="#modal-nhanexcel" data-toggle="modal">
                             <i class="fas fa-file-import"></i>
-                        </button>
-                    </div> --}}
+                        </button> --}}
+                        {{-- <button class="btn btn-xs btn-success mr-2" title="Xuất excel"
+                            data-target="#in_modal" data-toggle="modal">
+                            Xuất excel
+                        </button> --}}
+                    </div>
                 </div>
                 <div class="float-left  mt-5" style=";margin-left:5%">
 
@@ -73,7 +77,8 @@
                             <select name="madv" id="madv" class="form-control">
                                 <option value="">---Chọn huyện---</option>
                                 @foreach ($ds_huyen as $huyen)
-                                    <option value="{{ $huyen->madv }}" {{ $madv == $huyen->madv ?'selected':'' }}>{{ $huyen->name }}</option>
+                                    <option value="{{ $huyen->madv }}" {{ $madv == $huyen->madv ? 'selected' : '' }}>
+                                        {{ $huyen->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -128,6 +133,41 @@
         </div>
     </div>
     <!--end::Row-->
+    <!-- modal in danh sách -->
+    <form method="POST" action="{{ '/TaiKhoan/XuatExcel' }}" accept-charset="UTF-8" id="frm_modify_in" target="_blank">
+        @csrf
+        <div id="in_modal" tabindex="-1" class="modal fade kt_select2_modal" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <h4 id="modal-header-primary-label" class="modal-title">In danh sách tài khoản
+                        </h4>
+                        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12 mb-2">
+                            <label class="control-label">Chọn thông tin</label>
+                            <select name="phanloai" class="form-control" style="width:100%">
+                                <option value="ALL">Tất cả</option>
+                                <option value="H">Huyện</option>
+                                <option value="X">Xã</option>
+                                <option value="DN">Doanh nghiệp</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 mb-2" id="chon_xa_mau03">
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                        <button type="submit" name="submit" value="submit" class="btn btn-primary">Đồng
+                            ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <?php
     function menudiaban($model, $parent = 0, $char = '')
     {
@@ -165,18 +205,18 @@
                 echo '<a href="/dmdonvi/dvql/' .
                     $item->id .
                     '" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
-                                                <i class="icon-lg la fa-edit text-primary icon-2x"></i></a>';
+                                                    <i class="icon-lg la fa-edit text-primary icon-2x"></i></a>';
                 echo '<a href="' .
                     '/dmdonvi/danh_sach_don_vi/' .
                     $item->id .
                     '" class="btn btn-icon btn-clean btn-lg mb-1 position-relative" title="Danh sách đơn vị">
-                                                    <span class="svg-icon svg-icon-xl">
-                                                        <i class="icon-lg la la-clipboard-list text-success icon-2x"></i>
-                                                     </span>
-                                                    <span class="label label-sm label-light-danger text-dark label-rounded font-weight-bolder position-absolute top-0 right-0">' .
+                                                        <span class="svg-icon svg-icon-xl">
+                                                            <i class="icon-lg la la-clipboard-list text-success icon-2x"></i>
+                                                         </span>
+                                                        <span class="label label-sm label-light-danger text-dark label-rounded font-weight-bolder position-absolute top-0 right-0">' .
                     count(App\Models\dmdonvi::where('madiaban', $item->id)->get()) .
                     '</span>
-                                                 </a>';
+                                                     </a>';
                 echo '</td>';
                 echo '</tr>';
     
@@ -199,7 +239,7 @@
         $('#madv').on('change', function() {
             madv = $('#madv').val();
             phanloaitk = $('#phanloaitk').val();
-            url = '/TaiKhoan/ThongTin?phanloaitk=' + phanloaitk +'&madv='+ madv;
+            url = '/TaiKhoan/ThongTin?phanloaitk=' + phanloaitk + '&madv=' + madv;
             window.location.href = url;
         })
     </script>
