@@ -75,13 +75,13 @@
                                     <tr>
                                         <td>Tình trạng hoạt động</td>
                                         <td>
-                                            Hoạt động <input type='radio' value='1' name='public'
-                                                <?php if ($info->public) {
-                                                    echo 'checked';
-                                                } ?>>
-                                            Dừng <input type='radio' value='0' name='public' <?php if (!$info->public) {
-                                                echo 'checked';
-                                            } ?>>
+                                            <div class="radio-inline ml-2">
+                                                <label class="radio radio-outline radio-success">
+                                                <input type="radio" value='1' {{$info->public == 1?'checked':''}} name="public" />
+                                                <span></span>Hoạt động</label>
+                                                <label class="radio radio-outline radio-success">
+                                                <input type="radio" name="public" value='0' {{$info->public == 0?'checked':''}} />
+                                                <span></span>Dừng</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -155,15 +155,14 @@
                                                     xa.filter("." + val).clone().appendTo("[name=xa]")
                                                 }).change()
                                             </script>
-
-                                            Thành thị <input type='radio' value='1' name='khuvuc'
-                                                <?php if ($info->khuvuc) {
-                                                    echo 'checked';
-                                                } ?>>
-                                            Nông thôn <input type='radio' value='0' name='khuvuc'
-                                                <?php if (!$info->khuvuc) {
-                                                    echo 'checked';
-                                                } ?>>
+                                        <div class="radio-inline mt-2 ml-2">
+                                            <label class="radio radio-outline radio-success">
+                                            <input type="radio" value='1' {{$info->khuvuc == 1?'checked':''}} name="khuvuc" />
+                                            <span></span>Thành thị</label>
+                                            <label class="radio radio-outline radio-success">
+                                            <input type="radio" name="khuvuc" value='0' {{$info->khuvuc == 0?'checked':''}} />
+                                            <span></span>Nông thôn</label>
+                                        </div>
                                         </td>
 
                                     </tr>
@@ -209,6 +208,19 @@
 
 
                                             </select> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sử dụng lao động người nước ngoài</td>
+                                        <td>
+                                            <div class="radio-inline ml-2">
+                                                <label class="radio radio-outline radio-success">
+                                                <input type="radio" name="ldnuocngoai" value='1' {{$info->khuvuc == 1?'checked':''}} />
+                                                <span></span>Có</label>
+                                                <label class="radio radio-outline radio-success">
+                                                <input type="radio" name="ldnuocngoai" value='0' {{$info->khuvuc == 1?'checked':''}}  />
+                                                <span></span>Không</label>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Ngành nghề</td>
