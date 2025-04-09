@@ -213,7 +213,7 @@
                                 <tr>
                                     <td>Loại hình doanh nghiệp</td>
                                     <td><select class="form-control" name="loaihinh">
-                                            @if ($info->tinh == '44')
+                                            {{-- @if ($info->tinh == '44')
                                                 <?php foreach ($ctype2 as $dv){
 						?>
                                                 <option value='{{ $dv->madmlhkt }}' <?php if ($dv->madmlhkt == $info->loaihinh) {
@@ -231,8 +231,10 @@
                                                     {{ $dv->name }}
                                                 </option>
                                                 <?php  }?>
-                                            @endif
-
+                                            @endif --}}
+                                                @foreach ( $ctype as $dv )
+                                                    <option value="{{$dv->id}}" {{$dv->id == $info->loaihinh?'selected':''}}>{{$dv->name}}</option>
+                                                @endforeach
 
 
 
