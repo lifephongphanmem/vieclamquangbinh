@@ -22,6 +22,7 @@ use App\Http\Controllers\Danhmuc\dsdiabanController;
 use App\Http\Controllers\Danhmuc\dsdonviController;
 use App\Http\Controllers\Danhmuc\nghecongviecController;
 use App\Http\Controllers\Danhmuc\nguyennhanthatnghiepController;
+use App\Http\Controllers\Danhmuc\ParamsController;
 use App\Models\Danhmuc\capbac;
 
 Route::prefix('danh_muc')->group(function () {
@@ -184,4 +185,12 @@ Route::prefix('danh_muc')->group(function () {
         Route::post('/In',[canboController::class,'In']);
         
     });
+});
+Route::prefix('ParamType')->group(function(){
+    Route::get('ThongTin',[ParamsController::class,'ThongTin']);
+    Route::post('Luu',[ParamsController::class,'Luu']);
+    Route::get('Xoa/{id}',[ParamsController::class,'Xoa']);
+    Route::get('Params',[ParamsController::class,'Params']);
+    Route::post('LuuParam',[ParamsController::class,'LuuParam']);
+    Route::get('XoaParam/{id}',[ParamsController::class,'XoaParam']);
 });
