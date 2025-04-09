@@ -505,7 +505,7 @@ class AdminCompany extends Controller
 		}
 
 		unset($inputs['_token']);
-		// dd($inputs);
+
 		DB::table('company')->insert($inputs);
 
 		return redirect('/doanhnghiep-ba');
