@@ -99,12 +99,9 @@
                                                                 <label>Quốc tịch</label>
                                                                 <select class="form-control select2basic" name="nation">
                                                                     <option value="">--- Chọn quốc tịch ---</option>
-                                                                    <?php foreach ( $countries_list as $key => $value){ ?>
-                                                                    <option value='{{ $key }}' <?php if ($key == $ld->nation) {
-                                                                        echo 'selected';
-                                                                    } ?>>
-                                                                        {{ $value }}</option>
-                                                                    <?php } ?>
+                                                                    @foreach ($countries_list as $key => $value )
+                                                                        <option value="{{$key}}" {{$key == $ld->nation?'selected':''}}>{{$value}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -129,7 +126,7 @@
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <label>Số CMND/CCCD</label>
+                                                                <label>CCCD/Hộ chiếu </label>
                                                                 <input type="text" name="cmnd"
                                                                     value="{{ $ld->cmnd }}" class="form-control"
                                                                     required>

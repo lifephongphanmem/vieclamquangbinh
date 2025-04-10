@@ -99,7 +99,7 @@ class EmployerController extends Controller
 
   public function new()
   {
-    $countries_list = $this->getCountries();
+    $countries_list = getCountries();
 
     // get params
     $dmhc = $this->getdanhmuc();

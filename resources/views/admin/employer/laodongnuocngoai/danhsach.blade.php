@@ -25,6 +25,10 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+            $('#nation, #hoten, #cmnd, #gioitinh, #company').change(function() {
+                window.location.href = "/laodongnuocngoai/danhsach?nation=" + $(
+                    '#nation').val() + "&hoten=" + $('#hoten').val() + "&cmnd=" + $('#cmnd').val() + "&gioitinh=" + $('#gioitinh').val() + "&company=" + $('#company').val();
+            });
         });
     </script>
 @stop
@@ -37,11 +41,11 @@
                         <h3 class="card-label text-uppercase">Danh sách người lao động</h3>
                     </div>
                     <div class="card-toolbar">
-                        <button
+                        {{-- <button
                         data-target="#taonhanh-modal-confirm" data-toggle="modal"
                         class="btn btn-xs btn-success mr-3">
                         <i class=" flaticon-paper-plane"></i>Tạo nhanh
-                    </button>
+                    </button> --}}
                     <a href="{{ '/laodongnuocngoai/ThemMoi' }}" class="btn btn-xs btn-success mr-3"><i class="fa fa-plus"></i>
                         Thêm mới</a>
                         <a href="{{ '/laodongnuocngoai/indanhsach' }}" target="_bank" class="btn btn-xs btn-success"><i class="icon-lg la flaticon2-print text-primary"></i>
@@ -52,43 +56,44 @@
                     <div class="form-group row">
                         <div class="col-md-4 mt-2">
                             <label style="font-weight: bold">Quốc tịch</label>
-                            <select class="form-control" name="nation">
-                                <option value="ALL">---Chọn quốc tịch ---</option>
+                            <select class="form-control select2basic" name="nation" id="nation">
+                                <option value="ALL">Tất cả</option>
                                 @foreach ( getCountries() as $k=>$ct)
-                                <option value="{{$k}}">{{$ct}}</option>
+                                <option value="{{$k}}" {{$inputs['nation'] == $k?'selected':''}}>{{$ct}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-4 mt-2">
                             <label style="font-weight: bold">Họ tên</label>
-                            <input type="text" name='hoten' class="form-control">
+                            <input type="text" name='hoten' id="hoten" value="{{$inputs['hoten']??''}}" class="form-control">
                         </div>
                         <div class="col-md-4 mt-2">
                             <label style="font-weight: bold">Số hộ chiếu</label>
-                            <input type="text" name='cmnd' class="form-control">
+                            <input type="text" name='cmnd' id="cmnd" value="{{$inputs['cmnd']??''}}" class="form-control">
                         </div>
                         <div class="col-md-4 mt-2">
                             <label style="font-weight: bold">Giới tính</label>
-                            <select name="gioitinh" class="form-control select2basic">
-                                    <option value="nam">Nam</option>
-                                    <option value="nu">Nữ</option>
+                            <select name="gioitinh" id="gioitinh" class="form-control select2basic">
+                                <option value="ALL" {{$inputs['gioitinh'] == 'ALL'?'selected':''}}>Tất cả</option>
+                                    <option value="nam" {{$inputs['gioitinh'] == 'nam'?'selected':''}}>Nam</option>
+                                    <option value="nu" {{$inputs['gioitinh'] == 'nu'?'selected':''}}>Nữ</option>
                             </select>
                         </div>
                         <div class="col-md-4 mt-2">
                             {{-- <label style="font-weight: bold">Xã</label> --}}
                             <label style="font-weight: bold">Doanh nghiệp</label>
-                            <select class="form-control" name="company">
-                                <option value="ALL">--Chọn doanh nghiệp--</option>
+                            <select class="form-control select2basic" name="company" id="company">
+                                <option value="ALL">Tất cả</option>
                                 @foreach ($company as $k=>$ct)
-                                <option value="{{$k}}">{{$ct}}</option>
+                                <option value="{{$k}}" {{$inputs['company'] == $k?'selected':''}}>{{$ct}}</option>
                                 @endforeach
                             </select>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row mb-2" style="align-items: center; justify-content: center;">
+                    {{-- <div class="form-group row mb-2" style="align-items: center; justify-content: center;">
                         <button class="btn btn-success" >Tìm kiếm</button>
-                    </div>
+                    </div> --}}
 
                     <table id="sample_3" class="table table-striped table-bordered table-hover dataTable no-footer">
                         <thead>
@@ -114,13 +119,13 @@
                                 <td><span class="text-ellipsis"> </span> {{ $ld->cmnd }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ getDayvn($ld->ngaysinh) }}</td>
                                 <td><span class="text-ellipsis"> </span>{{ $ld->ctyname }}</td>
-                                <td><span class="text-ellipsis"> </span>{{ $ld->nation }}</td>
+                                <td><span class="text-ellipsis"> </span>{{ getCountries()[$ld->nation]??'' }}</td>
                                 <td>
                                     <a href="{{ '/vanban/thong_tin_nguoi_lao_dong_nuoc_ngoai?id='.$ld->id  }}" class="btn btn-sm mr-2" title="In thông tin" target="_blank">
                                         <i class="icon-lg la flaticon2-print text-dark"></i></a>
                                         <button title="Xóa thông tin" data-toggle="modal"
                                         data-target="#delete-modal-confirm" type="button"
-                                        onclick="cfDel('{{ 'doanhnghiep-delete/' . $ld->id }}')"
+                                        onclick="cfDel('{{ '/laodongnuocngoai/del/' . $ld->id }}')"
                                         class="btn btn-sm btn-clean btn-icon">
                                         <i class="icon-lg flaticon-delete text-danger"></i>
                                     </button>

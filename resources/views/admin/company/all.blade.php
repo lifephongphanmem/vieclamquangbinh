@@ -25,6 +25,7 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
+
         });
     </script>
 @stop
@@ -119,10 +120,10 @@
                             <tr>
                                 <th> STT </th>
                                 <th>Mã ĐKKD</th>
-                                <th>Tên doanh nghiệp</th>
-                                <th>Địa chỉ</th>
+                                <th width="10%">Tên doanh nghiệp</th>
+                                <th >Địa chỉ</th>
                                 <th style="width:10%">Điện thoại</th>
-                                <th>Quy mô</th>
+                                <th >Quy mô</th>
                                 <th>Tình trạng</th>
                                 <th>Biến động</th>
                                 <th>Tuyển dụng </th>

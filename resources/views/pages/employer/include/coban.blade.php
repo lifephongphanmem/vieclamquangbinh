@@ -10,8 +10,8 @@
 
         <div class="col-md-3">
             <div class="form-group">
-                <label class="control-label">Số CMND/CCCD (*)</label>
-                <input type="text" name="cmnd[]" class="form-control" placeholder="CMND/CCCD" value="{{isset($model)?$model->cmnd:''}}" required>
+                <label class="control-label">CCCD/Hộ chiếu (*)</label>
+                <input type="text" name="cmnd[]" class="form-control" placeholder="CCCD/Hộ chiếu" value="{{isset($model)?$model->cmnd:''}}" required>
             </div>
         </div>
 
@@ -39,6 +39,16 @@
             <div class="form-group">
                 <label class="control-label">Dân tộc (*)</label>
                 <input type="text" name="dantoc[]" placeholder="Tên dân tộc" class="form-control" value="{{isset($model)?$model->dantoc:''}}" required>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Quốc tịch (*)</label>
+                <select name="nation" class="form-control select2basic">
+                    @foreach ($countries_list as $k=>$ct )
+                        <option value="{{$k}}" {{$k == 'VN'?'selected':''}}>{{$ct}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="col-md-3">

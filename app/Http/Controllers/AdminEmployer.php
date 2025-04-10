@@ -60,7 +60,7 @@ class AdminEmployer extends Controller
 			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->where('state', 1)
 			->get();
-
+			// dd($lds);
 		// $lds=DB::table('nguoilaodong')->select('id','hoten','cmnd','ngaysinh','company','tinh')->get();
 		// dd($request->cid);
 		$a_congty = array_column(DB::table('company')->get()->toarray(), 'name', 'id');
@@ -125,6 +125,7 @@ class AdminEmployer extends Controller
 	public function edit($eid)
 	{
 		$countries_list = getCountries();
+		// dd($countries_list);
 		// get params
 		$dmhc = $this->getdanhmuc();
 		$list_cmkt = $this->getParamsByNametype('Trình độ CMKT');
@@ -190,16 +191,46 @@ class AdminEmployer extends Controller
 	}
 
 
-	public function DanhSach_NN()
+	public function DanhSach_NN(Request $request)
 	{
-		$model = DB::table('nguoilaodong')->wherenotin('nation', ['VN', 'Viet Nam', 'vn', 'Việt Nam', 'không'])->get();
+		$inputs=$request->all();
+		$inputs['nation']=$inputs['nation']??"ALL";
+		$inputs['gioitinh']=$inputs['gioitinh']??"ALL";
+		$inputs['company']=$inputs['company']??"ALL";
+		$model = DB::table('nguoilaodong')->wherenotin('nation', ['VN', 'Viet Nam', 'vn', 'Việt Nam', 'không']);
+		if($inputs['nation'] != 'ALL')
+		{
+			$model=$model->where('nation',$inputs['nation']);
+		}
+		if($inputs['gioitinh'] != 'ALL')
+		{
+			$model=$model->where('gioitinh',$inputs['gioitinh']);
+		}
+		if($inputs['company'] != 'ALL')
+		{
+			$model=$model->where('company',$inputs['company']);
+		}
+		if (!empty($inputs['hoten'])) {
+			$model = $model->where('hoten', 'like', '%' . $inputs['hoten'] . '%');
+		}
+		
+		if (!empty($inputs['cmnd'])) {
+			$model = $model->where('cmnd', 'like', '%' . $inputs['cmnd'] . '%');
+		}
+		
+		$model=$model->get();
 		foreach ($model as $ld) {
 
 			$cty = DB::table('company')->where('id', $ld->company)->get()->first();
 			$ld->ctyname = $cty->name;
 		}
-		$company = array_column(DB::table('company')->get()->toarray(), 'name', 'id');
-		return view('admin.employer.laodongnuocngoai.danhsach')
+		//Lấy công ty có sử dụng lao động người nước ngoài
+		$company=DB::table('company')->join('nguoilaodong','nguoilaodong.company','=','company.id')
+					->wherenotin('nguoilaodong.nation',['VN'])
+					->pluck('company.name','company.id');
+		// dd($model);
+		// $company = array_column(DB::table('company')->get()->toarray(), 'name', 'id');
+		return view('admin.employer.laodongnuocngoai.danhsach',compact('inputs'))
 			->with('model', $model)
 			->with('company', $company)
 			->with('baocao', getdulieubaocao());
@@ -226,6 +257,17 @@ class AdminEmployer extends Controller
 		$dmhanhchinh = danhmuchanhchinh::all();
 		return view('admin.employer.laodongnuocngoai.create', compact('countries_list', 'dmhc', 'list_cmkt', 'list_tdgd', 'list_nghe', 'list_vithe', 'list_linhvuc', 'list_hdld', 'company', 'dmhanhchinh'))
 			->with('baocao', getdulieubaocao());
+	}
+
+	public function Xoa($id)
+	{
+		$model=nguoilaodong::FindOrFail($id);
+		if($model)
+		{
+			$model->delete();
+		}
+
+		return redirect('/laodongnuocngoai/danhsach');
 	}
 
 	public function indanhsach()
