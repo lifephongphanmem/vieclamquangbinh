@@ -179,6 +179,7 @@ Route::prefix('laodongnuocngoai')->group(function () {
     Route::get('/danhsach', [AdminEmployer::class, 'DanhSach_NN']);
     Route::get('/ThemMoi', [AdminEmployer::class, 'ThemMoi_NN']);
     Route::get('/indanhsach', [AdminEmployer::class, 'indanhsach']);
+    Route::get('del/{id}',[AdminEmployer::class,'Xoa']);
 });
 
 // Tuyen dụng 
