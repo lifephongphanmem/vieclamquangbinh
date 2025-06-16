@@ -78,6 +78,7 @@ class CompanyController extends Controller
 					})
 					// ->paginate(20);
 					->get();
+					// dd($lds);
 		return view('pages.doanhnghiep')
 				->with('info',$info)
 				->with('baocao', getdulieubaocao())

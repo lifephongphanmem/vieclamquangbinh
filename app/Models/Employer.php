@@ -831,19 +831,9 @@ class Employer extends Model
 			// $ngaysinh=array_reverse(explode('/',$data['ngaysinh']));
 			// $data['ngaysinh']=implode('-',$ngaysinh);
 			$arr_ngaythang = ['ngaysinh', 'bdhopdong', 'kthopdong', 'bddochai', 'ktdochai', 'bdbhxh', 'ktbhxh'];
-			// foreach($arr_ngaythang as $nt){
-			// 	if($data[$nt] != null){
-			// 		$ngaythang=array_reverse(explode('/',$data[$nt]));
-			// 		if(count($ngaythang) != 3 && $data[$nt] != ''){
-			// 			array_push($ngaythang,'01');
-			// 		}
-			// 		$data[$nt]=implode('-',$ngaythang);
-			// 	}
-			// }
 			foreach ($arr_ngaythang as $nt) {
 				if (!isset($data[$nt]) || $data[$nt] === '' || $data[$nt] === '?') {
 					$data[$nt] = null;
-					continue;
 				}
 
 				// Nếu là số serial từ Excel → chuyển về datetime
