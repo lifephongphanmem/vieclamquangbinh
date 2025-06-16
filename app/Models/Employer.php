@@ -9,6 +9,8 @@ use App\Models\Report;
 use App\Models\nguoilaodong;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Exception;
 
 class Employer extends Model
 
@@ -41,7 +43,7 @@ class Employer extends Model
 	 */
 	public $timestamps = true;
 
-	public function getTypeCompanyInfo($ctypename,$a_cty=[])
+	public function getTypeCompanyInfo($ctypename, $a_cty = [])
 	{
 		$ctype = DB::table('param')->where('name', $ctypename)->get()->first();
 
@@ -63,9 +65,9 @@ class Employer extends Model
 		$ctys = DB::table('company')
 			->where('loaihinh', $ctype->id)
 			->where('public', 1)
-			->wherein('user',$a_cty)
+			->wherein('user', $a_cty)
 			->get();
-			// dd($ctys);
+		// dd($ctys);
 		$a_ctys = array_column($ctys->toarray(), 'id');
 		$user_id = DB::table('users')->wherein('id', $a_ctys)->pluck('id')->toArray();
 
@@ -105,7 +107,7 @@ class Employer extends Model
 				return $query->where('nguoilaodong.company', $cid);
 			})
 			// ->whereIn('nguoilaodong.state', [1, 2])
-			->where('nguoilaodong.state', '1')//Chỉ lấy lao động đang hoạt động để khớp với danh sách người lao động 28/03/2025
+			->where('nguoilaodong.state', '1') //Chỉ lấy lao động đang hoạt động để khớp với danh sách người lao động 28/03/2025
 			->whereRaw('id IN (SELECT MAX(id) AS id FROM nguoilaodong GROUP BY cmnd )')
 			->count();
 		// Tổng nữ	
@@ -828,30 +830,47 @@ class Employer extends Model
 			$data['company'] = session('admin')->company_id;
 			// $ngaysinh=array_reverse(explode('/',$data['ngaysinh']));
 			// $data['ngaysinh']=implode('-',$ngaysinh);
-			$arr_ngaythang=['ngaysinh','bdhopdong','kthopdong','bddochai','ktdochai','bdbhxh','ktbhxh'];
-			foreach($arr_ngaythang as $nt){
-				if($data[$nt] != null){
-					$ngaythang=array_reverse(explode('/',$data[$nt]));
-					if(count($ngaythang) != 3 && $data[$nt] != ''){
-						array_push($ngaythang,'01');
+			$arr_ngaythang = ['ngaysinh', 'bdhopdong', 'kthopdong', 'bddochai', 'ktdochai', 'bdbhxh', 'ktbhxh'];
+			foreach ($arr_ngaythang as $nt) {
+				if (!isset($data[$nt]) || $data[$nt] === '' || $data[$nt] === '?') {
+					$data[$nt] = null;
+				}
+
+				// Nếu là số serial từ Excel → chuyển về datetime
+				if (is_numeric($data[$nt])) {
+					try {
+						$data[$nt] = Date::excelToDateTimeObject($data[$nt])->format('Y-m-d');
+					} catch (Exception $e) {
+						$data[$nt] = null;
 					}
-					$data[$nt]=implode('-',$ngaythang);
+				}
+				// Nếu là chuỗi kiểu dd/mm/yyyy → chuẩn hóa lại
+				else {
+					$parts = explode('/', $data[$nt]);
+					if (count($parts) === 3) {
+						$data[$nt] = $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+					} else {
+						$data[$nt] = null; // ngày không hợp lệ
+					}
 				}
 			}
-			$data['cmnd']=trim($data['cmnd'],"'");
+			// dd($data);
+			$data['cmnd'] = trim($data['cmnd'], "'");
 			// dd($data);
 			$nld = nguoilaodong::where('company', $data['company'])->where('cmnd', (string)$data['cmnd'])->first();
+			// dd($data);
+
 			if (isset($nld)) {
 				$count_error += 1;
 			} else {
 				// dd($data);
-					nguoilaodong::create($data);			
+				nguoilaodong::create($data);
 				$count_success += 1;
 			}
 
 			// DB::table('nguoilaodong')->insert($data);
 		}
-	
+
 		// dd($count_success);
 		$RetArray = array();
 		$RetArray['count_success'] = $count_success;
