@@ -195,7 +195,7 @@ class AdminCompany extends Controller
 			// 	$val->diachi = $val->xa . ' - ' . $val->huyen . ' - ' . $val->tinh;
 			// }
 		}
-		
+
 		// dd($ctys->take(10));
 		// dd($ctys->first());
 		return view('admin.company.all')->with('ctys', $ctys)
@@ -222,20 +222,26 @@ class AdminCompany extends Controller
 	{
 		$input = $request->all();
 		unset($input['_token']);
-		$image =$request->File('image');
+		$image = $request->File('image');
 		$model = Company::find($input['id']);
-		if($image){
+		if ($image) {
 			if ($model->image != null) {
 				if (File::exists($model->image)) {
-                    File::Delete($model->image);
-                }
+					File::Delete($model->image);
+				}
 			}
 			// $data['image']= $image->store('DNDKKD');
 			$name = date('YmdHis') . $image->getClientOriginalName();
-            $image->move('uploads/DKKD/', $name);
-            $input['image'] = 'uploads/DKKD/' . $name;
+			$image->move('uploads/DKKD/', $name);
+			$input['image'] = 'uploads/DKKD/' . $name;
 		}
-		
+		if ($input['email'] != $model->email) {
+			//Thay đổi tài email đăng nhập tài khoản luôn
+			$user = User::where('email', $model->email)->first();
+			if ($user) {
+				$user->update(['email' => $input['email']]);
+			}
+		}
 		Company::find($input['id'])->update($input);
 		return redirect('/doanhnghiep-ba');
 	}
@@ -263,7 +269,7 @@ class AdminCompany extends Controller
 	}
 	public function getDmhc()
 	{
-		$cats = DB::table('danhmuchanhchinh')->where('level', 'Huyện')->orwhere('level', 'Thành phố')->orwhere('level','Thị xã')->get();
+		$cats = DB::table('danhmuchanhchinh')->where('level', 'Huyện')->orwhere('level', 'Thành phố')->orwhere('level', 'Thị xã')->get();
 		return $cats;
 	}
 	public function getParams($paramtype)
@@ -324,7 +330,7 @@ class AdminCompany extends Controller
 
 	public function edit(Request $request)
 	{
-		
+
 		$dm_filter = $request->dm_filter;
 		$public_filter = $request->public_filter;
 		$khaibao = $request->khaibao;
@@ -339,7 +345,7 @@ class AdminCompany extends Controller
 
 		$company = DB::table('company')->where('id', $request->cid)->first();
 		$info = $this->getInfo($company->user);
-		// dd($info);
+		// dd($info->tonghop['nuocngoai']);
 		//print_r($cat);
 		return view('admin.company.edit')
 			->with('dmhc', $dmhc)
@@ -547,7 +553,7 @@ class AdminCompany extends Controller
 				$val->nhaquanly = false;
 			}
 		}
-			
+
 		// dd($model->first());
 		// dd($a_vitrikhac);
 		// $a_vitri=array_column($list_nghe->toarray(),'name','id');
