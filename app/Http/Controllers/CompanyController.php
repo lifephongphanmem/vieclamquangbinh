@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
 use App\Models\Employer;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 
@@ -67,7 +68,7 @@ class CompanyController extends Controller
 		// Thông tin người lao động
 		$cid =$info->id;
 		// get Employers
-	
+		// dd($info);
 		$lds= DB::table('nguoilaodong')->where('company',$cid)
 					->when($search, function ($query, $search) {
                     return $query->where('nguoilaodong.hoten', 'like', '%'.$search.'%')
@@ -161,6 +162,7 @@ class CompanyController extends Controller
 		
 		$data['loaihinh']= $request->loaihinh;
 		$data['nganhnghe']= $request->nganhnghe;
+		$data['ldnuocngoai']= $request->ldnuocngoai;
 		
 		$image =$request->File('image');
 		$model = DB::table('company')->where('id',$cid)->first();
@@ -175,7 +177,15 @@ class CompanyController extends Controller
             $image->move('uploads/DKKD/', $name);
             $data['image'] = 'uploads/DKKD/' . $name;
 		}
-		
+		$logout=false;
+		if ($data['email'] != $model->email) {
+			//Thay đổi tài email đăng nhập tài khoản luôn
+			$user = User::where('email', $model->email)->first();
+			if ($user) {
+				$user->update(['email' => $data['email']]);
+				$logout=true;
+			}
+		}
 		$result= DB::table('company')->where('id',$cid)->update($data);
 		
 		// add to log system`
@@ -183,8 +193,11 @@ class CompanyController extends Controller
 		$rm->report('updateinfo', $result, 'company',$cid,1);
 		
 		if($result){
-
-			return redirect('doanhnghieppanel')->with('message',"Cập nhật thành công");
+			if($logout){
+				return redirect('/DangXuat')->with('message',"Cập nhật thành công. Đăng nhập lại bằng email mới");
+			}else{
+				return redirect('doanhnghieppanel')->with('message',"Cập nhật thành công");
+			}
 		}else{
 
 			 return redirect('doanhnghieppanel')->withErrors(['message'=>"Cập nhật ko thành công"]);

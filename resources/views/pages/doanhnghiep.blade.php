@@ -214,10 +214,10 @@
                                         <td>
                                             <div class="radio-inline ml-2">
                                                 <label class="radio radio-outline radio-success">
-                                                <input type="radio" name="ldnuocngoai" value='1' {{$info->khuvuc == 1?'checked':''}} />
+                                                <input type="radio" name="ldnuocngoai" value='1' {{$info->ldnuocngoai == 1?'checked':''}} />
                                                 <span></span>Có</label>
                                                 <label class="radio radio-outline radio-success">
-                                                <input type="radio" name="ldnuocngoai" value='0' {{$info->khuvuc == 1?'checked':''}}  />
+                                                <input type="radio" name="ldnuocngoai" value='0' {{$info->ldnuocngoai == 0?'checked':''}}  />
                                                 <span></span>Không</label>
                                             </div>
                                         </td>
