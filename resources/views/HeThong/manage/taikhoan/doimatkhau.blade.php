@@ -66,12 +66,12 @@
 
             <div class="col-lg-4">
                 <label>Tên <span class="require">*</span></label>
-                {!! Form::text('name', $model->name, ['class' => 'form-control', 'required', 'readonly'=>'true']) !!}
+                {!! Form::text('name', $model->name, ['class' => 'form-control', 'required']) !!}
             </div> 
             <div class="col-lg-4">
-                <label>Mật khẩu mới<span class="require">*</span></label>
+                <label>Mật khẩu mới</label>
                 {{-- {!! Form::text('password', null, ['class' => 'form-control','required']) !!} --}}
-                <input type="text" name="password" class="form-control" required>
+                <input type="text" name="password" class="form-control">
             </div>              
         </div>
         @endif

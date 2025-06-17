@@ -420,7 +420,11 @@ class UserController extends Controller
 			return view('errors.noperm')->with('machucnang', 'taikhoan');
 		}
 		$inputs = $request->all();
-		$inputs['password'] = Hash::make($inputs['password']);
+		if($inputs['password'] != null){
+			$inputs['password'] = Hash::make($inputs['password']);
+		}else{
+			    unset($inputs['password']);
+		}
 
 		if (session('admin')->phanloaitk == 1) {
 			$model = User::where('username', $inputs['username'])->first();
@@ -428,8 +432,8 @@ class UserController extends Controller
 			return redirect('/');
 		} else {
 			$model = User::where('email', $inputs['email'])->first();
-			$model->update(['password' => $inputs['password']]);
-			return redirect('/doanhnghieppanel');
+			$model->update($inputs);
+			return redirect('/DangXuat');
 		}
 	}
 
