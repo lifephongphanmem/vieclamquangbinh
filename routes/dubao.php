@@ -12,6 +12,7 @@ Route::prefix('dubaonhucaulaodong')->group(function () {
     Route::post('thaydoi', [dubaonhucaulaodongController::class, 'luudubao']);
     Route::post('themchitiet', [dubaonhucaulaodongController::class, 'themchitiet']);
     Route::get('indubao', [dubaonhucaulaodongController::class, 'indubao']);
+    Route::get('Xoa/{id}',[dubaonhucaulaodongController::class,'Xoa']);
     
     Route::post('/store', [thongbaotinhhinhsudungldController::class, 'store']);
     Route::post('/update/{id}', [thongbaotinhhinhsudungldController::class, 'update']);

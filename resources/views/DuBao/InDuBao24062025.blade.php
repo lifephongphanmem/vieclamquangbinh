@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align: center; font-weight: bold; font-size: 20px;text-transform: uppercase">
-                báo cáo dự báo nhu cầu tuyển dụng lao động năm {{ date('Y', strtotime($m_dubao->thoigian ?? date('Y-m-d')))}}
+                báo cáo dự báo nhu cầu tuyển dụng lao động năm {{ $m_dubao->thoigian }}
             </td>
         </tr>
 
@@ -25,12 +25,16 @@
     <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;">
         <thead>
             <tr class="text-center">
-                <th style="width: 5%">STT</th>
-                <th >Vị trí việc làm</th>
-                <th style="width: 10%">Phân loại</th>
-                <th >Số lượng</th>
-                {{-- <th style="width: 10%">Nhu cầu</th> --}}
-                <th style="width: 10%">Ghi chú</th>
+                <th rowspan="2" style="width: 5%">STT</th>
+                <th rowspan="2">Vị trí việc làm</th>
+                <th rowspan="2" style="width: 10%">Số lượng cung</th>
+                <th colspan="2">Thông tin cầu</th>
+                <th rowspan="2" style="width: 10%">Nhu cầu</th>
+                <th rowspan="2" style="width: 10%">Ghi chú</th>
+            </tr>
+            <tr class="text-center">
+                <th style="width: 10%">Số lượng đăng ký</th>
+                <th style="width: 10%">Nguồn khác</th>
             </tr>
             <tr class="text-center">
                 <td>A</td>
@@ -38,42 +42,30 @@
                 <td>1</td>
                 <td>2</td>
                 <td>3</td>
-
+                <td>4</td>
+                <td>5</td>
             </tr>
         </thead>
         <?php $i = 1; ?>
-        <tr style="font-weight: bold; text-align: left;">
-            <td>I</td>
-            <td colspan="4" style="font-weight: bold; text-align: left;">CUNG LAO ĐỘNG</td>
-        </tr>
-        @foreach ($model_chitiet->where('phanloai','CUNG') as $vitri)
+        @foreach ($model as $vitri)
             <tr>
                 <td style="text-align: center">{{ $i++ }}</td>
                 <td>{{ $vitri->tentgktct2 }}</td>
-                <td class="text-center">{{ $a_phanloai[$vitri->phanloai]??'' }}</td>
-                <td class="text-center">{{ dinhdangso($vitri->soluong) }}</td>
+                <td class="text-center">{{ dinhdangso($vitri->soluong_cung) }}</td>
+                <td class="text-center">{{ dinhdangso($vitri->soluong_cau) }}</td>
+                <td class="text-center">{{ dinhdangso($vitri->soluong_khac) }}</td>
+                <td class="text-center">{{ dinhdangso($vitri->chenhlech) }}</td>
                 <td class="text-center"></td>
             </tr>
         @endforeach
-                <tr style="font-weight: bold; text-align: left;">
-            <td>II</td>
-            <td colspan="4" style="font-weight: bold; text-align: left;">CẦU LAO ĐỘNG</td>
-        </tr>
-        @foreach ($model_chitiet->where('phanloai','CAU') as $vitri)
-            <tr>
-                <td style="text-align: center">{{ $i++ }}</td>
-                <td>{{ $vitri->tentgktct2 }}</td>
-                <td class="text-center">{{ $a_phanloai[$vitri->phanloai]??'' }}</td>
-                <td class="text-center">{{ dinhdangso($vitri->soluong) }}</td>
-                <td class="text-center"></td>
-            </tr>
-        @endforeach
-        {{-- <tr>
+        <tr>
             <td colspan="2" style="text-align: center">Tổng cộng</td>
+            <td class="text-center">{{ dinhdangso($model->sum('soluong_cung')) }}</td>
+            <td class="text-center">{{ dinhdangso($model->sum('soluong_cau')) }}</td>
+            <td class="text-center">{{ dinhdangso($model->sum('soluong_khac')) }}</td>
+            <td class="text-center">{{ dinhdangso($model->sum('chenhlech')) }}</td>
             <td class="text-center"></td>
-            <td class="text-center">{{ dinhdangso($model_chitiet->sum('soluong')) }}</td>
-            <td class="text-center"></td>
-        </tr> --}}
+        </tr>
 
 
     </table>

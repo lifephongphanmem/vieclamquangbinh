@@ -75,7 +75,7 @@
                                                 <i class="icon-lg la flaticon-edit-1 text-primary"></i>
                                             </a>
                                             <button title="Xóa thông tin" type="button"
-                                                onclick="cfDel('{{ $inputs['url'].'Xoa?id=' . $ld->id }}')"
+                                                onclick="cfDel('{{ $inputs['url'].'Xoa/' . $ld->id }}')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                                 data-toggle="modal">
                                                 <i class="icon-lg flaticon-delete text-danger"></i>
