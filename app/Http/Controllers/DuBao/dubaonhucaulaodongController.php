@@ -10,7 +10,10 @@ use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
 use App\Models\Danhmuc\dsdonvi;
 use App\Models\DuBao\dubaonhucaulaodong;
 use App\Models\DuBao\dubaonhucaulaodong_chitiet;
+use App\Models\nguoilaodong as ModelsNguoilaodong;
 use App\Models\Nguoilaodong\nguoilaodong;
+use App\Models\tuyendungModel;
+use App\Models\vitrituyendungModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +40,7 @@ class dubaonhucaulaodongController extends Controller
         }
         $inputs = $request->all();
         $inputs['url'] = static::$url;
-        $m_donvi = getDonVi(session('admin')->sadmin, 'dubaonhucaulaodong');
+        $m_donvi = getDonVi(session('admin')->sadmin);
         $m_donvi = $m_donvi->where('phanloaitaikhoan', 'TH');
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
 
@@ -47,6 +50,7 @@ class dubaonhucaulaodongController extends Controller
             ->with('model', $model)
             ->with('a_dsdv', array_column($m_donvi->toarray(), 'tendv', 'madv'))
             ->with('inputs', $inputs)
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Danh sách dự báo nhu cầu lao động');
     }
 
@@ -61,8 +65,8 @@ class dubaonhucaulaodongController extends Controller
         $inputs['url'] = static::$url;
 
         $vitrivl = dmtinhtrangthamgiahdktct2::where('manhom2', '20221108050559')->get();
-        $m_nguoilaodong = nguoilaodong::all(); //nghenghiep
-        $m_nhucau = nhucautuyendungct::all(); //vitrivl
+        $m_nguoilaodong = ModelsNguoilaodong::all(); //nghenghiep
+        $m_nhucau = vitrituyendungModel::all(); //vitrivl
         $a_kq = [];
         foreach ($vitrivl as $vitri) {
             //Cung
@@ -95,6 +99,7 @@ class dubaonhucaulaodongController extends Controller
             ->with('model_cau', $model_cau)
             ->with('model_khac', $model_khac)
             ->with('inputs', $inputs)
+                        ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Thông tin dự báo nhu cầu lao động');
     }
 
@@ -134,7 +139,7 @@ class dubaonhucaulaodongController extends Controller
         $m_donvi = dmdonvi::where('madv', $m_dubao->madv)->first();
         $model = dmtinhtrangthamgiahdktct2::where('manhom2', '20221108050559')->get();
         $model_chitiet = dubaonhucaulaodong_chitiet::where('madubao', $m_dubao->madubao)->get();
-        
+
         foreach ($model as $vt) {
             $vt->soluong_cung = $model_chitiet->where('phanloai', 'CUNG')->where('madmtgktct2', $vt->madmtgktct2)->count();
             $vt->soluong_cau = $model_chitiet->where('phanloai', 'CAU')->where('madmtgktct2', $vt->madmtgktct2)->count();
