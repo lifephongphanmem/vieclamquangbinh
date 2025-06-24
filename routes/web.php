@@ -57,6 +57,8 @@ include('doanhnghiep.php');
 include('cauhinh.php');
 include('nhucausudungld.php');
 include('cunglaodong.php');
+include('dudoanthitruonglaodong.php');
+include('dubao.php');
 // Route::get('/', [UserController::class, 'show_login' ]);
 
 // Route::get('/home',[UserController::class, 'show_login' ]);

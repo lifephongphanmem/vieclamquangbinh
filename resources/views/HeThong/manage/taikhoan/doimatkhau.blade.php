@@ -71,7 +71,7 @@
             <div class="col-lg-4">
                 <label>Mật khẩu mới</label>
                 {{-- {!! Form::text('password', null, ['class' => 'form-control','required']) !!} --}}
-                <input type="text" name="password" class="form-control">
+                <input type="text" name="password" class="form-control" placeholder="Không đổi thì không cần điền">
             </div>              
         </div>
         @endif
