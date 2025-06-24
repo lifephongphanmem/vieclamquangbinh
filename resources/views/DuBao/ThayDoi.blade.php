@@ -101,15 +101,15 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade active show" id="kt_cung" role="tabpanel"
                                     aria-labelledby="kt_cung">
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-lg-12 text-right">
                                             <div class="btn-group" role="group">
                                                 <button type="button" onclick="setThem('CUNG')" data-target="#modal-them"
                                                     data-toggle="modal" class="btn btn-light-dark btn-sm">
-                                                    <i class="fa fa-plus"></i> Thêm</button>
+                                                    <i class="fa fa-plus"></i></button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row" id="dscung">
                                         <div class="col-md-12">
@@ -119,7 +119,7 @@
                                                         <th width="5%">STT</th>
                                                         <th>Vị trí làm việc</th>
                                                         <th>Số lượng</th>
-                                                        <th width="15%">Thao tác</th>
+                                                        {{-- <th width="15%">Thao tác</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -129,7 +129,7 @@
                                                             <td class="text-center">{{ $i++ }}</td>
                                                             <td>{{ $tt->tentgktct2 }}</td>
                                                             <td>{{ $tt->soluong }}</td>
-                                                            <td class="text-center">
+                                                            {{-- <td class="text-center">
                                                                 <button title="Sửa thông tin" type="button"
                                                                     onclick="setThongTin('{{ $tt->id }}','{{ $tt->madmtgktct2 }}','{{ $tt->tentgktct2 }}','{{ $tt->soluong }}','CUNG')"
                                                                     class="btn btn-sm btn-clean btn-icon"
@@ -144,7 +144,7 @@
                                                                     <i class="icon-lg la fa-trash text-danger"></i>
                                                                 </button>
 
-                                                            </td>
+                                                            </td> --}}
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -154,7 +154,7 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="kt_cau" role="tabpanel" aria-labelledby="kt_cau">
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-lg-12 text-right">
                                             <div class="btn-group" role="group">
                                                 <button type="button" onclick="setHoGiaDinh()"
@@ -164,7 +164,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row" id="dscau">
                                         <div class="col-md-12">
@@ -174,7 +174,7 @@
                                                         <th width="5%">STT</th>
                                                         <th>Vị trí làm việc</th>
                                                         <th>Số lượng</th>
-                                                        <th width="15%">Thao tác</th>
+                                                        {{-- <th width="15%">Thao tác</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -184,7 +184,7 @@
                                                             <td class="text-center">{{ $i++ }}</td>
                                                             <td>{{ $tt->tentgktct2 }}</td>
                                                             <td>{{ $tt->soluong }}</td>
-                                                            <td class="text-center">
+                                                            {{-- <td class="text-center">
                                                                 <button title="Sửa thông tin" type="button"
                                                                     onclick="setThongTin('{{ $tt->id }}','{{ $tt->madmtgktct2 }}','{{ $tt->tentgktct2 }}','{{ $tt->soluong }}','CAU')"
                                                                     class="btn btn-sm btn-clean btn-icon"
@@ -199,7 +199,7 @@
                                                                     <i class="icon-lg la fa-trash text-danger"></i>
                                                                 </button>
 
-                                                            </td>
+                                                            </td> --}}
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -209,7 +209,7 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="kt_khac" role="tabpanel" aria-labelledby="kt_khac">
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-lg-12 text-right">
                                             <div class="btn-group" role="group">
                                                 <button title="Thêm đối tượng" type="button"
@@ -219,7 +219,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row" id="dskhac">
                                         <div class="col-md-12">
@@ -229,7 +229,7 @@
                                                         <th width="5%">STT</th>
                                                         <th>Vị trí làm việc</th>
                                                         <th>Số lượng</th>
-                                                        <th width="15%">Thao tác</th>
+                                                        {{-- <th width="15%">Thao tác</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -239,7 +239,7 @@
                                                             <td class="text-center">{{ $i++ }}</td>
                                                             <td>{{ $tt->tentgktct2 }}</td>
                                                             <td>{{ $tt->soluong }}</td>
-                                                            <td class="text-center">
+                                                            {{-- <td class="text-center">
                                                                 <button title="Sửa thông tin" type="button"
                                                                     onclick="setThongTin('{{ $tt->id }}','{{ $tt->madmtgktct2 }}','{{ $tt->tentgktct2 }}','{{ $tt->soluong }}','KHAC')"
                                                                     class="btn btn-sm btn-clean btn-icon"
@@ -254,7 +254,7 @@
                                                                     data-toggle="modal">
                                                                     <i class="icon-lg la fa-trash text-danger"></i>
                                                                 </button>
-                                                            </td>
+                                                            </td> --}}
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

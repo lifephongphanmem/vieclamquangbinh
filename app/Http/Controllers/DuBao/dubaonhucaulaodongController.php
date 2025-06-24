@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DuBao;
 
 use App\Http\Controllers\Controller;
 use App\Models\Caulaodong\nhucautuyendungct;
+use App\Models\Company;
 use App\Models\Danhmuc\dmdonvi;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct;
 use App\Models\Danhmuc\dmtinhtrangthamgiahdktct2;
@@ -12,6 +13,7 @@ use App\Models\DuBao\dubaonhucaulaodong;
 use App\Models\DuBao\dubaonhucaulaodong_chitiet;
 use App\Models\nguoilaodong as ModelsNguoilaodong;
 use App\Models\Nguoilaodong\nguoilaodong;
+use App\Models\nhankhauModel;
 use App\Models\tuyendungModel;
 use App\Models\vitrituyendungModel;
 use Illuminate\Http\Request;
@@ -42,6 +44,7 @@ class dubaonhucaulaodongController extends Controller
         $inputs['url'] = static::$url;
         $m_donvi = getDonVi(session('admin')->sadmin);
         $m_donvi = $m_donvi->where('phanloaitaikhoan', 'TH');
+
         $inputs['madv'] = $inputs['madv'] ?? $m_donvi->first()->madv;
 
         $model = dubaonhucaulaodong::where('madv', $inputs['madv'])->get();
@@ -54,18 +57,19 @@ class dubaonhucaulaodongController extends Controller
             ->with('pageTitle', 'Danh sách dự báo nhu cầu lao động');
     }
 
-    public function them(Request $request)
+    public function them24062025(Request $request)
     {
         $inputs = $request->all();
         $model = new dubaonhucaulaodong();
 
         $model->madubao = (string)getdate()[0];
         $model->thoigian = date('Y-m-d');
+        $nam = date('Y', strtotime($model->thoigian ?? date('Y-m-d')));
         $model->madv = $inputs['madv'];
         $inputs['url'] = static::$url;
 
-        $vitrivl = dmtinhtrangthamgiahdktct2::where('manhom2', '20221108050559')->get();
-        $m_nguoilaodong = ModelsNguoilaodong::all(); //nghenghiep
+        $vitrivl = dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get();
+        $m_nguoilaodong = nhankhauModel::where('kydieutra', $nam)->get(); //nghenghiep
         $m_nhucau = vitrituyendungModel::all(); //vitrivl
         $a_kq = [];
         foreach ($vitrivl as $vitri) {
@@ -88,6 +92,7 @@ class dubaonhucaulaodongController extends Controller
             //Khác
 
         }
+
         dubaonhucaulaodong_chitiet::insert($a_kq);
         $model_cung = dubaonhucaulaodong_chitiet::where('phanloai', 'CUNG')->where('madubao', $model->madubao)->get();
         $model_cau = dubaonhucaulaodong_chitiet::where('phanloai', 'CAU')->where('madubao', $model->madubao)->get();
@@ -99,10 +104,86 @@ class dubaonhucaulaodongController extends Controller
             ->with('model_cau', $model_cau)
             ->with('model_khac', $model_khac)
             ->with('inputs', $inputs)
-                        ->with('baocao', getdulieubaocao())
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Thông tin dự báo nhu cầu lao động');
     }
+    public function them(Request $request)
+    {
+        $inputs = $request->all();
+        $model = new dubaonhucaulaodong();
 
+        $model->madubao = (string)getdate()[0];
+        $model->thoigian = date('Y-m-d');
+        $nam = date('Y', strtotime($model->thoigian ?? date('Y-m-d')));
+        $model->madv = $inputs['madv'];
+        $inputs['url'] = static::$url;
+
+        $vitrivl = dmtinhtrangthamgiahdktct2::where('manhom2', '20221220175800')->get();
+        $m_nguoilaodong = nhankhauModel::where('kydieutra', $nam)->get(); //nghenghiep
+        $m_nhucau = vitrituyendungModel::all(); //vitrivl
+        $m_tuyendung = tuyendungModel::whereYear('thoihan', '=', $nam)->pluck('id'); //vitrivl
+        $m_doanhnghiep = Company::where('public', '1')->count();
+        $a_kq = [];
+        //Cung
+
+        $thongtincung = [
+            '1' => 'Trong tỉnh, trong nước',
+            '2' => 'Đi làm việc nước ngoài',
+            '3' => 'Nhu cầu học nghề'
+        ];
+        foreach ($thongtincung as $k => $ct) {
+            if (in_array($k, ['1', '2'])) {
+
+                $a_kq[] = [
+                    'madubao' => $model->madubao,
+                    'phanloai' => 'CUNG',
+                    'soluong' => $m_nguoilaodong->where('vieclammongmuon', 1)->count(),
+                    'madmtgktct2' => $k,
+                    'tentgktct2' =>  $ct,
+                ];
+            } else {
+                $a_kq[] = [
+                    'madubao' => $model->madubao,
+                    'phanloai' => 'CUNG',
+                    'soluong' => $m_nguoilaodong->filter(function ($item) {
+                        return !is_null($item->nganhnghemuonhoc);
+                    })->count(),
+                    'madmtgktct2' => $k,
+                    'tentgktct2' =>  $ct,
+                ];
+            }
+        }
+        //Cầu
+
+        $thongtincau = [
+            '1' => ['name' => 'Doanh nghiệp', 'data' => $m_doanhnghiep],
+            '2' => ['name' => 'Lượt tuyển dụng', 'data' => $m_tuyendung->count()],
+            '3' => ['name' => 'Chỉ tiêu tuyển dụng', 'data' => $m_nhucau->wherein('idtuyendung', $m_tuyendung)->count()],
+        ];
+        foreach ($thongtincau as $k => $ct) {
+            $a_kq[] = [
+                'madubao' => $model->madubao,
+                'phanloai' => 'CAU',
+                'soluong' => $ct['data'],
+                'madmtgktct2' => $k,
+                'tentgktct2' =>  $ct['name'],
+            ];
+        }
+        //Khác
+        dubaonhucaulaodong_chitiet::insert($a_kq);
+        $model_cung = dubaonhucaulaodong_chitiet::where('phanloai', 'CUNG')->where('madubao', $model->madubao)->get();
+        $model_cau = dubaonhucaulaodong_chitiet::where('phanloai', 'CAU')->where('madubao', $model->madubao)->get();
+        $model_khac = dubaonhucaulaodong_chitiet::where('phanloai', 'KHAC')->where('madubao', $model->madubao)->get();
+
+        return view('DuBao.ThayDoi')
+            ->with('model', $model)
+            ->with('model_cung', $model_cung)
+            ->with('model_cau', $model_cau)
+            ->with('model_khac', $model_khac)
+            ->with('inputs', $inputs)
+            ->with('baocao', getdulieubaocao())
+            ->with('pageTitle', 'Thông tin dự báo nhu cầu lao động');
+    }
     public function thaydoi(Request $request)
     {
         $inputs = $request->all();
@@ -118,6 +199,7 @@ class dubaonhucaulaodongController extends Controller
             ->with('model_cau', $model_cau)
             ->with('model_khac', $model_khac)
             ->with('inputs', $inputs)
+                        ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Thông tin dự báo nhu cầu lao động');
     }
 
@@ -136,19 +218,23 @@ class dubaonhucaulaodongController extends Controller
     {
         $inputs = $request->all();
         $m_dubao = dubaonhucaulaodong::where('madubao', $inputs['madubao'])->first();
+
         $m_donvi = dmdonvi::where('madv', $m_dubao->madv)->first();
         $model = dmtinhtrangthamgiahdktct2::where('manhom2', '20221108050559')->get();
         $model_chitiet = dubaonhucaulaodong_chitiet::where('madubao', $m_dubao->madubao)->get();
-
         foreach ($model as $vt) {
             $vt->soluong_cung = $model_chitiet->where('phanloai', 'CUNG')->where('madmtgktct2', $vt->madmtgktct2)->count();
             $vt->soluong_cau = $model_chitiet->where('phanloai', 'CAU')->where('madmtgktct2', $vt->madmtgktct2)->count();
             $vt->soluong_khac = $model_chitiet->where('phanloai', 'KHAC')->where('madmtgktct2', $vt->madmtgktct2)->count();
             $vt->chenhlech = $vt->soluong_cau + $vt->soluong_khac - $vt->soluong_cung;
         }
-
+        $a_phanloai=['CUNG' => 'CUNG',
+                    'CAU'=>'CẦU'    
+    ];
         return view('DuBao.InDuBao')
             ->with('model', $model)
+            ->with('model_chitiet', $model_chitiet)
+            ->with('a_phanloai', $a_phanloai)
             ->with('m_dubao', $m_dubao)
             ->with('m_donvi', $m_donvi)
             ->with('pageTitle', 'In dự báo nhu cầu lao động');;
@@ -231,5 +317,15 @@ class dubaonhucaulaodongController extends Controller
 
             $result['status'] = 'success';
         }
+    }
+
+    public function Xoa(Request $request,$id)
+    {
+        $inputs = $request->all();
+        $model=dubaonhucaulaodong::findOrFail($id);
+        dubaonhucaulaodong_chitiet::where('madubao',$model->madubao)->delete();
+        $model->delete();
+
+        return redirect('/dubaonhucaulaodong/danhsach?madv='.$model->madv);
     }
 }
