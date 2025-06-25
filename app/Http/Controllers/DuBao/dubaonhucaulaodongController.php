@@ -126,33 +126,36 @@ class dubaonhucaulaodongController extends Controller
         $m_doanhnghiep = Company::where('public', '1')->count();
         $a_kq = [];
         //Cung
-        $thongtincung = [
-            '1' => 'Trong tỉnh, trong nước',
-            '2' => 'Đi làm việc nước ngoài',
-            '3' => 'Nhu cầu học nghề'
-        ];
-        foreach ($thongtincung as $k => $ct) {
-            if (in_array($k, ['1', '2'])) {
+        $a_kq = [];
 
-                $a_kq[] = [
-                    'madubao' => $model->madubao,
-                    'phanloai' => 'CUNG',
-                    'soluong' => $m_nguoilaodong->where('vieclammongmuon', 1)->count(),
-                    'madmtgktct2' => $k,
-                    'tentgktct2' =>  $ct,
-                ];
-            } else {
-                $a_kq[] = [
-                    'madubao' => $model->madubao,
-                    'phanloai' => 'CUNG',
-                    'soluong' => $m_nguoilaodong->filter(function ($item) {
-                        return !is_null($item->nganhnghemuonhoc);
-                    })->count(),
-                    'madmtgktct2' => $k,
-                    'tentgktct2' =>  $ct,
-                ];
-            }
-        }
+        // 1. Trong tỉnh, trong nước
+        $a_kq[] = [
+            'madubao' => $model->madubao,
+            'phanloai' => 'CUNG',
+            'soluong' => $m_nguoilaodong->where('vieclammongmuon', 1)->count(), // hoặc where thêm điều kiện nếu cần
+            'madmtgktct2' => '1',
+            'tentgktct2' => 'Trong tỉnh, trong nước',
+        ];
+
+        // 2. Đi làm việc nước ngoài
+        $a_kq[] = [
+            'madubao' => $model->madubao,
+            'phanloai' => 'CUNG',
+            'soluong' => $m_nguoilaodong->where('vieclammongmuon', 2)->count(), // nếu là giá trị 2 cho làm việc nước ngoài
+            'madmtgktct2' => '2',
+            'tentgktct2' => 'Đi làm việc nước ngoài',
+        ];
+
+        // 3. Nhu cầu học nghề
+        $a_kq[] = [
+            'madubao' => $model->madubao,
+            'phanloai' => 'CUNG',
+            'soluong' => $m_nguoilaodong->filter(function ($item) {
+                return !is_null($item->nganhnghemuonhoc);
+            })->count(),
+            'madmtgktct2' => '3',
+            'tentgktct2' => 'Nhu cầu học nghề',
+        ];
         //Cầu
         $thongtincau = [
             '1' => ['name' => 'Doanh nghiệp', 'data' => $m_doanhnghiep],
@@ -198,7 +201,7 @@ class dubaonhucaulaodongController extends Controller
             ->with('model_cau', $model_cau)
             ->with('model_khac', $model_khac)
             ->with('inputs', $inputs)
-                        ->with('baocao', getdulieubaocao())
+            ->with('baocao', getdulieubaocao())
             ->with('pageTitle', 'Thông tin dự báo nhu cầu lao động');
     }
 
@@ -227,9 +230,10 @@ class dubaonhucaulaodongController extends Controller
             $vt->soluong_khac = $model_chitiet->where('phanloai', 'KHAC')->where('madmtgktct2', $vt->madmtgktct2)->count();
             $vt->chenhlech = $vt->soluong_cau + $vt->soluong_khac - $vt->soluong_cung;
         }
-        $a_phanloai=['CUNG' => 'CUNG',
-                    'CAU'=>'CẦU'    
-    ];
+        $a_phanloai = [
+            'CUNG' => 'CUNG',
+            'CAU' => 'CẦU'
+        ];
         return view('DuBao.InDuBao')
             ->with('model', $model)
             ->with('model_chitiet', $model_chitiet)
@@ -318,13 +322,13 @@ class dubaonhucaulaodongController extends Controller
         }
     }
 
-    public function Xoa(Request $request,$id)
+    public function Xoa(Request $request, $id)
     {
         $inputs = $request->all();
-        $model=dubaonhucaulaodong::findOrFail($id);
-        dubaonhucaulaodong_chitiet::where('madubao',$model->madubao)->delete();
+        $model = dubaonhucaulaodong::findOrFail($id);
+        dubaonhucaulaodong_chitiet::where('madubao', $model->madubao)->delete();
         $model->delete();
 
-        return redirect('/dubaonhucaulaodong/danhsach?madv='.$model->madv);
+        return redirect('/dubaonhucaulaodong/danhsach?madv=' . $model->madv);
     }
 }
