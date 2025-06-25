@@ -50,7 +50,7 @@
 
                 <div class="col-lg-3">
                     <label>Ngày tháng tạo<span class="require">*</span></label>
-                    {!! Form::input('date', 'thoigian', null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::input('date', 'thoigian', null, ['class' => 'form-control', 'readonly'=>true]) !!}
                 </div>
             </div>
 

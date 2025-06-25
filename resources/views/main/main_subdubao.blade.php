@@ -18,7 +18,7 @@
                     </g>
                 </svg>
             </span> --}}
-            <span class="menu-text font-weight-bold">DỰ BÁO</span>
+            <span class="menu-text font-weight-bold">DỰ BÁO TTLĐ</span>
             <i class="menu-arrow"></i>
         </a>
         <div class="menu-submenu">

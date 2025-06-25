@@ -35,9 +35,13 @@
                     </div>
                     <div class="card-toolbar">
                         @if (chkPhanQuyen('dsdubao', 'thaydoi'))
-                            <a href="{{ $inputs['url'] . 'them?madv=' . $inputs['madv'] }}" class="btn btn-xs btn-success mr-2"
+                            {{-- <a href="{{ $inputs['url'] . 'them?madv=' . $inputs['madv'] }}" class="btn btn-xs btn-success mr-2"
                                 title="Thêm mới"><i class="fa fa-plus"></i>Thêm mới
-                            </a>
+                            </a> --}}
+                            <button onclick="ThemDuBao($inputs['madv'])" class="btn btn-xs btn-success mr-2"
+                                data-target="#them-modal-confirm" data-toggle="modal" title="Thêm mới"><i
+                                    class="fa fa-plus"></i>Thêm mới
+                            </button>
                         @endif
                     </div>
                 </div>
@@ -65,7 +69,9 @@
                                     <td> {{ getNgayThang($ld->thoigian) }}</td>
                                     <td> {{ $ld->noidung }}</td>
                                     <td>
-                                        <a title="In tổng hợp" href="{{ url($inputs['url'] . 'indubao?madubao=' . $ld->madubao) }}" class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                        <a title="In tổng hợp"
+                                            href="{{ url($inputs['url'] . 'indubao?madubao=' . $ld->madubao) }}"
+                                            class="btn btn-sm btn-clean btn-icon" target="_blank">
                                             <i class="icon-lg la flaticon2-print text-primary"></i>
                                         </a>
                                         @if (chkPhanQuyen('dsdubao', 'thaydoi'))
@@ -75,7 +81,7 @@
                                                 <i class="icon-lg la flaticon-edit-1 text-primary"></i>
                                             </a>
                                             <button title="Xóa thông tin" type="button"
-                                                onclick="cfDel('{{ $inputs['url'].'Xoa/' . $ld->id }}')"
+                                                onclick="cfDel('{{ $inputs['url'] . 'Xoa/' . $ld->id }}')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal-confirm"
                                                 data-toggle="modal">
                                                 <i class="icon-lg flaticon-delete text-danger"></i>
@@ -94,6 +100,52 @@
     </div>
     <!--end::Row-->
     @include('includes.delete')
+    <!--create Modal-->
+    <div class="modal fade" id="them-modal-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xs" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thêm thông tin dự báo
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                {!! Form::open([
+                    'url' => '/dubaonhucaulaodong/them',
+                    'method' => 'get',
+                    'id' => 'frm_create',
+                ]) !!}
+                {{-- @csrf --}}
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="text" id="madv_create" name="madv" value="{{ $inputs['madv'] }}" hidden />
+
+
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Thời gian tạo</b></label>
+                                {{-- <select class="form-control" name="manhomchucnang">
+                                    @foreach (getNam() as $key => $val)
+                                        <option value="{{ $key }}">{{ $val }}</option>
+                                    @endforeach
+                                </select> --}}
+                                {!! Form::input('date', 'thoigian', date('Y-m-d'), ['class' => 'form-control', 'required']) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Đồng ý</button>
+                </div>
+                {!! Form::close() !!}
+
+            </div>
+        </div>
+    </div>
 
     <div id="modal-nhanexcel" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <form action="{{ '/nguoilaodong/import' }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">

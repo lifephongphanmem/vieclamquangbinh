@@ -16,7 +16,8 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align: center; font-weight: bold; font-size: 20px;text-transform: uppercase">
-                báo cáo dự báo nhu cầu tuyển dụng lao động năm {{ date('Y', strtotime($m_dubao->thoigian ?? date('Y-m-d')))}}
+                {{-- dự báo nhu cầu tuyển dụng lao động năm {{ date('Y', strtotime($m_dubao->thoigian ?? date('Y-m-d')))}} --}}
+                dự báo thị trường lao động năm {{ date('Y', strtotime($m_dubao->thoigian ?? date('Y-m-d')))}}
             </td>
         </tr>
 

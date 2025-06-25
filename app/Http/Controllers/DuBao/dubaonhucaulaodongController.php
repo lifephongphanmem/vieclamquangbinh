@@ -110,10 +110,11 @@ class dubaonhucaulaodongController extends Controller
     public function them(Request $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
         $model = new dubaonhucaulaodong();
 
         $model->madubao = (string)getdate()[0];
-        $model->thoigian = date('Y-m-d');
+        $model->thoigian = $inputs['thoigian'];
         $nam = date('Y', strtotime($model->thoigian ?? date('Y-m-d')));
         $model->madv = $inputs['madv'];
         $inputs['url'] = static::$url;
@@ -125,7 +126,6 @@ class dubaonhucaulaodongController extends Controller
         $m_doanhnghiep = Company::where('public', '1')->count();
         $a_kq = [];
         //Cung
-
         $thongtincung = [
             '1' => 'Trong tỉnh, trong nước',
             '2' => 'Đi làm việc nước ngoài',
@@ -154,7 +154,6 @@ class dubaonhucaulaodongController extends Controller
             }
         }
         //Cầu
-
         $thongtincau = [
             '1' => ['name' => 'Doanh nghiệp', 'data' => $m_doanhnghiep],
             '2' => ['name' => 'Lượt tuyển dụng', 'data' => $m_tuyendung->count()],
